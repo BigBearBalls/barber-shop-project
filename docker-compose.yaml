@@ -88,3 +88,6 @@ services:
 #      echo -e 'Successfully created the following topics:'
 #      kafka-topics --bootstrap-server kafka:9092 --list
 #      "
+
+networks:
+  barber-shop-network:
