@@ -1,46 +1,50 @@
 package eu.senla.booking.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import eu.senla.booking.dto.*;
+import eu.senla.booking.service.BookingService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
-@RequestMapping("/booking/")
+@RequiredArgsConstructor
+@RequestMapping("/api/v1/booking")
 public class BookingController {
 
-    // получает UUID мастера и возвращает список свободного времени для этого мастера
-    public void getMasterFreeTime() {
+    private final BookingService bookingService;
 
+    @GetMapping("/master/{masterId}")
+    public GetMasterFreeTimeResponse getMasterFreeTime(@PathVariable UUID masterId) {
+        return bookingService.getMasterFreeTime(masterId);
     }
 
-    // получает конкретный день возвращает список свободного времени на этот день
-    public void getDateFreeTime() {
-
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public AddBookResponse bookTime(@RequestBody BookTimeRequest request) {
+        return bookingService.bookTime(request);
     }
 
-    //Создаем бронь. получает id услуги (и мастера) и дату для записи. Возвращает id брони
-    public void bookTime() {
-
+    @DeleteMapping("/{bookingId}")
+    public void removeBooking(@PathVariable Long bookingId) {
+        bookingService.removeBooking(bookingId);
     }
 
-    // удаляет бронь. Получает id, возвращает статус.
-    public void removeBook() {
-
+    @PutMapping("/{bookingId}")
+    public void changeBookingDate(@RequestParam(name = "masterFreeTimeId") Long masterFreeTimeId,
+                                  @PathVariable Long bookingId) {
+        bookingService.changeBookingDate(new ChangeBookingDateRequest(bookingId, masterFreeTimeId));
     }
 
-    // принимает id брони с новыми исправлениями. Возвращает статус (или измененную бронь)
-    public void changeBookDate() {
-
+    @GetMapping("/user/{userId}")
+    public UserBookingsResponse getUsersBooks(@PathVariable Long userId) {
+        return bookingService.getUserBooks(userId);
     }
 
-    //принимает UUID пользователя и возвращает список его бронирований
-    public void showUsersBooks() {
-
-    }
-
-    //Получает id брони и возвращает всю информацию по ней
-    public void showBookInfoById() {
-
+    @GetMapping("/{bookingId}")
+    public BookingRecord getBookInfoById(@PathVariable Long bookingId) {
+        return bookingService.getBookingInfoById(bookingId);
     }
 
 }

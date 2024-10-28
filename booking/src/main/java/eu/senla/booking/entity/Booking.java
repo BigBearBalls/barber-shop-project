@@ -20,4 +20,6 @@ public class Booking {
     private MasterFreeTime masterFreeTime;
 
     private UUID userId;
+
+
 }
