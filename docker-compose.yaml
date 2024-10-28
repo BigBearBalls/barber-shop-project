@@ -67,6 +67,22 @@ services:
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
     networks:
       - barber-shop-network
+  notification-service:
+    build: ./notification-service
+    ports:
+      - "8081:8080"
+    deploy:
+      mode: replicated
+      replicas: 1
+    restart: always
+    depends_on:
+      - kafka
+      - kafka-ui
+    networks:
+      - barber-shop-network
+
+
+
 
 #  kafka-topics-generator:
 #    image: confluentinc/cp-kafka:6.2.4

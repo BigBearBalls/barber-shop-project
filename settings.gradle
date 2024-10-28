@@ -1,1 +1,2 @@
 rootProject.name = "barber-shop-project"
+include "notification-service"
