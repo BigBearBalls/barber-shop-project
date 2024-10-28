@@ -5,5 +5,4 @@ import eu.senla.booking.service.BookingService;
 public class BookingServiceImpl implements BookingService {
 
 
-
 }

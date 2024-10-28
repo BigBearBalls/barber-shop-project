@@ -16,6 +16,7 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToOne
     private MasterFreeTime masterFreeTime;
 
     private UUID userId;
