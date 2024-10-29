@@ -25,7 +25,6 @@ public class BookingController {
     @GetMapping("/master/{masterId}")
     public GetMasterFreeTimeResponse getMasterFreeTime(@PathVariable
                                                        @Valid
-                                                       @NotNull(message = MASTER_ID_CANNOT_BE_NULL_VALIDATION_MESSAGE)
                                                        UUID masterId) {
         return bookingService.getMasterFreeTime(masterId);
     }
@@ -41,7 +40,6 @@ public class BookingController {
                               @Valid
                               @Min(value = MIN_ID_VALUE_VALIDATION,
                                       message = BOOKING_ID_CANNOT_BE_LESS_THAN_VALIDATION_MESSAGE)
-                              @NotNull(message = BOOKING_ID_CANNOT_BE_NULL_VALIDATION_MESSAGE)
                               Long bookingId) {
         bookingService.removeBooking(bookingId);
     }
@@ -54,7 +52,6 @@ public class BookingController {
                                   @Valid
                                   @Min(value = MIN_ID_VALUE_VALIDATION,
                                           message = BOOKING_ID_CANNOT_BE_LESS_THAN_VALIDATION_MESSAGE)
-                                  @NotNull(message = BOOKING_ID_CANNOT_BE_NULL_VALIDATION_MESSAGE)
                                   Long bookingId) {
         bookingService.changeBookingDate(bookingId, request);
     }
@@ -64,7 +61,6 @@ public class BookingController {
                                               @Valid
                                               @Min(value = MIN_ID_VALUE_VALIDATION,
                                                       message = USER_ID_CANNOT_BE_LESS_THAN_VALIDATION_MESSAGE)
-                                              @NotNull(message = USER_ID_CANNOT_BE_NULL_VALIDATION_MESSAGE)
                                               Long userId) {
         return bookingService.getUserBooks(userId);
     }
@@ -74,9 +70,7 @@ public class BookingController {
                                          @Valid
                                          @Min(value = MIN_ID_VALUE_VALIDATION,
                                                  message = BOOKING_ID_CANNOT_BE_LESS_THAN_VALIDATION_MESSAGE)
-                                         @NotNull(message = BOOKING_ID_CANNOT_BE_NULL_VALIDATION_MESSAGE)
                                          Long bookingId) {
         return bookingService.getBookingInfoById(bookingId);
     }
-
 }

@@ -21,5 +21,5 @@ public class Booking {
 
     private UUID userId;
 
-
+    private Long serviceId;
 }
