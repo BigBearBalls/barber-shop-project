@@ -18,6 +18,7 @@ public class Booking {
     private Long id;
 
     @OneToOne
+    @JoinColumn(name = "master_free_time_id")
     private MasterFreeTime masterFreeTime;
 
     private UUID userId;
