@@ -1,5 +1,6 @@
 package eu.senla.booking.entity;
 
+import eu.senla.booking.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -22,4 +23,7 @@ public class Booking {
     private UUID userId;
 
     private Long serviceId;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
 }
