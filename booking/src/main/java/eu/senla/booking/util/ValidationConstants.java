@@ -12,8 +12,8 @@ public class ValidationConstants {
     public static final String BOOKING_ID_CANNOT_BE_NULL_VALIDATION_MESSAGE = "Booking ID cannot be null!";
     public static final String USER_ID_CANNOT_BE_NULL_VALIDATION_MESSAGE = "User ID cannot be null!";
     public static final String USER_ID_CANNOT_BE_LESS_THAN_VALIDATION_MESSAGE = "User ID cannot be less than 1!";
-    public static final String SERVICE_ID_CANNOT_BE_NULL_VALIDATION_MESSAGE = "User ID cannot be null!";
-    public static final String SERVICE_ID_CANNOT_BE_LESS_THAN_VALIDATION_MESSAGE = "User ID cannot be less than 1!";
+    public static final String PROCEDURE_ID_CANNOT_BE_NULL_VALIDATION_MESSAGE = "User ID cannot be null!";
+    public static final String PROCEDURE_ID_CANNOT_BE_LESS_THAN_VALIDATION_MESSAGE = "User ID cannot be less than 1!";
     public static final String MASTER_FREE_TIME_ID_CANNOT_BE_NULL_VALIDATION_MESSAGE = "User ID cannot be null!";
     public static final String MASTER_FREE_TIME_ID_CANNOT_BE_LESS_THAN_VALIDATION_MESSAGE = "User ID cannot be less than 1!";
 }

@@ -2,9 +2,9 @@ package eu.senla.booking.controller;
 
 import eu.senla.booking.dto.*;
 import eu.senla.booking.service.BookingService;
+import eu.senla.booking.service.MasterTimeTableService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -22,11 +22,13 @@ public class BookingController {
 
     private final BookingService bookingService;
 
+    private final MasterTimeTableService masterTimeTableService;
+
     @GetMapping("/master/{masterId}")
-    public GetMasterFreeTimeResponse getMasterFreeTime(@PathVariable
+    public GetMasterFreeTimesResponse getMasterFreeTime(@PathVariable
                                                        @Valid
                                                        UUID masterId) {
-        return bookingService.getMasterFreeTime(masterId);
+        return masterTimeTableService.getMasterFreeTimes(masterId);
     }
 
     @PostMapping

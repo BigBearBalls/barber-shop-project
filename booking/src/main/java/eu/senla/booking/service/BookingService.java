@@ -6,8 +6,6 @@ import java.util.UUID;
 
 public interface BookingService {
 
-    GetMasterFreeTimeResponse getMasterFreeTime(UUID masterId);
-
     AddBookResponse bookTime(BookTimeRequest request);
 
     void removeBooking(Long bookingId);

@@ -3,13 +3,17 @@ package eu.senla.booking.entity;
 import eu.senla.booking.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Setter
+@Getter
 @Table(name = "booking")
 public class Booking {
 
@@ -18,11 +22,11 @@ public class Booking {
     private Long id;
 
     @OneToOne
-    private MasterFreeTime masterFreeTime;
+    private MasterTimeTable masterTimeTable;
 
     private UUID userId;
 
-    private Long serviceId;
+    private Long procedureId;
 
     @Enumerated(EnumType.STRING)
     private Status status;

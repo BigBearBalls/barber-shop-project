@@ -20,5 +20,5 @@ public class DayTime {
     private LocalTime time;
 
     @OneToMany(mappedBy = "time", orphanRemoval = true)
-    private List<MasterFreeTime> masterFreeTime;
+    private List<MasterTimeTable> masterTimeTable;
 }

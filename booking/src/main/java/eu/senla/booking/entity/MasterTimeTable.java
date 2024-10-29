@@ -1,6 +1,5 @@
 package eu.senla.booking.entity;
 
-import eu.senla.booking.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -12,7 +11,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Table(name = "master_free_time")
-public class MasterFreeTime {
+public class MasterTimeTable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,10 +21,9 @@ public class MasterFreeTime {
 
     @ManyToOne
     @JoinColumn(name = "time_id")
-    private DayTime time;
+    private DayTime dayTime;
 
     private LocalDate date;
 
-    @Enumerated(EnumType.STRING)
-    private Status status;
+    private boolean isAvailable;
 }
