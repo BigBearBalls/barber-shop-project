@@ -32,9 +32,10 @@ public class BookingController {
     }
 
     @PutMapping("/{bookingId}")
-    public void changeBookingDate(@RequestParam(name = "masterFreeTimeId") Long masterFreeTimeId,
+    public void changeBookingDate(@RequestBody ChangeBookingDateRequest request,
                                   @PathVariable Long bookingId) {
-        bookingService.changeBookingDate(new ChangeBookingDateRequest(bookingId, masterFreeTimeId));
+        bookingService.changeBookingDate(new ChangeBookingDateRequest(bookingId, request.masterFreeTimeId(),
+                request.serviceId()));
     }
 
     @GetMapping("/user/{userId}")

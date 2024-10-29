@@ -1,4 +1,4 @@
 package eu.senla.booking.dto;
 
-public record ChangeBookingDateRequest(Long bookingId, Long masterFreeTimeId) {
+public record ChangeBookingDateRequest(Long bookingId, Long masterFreeTimeId, Long serviceId) {
 }
