@@ -9,6 +9,15 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/notification-service" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/booking" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/booking" />
           </set>
         </option>
       </GradleProjectSettings>

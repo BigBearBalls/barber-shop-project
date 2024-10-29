@@ -2,6 +2,25 @@ server:
   port: 8083
 
 spring:
+  application:
+    name: booking
   liquibase:
     change-log: classpath:/db/changelog/db.changelog-master.yaml
     enabled: false
+  datasource:
+    username: admin
+    password: 1234
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5433/barber-shop-database
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: postgresql
+    properties:
+      hibernate:
+        show_sql: true
+
+feign:
+  clients:
+    user-client:
+      url: ""
