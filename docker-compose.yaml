@@ -80,6 +80,16 @@ services:
       - kafka-ui
     networks:
       - barber-shop-network
+  gateway-service:
+    build: ./gateway-service
+    ports:
+      - "7080:8080"
+    restart: always
+    depends_on:
+      - notification-service
+    networks:
+      - barber-shop-network
+
 
 
 
@@ -107,3 +117,4 @@ services:
 
 networks:
   barber-shop-network:
+    driver: bridge
