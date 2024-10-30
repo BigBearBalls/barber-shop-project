@@ -2,8 +2,8 @@ package eu.senla.booking.exception;
 
 import eu.senla.booking.enums.ErrorCode;
 
-public class DayTimeNotFoundException extends NotFoundException {
-    public DayTimeNotFoundException(String message, ErrorCode errorCode) {
+public class BookingNotFoundException extends NotFoundException {
+    public BookingNotFoundException(String message, ErrorCode errorCode) {
         super(errorCode.getMessage() + message, errorCode);
     }
 }

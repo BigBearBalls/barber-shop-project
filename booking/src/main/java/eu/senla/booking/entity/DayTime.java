@@ -2,6 +2,7 @@ package eu.senla.booking.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalTime;
@@ -10,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Getter
 @Table(name = "day_time")
 public class DayTime {
 
@@ -19,6 +21,6 @@ public class DayTime {
 
     private LocalTime time;
 
-    @OneToMany(mappedBy = "time", orphanRemoval = true)
-    private List<MasterTimeTable> masterTimeTable;
+    @OneToMany(mappedBy = "dayTime", orphanRemoval = true)
+    private List<MasterTimetable> masterTimeTable;
 }

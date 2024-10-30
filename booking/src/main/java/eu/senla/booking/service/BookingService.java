@@ -12,7 +12,7 @@ public interface BookingService {
 
     void changeBookingDate(Long bookingId, ChangeBookingDateRequest request);
 
-    UserBookingsResponse getUserBooks(Long userId);
+    UserBookingsResponse getUserBooks(UUID userId);
 
     BookingRecord getBookingInfoById(Long bookingId);
 }

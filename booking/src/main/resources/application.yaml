@@ -23,4 +23,10 @@ spring:
 feign:
   clients:
     user-client:
-      url: ""
+      url: "http://${USER_SERVICE_NAMESPACE:localhost}:${USER_SERVICE_PORT:9001}/${USER_SERVICE_URL:api/v1/user}"
+      get-user:
+        url: "${USER_SERVICE_GET_USER_URL:/{userId}}"
+    procedure-client:
+      url: "http://${PROCEDURE_SERVICE_NAMESPACE:localhost}:${PROCEDURE_SERVICE_PORT:9002}/${PROCEDURE_SERVICE_URL:api/v1/procedures}"
+      get-procedure:
+        url: "${PROCEDURE_SERVICE_GET_PROCEDURE_URL:/{procedureId}}"

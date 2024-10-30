@@ -1,5 +1,5 @@
 package eu.senla.booking.enums;
 
 public enum Status {
-    OPEN, CLOSED
+    OPEN, CLOSED, CANCELED
 }

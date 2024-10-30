@@ -1,4 +1,6 @@
 package eu.senla.booking.dto;
 
-public class UserDTO {
+import java.util.UUID;
+
+public record UserDTO(UUID id, String name, String surname) {
 }

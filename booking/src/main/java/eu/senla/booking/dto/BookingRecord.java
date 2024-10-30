@@ -4,13 +4,13 @@ import eu.senla.booking.enums.Status;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.UUID;
 
 public record BookingRecord(
         Long bookingId,
-        UUID masterId,
+        UserDTO master,
         LocalDate date,
         LocalTime time,
+        ProcedureDTO procedure,
         Status status
 ) {
 }
