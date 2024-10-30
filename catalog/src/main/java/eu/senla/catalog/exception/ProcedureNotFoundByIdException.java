@@ -1,0 +1,16 @@
+package eu.senla.catalog.exception;
+
+import eu.senla.catalog.util.enums.ExceptionInfo;
+import lombok.Getter;
+import org.springframework.http.HttpStatus;
+
+@Getter
+public class ProcedureNotFoundByIdException extends AbstractException{
+
+    private final long id;
+
+    public ProcedureNotFoundByIdException(long id, ExceptionInfo exceptionInfo) {
+        super(exceptionInfo.getExceptionCode(), exceptionInfo.getExceptionMessage(), HttpStatus.NOT_FOUND);
+        this.id = id;
+    }
+}

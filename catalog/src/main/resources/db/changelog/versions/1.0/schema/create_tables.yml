@@ -1,0 +1,92 @@
+databaseChangeLog:
+  - changeSet:
+      id: master-table
+      author: Yevgany Tyurin
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: master_pkey
+                  name: id
+                  type: uuid
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: surname
+                  type: VARCHAR(255)
+            tableName: master
+
+  - changeSet:
+      id: procedure-table
+      author: Yevgany Tyurin
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: procedure_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: price
+                  type: DOUBLE PRECISION
+            tableName: procedure
+
+  - changeSet:
+      - id: master_procedure-table
+        author: Yevgany Tyurin
+        changes:
+          - createTable:
+              columns:
+                - column:
+                    name: master_id
+                    type: UUID
+                    constraints:
+                      nullable: false
+                      foreignKeyName: fk_master_id
+                - column:
+                    name: procedure_id
+                    type: BIGINT
+                    constraints:
+                      nullable: false
+                      foreignKeyName: fk_procedure_id
+              tableName: master_procedure
+          - addPrimaryKey:
+              tableName: master_procedure
+              constraintName: pk_master_procedure
+              columnNames: master_id, procedure_id
+
+  - changeSet:
+      id: master_procedure-procedure-foreign-key
+      author: Yevgany Tyurin
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: procedure_id
+            baseTableName: master_procedure
+            constraintName: fk_master_procedure_on_procedure
+            referencedColumnNames: id
+            referencedTableName: procedure
+
+  - changeSet:
+      id: master_procedure-master-foreign-key
+      author: Yevgany Tyurin
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: master_id
+            baseTableName: master_procedure
+            constraintName: fk_master_procedure_on_news
+            referencedColumnNames: id
+            referencedTableName: master
