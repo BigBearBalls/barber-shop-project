@@ -4,6 +4,7 @@ import eu.senla.catalog.dto.ProcedureDto;
 import eu.senla.catalog.mapper.ProcedureMapper;
 import eu.senla.catalog.service.MasterService;
 import eu.senla.catalog.service.ProcedureService;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -47,7 +48,7 @@ public class ProcedureController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ProcedureDto addProcedure(@RequestBody ProcedureDto procedureDto) {
+    public ProcedureDto addProcedure(@Valid @RequestBody ProcedureDto procedureDto) {
          return procedureMapper.toProcedureDto(procedureService
                          .addProcedure(procedureMapper.toProcedure(procedureDto)));
     }

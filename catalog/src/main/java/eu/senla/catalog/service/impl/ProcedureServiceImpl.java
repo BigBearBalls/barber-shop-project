@@ -19,7 +19,6 @@ public class ProcedureServiceImpl implements ProcedureService {
 
     @Override
     public void deleteProcedure(Long id) {
-
         if(procedureRepository.findById(id).isEmpty()) {
             throw new ProcedureNotFoundByIdException(id, ExceptionInfo.NOT_FOUND_ID);
         }

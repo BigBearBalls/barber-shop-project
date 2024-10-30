@@ -7,8 +7,11 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum ExceptionInfo {
-    NOT_FOUND_ID("not.found.id.message", 40401),
-    NAME_EXIST("name.exist.message", 40902);
+    NOT_FOUND_ID("not-found-id-message", 40401),
+    NAME_EXIST("name-exist-message", 40902),
+    PROCEDURE_NAME_SIZE("procedure-name-size-message", 40002),
+    NOT_POSITIVE_PRICE("not-positive-price-message", 40107),
+    NULL_FIELD("null-field-message", 40005);
 
     private final String exceptionMessage;
     private final int exceptionCode;
