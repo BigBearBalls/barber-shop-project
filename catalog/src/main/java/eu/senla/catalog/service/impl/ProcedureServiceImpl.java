@@ -1,8 +1,10 @@
 package eu.senla.catalog.service.impl;
 
+import eu.senla.catalog.dto.ProcedureDto;
 import eu.senla.catalog.entity.Procedure;
-import eu.senla.catalog.exception.ProcedureExistException;
-import eu.senla.catalog.exception.ProcedureNotFoundByIdException;
+import eu.senla.catalog.exception.EntityExistException;
+import eu.senla.catalog.exception.NotFoundByIdException;
+import eu.senla.catalog.mapper.ProcedureMapper;
 import eu.senla.catalog.repository.ProcedureRepository;
 import eu.senla.catalog.service.ProcedureService;
 import eu.senla.catalog.util.enums.ExceptionInfo;
@@ -10,49 +12,59 @@ import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class ProcedureServiceImpl implements ProcedureService {
 
     private final ProcedureRepository procedureRepository;
+    private final ProcedureMapper procedureMapper;
 
     @Override
+    @Transactional
     public void deleteProcedure(Long id) {
-        if(procedureRepository.findById(id).isEmpty()) {
-            throw new ProcedureNotFoundByIdException(id, ExceptionInfo.NOT_FOUND_ID);
+        Procedure procedure = procedureRepository
+                .findById(id)
+                .orElseThrow(() -> new NotFoundByIdException(String.valueOf(id), ExceptionInfo.NOT_FOUND_ID));
+        procedureRepository.delete(procedure);
+    }
+
+    @Override
+    @Transactional
+    public ProcedureDto addProcedure(ProcedureDto procedureDto) {
+        Procedure excistProcedure = procedureRepository.getByName(procedureDto.name());
+        if(excistProcedure != null) {
+            throw new EntityExistException(String.valueOf(excistProcedure.getId()), ExceptionInfo.NAME_EXIST);
         }
-        procedureRepository.deleteById(id);
+        return procedureMapper.toProcedureDto(procedureRepository.save(procedureMapper.toProcedure(procedureDto)));
     }
 
     @Override
-    public Procedure addProcedure(Procedure procedure) {
-        if (procedureRepository.existsByName(procedure.getName())) {
-            Procedure excistProcedure = procedureRepository.findByName(procedure.getName());
-            throw new ProcedureExistException(excistProcedure.getId(), ExceptionInfo.NAME_EXIST);
-        }
-        return procedureRepository.save(procedure);
+    @Transactional(readOnly = true)
+    public List<ProcedureDto> getProcedures() {
+        return procedureRepository
+                .findAll()
+                .stream()
+                .map(procedureMapper::toProcedureDto)
+                .toList();
     }
 
     @Override
-    public List<Procedure> findProcedures() {
-        return procedureRepository.findAll();
+    @Transactional(readOnly = true)
+    public ProcedureDto getProcedure(Long procedureId) {
+        Procedure procedure = procedureRepository
+                .findById(procedureId)
+                .orElseThrow(() -> new NotFoundByIdException(String.valueOf(procedureId), ExceptionInfo.NOT_FOUND_ID));
+        return procedureMapper.toProcedureDto(procedure);
     }
 
     @Override
-    public Procedure findProcedure(Long procedureId) {
-        Optional<Procedure> procedure = procedureRepository.findById(procedureId);
-        if(procedure.isEmpty()) {
-            throw new ProcedureNotFoundByIdException(procedureId, ExceptionInfo.NOT_FOUND_ID);
-        }
-        return procedure.get();
-    }
-
-    @Override
-    public Procedure updateProcedure(Long procedureId, Procedure updateProcedure) {
-        Procedure currantProcedure = findProcedure(procedureId);
-        Optional.ofNullable(updateProcedure.getName()).ifPresent(currantProcedure::setName);
-        Optional.of(updateProcedure.getPrice()).ifPresent(currantProcedure::setPrice);
-        return procedureRepository.save(currantProcedure);
+    @Transactional
+    public ProcedureDto updateProcedure(Long procedureId, ProcedureDto updateProcedureDto) {
+        Procedure currantProcedure = procedureMapper.toProcedure(getProcedure(procedureId));
+        Optional.ofNullable(updateProcedureDto.name()).ifPresent(currantProcedure::setName);
+        Optional.of(updateProcedureDto.price()).ifPresent(currantProcedure::setPrice);
+        return procedureMapper.toProcedureDto(procedureRepository.save(currantProcedure));
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public abstract class AbstractException extends RuntimeException{
 
+    private final String id;
     private final int exceptionCode;
     private final String exceptionMessage;
     private final HttpStatus httpStatus;

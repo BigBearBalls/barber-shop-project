@@ -1,8 +1,7 @@
 package eu.senla.catalog.controller.aspect;
 
-import eu.senla.catalog.exception.MasterNotFoundByIdException;
-import eu.senla.catalog.exception.ProcedureExistException;
-import eu.senla.catalog.exception.ProcedureNotFoundByIdException;
+import eu.senla.catalog.exception.EntityExistException;
+import eu.senla.catalog.exception.NotFoundByIdException;
 import eu.senla.catalog.util.enums.ExceptionInfo;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +26,9 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     private final MessageSource messageSource;
 
-    @ExceptionHandler(value = MasterNotFoundByIdException.class)
+    @ExceptionHandler(value = NotFoundByIdException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<ResponseException> handleMasterNotFoundById(MasterNotFoundByIdException exception) {
+    public ResponseEntity<ResponseException> handleNotFoundByIdException(NotFoundByIdException exception) {
         return new ResponseEntity<>(new ResponseException(messageSource.getMessage(exception.getExceptionMessage(),
                 new Object[]{exception.getId()},
                 LocaleContextHolder.getLocale()),
@@ -37,19 +36,9 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
                 exception.getHttpStatus());
     }
 
-    @ExceptionHandler(value = ProcedureNotFoundByIdException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<ResponseException> handleProcedureNotFoundById(ProcedureNotFoundByIdException exception) {
-        return new ResponseEntity<>(new ResponseException(messageSource.getMessage(exception.getExceptionMessage(),
-                new Object[]{exception.getId()},
-                LocaleContextHolder.getLocale()),
-                exception.getExceptionCode()),
-                exception.getHttpStatus());
-    }
-
-    @ExceptionHandler(value = ProcedureExistException.class)
+    @ExceptionHandler(value = EntityExistException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public ResponseEntity<ResponseException> handleProcedureExistException(ProcedureExistException exception) {
+    public ResponseEntity<ResponseException> handleProcedureExistException(EntityExistException exception) {
         return new ResponseEntity<>(new ResponseException(messageSource.getMessage(exception.getExceptionMessage(),
                 new Object[]{exception.getId()},
                 LocaleContextHolder.getLocale()),

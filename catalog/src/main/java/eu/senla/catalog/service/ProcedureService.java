@@ -1,17 +1,17 @@
 package eu.senla.catalog.service;
 
-import eu.senla.catalog.entity.Procedure;
+import eu.senla.catalog.dto.ProcedureDto;
 import java.util.List;
 
 public interface ProcedureService {
 
     void deleteProcedure(Long id);
 
-    Procedure addProcedure(Procedure procedure);
+    ProcedureDto addProcedure(ProcedureDto procedure);
 
-    List<Procedure> findProcedures();
+    List<ProcedureDto> getProcedures();
 
-    Procedure findProcedure(Long procedureId);
+    ProcedureDto getProcedure(Long procedureId);
 
-    Procedure updateProcedure(Long procedureId, Procedure procedure);
+    ProcedureDto updateProcedure(Long procedureId, ProcedureDto procedureDto);
 }
