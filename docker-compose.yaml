@@ -67,19 +67,44 @@ services:
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
     networks:
       - barber-shop-network
+
+  auth-service:
+    image: quay.io/keycloak/keycloak:26.0.4
+    restart: always
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: ${KEYCLOAK_USER}
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_PASSWORD}
+    ports:
+      - "8082:8080"
+    command:
+      - start-dev
+    networks:
+      - barber-shop-network
   notification-service:
     build: ./notification-service
     ports:
       - "8081:8080"
-    deploy:
-      mode: replicated
-      replicas: 1
     restart: always
     depends_on:
       - kafka
       - kafka-ui
+      - auth-service
     networks:
       - barber-shop-network
+  gateway-service:
+    build: ./gateway-service
+    ports:
+      - "7080:8080"
+    restart: always
+    depends_on:
+      - notification-service
+      - auth-service
+    environment:
+      KEYCLOAK_ISSUER_URI: ${KEYCLOAK_ISSUER_URI}
+      KEYCLOAK_JWK_URI: ${KEYCLOAK_JWK_URI}
+    networks:
+      - barber-shop-network
+
 
 
 
@@ -107,3 +132,4 @@ services:
 
 networks:
   barber-shop-network:
+    driver: bridge
