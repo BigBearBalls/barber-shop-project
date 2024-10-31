@@ -16,6 +16,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -51,7 +53,8 @@ public class MasterTimetableServiceImpl implements MasterTimetableService {
     @Override
     @Transactional(readOnly = true)
     public GetMasterFreeTimesResponse getMasterFreeTimes(UUID masterId) {
-        List<MasterTimetable> list = masterTimeTableRepository.findAllByMasterIdAndIsAvailable(masterId, true);
+        List<MasterTimetable> list = masterTimeTableRepository.getAllAvailableMasterTimetables(masterId, true,
+                LocalDate.now(), LocalTime.now());
         return masterTimeTableMapper.toResponse(list);
     }
 }

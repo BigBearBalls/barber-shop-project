@@ -2,5 +2,5 @@ package eu.senla.booking.dto;
 
 import java.util.List;
 
-public record UserBookingsResponse(List<BookingRecord> list) {
+public record UserBookingsResponse(List<BookingRecord> list, int totalPages) {
 }

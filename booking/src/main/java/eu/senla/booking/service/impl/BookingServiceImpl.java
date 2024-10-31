@@ -13,8 +13,9 @@ import eu.senla.booking.mapper.BookingMapper;
 import eu.senla.booking.repository.BookingRepository;
 import eu.senla.booking.service.BookingService;
 import eu.senla.booking.service.MasterTimetableService;
-import eu.senla.booking.util.ExceptionMessageTemplateConstants;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -79,14 +80,14 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     @Transactional(readOnly = true)
-    public UserBookingsResponse getUserBooks(UUID userId) {
-        List<Booking> bookings = bookingRepository.findAllByUserId(userId);
+    public UserBookingsResponse getUserBooks(UUID userId, Pageable pageable) {
+        Page<Booking> bookings = bookingRepository.findAllByUserId(userId, pageable);
         List<BookingRecord> list = bookings.stream().map(e -> {
             UserDTO userDTO = userClient.getUser(e.getMasterTimeTable().getMasterId());
             ProcedureDTO procedureDTO = procedureClient.getProcedure(e.getProcedureId());
             return bookingMapper.toDTO(e, userDTO, procedureDTO);
         }).toList();
-        return new UserBookingsResponse(list);
+        return new UserBookingsResponse(list, bookings.getTotalPages());
     }
 
     @Override
