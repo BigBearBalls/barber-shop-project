@@ -10,7 +10,7 @@ services:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
     ports:
-      - 22181:2181
+      - "22181:2181"
     networks:
       - barber-shop-network
 
@@ -26,7 +26,7 @@ services:
       timeout: 3s
       retries: 3
     ports:
-      - 5433:5432
+      - "5433:5432"
     networks:
       - barber-shop-network
 
@@ -36,7 +36,7 @@ services:
       zookeeper:
         condition: service_healthy
     ports:
-      - 29092:29092
+      - "29092:29092"
     healthcheck:
       test: [ "CMD", "nc", "-vz", "localhost", "9092" ]
       interval: 10s
@@ -56,7 +56,7 @@ services:
   kafka-ui:
     image: provectuslabs/kafka-ui
     ports:
-      - 8080:8080
+      - "8080:8080"
     restart: always
     depends_on:
       kafka:

@@ -5,14 +5,15 @@ import eu.senla.booking.entity.Booking;
 import eu.senla.booking.entity.MasterTimetable;
 import eu.senla.booking.enums.ErrorCode;
 import eu.senla.booking.enums.Status;
-import eu.senla.booking.exception.BookingNotFoundException;
 import eu.senla.booking.exception.LogExceptionWrapper;
+import eu.senla.booking.exception.NotFoundException;
 import eu.senla.booking.feign.ProcedureClient;
 import eu.senla.booking.feign.UserClient;
 import eu.senla.booking.mapper.BookingMapper;
 import eu.senla.booking.repository.BookingRepository;
 import eu.senla.booking.service.BookingService;
 import eu.senla.booking.service.MasterTimetableService;
+import eu.senla.booking.util.ExceptionMessageTemplateConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
+
+import static eu.senla.booking.util.ExceptionMessageTemplateConstants.BOOKING_WITH_ID_NOT_FOUND_MSG_TEMPLATE;
 
 @Service
 @RequiredArgsConstructor
@@ -97,7 +100,7 @@ public class BookingServiceImpl implements BookingService {
 
     private Booking getBooking(Long bookingId) {
         return bookingRepository.findById(bookingId).orElseThrow(() -> LogExceptionWrapper.logErrorException(
-                new BookingNotFoundException(String.format("Booking with ID (%s) not found!", bookingId),
+                new NotFoundException(String.format(BOOKING_WITH_ID_NOT_FOUND_MSG_TEMPLATE, bookingId),
                         ErrorCode.ERR_OBJECT_NOT_FOUND)));
     }
 }
