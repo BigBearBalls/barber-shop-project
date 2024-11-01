@@ -14,7 +14,17 @@ def NOTIFICATION_SERVICE = project(":notification-service")
 
 allprojects {
     group 'eu.senla'
-    version '1.0-SNAPSHOT'
+    version '0.0.1-SNAPSHOT'
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(17)
+        }
+    }
+
+    repositories {
+        mavenCentral()
+    }
 }
 
 ext {
@@ -24,8 +34,8 @@ ext {
 
 Set<Project> datasourceProjects = Set.of(BOOKING_SERVICE, PROCEDURE_SERVICE, USER_SERVICE)
 Set<Project> kafkaProjects = Set.of(NOTIFICATION_SERVICE, BOOKING_SERVICE)
-Set<Project> webProjects = Set.of(BOOKING_SERVICE, PROCEDURE_SERVICE, USER_SERVICE)
-Set<Project> securityProjects = Set.of(BOOKING_SERVICE, PROCEDURE_SERVICE, USER_SERVICE)
+Set<Project> webProjects = Set.of(BOOKING_SERVICE, PROCEDURE_SERVICE, USER_SERVICE, NOTIFICATION_SERVICE)
+Set<Project> securityProjects = Set.of(/*BOOKING_SERVICE, PROCEDURE_SERVICE, USER_SERVICE, */GATEWAY_SERVICE)
 
 subprojects { subproject ->
 
@@ -36,18 +46,8 @@ subprojects { subproject ->
         plugin('io.spring.dependency-management')
     }
 
-    java {
-        toolchain {
-            languageVersion = JavaLanguageVersion.of(17)
-        }
-    }
-
     bootJar {
         archivesBaseName = "app"
-    }
-
-    repositories {
-        mavenCentral()
     }
 
     if (subproject in datasourceProjects) {
@@ -72,7 +72,7 @@ subprojects { subproject ->
         }
     }
 
-/*    if (subproject in securityProjects) {
+    if (subproject in securityProjects) {
         dependencies {
             implementation 'org.springframework.boot:spring-boot-starter-security'
             implementation "org.springframework.security:spring-security-oauth2-resource-server:${springSecurityOauth2Version}"
@@ -80,7 +80,7 @@ subprojects { subproject ->
             implementation "org.springframework.security:spring-security-oauth2-client:${springSecurityOauth2Version}"
             testImplementation 'org.springframework.security:spring-security-test'
         }
-    }*/
+    }
 
     dependencies {
         compileOnly 'org.projectlombok:lombok'

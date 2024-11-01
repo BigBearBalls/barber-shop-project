@@ -10,23 +10,23 @@ services:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
     ports:
-      - 22181:2181
+      - "22181:2181"
     networks:
       - barber-shop-network
 
   barber-shop-database:
     image: postgres:14.7-alpine
     environment:
-      - 'POSTGRES_DB=barber-shop-database'
-      - 'POSTGRES_PASSWORD=1234'
-      - 'POSTGRES_USER=admin'
+      - 'POSTGRES_DB=$DATABASE_NAME'
+      - 'POSTGRES_PASSWORD=$DATABASE_PASSWORD'
+      - 'POSTGRES_USER=$DATABASE_USERNAME'
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready", "-U", "chelovek", "-d", "orders-database" ]
       interval: 10s
       timeout: 3s
       retries: 3
     ports:
-      - 5433:5432
+      - "5433:5432"
     networks:
       - barber-shop-network
 
@@ -36,7 +36,7 @@ services:
       zookeeper:
         condition: service_healthy
     ports:
-      - 29092:29092
+      - "29092:29092"
     healthcheck:
       test: [ "CMD", "nc", "-vz", "localhost", "9092" ]
       interval: 10s
@@ -55,9 +55,8 @@ services:
 
   kafka-ui:
     image: provectuslabs/kafka-ui
-    container_name: kafka-ui
     ports:
-      - 8080:8080
+      - "8080:8080"
     restart: always
     depends_on:
       kafka:
@@ -75,15 +74,36 @@ services:
       KC_BOOTSTRAP_ADMIN_USERNAME: ${KEYCLOAK_USER}
       KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_PASSWORD}
     ports:
-      - "8082:8080"
+      - "9000:8080"
+    depends_on:
+      - user-service
     command:
       - start-dev
     networks:
       - barber-shop-network
+
   notification-service:
     build: ./notification-service
     ports:
-      - "8081:8080"
+      - "9002:8080"
+    restart: always
+#    depends_on:
+#      - kafka
+#      - kafka-ui
+#      - auth-service
+    networks:
+      - barber-shop-network
+
+  booking-service:
+    build: ./booking-service
+    ports:
+      - "9003:8080"
+    environment:
+      - "DATABASE_NAME=barber-shop-database"
+      - "DATABASE_PORT=5432"
+      - "DATABASE_HOST=barber-shop-database"
+      - "DATABASE_USERNAME=admin"
+      - "DATABASE_PASSWORD=1234"
     restart: always
     depends_on:
       - kafka
@@ -91,6 +111,29 @@ services:
       - auth-service
     networks:
       - barber-shop-network
+
+  config-server:
+    build: ./config-server
+    ports:
+      - "8888:8888"
+    environment:
+      - "DATABASE_NAME=barber-shop-database"
+      - "DATABASE_PORT=5432"
+      - "DATABASE_HOST=barber-shop-database"
+      - "DATABASE_USERNAME=admin"
+      - "DATABASE_PASSWORD=1234"
+    networks:
+      - barber-shop-network
+
+  user-service:
+    build: ./user-service
+    ports:
+      - "9001:8080"
+    depends_on:
+      - barber-shop-database
+    networks:
+      - barber-shop-network
+
   gateway-service:
     build: ./gateway-service
     ports:
@@ -104,10 +147,6 @@ services:
       KEYCLOAK_JWK_URI: ${KEYCLOAK_JWK_URI}
     networks:
       - barber-shop-network
-
-
-
-
 
 #  kafka-topics-generator:
 #    image: confluentinc/cp-kafka:6.2.4
