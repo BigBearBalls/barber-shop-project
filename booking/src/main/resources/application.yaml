@@ -1,5 +1,5 @@
 server:
-  port: 8083
+  port: 8080
 
 spring:
   application:
@@ -8,10 +8,10 @@ spring:
     change-log: classpath:/db/changelog/db.changelog-master.yaml
     enabled: false
   datasource:
-    username: admin
-    password: 1234
+    username: ${DATABASE_USERNAME:admin}
+    password: ${DATABASE_PASSWORD:1234}
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5433/barber-shop-database
+    url: jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:5433}/${DATABASE_NAME:barber-shop-database}
   jpa:
     hibernate:
       ddl-auto: update
@@ -25,8 +25,8 @@ feign:
     user-client:
       url: "http://${USER_SERVICE_NAMESPACE:localhost}:${USER_SERVICE_PORT:9001}/${USER_SERVICE_URL:api/v1/user}"
       get-user:
-        url: "${USER_SERVICE_GET_USER_URL:/{userId}}"
+        url: "${USER_SERVICE_GET_USER_URI:/{userId}}"
     procedure-client:
       url: "http://${PROCEDURE_SERVICE_NAMESPACE:localhost}:${PROCEDURE_SERVICE_PORT:9002}/${PROCEDURE_SERVICE_URL:api/v1/procedures}"
       get-procedure:
-        url: "${PROCEDURE_SERVICE_GET_PROCEDURE_URL:/{procedureId}}"
+        url: "${PROCEDURE_SERVICE_GET_PROCEDURE_URI:/{procedureId}}"
