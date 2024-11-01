@@ -1,3 +1,56 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.3.5'
+    id 'io.spring.dependency-management' version '1.1.6'
+}
 
-group 'eu.senla'
-version '1.0-SNAPSHOT'
+allprojects {
+    group 'eu.senla'
+    version '1.0-SNAPSHOT'
+}
+
+ext {
+    set('springCloudVersion', "2023.0.3")
+}
+
+subprojects {
+
+    apply {
+        plugin('java')
+        plugin('org.springframework.boot')
+        plugin('io.spring.dependency-management')
+    }
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(17)
+        }
+    }
+
+    bootJar {
+        archivesBaseName = "app"
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        implementation 'org.liquibase:liquibase-core'
+        compileOnly 'org.projectlombok:lombok'
+        developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+        developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    }
+
+    tasks.named('test') {
+        useJUnitPlatform()
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        }
+    }
+}
