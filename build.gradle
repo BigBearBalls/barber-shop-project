@@ -4,6 +4,14 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.6'
 }
 
+def BOOKING_SERVICE = project(":booking-service")
+def PROCEDURE_SERVICE = project(":procedure-service")
+def USER_SERVICE = project(":user-service")
+def CONFIG_SERVER = project(":config-server")
+def GATEWAY_SERVICE = project(":gateway-service")
+def NOTIFICATION_SERVICE = project(":notification-service")
+
+
 allprojects {
     group 'eu.senla'
     version '1.0-SNAPSHOT'
@@ -11,9 +19,16 @@ allprojects {
 
 ext {
     set('springCloudVersion', "2023.0.3")
+    set("springSecurityOauth2Version",'6.3.4')
 }
 
-subprojects {
+Set<Project> datasourceProjects = Set.of(BOOKING_SERVICE, PROCEDURE_SERVICE, USER_SERVICE)
+Set<Project> kafkaProjects = Set.of(NOTIFICATION_SERVICE, BOOKING_SERVICE)
+Set<Project> webProjects = Set.of(BOOKING_SERVICE, PROCEDURE_SERVICE, USER_SERVICE)
+Set<Project> securityProjects = Set.of(BOOKING_SERVICE, PROCEDURE_SERVICE, USER_SERVICE)
+
+subprojects { subproject ->
+
 
     apply {
         plugin('java')
@@ -35,10 +50,40 @@ subprojects {
         mavenCentral()
     }
 
+    if (subproject in datasourceProjects) {
+        dependencies {
+            implementation 'org.liquibase:liquibase-core'
+            implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+            runtimeOnly 'org.postgresql:postgresql'
+        }
+    }
+
+    if (subproject in webProjects) {
+        dependencies {
+            implementation 'org.springframework.boot:spring-boot-starter-web'
+            implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+        }
+    }
+
+    if (subproject in kafkaProjects) {
+        dependencies {
+            implementation 'org.springframework.kafka:spring-kafka'
+            testImplementation 'org.springframework.kafka:spring-kafka-test'
+        }
+    }
+
+/*    if (subproject in securityProjects) {
+        dependencies {
+            implementation 'org.springframework.boot:spring-boot-starter-security'
+            implementation "org.springframework.security:spring-security-oauth2-resource-server:${springSecurityOauth2Version}"
+            implementation "org.springframework.security:spring-security-oauth2-jose:${springSecurityOauth2Version}"
+            implementation "org.springframework.security:spring-security-oauth2-client:${springSecurityOauth2Version}"
+            testImplementation 'org.springframework.security:spring-security-test'
+        }
+    }*/
+
     dependencies {
-        implementation 'org.liquibase:liquibase-core'
         compileOnly 'org.projectlombok:lombok'
-        developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
         testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
         developmentOnly 'org.springframework.boot:spring-boot-devtools'

@@ -7,8 +7,3 @@ spring:
   liquibase:
     change-log: classpath:/db/changelog/db.changelog-master.yaml
     enabled: false
-
-feign:
-  clients:
-    user-client:
-      url: ""
