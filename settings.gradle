@@ -1,3 +1,4 @@
 rootProject.name = "barber-shop-project"
 include "notification-service"
 include "gateway-service"
+include "booking"
