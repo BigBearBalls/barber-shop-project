@@ -90,6 +90,17 @@ services:
       - auth-service
     networks:
       - barber-shop-network
+  booking-service:
+    build: ./booking-service
+    ports:
+      - "9003:8080"
+    restart: always
+    depends_on:
+      - kafka
+      - kafka-ui
+      - auth-service
+    networks:
+      - barber-shop-network
   gateway-service:
     build: ./gateway-service
     ports:
