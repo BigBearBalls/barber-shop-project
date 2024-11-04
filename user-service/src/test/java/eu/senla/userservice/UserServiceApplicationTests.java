@@ -1,4 +1,4 @@
-package eu.senla.user_service;
+package eu.senla.userservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
