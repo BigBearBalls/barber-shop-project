@@ -1,4 +1,5 @@
 plugins {
+    id 'checkstyle'
     id 'java'
     id 'org.springframework.boot' version '3.3.5'
     id 'io.spring.dependency-management' version '1.1.6'
@@ -39,11 +40,11 @@ Set<Project> securityProjects = Set.of(/*BOOKING_SERVICE, PROCEDURE_SERVICE, USE
 
 subprojects { subproject ->
 
-
     apply {
         plugin('java')
         plugin('org.springframework.boot')
         plugin('io.spring.dependency-management')
+        plugin("checkstyle")
     }
 
     bootJar {
@@ -91,6 +92,25 @@ subprojects { subproject ->
 
     tasks.named('test') {
         useJUnitPlatform()
+    }
+
+    checkstyle {
+        toolVersion = "10.20.0"
+        configFile = file("${rootDir}/checkstyle.xml")
+    }
+
+    checkstyleMain {
+        source ='src/main/java'
+    }
+    checkstyleTest {
+        source ='src/test/java'
+    }
+
+    tasks.withType(Checkstyle).configureEach {
+        reports {
+            xml.required = false
+            html.required = true
+        }
     }
 
     dependencyManagement {
