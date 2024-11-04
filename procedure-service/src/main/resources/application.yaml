@@ -1,6 +1,6 @@
 spring:
   application:
-    name: booking
+    name: "procedure-service"
   liquibase:
     change-log: classpath:/db/changelog/db.changelog-master.yaml
     enabled: false
@@ -8,7 +8,7 @@ spring:
     username: ${DATABASE_USERNAME:admin}
     password: ${DATABASE_PASSWORD:1234}
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:5433}/${DATABASE_NAME:barber-shop-database}
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/}${DATABASE_NAME:barber-shop-database}
   jpa:
     hibernate:
       ddl-auto: update

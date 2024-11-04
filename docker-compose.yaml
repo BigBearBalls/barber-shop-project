@@ -16,10 +16,8 @@ services:
 
   barber-shop-database:
     image: postgres:14.7-alpine
-    environment:
-      - 'POSTGRES_DB=$DATABASE_NAME'
-      - 'POSTGRES_PASSWORD=$DATABASE_PASSWORD'
-      - 'POSTGRES_USER=$DATABASE_USERNAME'
+    env_file:
+      - env/datasource.env
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready", "-U", "chelovek", "-d", "barber-shop-database" ]
       interval: 10s
@@ -70,9 +68,8 @@ services:
   auth-service:
     image: quay.io/keycloak/keycloak:26.0.4
     restart: always
-    environment:
-      KC_BOOTSTRAP_ADMIN_USERNAME: ${KEYCLOAK_USER}
-      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_PASSWORD}
+    env_file:
+      - env/keycloak.env
     ports:
       - "9000:8080"
     depends_on:
@@ -98,12 +95,8 @@ services:
     build: ./booking-service
     ports:
       - "9003:8080"
-    environment:
-      - "DATABASE_NAME=barber-shop-database"
-      - "DATABASE_PORT=5432"
-      - "DATABASE_HOST=barber-shop-database"
-      - "DATABASE_USERNAME=admin"
-      - "DATABASE_PASSWORD=1234"
+    env_file:
+      - env/datasource.env
     restart: always
     depends_on:
       - kafka
@@ -112,23 +105,23 @@ services:
     networks:
       - barber-shop-network
 
-  config-server:
-    build: ./config-server
-    ports:
-      - "8888:8888"
-    environment:
-      - "DATABASE_NAME=barber-shop-database"
-      - "DATABASE_PORT=5432"
-      - "DATABASE_HOST=barber-shop-database"
-      - "DATABASE_USERNAME=admin"
-      - "DATABASE_PASSWORD=1234"
-    networks:
-      - barber-shop-network
-
   user-service:
     build: ./user-service
     ports:
       - "9001:8080"
+    env_file:
+      - env/datasource.env
+    depends_on:
+      - barber-shop-database
+    networks:
+      - barber-shop-network
+
+  procedure-service:
+    build: ./procedure-service
+    ports:
+      - "9004:8080"
+    env_file:
+      - env/datasource.env
     depends_on:
       - barber-shop-database
     networks:
@@ -140,11 +133,13 @@ services:
       - "7080:8080"
     restart: always
     depends_on:
+      - user-service
+      - procedure-service
+      - booking-service
       - notification-service
       - auth-service
-    environment:
-      KEYCLOAK_ISSUER_URI: ${KEYCLOAK_ISSUER_URI}
-      KEYCLOAK_JWK_URI: ${KEYCLOAK_JWK_URI}
+    env_file:
+      - env/keycloak.env
     networks:
       - barber-shop-network
 
