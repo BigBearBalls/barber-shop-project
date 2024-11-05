@@ -1,13 +1,17 @@
-package eu.senla.userservice.entity;
+package eu.senla.booking.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.UUID;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -16,24 +20,19 @@ public class WorkingDay {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "working_days_id_gen")
     @SequenceGenerator(name = "working_days_id_gen", sequenceName = "working_days_working_day_id_seq", allocationSize = 1)
-    @Column(name = "working_day_id", nullable = false)
+    @Column(name = "working_day_id")
     private Integer id;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "master_id", nullable = false)
-    private User master;
+    @Column(name = "master_id")
+    private UUID master;
 
-    @NotNull
-    @Column(name = "working_date", nullable = false)
+    @Column(name = "working_date")
     private LocalDate workingDate;
 
-    @NotNull
-    @Column(name = "work_start", nullable = false)
+    @Column(name = "work_start")
     private LocalTime workStart;
 
-    @NotNull
-    @Column(name = "work_end", nullable = false)
+    @Column(name = "work_end")
     private LocalTime workEnd;
 
 }

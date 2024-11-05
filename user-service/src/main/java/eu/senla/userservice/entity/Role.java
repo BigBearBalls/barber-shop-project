@@ -1,24 +1,24 @@
 package eu.senla.userservice.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
 @Table(name = "roles", schema = "my_schema")
 public class Role {
     @Id
-    @Column(name = "role_id", nullable = false)
+    @Column(name = "role_id")
     private Integer id;
 
-    @Size(max = 50)
-    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "role_value", nullable = false, length = 50)
+    @Column(name = "role_value")
     private RoleValueType roleValue;
 
 }
