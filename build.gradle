@@ -40,6 +40,10 @@ Set<Project> kafkaProjects = Set.of(NOTIFICATION_SERVICE, BOOKING_SERVICE)
 Set<Project> webProjects = Set.of(BOOKING_SERVICE, PROCEDURE_SERVICE, USER_SERVICE, NOTIFICATION_SERVICE)
 Set<Project> securityProjects = Set.of(/*BOOKING_SERVICE, PROCEDURE_SERVICE, USER_SERVICE, */GATEWAY_SERVICE)
 
+bootJar {
+    enabled = false
+}
+
 subprojects { subproject ->
 
     apply {
@@ -65,6 +69,8 @@ subprojects { subproject ->
         dependencies {
             implementation 'org.springframework.boot:spring-boot-starter-web'
             implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+            implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
+            implementation 'org.hibernate.validator:hibernate-validator:7.0.1.Final'
         }
     }
 
