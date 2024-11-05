@@ -1,6 +1,8 @@
+FROM barber-shop-project as barber-shop
+
 FROM openjdk:17-oracle as extractor
 WORKDIR /notification-service
-COPY build/libs/app-0.0.1-SNAPSHOT.jar /notification-service/
+COPY  --from=barber-shop /root-app/notification-service/build/libs/app-0.0.1-SNAPSHOT.jar /notification-service/
 RUN java -Djarmode=layertools -jar app-0.0.1-SNAPSHOT.jar extract
 
 FROM  openjdk:17-oracle

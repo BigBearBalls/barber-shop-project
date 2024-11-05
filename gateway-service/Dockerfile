@@ -1,6 +1,8 @@
+FROM barber-shop-project as barber-shop
+
 FROM openjdk:17-oracle as extractor
 WORKDIR /gateway-service
-COPY build/libs/app-0.0.1-SNAPSHOT.jar /gateway-service/
+COPY --from=barber-shop /root-app/gateway-service/build/libs/app-0.0.1-SNAPSHOT.jar /gateway-service/
 RUN java -Djarmode=layertools -jar app-0.0.1-SNAPSHOT.jar extract
 
 FROM  openjdk:17-oracle

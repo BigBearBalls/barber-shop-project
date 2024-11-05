@@ -1,4 +1,9 @@
 services:
+  barber-shop-project:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: barber-shop-project:latest
   zookeeper:
     image: confluentinc/cp-zookeeper:6.2.4
     healthcheck:
@@ -84,7 +89,8 @@ services:
     ports:
       - "9002:8080"
     restart: always
-#    depends_on:
+    depends_on:
+      - barber-shop-project
 #      - kafka
 #      - kafka-ui
 #      - auth-service
@@ -99,6 +105,7 @@ services:
       - env/datasource.env
     restart: always
     depends_on:
+      - barber-shop-project
       - kafka
       - kafka-ui
       - auth-service
@@ -112,6 +119,7 @@ services:
     env_file:
       - env/datasource.env
     depends_on:
+      - barber-shop-project
       - barber-shop-database
     networks:
       - barber-shop-network
@@ -123,6 +131,7 @@ services:
     env_file:
       - env/datasource.env
     depends_on:
+      - barber-shop-project
       - barber-shop-database
     networks:
       - barber-shop-network
