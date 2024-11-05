@@ -23,6 +23,13 @@ jwt:
     converter:
       resource-id: barbershop-realm
 
-
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
 
 
