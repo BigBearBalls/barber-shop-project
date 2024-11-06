@@ -5,6 +5,18 @@ services:
       dockerfile: Dockerfile
     image: barber-shop-project:latest
 
+#  liquibase:
+#    image: liquibase/liquibase
+#    volumes:
+#      - ./migrations:/liquibase/changelog  # Папка с вашими миграциями
+#    environment:
+#      LIQUIBASE_URL: jdbc:postgresql://db:5432/mydatabase
+#      LIQUIBASE_USERNAME:
+#      LIQUIBASE_PASSWORD: mypassword
+#      LIQUIBASE_CHANGELOG_FILE: /liquibase/changelog/db.changelog.xml
+#    depends_on:
+#      - db
+
   zookeeper:
     image: confluentinc/cp-zookeeper:6.2.4
     healthcheck:
