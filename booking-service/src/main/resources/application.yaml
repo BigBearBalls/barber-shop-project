@@ -5,8 +5,8 @@ spring:
   application:
     name: booking-service
   liquibase:
-    change-log: classpath:/db/changelog/db.changelog-master.yaml
-    enabled: false
+    change-log: classpath:liquibase/db.changelog-booking-master.yaml
+    enabled: true
   datasource:
     username: ${DATABASE_USERNAME:admin}
     password: ${DATABASE_PASSWORD:1234}
@@ -14,7 +14,7 @@ spring:
     url: ${DATABASE_URL:jdbc:postgresql://localhost:5433/}${DATABASE_NAME:barber-shop-database}
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     database: postgresql
     properties:
       hibernate:

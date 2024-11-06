@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: "booking-1.0"
+      author: Dany
+      changes:
+        - createSequence:
+            sequenceName: bookings_booking_id_seq
+            startValue: 1
+            incrementBy: 1
+
+        - createTable:
+            tableName: bookings
+            columns:
+              - column:
+                  name: booking_id
+                  type: INTEGER
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: reservation_start
+                  type: TIME
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: reservation_end
+                  type: TIME
+                  constraints:
+                    nullable: false
