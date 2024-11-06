@@ -70,5 +70,3 @@ databaseChangeLog:
             constraintName: fk_user_role
             referencedTableName: role
             referencedColumnNames: role_id
-            onDelete: CASCADE
-            onUpdate: CASCADE
