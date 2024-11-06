@@ -33,6 +33,7 @@ allprojects {
 ext {
     set('springCloudVersion', "2023.0.3")
     set("springSecurityOauth2Version",'6.3.4')
+    set("validationApiVersion", '3.0.2')
 }
 
 Set<Project> datasourceProjects = Set.of(BOOKING_SERVICE, PROCEDURE_SERVICE, USER_SERVICE)
@@ -69,7 +70,7 @@ subprojects { subproject ->
         dependencies {
             implementation 'org.springframework.boot:spring-boot-starter-web'
             implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
-            implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
+            implementation "jakarta.validation:jakarta.validation-api:${validationApiVersion}"
         }
     }
 

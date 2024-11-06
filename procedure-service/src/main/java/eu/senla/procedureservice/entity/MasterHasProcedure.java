@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @Entity
@@ -19,5 +21,8 @@ public class MasterHasProcedure {
     @Id
     @Column(name = "master_execution_id")
     private Integer id;
-
+    @Column(name = "master_id")
+    private UUID masterId;
+    @Column(name = "procedure_id")
+    private Integer procedureId;
 }
