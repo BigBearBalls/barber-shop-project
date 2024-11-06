@@ -33,12 +33,17 @@ allprojects {
 ext {
     set('springCloudVersion', "2023.0.3")
     set("springSecurityOauth2Version",'6.3.4')
+    set("validationApiVersion", '3.0.2')
 }
 
 Set<Project> datasourceProjects = Set.of(BOOKING_SERVICE, PROCEDURE_SERVICE, USER_SERVICE)
 Set<Project> kafkaProjects = Set.of(NOTIFICATION_SERVICE, BOOKING_SERVICE)
 Set<Project> webProjects = Set.of(BOOKING_SERVICE, PROCEDURE_SERVICE, USER_SERVICE, NOTIFICATION_SERVICE)
 Set<Project> securityProjects = Set.of(/*BOOKING_SERVICE, PROCEDURE_SERVICE, USER_SERVICE, */GATEWAY_SERVICE)
+
+bootJar {
+    enabled = false
+}
 
 subprojects { subproject ->
 
@@ -65,6 +70,7 @@ subprojects { subproject ->
         dependencies {
             implementation 'org.springframework.boot:spring-boot-starter-web'
             implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+            implementation "jakarta.validation:jakarta.validation-api:${validationApiVersion}"
         }
     }
 

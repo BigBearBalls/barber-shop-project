@@ -1,3 +1,5 @@
+CREATE SCHEMA IF NOT EXISTS my_schema;
+SET search_path TO my_schema;
 CREATE TABLE IF NOT EXISTS roles
 (
     role_id    INTEGER NOT NULL CONSTRAINT roles_pk PRIMARY KEY,

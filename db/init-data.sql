@@ -1,3 +1,4 @@
+SET search_path TO my_schema;
 INSERT INTO roles (role_id, role_value)
 VALUES
     (1, 'ADMIN'),
