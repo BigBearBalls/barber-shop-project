@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: master-procedure-1.1
+      author: Dany
+      changes:
+        - createTable:
+            tableName: master_has_procedure
+            columns:
+              - column:
+                  name: master_execution_id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: master_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: procedure_id
+                  type: INT
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            baseTableName: master_has_procedure
+            baseColumnNames: procedure_id
+            constraintName: fk_master_has_procedure_procedure
+            referencedTableName: procedure
+            referencedColumnNames: procedure_id
+            onDelete: CASCADE
+            onUpdate: CASCADE
