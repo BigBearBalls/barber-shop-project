@@ -31,6 +31,8 @@ services:
       retries: 3
     ports:
       - "5433:5432"
+    volumes:
+      - ./db/init-scripts:/docker-entrypoint-initdb.d/
     networks:
       - barber-shop-network
 

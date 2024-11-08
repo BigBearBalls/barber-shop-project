@@ -12,7 +12,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "working_days")
+@Table(name = "working_days", schema = "booking_service_schema")
 @ToString
 public class WorkingDay {
 

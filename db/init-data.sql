@@ -1,4 +1,3 @@
-
 INSERT INTO users (user_id, first_name, last_name, email, password, phone_number, roles_id)
 VALUES
     ('a1b2c3d4-e5f6-4789-8a7b-1234567890ab', 'Сергей', 'Кузнецов', 'admin@example.com', 'admin123', '+79990000000', 1),

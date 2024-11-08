@@ -4,11 +4,12 @@ databaseChangeLog:
       author: Dany
       changes:
         - createSequence:
-            sequenceName: bookings_booking_id_seq
+            sequenceName: booking_service_schema.bookings_booking_id_seq
             startValue: 1
             incrementBy: 1
 
         - createTable:
+            schemaName: booking_service_schema
             tableName: bookings
             columns:
               - column:

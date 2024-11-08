@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "roles", schema = "my_schema")
+@Table(name = "roles", schema = "user_service_schema")
 public class Role {
     @Id
     @Column(name = "role_id")

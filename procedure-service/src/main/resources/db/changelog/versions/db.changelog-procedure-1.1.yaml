@@ -4,7 +4,8 @@ databaseChangeLog:
       author: Dany
       changes:
         - createTable:
-            tableName: master_has_procedure
+            schemaName: procedure_service_schema
+            tableName: masters_has_procedures
             columns:
               - column:
                   name: master_execution_id
@@ -27,10 +28,10 @@ databaseChangeLog:
                     nullable: false
 
         - addForeignKeyConstraint:
-            baseTableName: master_has_procedure
+            baseTableName: masters_has_procedures
             baseColumnNames: procedure_id
             constraintName: fk_master_has_procedure_procedure
-            referencedTableName: procedure
+            referencedTableName: procedures
             referencedColumnNames: procedure_id
             onDelete: CASCADE
             onUpdate: CASCADE
