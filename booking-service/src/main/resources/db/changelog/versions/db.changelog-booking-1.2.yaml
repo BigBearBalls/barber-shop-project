@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: "booking-1.2"
+      author: Dany
+      changes:
+        - addColumn:
+            tableName: bookings
+            columns:
+              - column:
+                  name: procedure_id
+                  type: INTEGER
+                  constraints:
+                    nullable: true
+
+              - column:
+                  name: working_day_id
+                  type: INTEGER
+                  constraints:
+                    nullable: true
+
+              - column:
+                  name: client_id
+                  type: UUID
+                  constraints:
+                    nullable: true
+
+        - addForeignKeyConstraint:
+            baseTableName: bookings
+            baseColumnNames: working_day_id
+            constraintName: fk_bookings_working_day
+            referencedTableName: working_days
+            referencedColumnNames: working_day_id

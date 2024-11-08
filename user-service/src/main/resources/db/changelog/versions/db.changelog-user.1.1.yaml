@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: "user-1.1"
+      author: Dany
+      changes:
+        - insert:
+            tableName: role
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 1
+              - column:
+                  name: role_value
+                  value: ADMIN
+        - insert:
+            tableName: role
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 2
+              - column:
+                  name: role_value
+                  value: CLIENT
+        - insert:
+            tableName: role
+            columns:
+              - column:
+                  name: role_id
+                  valueNumeric: 3
+              - column:
+                  name: role_value
+                  value: MASTER
