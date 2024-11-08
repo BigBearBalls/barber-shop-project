@@ -1,4 +1,4 @@
-package eu.senla.booking.service.impl;
+package eu.senla.booking.facade.impl;
 
 import eu.senla.booking.dto.request.AggregatedBooking;
 import eu.senla.booking.dto.request.BookingRequestDTO;
@@ -9,7 +9,7 @@ import eu.senla.booking.mock.ProcedureMock;
 import eu.senla.booking.mock.ProcedureServiceMock;
 import eu.senla.booking.mock.UserMock;
 import eu.senla.booking.mock.UserServiceMock;
-import eu.senla.booking.service.BookingDataAggregator;
+import eu.senla.booking.facade.BookingDataAggregator;
 import eu.senla.booking.service.WorkingDayService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

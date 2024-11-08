@@ -1,4 +1,4 @@
-package eu.senla.booking.service;
+package eu.senla.booking.facade;
 
 import eu.senla.booking.dto.request.BookingRequestDTO;
 import eu.senla.booking.dto.response.BookingResponseDTO;
