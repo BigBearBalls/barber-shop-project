@@ -4,6 +4,7 @@ spring:
   liquibase:
     change-log: classpath:/db/changelog/db.changelog-user-master.yaml
     enabled: true
+    default-schema: user_service_schema
   datasource:
     username: ${DATABASE_USERNAME:admin}
     password: ${DATABASE_PASSWORD:1234}

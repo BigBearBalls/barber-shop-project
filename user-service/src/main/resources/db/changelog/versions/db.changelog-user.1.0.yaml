@@ -3,8 +3,12 @@ databaseChangeLog:
       id: "user-1.0"
       author: Dany
       changes:
+        - sql:
+            splitStatements: false
+            sql: "CREATE SCHEMA IF NOT EXISTS user_service_schema;"
         - createTable:
-            tableName: role
+            schemaName: user_service_schema
+            tableName: roles
             columns:
               - column:
                   name: role_id
@@ -20,7 +24,7 @@ databaseChangeLog:
                     nullable: false
 
         - createTable:
-            tableName: user
+            tableName: users
             columns:
               - column:
                   name: user_id
@@ -65,8 +69,8 @@ databaseChangeLog:
                     nullable: false
 
         - addForeignKeyConstraint:
-            baseTableName: user
+            baseTableName: users
             baseColumnNames: roles_id
             constraintName: fk_user_role
-            referencedTableName: role
+            referencedTableName: roles
             referencedColumnNames: role_id
