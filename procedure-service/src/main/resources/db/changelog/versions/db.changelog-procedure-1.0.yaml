@@ -3,9 +3,6 @@ databaseChangeLog:
       id: "procedure-1.0"
       author: Dany
       changes:
-        - sql:
-            splitStatements: false
-            sql: "CREATE SCHEMA IF NOT EXISTS procedure_service_schema;"
         - createTable:
             schemaName: procedure_service_schema
             tableName: procedures

@@ -3,9 +3,6 @@ databaseChangeLog:
       id: master-procedure-1.1
       author: Dany
       changes:
-        - sql:
-            splitStatements: false
-            sql: "CREATE SCHEMA IF NOT EXISTS procedure_service_schema;"
         - createTable:
             schemaName: procedure_service_schema
             tableName: masters_has_procedures
