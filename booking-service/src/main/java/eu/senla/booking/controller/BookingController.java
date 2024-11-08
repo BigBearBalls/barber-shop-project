@@ -1,16 +1,30 @@
 package eu.senla.booking.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import eu.senla.booking.dto.request.BookingRequestDTO;
+import eu.senla.booking.dto.response.BookingResponseDTO;
+import eu.senla.booking.dto.response.IdResponseDTO;
+import eu.senla.booking.service.BookingFacade;
+import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/booking/")
+@RequestMapping("/bookings")
+@AllArgsConstructor
 public class BookingController {
 
-    @GetMapping
-    public String sayHello() {
-        return "Hello Barber";
+    private final BookingFacade bookingFacade;
+
+    @PostMapping
+    public ResponseEntity<IdResponseDTO> save(@RequestBody BookingRequestDTO bookingDTO) {
+        return ResponseEntity
+                .ok( bookingFacade.saveBooking(bookingDTO));
+    }
+
+    @GetMapping("{id}")
+    public BookingResponseDTO findById(@PathVariable int id) {
+        bookingFacade.findById(id);
+        return bookingFacade.findById(id);
     }
 
 }

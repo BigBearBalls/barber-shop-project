@@ -1,10 +1,7 @@
 package eu.senla.booking.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -16,6 +13,7 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "working_days", schema = "my_schema")
+@ToString
 public class WorkingDay {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "working_days_id_gen")
