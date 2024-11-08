@@ -17,7 +17,7 @@ import java.util.UUID;
 public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bookings_id_gen")
-    //@SequenceGenerator(name = "bookings_id_gen", sequenceName = "bookings_booking_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "bookings_id_gen", sequenceName = "bookings_booking_id_seq", allocationSize = 1)
     @Column(name = "booking_id")
     private Integer id;
 

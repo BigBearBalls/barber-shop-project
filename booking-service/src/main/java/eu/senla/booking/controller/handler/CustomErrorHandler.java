@@ -1,6 +1,8 @@
 package eu.senla.booking.controller.handler;
 
-import eu.senla.booking.dto.response.ErrorResponse;
+import eu.senla.booking.data.response.ErrorResponse;
+import eu.senla.booking.service.exception.ApplicationException;
+import eu.senla.booking.service.exception.MasterNotWorkException;
 import eu.senla.booking.service.exception.ResourceNotFoundException;
 import eu.senla.booking.service.exception.TimeAlreadyBookedException;
 import lombok.extern.slf4j.Slf4j;
@@ -24,13 +26,14 @@ public class CustomErrorHandler {
                 .body(errorResponse);
     }
 
-    @ExceptionHandler(TimeAlreadyBookedException.class)
+    @ExceptionHandler({TimeAlreadyBookedException.class, MasterNotWorkException.class})
     @ResponseBody
-    public ResponseEntity<ErrorResponse> handleResourceNotFound(TimeAlreadyBookedException ex) {
+    public ResponseEntity<ErrorResponse> handleResourceNotFound(ApplicationException ex) {
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.toString(),
                 ex.getMessage(), HttpStatus.BAD_REQUEST.value());
         log.warn(ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(errorResponse);
     }
+
 }
