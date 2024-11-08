@@ -1,11 +1,11 @@
 package eu.senla.booking.service.impl;
 
+import eu.senla.booking.dto.ProcedureDTO;
 import eu.senla.booking.dto.request.AggregatedBooking;
 import eu.senla.booking.dto.request.BookingRequestDTO;
 import eu.senla.booking.dto.response.IdResponseDTO;
 import eu.senla.booking.entity.Booking;
 import eu.senla.booking.entity.WorkingDay;
-import eu.senla.booking.mock.ProcedureMock;
 import eu.senla.booking.repository.BookingRepository;
 import eu.senla.booking.service.BookingService;
 import eu.senla.booking.service.exception.ResourceNotFoundException;
@@ -32,23 +32,23 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public IdResponseDTO saveBooking(AggregatedBooking aggregatedBookingData, BookingRequestDTO bookingRequestDTO) {
 
-        WorkingDay workingMasterDay = aggregatedBookingData.workingMasterDay();
-        ProcedureMock procedure = aggregatedBookingData.procedure();
+        WorkingDay workingMasterDay = aggregatedBookingData.getWorkingMasterDay();
+        ProcedureDTO procedure = aggregatedBookingData.getProcedure();
 
         List<Booking> masterBookingsPerDay = bookingRepository
                 .findAllByWorkingDayId(workingMasterDay.getId());
 
         checkFreeTime(workingMasterDay, masterBookingsPerDay,
                 procedure.getDuration(),
-                bookingRequestDTO.reservationStart());
+                bookingRequestDTO.getReservationStart());
 
 
         Booking booking = Booking.builder()
-                .clientId(bookingRequestDTO.clientId())
+                .clientId(bookingRequestDTO.getClientId())
                 .procedureId(procedure.getId())
                 .workingDayId(workingMasterDay.getId())
-                .reservationStart(bookingRequestDTO.reservationStart())
-                .reservationEnd(bookingRequestDTO.reservationStart()
+                .reservationStart(bookingRequestDTO.getReservationStart())
+                .reservationEnd(bookingRequestDTO.getReservationStart()
                             .plusMinutes(procedure.getDuration()))
                     .build();
 

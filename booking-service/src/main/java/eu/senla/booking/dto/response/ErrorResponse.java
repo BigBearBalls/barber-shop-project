@@ -1,3 +1,15 @@
 package eu.senla.booking.dto.response;
-public record ErrorResponse(String status, String message, int code) {
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+import java.time.LocalDateTime;
+
+@Data
+@AllArgsConstructor
+public class ErrorResponse {
+    private String status;
+    private String message;
+    private int code;
+
 }

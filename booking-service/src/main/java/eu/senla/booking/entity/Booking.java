@@ -11,13 +11,13 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "bookings", schema = "my_schema")
+@Table(name = "bookings")
 @ToString
 @Builder
 public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bookings_id_gen")
-    //@SequenceGenerator(name = "bookings_id_gen", sequenceName = "bookings_booking_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "bookings_id_gen", sequenceName = "bookings_booking_id_seq", allocationSize = 1)
     @Column(name = "booking_id")
     private Integer id;
 

@@ -1,14 +1,14 @@
 package eu.senla.booking.facade.impl;
 
+import eu.senla.booking.client.ProcedureClient;
+import eu.senla.booking.client.UserClient;
+import eu.senla.booking.dto.ProcedureDTO;
+import eu.senla.booking.dto.UserDTO;
 import eu.senla.booking.dto.request.AggregatedBooking;
 import eu.senla.booking.dto.request.BookingRequestDTO;
 import eu.senla.booking.dto.response.BookingResponseDTO;
 import eu.senla.booking.entity.Booking;
 import eu.senla.booking.entity.WorkingDay;
-import eu.senla.booking.mock.ProcedureMock;
-import eu.senla.booking.mock.ProcedureServiceMock;
-import eu.senla.booking.mock.UserMock;
-import eu.senla.booking.mock.UserServiceMock;
 import eu.senla.booking.facade.BookingDataAggregator;
 import eu.senla.booking.service.WorkingDayService;
 import lombok.AllArgsConstructor;
@@ -19,19 +19,19 @@ import org.springframework.stereotype.Service;
 public class BookingDataAggregatorImpl implements BookingDataAggregator {
 
     private final WorkingDayService workingDayService;
-    private final ProcedureServiceMock procedureServiceMock;
-    private final UserServiceMock userServiceMock;
+    private final ProcedureClient procedureClient;
+    private final UserClient userClient;
 
 
     @Override
     public AggregatedBooking collectDataForSaving(BookingRequestDTO bookingRequestDto) {
         WorkingDay workingMasterDay = workingDayService
-                .findWorkingDayByMasterAndWorkingDate(bookingRequestDto.masterId(),
-                        bookingRequestDto.workingDate());
+                .findWorkingDayByMasterAndWorkingDate(bookingRequestDto.getMasterId(),
+                        bookingRequestDto.getWorkingDate());
 
-        ProcedureMock procedure = procedureServiceMock
-                .findProcedureByIdAndMasterId(bookingRequestDto.procedureId(),
-                        bookingRequestDto.masterId());
+        ProcedureDTO procedure = procedureClient
+                .findProcedureByIdAndMasterId(bookingRequestDto.getProcedureId(),
+                        bookingRequestDto.getMasterId());
 
         return new AggregatedBooking(workingMasterDay, procedure);
     }
@@ -40,11 +40,11 @@ public class BookingDataAggregatorImpl implements BookingDataAggregator {
     public BookingResponseDTO collectResponseData(Booking booking) {
 
         WorkingDay workingDay = workingDayService.findById(booking.getWorkingDayId());
-        ProcedureMock procedure = procedureServiceMock.findProcedureByIdAndMasterId(booking.getProcedureId(),
+        ProcedureDTO procedure = procedureClient.findProcedureByIdAndMasterId(booking.getProcedureId(),
                 workingDay.getMaster());
 
-        UserMock client = userServiceMock.findUserById(booking.getClientId());
-        UserMock master = userServiceMock.findUserById(workingDay.getMaster());
+        UserDTO client = userClient.findUserById(booking.getClientId());
+        UserDTO master = userClient.findUserById(workingDay.getMaster());
 
         return BookingResponseDTO.builder()
                 .clientFirstName(client.getFirstname())

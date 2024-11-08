@@ -1,4 +1,4 @@
-package eu.senla.booking.mock;
+package eu.senla.booking.dto;
 
 import lombok.Builder;
 import lombok.Data;
@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 @Data
 @Builder
-public class ProcedureMock {
+public class ProcedureDTO {
 
     private Integer id;
     private String name;
