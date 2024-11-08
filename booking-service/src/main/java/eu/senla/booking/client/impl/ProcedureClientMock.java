@@ -1,7 +1,7 @@
 package eu.senla.booking.client.impl;
 
 import eu.senla.booking.client.ProcedureClient;
-import eu.senla.booking.dto.ProcedureDTO;
+import eu.senla.booking.data.ProcedureDTO;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;

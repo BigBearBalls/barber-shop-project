@@ -1,8 +1,8 @@
 package eu.senla.booking.controller;
 
-import eu.senla.booking.dto.request.BookingRequestDTO;
-import eu.senla.booking.dto.response.BookingResponseDTO;
-import eu.senla.booking.dto.response.IdResponseDTO;
+import eu.senla.booking.data.request.BookingRequestDTO;
+import eu.senla.booking.data.response.BookingResponseDTO;
+import eu.senla.booking.data.response.IdResponseDTO;
 import eu.senla.booking.facade.BookingFacade;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

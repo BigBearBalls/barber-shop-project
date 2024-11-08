@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.UUID;
 
-import static eu.senla.booking.dto.response.ErrorMessage.WORKING_DAY_NOT_FOUND;
+import static eu.senla.booking.data.response.ErrorMessage.WORKING_DAY_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor

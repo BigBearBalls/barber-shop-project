@@ -1,6 +1,6 @@
-package eu.senla.booking.dto.request;
+package eu.senla.booking.data.request;
 
-import eu.senla.booking.dto.ProcedureDTO;
+import eu.senla.booking.data.ProcedureDTO;
 import eu.senla.booking.entity.WorkingDay;
 import lombok.AllArgsConstructor;
 import lombok.Data;

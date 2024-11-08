@@ -1,8 +1,8 @@
 plugins {
-    id 'checkstyle'
-    id 'java'
-    id 'org.springframework.boot' version '3.3.5'
-    id 'io.spring.dependency-management' version '1.1.6'
+    id "checkstyle"
+    id "java"
+    id "org.springframework.boot" version '3.3.5'
+    id "io.spring.dependency-management" version '1.1.6'
 }
 
 bootJar {
@@ -16,8 +16,8 @@ def GATEWAY_SERVICE = project(":gateway-service")
 def NOTIFICATION_SERVICE = project(":notification-service")
 
 allprojects {
-    group 'eu.senla'
-    version '0.0.1-SNAPSHOT'
+    group "eu.senla"
+    version "0.0.1-SNAPSHOT"
 
     java {
         toolchain {
@@ -31,9 +31,10 @@ allprojects {
 }
 
 ext {
-    set('springCloudVersion', "2023.0.3")
-    set("springSecurityOauth2Version",'6.3.4')
-    set("validationApiVersion", '3.0.2')
+    set("springCloudVersion", "2023.0.3")
+    set("springSecurityOauth2Version","6.3.4")
+    set("validationApiVersion", "3.0.2")
+    set("mapstructVersion", "1.5.5.Final")
 }
 
 Set<Project> datasourceProjects = Set.of(BOOKING_SERVICE, PROCEDURE_SERVICE, USER_SERVICE)
@@ -48,9 +49,9 @@ bootJar {
 subprojects { subproject ->
 
     apply {
-        plugin('java')
-        plugin('org.springframework.boot')
-        plugin('io.spring.dependency-management')
+        plugin("java")
+        plugin("org.springframework.boot")
+        plugin("io.spring.dependency-management")
         plugin("checkstyle")
     }
 
@@ -60,30 +61,31 @@ subprojects { subproject ->
 
     if (subproject in datasourceProjects) {
         dependencies {
-            implementation 'org.liquibase:liquibase-core'
-            implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-            runtimeOnly 'org.postgresql:postgresql'
+            implementation "org.liquibase:liquibase-core"
+            implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+            runtimeOnly "org.postgresql:postgresql"
         }
     }
 
     if (subproject in webProjects) {
         dependencies {
-            implementation 'org.springframework.boot:spring-boot-starter-web'
-            implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+            implementation "org.springframework.boot:spring-boot-starter-web"
+            implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
             implementation "jakarta.validation:jakarta.validation-api:${validationApiVersion}"
+            implementation "org.mapstruct:mapstruct:${mapstructVersion}"
         }
     }
 
     if (subproject in kafkaProjects) {
         dependencies {
-            implementation 'org.springframework.kafka:spring-kafka'
-            testImplementation 'org.springframework.kafka:spring-kafka-test'
+            implementation "org.springframework.kafka:spring-kafka"
+            testImplementation "org.springframework.kafka:spring-kafka-test"
         }
     }
 
     if (subproject in securityProjects) {
         dependencies {
-            implementation 'org.springframework.boot:spring-boot-starter-security'
+            implementation "org.springframework.boot:spring-boot-starter-security"
             implementation "org.springframework.security:spring-security-oauth2-resource-server:${springSecurityOauth2Version}"
             implementation "org.springframework.security:spring-security-oauth2-jose:${springSecurityOauth2Version}"
             implementation "org.springframework.security:spring-security-oauth2-client:${springSecurityOauth2Version}"
@@ -92,14 +94,14 @@ subprojects { subproject ->
     }
 
     dependencies {
-        implementation 'org.springframework.boot:spring-boot-starter-actuator'
-        compileOnly 'org.projectlombok:lombok'
-        testImplementation 'org.springframework.boot:spring-boot-starter-test'
-        testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-        developmentOnly 'org.springframework.boot:spring-boot-devtools'
+        implementation "org.springframework.boot:spring-boot-starter-actuator"
+        compileOnly "org.projectlombok:lombok"
+        testImplementation "org.springframework.boot:spring-boot-starter-test"
+        testRuntimeOnly "org.junit.platform:junit-platform-launcher"
+        developmentOnly "org.springframework.boot:spring-boot-devtools"
     }
 
-    tasks.named('test') {
+    tasks.named("test") {
         useJUnitPlatform()
     }
 
@@ -109,10 +111,10 @@ subprojects { subproject ->
     }
 
     checkstyleMain {
-        source ='src/main/java'
+        source ="src/main/java"
     }
     checkstyleTest {
-        source ='src/test/java'
+        source ="src/test/java"
     }
 
     tasks.withType(Checkstyle).configureEach {

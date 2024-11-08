@@ -1,4 +1,4 @@
-package eu.senla.booking.dto;
+package eu.senla.booking.data;
 
 import lombok.Builder;
 import lombok.Data;

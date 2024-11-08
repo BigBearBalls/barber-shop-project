@@ -1,9 +1,10 @@
 package eu.senla.booking.service.impl;
 
-import eu.senla.booking.dto.ProcedureDTO;
-import eu.senla.booking.dto.request.AggregatedBooking;
-import eu.senla.booking.dto.request.BookingRequestDTO;
-import eu.senla.booking.dto.response.IdResponseDTO;
+import eu.senla.booking.data.ProcedureDTO;
+import eu.senla.booking.data.mapper.BookingMapper;
+import eu.senla.booking.data.request.AggregatedBooking;
+import eu.senla.booking.data.request.BookingRequestDTO;
+import eu.senla.booking.data.response.IdResponseDTO;
 import eu.senla.booking.entity.Booking;
 import eu.senla.booking.entity.WorkingDay;
 import eu.senla.booking.repository.BookingRepository;
@@ -19,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalTime;
 import java.util.List;
 
-import static eu.senla.booking.dto.response.ErrorMessage.*;
+import static eu.senla.booking.data.response.ErrorMessage.*;
 
 @Service
 @AllArgsConstructor
@@ -27,6 +28,7 @@ import static eu.senla.booking.dto.response.ErrorMessage.*;
 public class BookingServiceImpl implements BookingService {
 
     private final BookingRepository bookingRepository;
+    private final BookingMapper bookingMapper;
 
     @Transactional
     @Override
@@ -43,22 +45,16 @@ public class BookingServiceImpl implements BookingService {
                 bookingRequestDTO.getReservationStart());
 
 
-        Booking booking = Booking.builder()
-                .clientId(bookingRequestDTO.getClientId())
-                .procedureId(procedure.getId())
-                .workingDayId(workingMasterDay.getId())
-                .reservationStart(bookingRequestDTO.getReservationStart())
-                .reservationEnd(bookingRequestDTO.getReservationStart()
-                            .plusMinutes(procedure.getDuration()))
-                    .build();
+        Booking booking = bookingMapper.toBooking(bookingRequestDTO, procedure,
+                workingMasterDay, bookingRequestDTO.getReservationStart().plusMinutes(procedure.getDuration()));
 
         bookingRepository.save(booking);
         log.info("Booking with id: ${} has been created", booking.getId());
         return new IdResponseDTO(booking.getId());
     }
 
-    @Override
     @Transactional
+    @Override
     public Booking findBookingById(int id) {
         return (Booking) bookingRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(BOOKING_NOT_FOUND + id));

@@ -1,6 +1,6 @@
 package eu.senla.booking.client;
 
-import eu.senla.booking.dto.ProcedureDTO;
+import eu.senla.booking.data.ProcedureDTO;
 
 import java.util.UUID;
 

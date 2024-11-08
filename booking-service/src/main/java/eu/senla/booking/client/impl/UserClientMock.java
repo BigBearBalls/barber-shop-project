@@ -1,7 +1,7 @@
 package eu.senla.booking.client.impl;
 
 import eu.senla.booking.client.UserClient;
-import eu.senla.booking.dto.UserDTO;
+import eu.senla.booking.data.UserDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;

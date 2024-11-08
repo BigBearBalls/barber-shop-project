@@ -1,6 +1,6 @@
 package eu.senla.booking.controller.handler;
 
-import eu.senla.booking.dto.response.ErrorResponse;
+import eu.senla.booking.data.response.ErrorResponse;
 import eu.senla.booking.service.exception.ApplicationException;
 import eu.senla.booking.service.exception.MasterNotWorkException;
 import eu.senla.booking.service.exception.ResourceNotFoundException;

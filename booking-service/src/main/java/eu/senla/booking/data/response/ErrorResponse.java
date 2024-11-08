@@ -1,9 +1,7 @@
-package eu.senla.booking.dto.response;
+package eu.senla.booking.data.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
