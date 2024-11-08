@@ -8,6 +8,7 @@ import eu.senla.booking.entity.Booking;
 import eu.senla.booking.entity.WorkingDay;
 import eu.senla.booking.repository.BookingRepository;
 import eu.senla.booking.service.BookingService;
+import eu.senla.booking.service.exception.MasterNotWorkException;
 import eu.senla.booking.service.exception.ResourceNotFoundException;
 import eu.senla.booking.service.exception.TimeAlreadyBookedException;
 import lombok.AllArgsConstructor;
@@ -18,8 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalTime;
 import java.util.List;
 
-import static eu.senla.booking.dto.response.ErrorMessage.BOOKING_NOT_FOUND;
-import static eu.senla.booking.dto.response.ErrorMessage.TIME_ALREADY_BOOKED;
+import static eu.senla.booking.dto.response.ErrorMessage.*;
 
 @Service
 @AllArgsConstructor
@@ -74,7 +74,7 @@ public class BookingServiceImpl implements BookingService {
         LocalTime desiredEndTime = desiredStartTime.plusMinutes(duration);
 
         if(desiredStartTime.isBefore(workTimeStart) || desiredEndTime.isAfter(workTimeEnd)) {
-            throw new TimeAlreadyBookedException(TIME_ALREADY_BOOKED );
+            throw new MasterNotWorkException(MASTER_DOESNT_WORK);
         }
 
         for (Booking booking : bookings) {
