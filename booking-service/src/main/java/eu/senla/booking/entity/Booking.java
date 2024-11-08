@@ -11,7 +11,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "bookings", schema = "my_schema")
+@Table(name = "bookings", schema = "booking_service_schema")
 @ToString
 @Builder
 public class Booking {

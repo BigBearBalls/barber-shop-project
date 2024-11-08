@@ -4,6 +4,7 @@ databaseChangeLog:
       author: Dany
       changes:
         - addColumn:
+            schemaName: booking_service_schema
             tableName: bookings
             columns:
               - column:

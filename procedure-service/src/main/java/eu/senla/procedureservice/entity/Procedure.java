@@ -18,7 +18,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Entity
-@Table(name = "procedures", schema = "my_schema")
+@Table(name = "procedures", schema = "procedure_service_schema")
 public class Procedure {
     @Id
     @Column(name = "procedure_id")

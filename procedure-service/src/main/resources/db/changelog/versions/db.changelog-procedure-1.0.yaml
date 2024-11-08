@@ -4,7 +4,8 @@ databaseChangeLog:
       author: Dany
       changes:
         - createTable:
-            tableName: procedure
+            schemaName: procedure_service_schema
+            tableName: procedures
             columns:
               - column:
                   name: procedure_id
