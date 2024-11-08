@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: "procedure-service"
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+    enabled: false
+  datasource:
+    username: ${DATABASE_USERNAME:admin}
+    password: ${DATABASE_PASSWORD:1234}
+    driver-class-name: org.postgresql.Driver
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5433/}${DATABASE_NAME:barber-shop-database}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: postgresql
+    properties:
+      hibernate:
+        show_sql: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
