@@ -24,8 +24,9 @@ services:
     image: postgres:14.7-alpine
     env_file:
       - env/datasource.env
+    restart: always
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready", "-U", "chelovek", "-d", "barber-shop-database" ]
+      test: [ "CMD-SHELL", "pg_isready", "-d", "barber-shop-database" ]
       interval: 10s
       timeout: 3s
       retries: 3
@@ -33,6 +34,23 @@ services:
       - "5433:5432"
     networks:
       - barber-shop-network
+    volumes:
+      - local_pgdata:/var/lib/postgresql/data
+
+  pgadmin-ui:
+    image: dpage/pgadmin4
+    restart: always
+    depends_on:
+      barber-shop-database:
+        condition: service_healthy
+    ports:
+      - "5050:80"
+    env_file:
+      - env/datasource.env
+    networks:
+      - barber-shop-network
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
 
   kafka:
     image: confluentinc/cp-kafka:6.2.4
@@ -225,3 +243,7 @@ services:
 networks:
   barber-shop-network:
     driver: bridge
+
+volumes:
+  local_pgdata:
+  pgadmin_data:
