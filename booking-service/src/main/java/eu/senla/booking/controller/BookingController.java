@@ -1,10 +1,6 @@
 package eu.senla.booking.controller;
 
 import eu.senla.booking.constant.ValidationConstants;
-import eu.senla.booking.dto.request.BookingRequestDTO;
-import eu.senla.booking.dto.response.BookingResponseDTO;
-import eu.senla.booking.dto.response.IdResponseDTO;
-import eu.senla.booking.service.BookingFacade;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
