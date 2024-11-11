@@ -7,20 +7,152 @@
 	},
 	"item": [
 		{
-			"name": "http://localhost:8080/bookings/",
+			"name": "1. Create booking",
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"clientId\": \"8e3a34ac-119b-453d-bba7-478c23361d59\",\r\n  \"masterId\": \"c1e2d3f4-56a7-89b0-c1d2-456789ab0123\",\r\n  \"procedureId\": \"8\",\r\n  \"reservationStart\": \"13:45\",  \r\n  \"workingDate\" : \"2024-11-24\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://localhost:8080/bookings/",
+					"raw": "http://localhost:9003/bookings",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "9003",
+					"path": [
+						"bookings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2. Get exception(wrong working time)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"clientId\": \"8e3a34ac-119b-453d-bba7-478c23361d59\",\r\n  \"masterId\": \"c1e2d3f4-56a7-89b0-c1d2-456789ab0123\",\r\n  \"procedureId\": \"8\",\r\n  \"reservationStart\": \"21:45\",  \r\n  \"workingDate\" : \"2024-11-24\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9003/bookings",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9003",
+					"path": [
+						"bookings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3. Get exception(master doesn't work)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"clientId\": \"8e3a34ac-119b-453d-bba7-478c23361d59\",\r\n  \"masterId\": \"c1e2d3f4-56a7-89b0-c1d2-456789ab0123\",\r\n  \"procedureId\": \"8\",\r\n  \"reservationStart\": \"21:45\",  \r\n  \"workingDate\" : \"2024-11-21\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9003/bookings",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9003",
+					"path": [
+						"bookings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. Get exception(This time has already booked)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"clientId\": \"8e3a34ac-119b-453d-bba7-478c23361d59\",\r\n  \"masterId\": \"c1e2d3f4-56a7-89b0-c1d2-456789ab0123\",\r\n  \"procedureId\": \"8\",\r\n  \"reservationStart\": \"11:15\",  \r\n  \"workingDate\" : \"2024-11-24\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9003/bookings",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9003",
+					"path": [
+						"bookings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. Get booking by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9003/bookings/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9003",
 					"path": [
 						"bookings",
-						""
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get exception(Not exists)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9003/bookings/546546",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9003",
+					"path": [
+						"bookings",
+						"546546"
 					]
 				}
 			},

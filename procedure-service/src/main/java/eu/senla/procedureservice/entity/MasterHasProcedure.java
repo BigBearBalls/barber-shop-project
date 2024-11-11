@@ -16,7 +16,7 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "master_has_procedures", schema = "my_schema")
+@Table(name = "master_has_procedures", schema = "procedure_service_schema")
 public class MasterHasProcedure {
     @Id
     @Column(name = "master_execution_id")
