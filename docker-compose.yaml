@@ -34,10 +34,9 @@ services:
       - "5433:5432"
     volumes:
       - "./db/init-scripts:/docker-entrypoint-initdb.d/"
+      - local_pgdata:/var/lib/postgresql/data
     networks:
       - barber-shop-network
-    volumes:
-      - local_pgdata:/var/lib/postgresql/data
 
   pgadmin-ui:
     image: dpage/pgadmin4
@@ -178,6 +177,26 @@ services:
     build: ./procedure-service
     ports:
       - "9004:8080"
+    healthcheck:
+      test: curl -f http://localhost:8080/actuator/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    env_file:
+      - env/datasource.env
+    depends_on:
+      barber-shop-project:
+        condition: service_completed_successfully
+      barber-shop-database:
+        condition: service_healthy
+    networks:
+      - barber-shop-network
+
+  calendar-service:
+    build: ./calendar-service
+    ports:
+      - "9010:8080"
     healthcheck:
       test: curl -f http://localhost:8080/actuator/health
       interval: 30s
