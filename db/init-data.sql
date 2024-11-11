@@ -1,4 +1,4 @@
-INSERT INTO users (user_id, first_name, last_name, email, password, phone_number, roles_id)
+INSERT INTO user_service_schema.users (user_id, first_name, last_name, email, password, phone_number, roles_id)
 VALUES
     ('a1b2c3d4-e5f6-4789-8a7b-1234567890ab', 'Сергей', 'Кузнецов', 'admin@example.com', 'admin123', '+79990000000', 1),
     ('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe95', 'Алексей', 'Петров', 'alexey.petrov@example.com', 'password123', '+79995432100', 3),
@@ -15,7 +15,7 @@ VALUES
     ('634f1450-09fd-4c8b-9e6c-96fa22e153a6', 'Петр', 'Петров', 'peter.petrov@example.com', 'password123', '+79991234567', 2),
     ('8e3a34ac-119b-453d-bba7-478c23361d59', 'Мария', 'Сидорова', 'maria.sidorova@example.com', 'password123', '+79991234568', 2);
 
-INSERT INTO procedures (procedure_id, procedure_name, procedure_price, procedure_duration)
+INSERT INTO procedure_service_schema.procedures (procedure_id, procedure_name, procedure_price, procedure_duration)
 VALUES
     (1, 'Классическая стрижка', 25.00, 30),
     (2, 'Коррекция бороды', 20.00, 30),
@@ -28,7 +28,8 @@ VALUES
     (9, 'Укладка волос (мужская)', 25.00, 45),
     (10, 'Массаж спины', 45.00, 60);
 
-INSERT INTO master_has_procedures (master_execution_id , master_id, procedure_id)
+
+INSERT INTO procedure_service_schema.masters_has_procedures(master_execution_id , master_id, procedure_id)
 VALUES
     (1, 'f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe95', 1),
     (2, 'f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe95', 2),
@@ -42,7 +43,7 @@ VALUES
     (10, 'c1e2d3f4-56a7-89b0-c1d2-456789ab0123', 9),
     (11, 'c1e2d3f4-56a7-89b0-c1d2-456789ab0123', 10);
 
-INSERT INTO working_days (working_day_id, master_id, working_date, work_start, work_end)
+INSERT INTO booking_service_schema.working_days (working_day_id, master_id, working_date, work_start, work_end)
 VALUES
     (1, 'f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe95', '2024-11-24', '09:00', '21:00'),
     (2, 'd5b6a7b5-48ab-433d-b0a7-888763fa19b3', '2024-11-24', '09:00', '21:00'),
@@ -68,7 +69,7 @@ VALUES
     (16, 'd5b6a7b5-48ab-433d-b0a7-888763fa19b3', '2024-11-28', '09:00', '21:00'),
     (17, 'c1e2d3f4-56a7-89b0-c1d2-456789ab0123', '2024-11-28', '09:00', '21:00');
 
-INSERT INTO bookings (booking_id,client_id, reservation_start, reservation_end, procedure_id, working_day_id)
+INSERT INTO booking_service_schema.bookings (booking_id,client_id, reservation_start, reservation_end, procedure_id, working_day_id)
 VALUES
     (nextval('bookings_booking_id_seq'), 'a1b2c3d4-e5f6-4789-8a7b-1234567890ab', '09:00', '09:45', 1, 1),
     (nextval('bookings_booking_id_seq'), 'f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe95', '10:00', '10:30', 3, 1),
