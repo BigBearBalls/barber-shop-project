@@ -2,6 +2,7 @@ package eu.senla.booking.dto.request;
 
 import eu.senla.booking.annotation.validation.WorkingHours;
 import eu.senla.booking.constant.ValidationConstants;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
@@ -10,6 +11,8 @@ import java.time.LocalTime;
 import java.util.UUID;
 public record BookingRequestDTO(@Min(value = ValidationConstants.MIN_ID_VALUE,
                                      message = ValidationConstants.PROCEDURE_ID_CANNOT_BE_LESS_THEN_VALIDATION_MESSAGE)
+                                @Max(value = Integer.MAX_VALUE,
+                                     message = ValidationConstants.PROCEDURE_ID_CANNOT_BE_MORE_THEN_VALIDATION_MESSAGE)
                                 @NotNull(message = ValidationConstants.PROCEDURE_ID_CANNOT_BE_NULL_VALIDATION_MESSAGE)
                                 Integer procedureId,
                                 @NotNull(message = ValidationConstants.MASTER_ID_CANNOT_BE_NULL_VALIDATION_MESSAGE)

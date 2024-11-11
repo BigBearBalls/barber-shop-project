@@ -10,4 +10,6 @@ public class ValidationConstants {
     public static final String WORKING_DATE_CANNOT_BE_NULL_VALIDATION_MESSAGE = "Working date cannot be null!";
     public static final String BOOKING_ID_CANNOT_BE_LESS_THEN_VALIDATION_MESSAGE = "Booking ID cannot be less then 1!";
     public static final String BOOKING_ID_CANNOT_BE_NULL_VALIDATION_MESSAGE = "Booking ID cannot be null!";
+    public static final String PROCEDURE_ID_CANNOT_BE_MORE_THEN_VALIDATION_MESSAGE = "Procedure ID cannot be more then 2147483647!";
+    public static final String BOOKING_ID_CANNOT_BE_MORE_THEN_VALIDATION_MESSAGE = "Booking ID cannot be more then 2147483647!";
 }

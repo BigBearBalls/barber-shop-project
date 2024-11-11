@@ -6,6 +6,7 @@ import eu.senla.booking.dto.response.BookingResponseDTO;
 import eu.senla.booking.dto.response.IdResponseDTO;
 import eu.senla.booking.service.BookingFacade;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -31,6 +32,8 @@ public class BookingController {
     public BookingResponseDTO findById(@PathVariable
                                        @Min(value = ValidationConstants.MIN_ID_VALUE,
                                             message = ValidationConstants.BOOKING_ID_CANNOT_BE_LESS_THEN_VALIDATION_MESSAGE)
+                                       @Max(value = Integer.MAX_VALUE,
+                                            message = ValidationConstants.BOOKING_ID_CANNOT_BE_MORE_THEN_VALIDATION_MESSAGE)
                                        @NotNull(message = ValidationConstants.BOOKING_ID_CANNOT_BE_NULL_VALIDATION_MESSAGE)
                                        Integer id) {
         bookingFacade.findById(id);
