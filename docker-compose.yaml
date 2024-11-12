@@ -94,6 +94,7 @@ services:
     image: quay.io/keycloak/keycloak:26.0.4
     restart: always
     env_file:
+      - env/security.env
       - env/keycloak.env
     ports:
       - "9000:8080"
@@ -139,6 +140,7 @@ services:
       retries: 3
       start_period: 30s
     env_file:
+      - env/security.env
       - env/datasource.env
     restart: always
     depends_on:
@@ -212,7 +214,7 @@ services:
         condition: service_healthy
     networks:
       - barber-shop-network
-      
+
   calendar-service:
     build: ./calendar-service
     ports:
@@ -256,6 +258,7 @@ services:
       auth-service:
         condition: service_started
     env_file:
+      - env/security.env
       - env/keycloak.env
     networks:
       - barber-shop-network
