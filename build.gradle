@@ -14,6 +14,7 @@ def PROCEDURE_SERVICE = project(":procedure-service")
 def USER_SERVICE = project(":user-service")
 def GATEWAY_SERVICE = project(":gateway-service")
 def NOTIFICATION_SERVICE = project(":notification-service")
+def WORKING_DAY_SERVICE = project(":working-day-service")
 
 allprojects {
     group 'eu.senla'
@@ -38,7 +39,7 @@ ext {
 
 Set<Project> datasourceProjects = Set.of(BOOKING_SERVICE, PROCEDURE_SERVICE, USER_SERVICE)
 Set<Project> kafkaProjects = Set.of(NOTIFICATION_SERVICE, BOOKING_SERVICE)
-Set<Project> webProjects = Set.of(BOOKING_SERVICE, PROCEDURE_SERVICE, USER_SERVICE, NOTIFICATION_SERVICE)
+Set<Project> webProjects = Set.of(BOOKING_SERVICE, PROCEDURE_SERVICE, USER_SERVICE, NOTIFICATION_SERVICE, WORKING_DAY_SERVICE)
 Set<Project> securityProjects = Set.of(/*BOOKING_SERVICE, PROCEDURE_SERVICE, USER_SERVICE, */GATEWAY_SERVICE)
 
 bootJar {
