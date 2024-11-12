@@ -12,9 +12,10 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "working_days", schema = "my_schema")
+@Table(name = "working_days", schema = "booking_service_schema")
 @ToString
 public class WorkingDay {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "working_days_id_gen")
     @SequenceGenerator(name = "working_days_id_gen", sequenceName = "working_days_working_day_id_seq", allocationSize = 1)

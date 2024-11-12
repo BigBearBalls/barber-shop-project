@@ -24,15 +24,34 @@ services:
     image: postgres:14.7-alpine
     env_file:
       - env/datasource.env
+    restart: always
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready", "-U", "chelovek", "-d", "barber-shop-database" ]
+      test: [ "CMD-SHELL", "pg_isready", "-d", "barber-shop-database" ]
       interval: 10s
       timeout: 3s
       retries: 3
     ports:
       - "5433:5432"
+    volumes:
+      - "./db/init-scripts:/docker-entrypoint-initdb.d/"
+      - local_pgdata:/var/lib/postgresql/data
     networks:
       - barber-shop-network
+
+  pgadmin-ui:
+    image: dpage/pgadmin4
+    restart: always
+    depends_on:
+      barber-shop-database:
+        condition: service_healthy
+    ports:
+      - "5050:80"
+    env_file:
+      - env/datasource.env
+    networks:
+      - barber-shop-network
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
 
   kafka:
     image: confluentinc/cp-kafka:6.2.4
@@ -193,6 +212,26 @@ services:
         condition: service_healthy
     networks:
       - barber-shop-network
+      
+  calendar-service:
+    build: ./calendar-service
+    ports:
+      - "9010:8080"
+    healthcheck:
+      test: curl -f http://localhost:8080/actuator/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    env_file:
+      - env/datasource.env
+    depends_on:
+      barber-shop-project:
+        condition: service_completed_successfully
+      barber-shop-database:
+        condition: service_healthy
+    networks:
+      - barber-shop-network
 
   gateway-service:
     build: ./gateway-service
@@ -245,3 +284,7 @@ services:
 networks:
   barber-shop-network:
     driver: bridge
+
+volumes:
+  local_pgdata:
+  pgadmin_data:

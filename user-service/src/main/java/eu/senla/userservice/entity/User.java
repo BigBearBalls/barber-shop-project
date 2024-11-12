@@ -13,7 +13,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "users", schema = "my_schema")
+@Table(name = "users", schema = "user_service_schema")
 public class User {
     @Id
     @Column(name = "user_id")

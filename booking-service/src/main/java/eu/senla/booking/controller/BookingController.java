@@ -1,28 +1,41 @@
 package eu.senla.booking.controller;
 
-import eu.senla.booking.dto.request.BookingRequestDTO;
-import eu.senla.booking.dto.response.BookingResponseDTO;
-import eu.senla.booking.dto.response.IdResponseDTO;
-import eu.senla.booking.service.BookingFacade;
+import eu.senla.booking.constant.ValidationConstants;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import eu.senla.booking.data.request.BookingRequestDTO;
+import eu.senla.booking.data.response.BookingResponseDTO;
+import eu.senla.booking.data.response.IdResponseDTO;
+import eu.senla.booking.facade.BookingFacade;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/bookings")
 @AllArgsConstructor
+@Validated
 public class BookingController {
 
     private final BookingFacade bookingFacade;
 
     @PostMapping
-    public ResponseEntity<IdResponseDTO> save(@RequestBody BookingRequestDTO bookingDTO) {
+    public ResponseEntity<IdResponseDTO> save(@RequestBody @Valid BookingRequestDTO bookingDTO) {
         return ResponseEntity
-                .ok( bookingFacade.saveBooking(bookingDTO));
+                .ok(bookingFacade.saveBooking(bookingDTO));
     }
 
     @GetMapping("{id}")
-    public BookingResponseDTO findById(@PathVariable int id) {
+    public BookingResponseDTO findById(@PathVariable
+                                       @Min(value = ValidationConstants.MIN_ID_VALUE,
+                                            message = ValidationConstants.BOOKING_ID_CANNOT_BE_LESS_THEN_VALIDATION_MESSAGE)
+                                       @Max(value = Integer.MAX_VALUE,
+                                            message = ValidationConstants.BOOKING_ID_CANNOT_BE_MORE_THEN_VALIDATION_MESSAGE)
+                                       @NotNull(message = ValidationConstants.BOOKING_ID_CANNOT_BE_NULL_VALIDATION_MESSAGE)
+                                       Integer id) {
         bookingFacade.findById(id);
         return bookingFacade.findById(id);
     }
