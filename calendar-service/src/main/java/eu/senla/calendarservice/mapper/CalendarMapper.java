@@ -15,6 +15,6 @@ public interface CalendarMapper {
     @Mapping(target = "id", ignore = true)
     DayOff toCalendarDayOff(LocalDate date);
 
-    IsHolidayResponse toIsHolidayDayResponse(Boolean isHolidayDay);
+    IsHolidayResponse toIsHolidayResponse(Boolean isHolidayDay);
 
 }

@@ -10,5 +10,5 @@ public interface CalendarService {
 
     void setWorkingDay(LocalDate day);
 
-    IsHolidayResponse isHolidayDay(LocalDate day);
+    IsHolidayResponse isHoliday(LocalDate day);
 }
