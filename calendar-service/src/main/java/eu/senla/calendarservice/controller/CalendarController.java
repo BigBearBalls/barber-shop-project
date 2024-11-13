@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping("/calendar/")
+@RequestMapping("api/v1/calendar/")
 @RequiredArgsConstructor
 public class CalendarController {
 
