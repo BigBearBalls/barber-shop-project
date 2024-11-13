@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: "calendar-1.0"
+      author: "Dany"
+      changes:
+        - createTable:
+            tableName: "calendar_days_off"
+            schemaName: "calendar_service_schema"
+            columns:
+              - column:
+                  name: "calendar_day_off_id"
+                  type: "BIGINT"
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: "calendar_day_off_date"
+                  type: "DATE"
+                  constraints:
+                    nullable: false
+
+        - createSequence:
+            schemaName: "calendar_service_schema"
+            sequenceName: "calendar_day_off_id_seq"
+            startValue: 1
+            incrementBy: 1
+
+  - changeSet:
+      id: "set-sequence-generator"
+      author: "Dany"
+      changes:
+        - addAutoIncrement:
+            columnName: "calendar_day_off_id"
+            tableName: "calendar_days_off"
+            incrementBy: 1
+            startWith: 1

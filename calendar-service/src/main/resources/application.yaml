@@ -2,6 +2,7 @@ spring:
   application:
     name: "calendar-service"
   liquibase:
+    change-log: classpath:/db/changelog/db.changelog-calendar-master.yaml
     enabled: false
     default-schema: "calendar_service_schema"
   datasource:
