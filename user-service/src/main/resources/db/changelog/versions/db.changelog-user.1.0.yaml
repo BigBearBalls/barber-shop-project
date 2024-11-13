@@ -5,7 +5,7 @@ databaseChangeLog:
       changes:
         - createTable:
             schemaName: user_service_schema
-            tableName: roles
+            tableName: role
             columns:
               - column:
                   name: role_id
@@ -60,14 +60,14 @@ databaseChangeLog:
                   type: VARCHAR(25)
 
               - column:
-                  name: roles_id
+                  name: role_id
                   type: INT
                   constraints:
                     nullable: false
 
         - addForeignKeyConstraint:
             baseTableName: users
-            baseColumnNames: roles_id
+            baseColumnNames: role_id
             constraintName: fk_user_role
-            referencedTableName: roles
+            referencedTableName: role
             referencedColumnNames: role_id
