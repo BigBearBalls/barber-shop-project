@@ -61,15 +61,15 @@ public class BookingServiceImpl implements BookingService {
     }
 
     private void checkFreeTime(WorkingDay workingDay,
-                                  List<Booking> bookings,
-                                  Integer duration,
-                                  LocalTime desiredStartTime) {
+                               List<Booking> bookings,
+                               Integer duration,
+                               LocalTime desiredStartTime) {
 
         LocalTime workTimeStart = workingDay.getWorkStart();
         LocalTime workTimeEnd = workingDay.getWorkEnd();
         LocalTime desiredEndTime = desiredStartTime.plusMinutes(duration);
 
-        if(desiredStartTime.isBefore(workTimeStart) || desiredEndTime.isAfter(workTimeEnd)) {
+        if (desiredStartTime.isBefore(workTimeStart) || desiredEndTime.isAfter(workTimeEnd)) {
             throw new MasterNotWorkException(MASTER_DOESNT_WORK);
         }
 
@@ -77,8 +77,8 @@ public class BookingServiceImpl implements BookingService {
             LocalTime bookingTimeStart = booking.getReservationStart();
             LocalTime bookingTimeEnd = booking.getReservationEnd();
 
-            if(desiredStartTime.isBefore(bookingTimeEnd) && desiredEndTime.isAfter(bookingTimeStart)) {
-                throw new TimeAlreadyBookedException(TIME_ALREADY_BOOKED );
+            if (desiredStartTime.isBefore(bookingTimeEnd) && desiredEndTime.isAfter(bookingTimeStart)) {
+                throw new TimeAlreadyBookedException(TIME_ALREADY_BOOKED);
             }
         }
 
