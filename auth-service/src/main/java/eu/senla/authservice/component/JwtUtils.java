@@ -3,14 +3,10 @@ package eu.senla.authservice.component;
 import eu.senla.authservice.dto.UserDTO;
 import eu.senla.authservice.enums.ErrorCode;
 import eu.senla.authservice.exception.JwtValidateException;
-import eu.senla.authservice.mapper.UserMapper;
-import eu.senla.authservice.model.User;
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import io.jsonwebtoken.security.SignatureException;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 

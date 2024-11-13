@@ -1,20 +1,22 @@
 package eu.senla.authservice.model;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
-
-import java.io.Serializable;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 public class Role implements GrantedAuthority {
 
-    private Integer id;
+    private Short id;
 
     private RoleValue roleValue;
 
     @Override
+    @JsonIgnore
     public String getAuthority() {
         return roleValue.name();
     }

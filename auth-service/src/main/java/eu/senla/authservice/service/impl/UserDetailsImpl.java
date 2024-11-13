@@ -2,7 +2,6 @@ package eu.senla.authservice.service.impl;
 
 import eu.senla.authservice.client.UserClient;
 import eu.senla.authservice.mapper.UserMapper;
-import eu.senla.authservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 public class UserDetailsImpl implements UserDetailsService {
 
     private final UserClient userClient;
-
     private final UserMapper userMapper;
 
     @Override

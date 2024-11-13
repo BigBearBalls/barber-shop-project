@@ -17,7 +17,6 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     private final UserClient userClient;
-
     private final UserMapper userMapper;
 
     @Override

@@ -91,18 +91,20 @@ services:
       - barber-shop-network
 
   auth-service:
-    image: quay.io/keycloak/keycloak:26.0.4
+    #    image: quay.io/keycloak/keycloak:26.0.4
+    build: ./auth-service
     restart: always
     env_file:
       - env/security.env
-      - env/keycloak.env
+      - env/feign-services-url.env
+    #      - env/keycloak.env
     ports:
       - "9000:8080"
     depends_on:
       user-service:
         condition: service_healthy
-    command:
-      - start-dev
+    #    command:
+    #      - start-dev
     networks:
       - barber-shop-network
 
@@ -167,6 +169,7 @@ services:
       start_period: 30s
     env_file:
       - env/datasource.env
+      - env/security.env
     depends_on:
       barber-shop-project:
         condition: service_completed_successfully

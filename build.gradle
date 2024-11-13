@@ -35,7 +35,7 @@ allprojects {
 
 ext {
     set("springCloudVersion", "2023.0.3")
-    set("springSecurityOauth2Version","6.3.4")
+    set("springSecurityOauth2Version", "6.3.4")
     set("validationApiVersion", "3.0.2")
     set("mapstructVersion", "1.5.5.Final")
     set("jwtVer", "0.11.5")
@@ -46,7 +46,7 @@ Set<Project> datasourceProjects = Set.of(BOOKING_SERVICE, PROCEDURE_SERVICE, USE
 Set<Project> kafkaProjects = Set.of(NOTIFICATION_SERVICE, BOOKING_SERVICE, CALENDAR_SERVICE)
 Set<Project> webProjects = Set.of(BOOKING_SERVICE, PROCEDURE_SERVICE, USER_SERVICE, NOTIFICATION_SERVICE,
         CALENDAR_SERVICE, WORKING_DAY_SERVICE, AUTH_SERVICE)
-Set<Project> securityProjects = Set.of(/*BOOKING_SERVICE, PROCEDURE_SERVICE, USER_SERVICE, */GATEWAY_SERVICE, AUTH_SERVICE)
+Set<Project> securityProjects = Set.of(/*BOOKING_SERVICE, PROCEDURE_SERVICE,*/ USER_SERVICE, GATEWAY_SERVICE, AUTH_SERVICE)
 
 bootJar {
     enabled = false
@@ -120,10 +120,10 @@ subprojects { subproject ->
     }
 
     checkstyleMain {
-        source ="src/main/java"
+        source = "src/main/java"
     }
     checkstyleTest {
-        source ="src/test/java"
+        source = "src/test/java"
     }
 
     tasks.withType(Checkstyle).configureEach {

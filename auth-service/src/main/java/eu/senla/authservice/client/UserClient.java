@@ -1,5 +1,6 @@
 package eu.senla.authservice.client;
 
+import eu.senla.authservice.configuration.FeignConfig;
 import eu.senla.authservice.dto.RegistrationRequest;
 import eu.senla.authservice.dto.UserDTO;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -8,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
-@FeignClient(url = "${feign.clients.user-service.url}", name = "userClient")
+@FeignClient(url = "${feign.clients.user-service.url}", name = "userClient", configuration = FeignConfig.class)
 public interface UserClient {
 
     @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE)

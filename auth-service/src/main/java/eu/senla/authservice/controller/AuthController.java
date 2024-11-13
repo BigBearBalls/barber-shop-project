@@ -4,7 +4,6 @@ import eu.senla.authservice.dto.LoginRequest;
 import eu.senla.authservice.dto.LoginResponse;
 import eu.senla.authservice.dto.RegistrationRequest;
 import eu.senla.authservice.service.AuthService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

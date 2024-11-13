@@ -4,12 +4,12 @@ spring:
     security:
       jwt:
         access-key:
-          value: ${REFRESH_KEY}
+          value: ${ACCESS_KEY}
           expiration-time: 10
         refresh-key:
           value: ${REFRESH_KEY}
           expiration-time: 120
-      api-key: ${API_KEY]
+      api-key: ${API_KEY}
 
 feign:
   clients:
