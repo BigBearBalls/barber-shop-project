@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @Setter
 public class ErrorResponse implements Serializable {
 
-    private HttpStatus status;
     private String message;
     private String errorCode;
     private String path;

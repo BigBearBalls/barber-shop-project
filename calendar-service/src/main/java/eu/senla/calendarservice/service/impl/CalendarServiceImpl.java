@@ -25,7 +25,7 @@ public class CalendarServiceImpl implements CalendarService {
     @Override
     public LocalDate setDayOff(LocalDate day) {
         if (day.isBefore(LocalDate.now())) {
-            throw new InvalidDateException(ErrorConstants.INVALID_DATE_ERROR_MESSAGE);
+            throw new InvalidDateException(ErrorConstants.INVALID_DATE_ERROR_MESSAGE, ErrorConstants.INVALID_DATE_ERROR_CODE);
         }
         DayOff calendarDayOff = calendarMapper.toCalendarDayOff(day);
         return calendarRepository.save(calendarDayOff).getDate();
@@ -37,7 +37,7 @@ public class CalendarServiceImpl implements CalendarService {
         if (calendarRepository.existsByDate(day)) {
             calendarRepository.deleteByDate(day);
         } else {
-            throw new EmptyDateException(ErrorConstants.EMPTY_DATE_ERROR_MESSAGE);
+            throw new EmptyDateException(ErrorConstants.EMPTY_DATE_ERROR_MESSAGE, ErrorConstants.EMPTY_DATE_ERROR_CODE);
         }
     }
 

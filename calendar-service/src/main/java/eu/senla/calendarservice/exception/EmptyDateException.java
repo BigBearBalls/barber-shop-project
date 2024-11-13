@@ -1,8 +1,8 @@
 package eu.senla.calendarservice.exception;
 
-public class EmptyDateException extends RuntimeException {
+public class EmptyDateException extends CalendarApiException {
 
-    public EmptyDateException(String message) {
-        super(message);
+    public EmptyDateException(String errorMessage, String errorCode) {
+        super(errorMessage, errorCode);
     }
 }
