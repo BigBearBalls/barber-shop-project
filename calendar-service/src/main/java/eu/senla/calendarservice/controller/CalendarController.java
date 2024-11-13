@@ -1,6 +1,6 @@
 package eu.senla.calendarservice.controller;
 
-import eu.senla.calendarservice.dto.IsHolidayDayResponse;
+import eu.senla.calendarservice.dto.IsHolidayResponse;
 import eu.senla.calendarservice.service.CalendarService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -21,12 +21,12 @@ public class CalendarController {
     }
 
     @DeleteMapping("working-day/{day}")
-    public void setWorkingDay(@PathVariable @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate day) {
+    public void cancelDayOff(@PathVariable @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate day) {
         calendarService.setWorkingDay(day);
     }
 
     @GetMapping("{day}")
-    public IsHolidayDayResponse checkDay(@PathVariable @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate day) {
-        return calendarService.isWorkingDay(day);
+    public IsHolidayResponse checkDay(@PathVariable @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate day) {
+        return calendarService.isHolidayDay(day);
     }
 }

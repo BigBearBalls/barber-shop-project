@@ -6,7 +6,7 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
-public class IsHolidayDayResponse {
+public class IsHolidayResponse {
 
     private Boolean isHolidayDay;
 

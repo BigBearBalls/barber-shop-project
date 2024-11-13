@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class CalendarDayOff {
+public class DayOff {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "calendar_day_off_seq")

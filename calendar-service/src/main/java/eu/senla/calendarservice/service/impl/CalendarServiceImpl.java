@@ -1,12 +1,13 @@
 package eu.senla.calendarservice.service.impl;
 
-import eu.senla.calendarservice.dto.IsHolidayDayResponse;
-import eu.senla.calendarservice.entity.CalendarDayOff;
+import eu.senla.calendarservice.dto.IsHolidayResponse;
+import eu.senla.calendarservice.entity.DayOff;
 import eu.senla.calendarservice.exception.EmptyDateException;
 import eu.senla.calendarservice.exception.InvalidDateException;
 import eu.senla.calendarservice.mapper.CalendarMapper;
 import eu.senla.calendarservice.repository.CalendarRepository;
 import eu.senla.calendarservice.service.CalendarService;
+import eu.senla.calendarservice.util.constants.ErrorConstants;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,25 +25,25 @@ public class CalendarServiceImpl implements CalendarService {
     @Override
     public LocalDate setDayOff(LocalDate day) {
         if (day.isBefore(LocalDate.now())) {
-            throw new InvalidDateException("The date cannot be earlier than today.");
+            throw new InvalidDateException(ErrorConstants.INVALID_DATE_ERROR_MESSAGE);
         }
-        CalendarDayOff calendarDayOff = calendarMapper.toCalendarDayOff(day);
+        DayOff calendarDayOff = calendarMapper.toCalendarDayOff(day);
         return calendarRepository.save(calendarDayOff).getDate();
     }
 
     @Transactional
     @Override
     public void setWorkingDay(LocalDate day) {
-        if(calendarRepository.existsByDate(day)){
+        if (calendarRepository.existsByDate(day)) {
             calendarRepository.deleteByDate(day);
         } else {
-            throw new EmptyDateException("This day is already a working day");
+            throw new EmptyDateException(ErrorConstants.EMPTY_DATE_ERROR_MESSAGE);
         }
     }
 
     @Transactional
     @Override
-    public IsHolidayDayResponse isWorkingDay(LocalDate day) {
-         return calendarMapper.toIsHolidayDayResponse(calendarRepository.existsByDate(day));
+    public IsHolidayResponse isHolidayDay(LocalDate day) {
+        return calendarMapper.toIsHolidayDayResponse(calendarRepository.existsByDate(day));
     }
 }
