@@ -212,7 +212,7 @@ services:
         condition: service_healthy
     networks:
       - barber-shop-network
-      
+
   calendar-service:
     build: ./calendar-service
     ports:

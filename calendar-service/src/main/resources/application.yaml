@@ -2,7 +2,8 @@ spring:
   application:
     name: "calendar-service"
   liquibase:
-    enabled: false
+    change-log: classpath:/db/changelog/db.changelog-calendar-master.yaml
+    enabled: true
     default-schema: "calendar_service_schema"
   datasource:
     username: ${DATABASE_USERNAME:postgres}
