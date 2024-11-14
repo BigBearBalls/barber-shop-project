@@ -27,6 +27,6 @@ public class CalendarController {
 
     @GetMapping("{day}")
     public IsHolidayResponse checkDay(@PathVariable @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate day) {
-        return calendarService.isHolidayDay(day);
+        return calendarService.isHoliday(day);
     }
 }
