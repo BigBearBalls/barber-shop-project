@@ -9,8 +9,7 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProcedureDTO {
-    private String id;
+public class CreateProcedureRequest {
     private String procedureName;
     private BigDecimal procedurePrice;
     private Integer procedureDuration;

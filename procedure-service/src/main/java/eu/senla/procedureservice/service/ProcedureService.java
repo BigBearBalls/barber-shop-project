@@ -1,9 +1,20 @@
 package eu.senla.procedureservice.service;
 
+import eu.senla.procedureservice.data.dto.request.CreateProcedureRequest;
 import eu.senla.procedureservice.data.dto.request.ProcedureDTO;
 import eu.senla.procedureservice.data.dto.response.IdResponseDTO;
+import eu.senla.procedureservice.data.dto.response.ProceduresPageResponse;
+import org.springframework.data.domain.Pageable;
+
+import java.util.UUID;
 
 public interface ProcedureService {
 
-    IdResponseDTO save(ProcedureDTO procedureDTO);
+    IdResponseDTO save(CreateProcedureRequest request);
+
+    ProcedureDTO findProcedureByIdAndMasterId(Integer id, UUID masterId);
+
+    void subscribeOnProcedure(Integer procedureId, UUID masterId);
+
+    ProceduresPageResponse getPageOfProcedures(Pageable pageable);
 }
