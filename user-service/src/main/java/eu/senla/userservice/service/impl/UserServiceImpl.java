@@ -7,6 +7,7 @@ import eu.senla.userservice.entity.RoleValue;
 import eu.senla.userservice.entity.User;
 import eu.senla.userservice.enums.ErrorCode;
 import eu.senla.userservice.exception.ExistsException;
+import eu.senla.userservice.exception.LogExceptionWrapper;
 import eu.senla.userservice.exception.NotFoundException;
 import eu.senla.userservice.mapper.UserMapper;
 import eu.senla.userservice.repository.UserRepository;
@@ -30,18 +31,16 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public UserDTO getUserByEmail(String email) {
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException(
-                String.format(ErrorCode.ERR_USER_NOT_FOUND.getMessage(), "email", email), ErrorCode.ERR_USER_NOT_FOUND));
-        return userMapper.toDTO(user);
+        return userMapper.toDTO(this.findByEmail(email));
     }
 
     @Override
     @Transactional
     public void createUser(RegistrationRequest registrationRequest) {
         userRepository.findByEmail(registrationRequest.getEmail()).ifPresent(e -> {
-            throw new ExistsException(
+            throw LogExceptionWrapper.logErrorException(new ExistsException(
                     String.format(ErrorCode.ERR_USER_ALREADY_EXISTS.getMessage(), registrationRequest.getEmail()),
-                    ErrorCode.ERR_USER_ALREADY_EXISTS);
+                    ErrorCode.ERR_USER_ALREADY_EXISTS));
         });
         User user = userMapper.toNewEntity(registrationRequest);
         Role role = roleService.getRoleByValue(RoleValue.ROLE_CLIENT);
@@ -55,10 +54,20 @@ public class UserServiceImpl implements UserService {
         return userRepository.getUserPasswordById(userId);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public UserDTO getUserById(UUID userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> LogExceptionWrapper.logErrorException(
+                new NotFoundException(String.format(ErrorCode.ERR_USER_NOT_FOUND.getMessage(), "id", userId),
+                        ErrorCode.ERR_USER_NOT_FOUND)));
+        return userMapper.toDTO(user);
+    }
+
     @Transactional(readOnly = true)
     public User findByEmail(String email) {
-        return userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException(
-                String.format(ErrorCode.ERR_USER_NOT_FOUND.getMessage(), "email", email), ErrorCode.ERR_USER_NOT_FOUND));
+        return userRepository.findByEmail(email).orElseThrow(() -> LogExceptionWrapper.logErrorException(
+                new NotFoundException(String.format(ErrorCode.ERR_USER_NOT_FOUND.getMessage(), "email", email),
+                        ErrorCode.ERR_USER_NOT_FOUND)));
     }
 
     @Override

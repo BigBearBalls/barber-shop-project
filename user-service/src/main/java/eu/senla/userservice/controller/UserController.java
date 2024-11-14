@@ -20,19 +20,25 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    UserDTO getUserByEmail(@RequestParam("email") String email) {
+    public UserDTO getUserByEmail(@RequestParam("email") String email) {
         return userService.getUserByEmail(email);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    void createUser(@RequestBody RegistrationRequest request) {
+    public void createUser(@RequestBody RegistrationRequest request) {
         userService.createUser(request);
     }
 
     @GetMapping(value = "/{userId}/password")
     @PreAuthorize("@headerCheck.hasRequiredHeader(#request)")
-    String getUserPasswordById(@PathVariable UUID userId, HttpServletRequest request) {
+    public String getUserPasswordById(@PathVariable UUID userId, HttpServletRequest request) {
         return userService.getUserPasswordById(userId);
     }
+
+    @GetMapping(value = "/{userId}")
+    public UserDTO getUserById(@PathVariable UUID userId) {
+        return userService.getUserById(userId);
+    }
+
 }

@@ -18,4 +18,6 @@ public interface UserService {
     UserDetailsService userDetailsService();
 
     User findByEmail(String email);
+
+    UserDTO getUserById(UUID userId);
 }
