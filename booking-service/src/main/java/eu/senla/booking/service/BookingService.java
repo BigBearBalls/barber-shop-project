@@ -7,5 +7,6 @@ import eu.senla.booking.entity.Booking;
 
 public interface BookingService {
     IdResponseDTO saveBooking(AggregatedBooking aggregatedBookingData, BookingRequestDTO bookingRequestDTO);
+
     Booking findBookingById(int id);
 }

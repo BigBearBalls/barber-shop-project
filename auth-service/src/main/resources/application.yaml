@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: auth-service
+    security:
+      jwt:
+        access-key:
+          value: ${ACCESS_KEY}
+          expiration-time: 10
+        refresh-key:
+          value: ${REFRESH_KEY}
+          expiration-time: 120
+      api-key: ${API_KEY}
+
+feign:
+  clients:
+    user-service:
+      url: ${USER_SERVICE_URL}/api/v1/user
