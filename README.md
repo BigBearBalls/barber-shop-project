@@ -6,8 +6,8 @@
 >> - Windows: _start.ps1_ 
 > 
 >> Build and Run single service. Also rebuild if needed.
->> - Linux: _start.sh_ <service-name>
->> - Windows: _start.ps1_ -ServiceName "<service-name>"
+>> - Linux: _start.sh_ service-name
+>> - Windows: _start.ps1_ -ServiceName "service-name"
 
 ## Authorization service
 
