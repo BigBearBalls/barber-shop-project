@@ -1,13 +1,13 @@
-package eu.senla.notificationservice;
+package eu.senla.workingdayservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class NotificationServiceApplication {
+public class WorkingDayServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(NotificationServiceApplication.class, args);
+        SpringApplication.run(WorkingDayServiceApplication.class, args);
     }
 
 }

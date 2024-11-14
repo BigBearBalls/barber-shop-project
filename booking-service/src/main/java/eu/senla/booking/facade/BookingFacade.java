@@ -6,5 +6,6 @@ import eu.senla.booking.data.response.IdResponseDTO;
 
 public interface BookingFacade {
     IdResponseDTO saveBooking(BookingRequestDTO bookingRequestDto);
+
     BookingResponseDTO findById(int id);
 }

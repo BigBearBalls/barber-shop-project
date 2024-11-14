@@ -7,5 +7,6 @@ import java.util.UUID;
 
 public interface WorkingDayService {
     WorkingDay findWorkingDayByMasterAndWorkingDate(UUID master, LocalDate workingDate);
+
     WorkingDay findById(int id);
 }
