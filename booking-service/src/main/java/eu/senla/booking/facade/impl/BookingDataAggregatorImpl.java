@@ -45,8 +45,8 @@ public class BookingDataAggregatorImpl implements BookingDataAggregator {
         ProcedureDTO procedure = procedureClient.findProcedureByIdAndMasterId(booking.getProcedureId(),
                 workingDay.getMaster());
 
-        UserDTO client = userClient.findUserById(booking.getClientId());
-        UserDTO master = userClient.findUserById(workingDay.getMaster());
+        UserDTO client = userClient.getUserById(booking.getClientId());
+        UserDTO master = userClient.getUserById(workingDay.getMaster());
 
         return bookingMapper.toBookingResponseDTO(client, master, procedure, booking, workingDay);
     }

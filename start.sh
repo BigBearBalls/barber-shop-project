@@ -1,5 +1,7 @@
 #!/bin/bash
 
+SECONDS=0
+
 build_and_restart_all() {
     echo "Running gradlew build..."
     ./gradlew build
@@ -62,3 +64,6 @@ if [ -n "$1" ]; then
 else
     build_and_restart_all
 fi
+
+duration=$SECONDS
+echo "Total execution time: $((""$duration / 60)) minutes and $(($duration % 60)) seconds."
