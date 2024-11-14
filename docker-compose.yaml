@@ -1,9 +1,4 @@
 services:
-  barber-shop-project:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: barber-shop-project:latest
 
   zookeeper:
     image: confluentinc/cp-zookeeper:6.2.4
@@ -120,8 +115,6 @@ services:
       start_period: 30s
     restart: always
     depends_on:
-      barber-shop-project:
-        condition: service_completed_successfully
       kafka-topics-generator:
         condition: service_completed_successfully
       kafka:
@@ -146,8 +139,6 @@ services:
       - env/datasource.env
     restart: always
     depends_on:
-      barber-shop-project:
-        condition: service_completed_successfully
       kafka-topics-generator:
         condition: service_completed_successfully
       kafka:
@@ -171,8 +162,6 @@ services:
       - env/datasource.env
       - env/security.env
     depends_on:
-      barber-shop-project:
-        condition: service_completed_successfully
       barber-shop-database:
         condition: service_healthy
     networks:
@@ -191,8 +180,6 @@ services:
     env_file:
       - env/datasource.env
     depends_on:
-      barber-shop-project:
-        condition: service_completed_successfully
       barber-shop-database:
         condition: service_healthy
     networks:
@@ -211,8 +198,6 @@ services:
     env_file:
       - env/datasource.env
     depends_on:
-      barber-shop-project:
-        condition: service_completed_successfully
       barber-shop-database:
         condition: service_healthy
     networks:
@@ -231,8 +216,6 @@ services:
     env_file:
       - env/datasource.env
     depends_on:
-      barber-shop-project:
-        condition: service_completed_successfully
       barber-shop-database:
         condition: service_healthy
     networks:
@@ -249,17 +232,6 @@ services:
       retries: 3
       start_period: 30s
     restart: always
-    depends_on:
-      user-service:
-        condition: service_healthy
-      procedure-service:
-        condition: service_healthy
-      booking-service:
-        condition: service_healthy
-      notification-service:
-        condition: service_healthy
-      auth-service:
-        condition: service_started
     env_file:
       - env/security.env
       - env/keycloak.env
