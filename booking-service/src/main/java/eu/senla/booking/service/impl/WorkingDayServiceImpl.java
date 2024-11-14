@@ -1,7 +1,7 @@
 package eu.senla.booking.service.impl;
 
-import eu.senla.booking.repository.WorkingDayRepository;
 import eu.senla.booking.entity.WorkingDay;
+import eu.senla.booking.repository.WorkingDayRepository;
 import eu.senla.booking.service.WorkingDayService;
 import eu.senla.booking.service.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -17,21 +17,21 @@ import static eu.senla.booking.data.response.ErrorMessage.WORKING_DAY_NOT_FOUND;
 @RequiredArgsConstructor
 public class WorkingDayServiceImpl implements WorkingDayService {
 
-     private final WorkingDayRepository workingDayRepository;
+    private final WorkingDayRepository workingDayRepository;
 
-     @Override
-     @Transactional
-     public WorkingDay findWorkingDayByMasterAndWorkingDate(UUID master, LocalDate workingDate) {
-          return workingDayRepository
-                 .getWorkingDayByMasterAndWorkingDate(master, workingDate)
-                 .orElseThrow(() -> new ResourceNotFoundException(WORKING_DAY_NOT_FOUND));
+    @Override
+    @Transactional
+    public WorkingDay findWorkingDayByMasterAndWorkingDate(UUID master, LocalDate workingDate) {
+        return workingDayRepository
+                .getWorkingDayByMasterAndWorkingDate(master, workingDate)
+                .orElseThrow(() -> new ResourceNotFoundException(WORKING_DAY_NOT_FOUND));
 
-     }
+    }
 
-     @Override
-     @Transactional
-     public WorkingDay findById(int id) {
-          return workingDayRepository.findById(id)
-                  .orElseThrow(() -> new ResourceNotFoundException(WORKING_DAY_NOT_FOUND));
-     }
+    @Override
+    @Transactional
+    public WorkingDay findById(int id) {
+        return workingDayRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(WORKING_DAY_NOT_FOUND));
+    }
 }

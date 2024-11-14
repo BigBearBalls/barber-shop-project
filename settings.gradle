@@ -6,3 +6,4 @@ include "user-service"
 include "procedure-service"
 include 'working-day-service'
 include "calendar-service"
+include "auth-service"

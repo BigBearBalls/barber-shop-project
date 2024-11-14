@@ -56,33 +56,33 @@
 //                .build();
 //    }
 //
-////    @Test
-////    @Transactional
-////    void testSaveBookingSuccessfully() {
-////        when(bookingRepository.findAllByWorkingDayId(workingDay.getId())).thenReturn(List.of());
-////        when(bookingRepository.save(any(Booking.class))).thenReturn(booking);
-////        BookingRequestDTO bookingRequestDTO  = new BookingRequestDTO(1, 1, randomId);
-////        IdResponseDTO response = bookingService.saveBooking(workingDay, 1);
-////
-////        assertNotNull(response);
-////        assertEquals(1, response.id());
-////        verify(bookingRepository, times(1)).save(any(Booking.class));
-////    }
-////
-////    @Test
-////    void testSaveBookingThrowsTimeAlreadyBookedException() {
-////        Booking existingBooking = Booking.builder()
-////                .reservationStart(LocalTime.of(10, 0))
-////                .reservationEnd(LocalTime.of(11, 0))
-////                .build();
-////
-////        when(bookingRepository.findAllByWorkingDayId(workingDay.getId())).thenReturn(List.of(existingBooking));
-////
-////        TimeAlreadyBookedException exception = assertThrows(TimeAlreadyBookedException.class, () ->
-////                bookingService.saveBooking(() -> workingDay, bookingRequestDTO));
-////
-////        assertEquals("Time already booked", exception.getMessage());
-////    }
+/// /    @Test
+/// /    @Transactional
+/// /    void testSaveBookingSuccessfully() {
+/// /        when(bookingRepository.findAllByWorkingDayId(workingDay.getId())).thenReturn(List.of());
+/// /        when(bookingRepository.save(any(Booking.class))).thenReturn(booking);
+/// /        BookingRequestDTO bookingRequestDTO  = new BookingRequestDTO(1, 1, randomId);
+/// /        IdResponseDTO response = bookingService.saveBooking(workingDay, 1);
+/// /
+/// /        assertNotNull(response);
+/// /        assertEquals(1, response.id());
+/// /        verify(bookingRepository, times(1)).save(any(Booking.class));
+/// /    }
+/// /
+/// /    @Test
+/// /    void testSaveBookingThrowsTimeAlreadyBookedException() {
+/// /        Booking existingBooking = Booking.builder()
+/// /                .reservationStart(LocalTime.of(10, 0))
+/// /                .reservationEnd(LocalTime.of(11, 0))
+/// /                .build();
+/// /
+/// /        when(bookingRepository.findAllByWorkingDayId(workingDay.getId())).thenReturn(List.of(existingBooking));
+/// /
+/// /        TimeAlreadyBookedException exception = assertThrows(TimeAlreadyBookedException.class, () ->
+/// /                bookingService.saveBooking(() -> workingDay, bookingRequestDTO));
+/// /
+/// /        assertEquals("Time already booked", exception.getMessage());
+/// /    }
 //
 ////    @Test
 ////    void testFindBookingByIdSuccessfully() {

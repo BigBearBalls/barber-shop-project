@@ -1,7 +1,13 @@
 package eu.senla.procedureservice.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 
@@ -11,8 +17,6 @@ import java.math.BigDecimal;
 @Setter
 @Entity
 @Table(name = "procedures", schema = "procedure_service_schema")
-@Builder
-@ToString
 public class Procedure {
     @Id
     @Column(name = "procedure_id")
