@@ -9,7 +9,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: role_id
-                  type: INT
+                  type: SMALLINT
                   constraints:
                     primaryKey: true
                     nullable: false
@@ -61,7 +61,7 @@ databaseChangeLog:
 
               - column:
                   name: role_id
-                  type: INT
+                  type: SMALLINT
                   constraints:
                     nullable: false
 
