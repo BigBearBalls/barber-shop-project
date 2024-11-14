@@ -1,10 +1,15 @@
 package eu.senla.workingdayservice.controller;
 
+import eu.senla.workingdayservice.dto.WorkingDayDto;
+import eu.senla.workingdayservice.service.WorkingDayService;
+import java.time.LocalDate;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -12,9 +17,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class WorkingDayController {
 
-    @GetMapping
-    @ResponseStatus(HttpStatus.OK)
-    public String getHello() {
-        return "OK";
+    private final WorkingDayService workingDayService;
+
+    @GetMapping("{id}")
+    public WorkingDayDto findById(@PathVariable Integer id) {
+        return workingDayService.findById(id);
+    }
+
+    @GetMapping("{masterId}/master/{date}/date")
+    public WorkingDayDto findByMasterIdAndWorkingDate(@PathVariable UUID masterId, @PathVariable LocalDate date) {
+        return workingDayService.findByMasterAndWorkingDate(masterId, date);
+    }
+
+    @PostMapping()
+    public Integer addWorkingDay(@RequestBody WorkingDayDto workingDayDto) {
+        return workingDayService.save(workingDayDto);
     }
 }
