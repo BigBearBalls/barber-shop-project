@@ -16,6 +16,7 @@ def GATEWAY_SERVICE = project(":gateway-service")
 def NOTIFICATION_SERVICE = project(":notification-service")
 def WORKING_DAY_SERVICE = project(":working-day-service")
 def CALENDAR_SERVICE = project(":calendar-service")
+def AUTH_SERVICE = project(":auth-service")
 
 allprojects {
     group "eu.senla"
@@ -34,16 +35,18 @@ allprojects {
 
 ext {
     set("springCloudVersion", "2023.0.3")
-    set("springSecurityOauth2Version","6.3.4")
+    set("springSecurityOauth2Version", "6.3.4")
     set("validationApiVersion", "3.0.2")
     set("mapstructVersion", "1.5.5.Final")
+    set("jwtVer", "0.11.5")
 }
 
 
 Set<Project> datasourceProjects = Set.of(BOOKING_SERVICE, PROCEDURE_SERVICE, USER_SERVICE, CALENDAR_SERVICE)
 Set<Project> kafkaProjects = Set.of(NOTIFICATION_SERVICE, BOOKING_SERVICE, CALENDAR_SERVICE)
-Set<Project> webProjects = Set.of(BOOKING_SERVICE, PROCEDURE_SERVICE, USER_SERVICE, NOTIFICATION_SERVICE, CALENDAR_SERVICE, WORKING_DAY_SERVICE)
-Set<Project> securityProjects = Set.of(/*BOOKING_SERVICE, PROCEDURE_SERVICE, USER_SERVICE, */GATEWAY_SERVICE)
+Set<Project> webProjects = Set.of(BOOKING_SERVICE, PROCEDURE_SERVICE, USER_SERVICE, NOTIFICATION_SERVICE,
+        CALENDAR_SERVICE, WORKING_DAY_SERVICE, AUTH_SERVICE)
+Set<Project> securityProjects = Set.of(/*BOOKING_SERVICE, PROCEDURE_SERVICE,*/ USER_SERVICE, GATEWAY_SERVICE, AUTH_SERVICE)
 
 bootJar {
     enabled = false
@@ -92,6 +95,9 @@ subprojects { subproject ->
             implementation "org.springframework.security:spring-security-oauth2-resource-server:${springSecurityOauth2Version}"
             implementation "org.springframework.security:spring-security-oauth2-jose:${springSecurityOauth2Version}"
             implementation "org.springframework.security:spring-security-oauth2-client:${springSecurityOauth2Version}"
+            implementation "io.jsonwebtoken:jjwt-api:${jwtVer}"
+            implementation "io.jsonwebtoken:jjwt-impl:${jwtVer}"
+            implementation "io.jsonwebtoken:jjwt-gson:${jwtVer}"
             testImplementation 'org.springframework.security:spring-security-test'
         }
     }
@@ -114,10 +120,10 @@ subprojects { subproject ->
     }
 
     checkstyleMain {
-        source ="src/main/java"
+        source = "src/main/java"
     }
     checkstyleTest {
-        source ="src/test/java"
+        source = "src/test/java"
     }
 
     tasks.withType(Checkstyle).configureEach {
