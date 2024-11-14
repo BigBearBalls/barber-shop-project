@@ -20,7 +20,7 @@ databaseChangeLog:
                   valueNumeric: 2
               - column:
                   name: role_value
-                  value: CLIENT
+                  value: ROLE_CLIENT
         - insert:
             tableName: role
             columns:
@@ -29,4 +29,4 @@ databaseChangeLog:
                   valueNumeric: 3
               - column:
                   name: role_value
-                  value: MASTER
+                  value: ROLE_MASTER
