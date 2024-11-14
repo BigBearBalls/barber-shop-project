@@ -21,7 +21,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@Table(name = "working_day", schema = "working_day_service_schema")
+@Table(name = "working_days", schema = "working_day_service_schema")
 @ToString
 public class WorkingDay {
 

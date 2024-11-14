@@ -1,4 +1,4 @@
-package eu.senla.procedureservice.data.entity;
+package eu.senla.procedureservice.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -14,11 +14,8 @@ import java.math.BigDecimal;
 @Builder
 @ToString
 public class Procedure {
-
     @Id
     @Column(name = "procedure_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "procedures_id_gen")
-    @SequenceGenerator(name = "procedures_id_gen", sequenceName = "procedures_booking_id_seq", allocationSize = 1)
     private Integer id;
 
     @Column(name = "procedure_name")

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class CustomExceptionHandler {
 
     @ExceptionHandler(NotFoundByDateException.class)
-    public ResponseEntity<?> handleNotFoundByDateException(HttpServletRequest request) {
+    public ResponseEntity<ExceptionResponse> handleNotFoundByDateException(HttpServletRequest request) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(new ExceptionResponse(ExceptionInfo.WORKING_DAY_NOT_FOUND_BY_DATE.getExceptionMessage(),
@@ -25,7 +25,7 @@ public class CustomExceptionHandler {
     }
 
     @ExceptionHandler(NotFoundByIdException.class)
-    public ResponseEntity<?> handleNotFoundByIdException(HttpServletRequest request) {
+    public ResponseEntity<ExceptionResponse> handleNotFoundByIdException(HttpServletRequest request) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(new ExceptionResponse(ExceptionInfo.WORKING_DAY_NOT_FOUND_BY_ID.getExceptionMessage(),
@@ -35,7 +35,7 @@ public class CustomExceptionHandler {
     }
 
     @ExceptionHandler(EntityExistException.class)
-    public ResponseEntity<?> handleEntityExistException(HttpServletRequest request) {
+    public ResponseEntity<ExceptionResponse> handleEntityExistException(HttpServletRequest request) {
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
                 .body(new ExceptionResponse(ExceptionInfo.ENTITY_EXIST.getExceptionMessage(),

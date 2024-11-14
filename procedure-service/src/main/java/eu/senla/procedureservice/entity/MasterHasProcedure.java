@@ -1,4 +1,4 @@
-package eu.senla.procedureservice.data.entity;
+package eu.senla.procedureservice.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

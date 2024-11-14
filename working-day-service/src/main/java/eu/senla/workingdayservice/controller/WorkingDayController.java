@@ -5,6 +5,7 @@ import eu.senla.workingdayservice.service.WorkingDayService;
 import java.time.LocalDate;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/working-days")
+@RequestMapping("/api/v1/working-days/")
 @RequiredArgsConstructor
 public class WorkingDayController {
 
@@ -25,7 +26,7 @@ public class WorkingDayController {
     }
 
     @GetMapping("{masterId}/master/{date}/date")
-    public WorkingDayDto findByMasterIdAndWorkingDate(@PathVariable UUID masterId, @PathVariable LocalDate date) {
+    public WorkingDayDto findByMasterIdAndWorkingDate(@PathVariable UUID masterId, @PathVariable @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate date) {
         return workingDayService.findByMasterAndWorkingDate(masterId, date);
     }
 

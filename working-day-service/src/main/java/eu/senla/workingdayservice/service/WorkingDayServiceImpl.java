@@ -8,28 +8,24 @@ import eu.senla.workingdayservice.repository.WorkingDayRepository;
 import eu.senla.workingdayservice.util.ExceptionInfo;
 import java.time.LocalDate;
 import java.util.UUID;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class WorkingDayServiceImpl implements WorkingDayService {
 
     private final WorkingDayRepository workingDayRepository;
     private final WorkingDayMapper workingDayMapper;
 
-    public WorkingDayServiceImpl(WorkingDayRepository workingDayRepository, WorkingDayMapper workingDayMapper) {
-        this.workingDayRepository = workingDayRepository;
-        this.workingDayMapper = workingDayMapper;
-    }
-
     @Override
     @Transactional(readOnly = true)
     public WorkingDayDto findById(int id) {
-            return workingDayMapper
-                    .toWorkingDayDto(workingDayRepository
-                            .findById(id)
-                            .orElseThrow(() -> new NotFoundByIdException(ExceptionInfo.WORKING_DAY_NOT_FOUND_BY_ID.getExceptionCode(),
-                                                                         ExceptionInfo.WORKING_DAY_NOT_FOUND_BY_ID.getExceptionMessage())));
+            return workingDayMapper.toWorkingDayDto(workingDayRepository
+                    .findById(id)
+                    .orElseThrow(() -> new NotFoundByIdException(ExceptionInfo.WORKING_DAY_NOT_FOUND_BY_ID.getExceptionCode(),
+                                                                 ExceptionInfo.WORKING_DAY_NOT_FOUND_BY_ID.getExceptionMessage())));
     }
 
     @Override
