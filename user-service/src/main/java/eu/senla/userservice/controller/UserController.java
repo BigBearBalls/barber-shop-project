@@ -1,6 +1,5 @@
 package eu.senla.userservice.controller;
 
-
 import eu.senla.userservice.dto.RegistrationRequest;
 import eu.senla.userservice.dto.UserDTO;
 import eu.senla.userservice.service.UserService;
@@ -40,5 +39,4 @@ public class UserController {
     public UserDTO getUserById(@PathVariable UUID userId) {
         return userService.getUserById(userId);
     }
-
 }
