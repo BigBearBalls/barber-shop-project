@@ -179,6 +179,7 @@ services:
       retries: 3
       start_period: 30s
     env_file:
+      - env/security.env
       - env/datasource.env
     depends_on:
       barber-shop-database:
