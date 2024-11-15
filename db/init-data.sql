@@ -1,4 +1,4 @@
-INSERT INTO user_service_schema.users (user_id, first_name, last_name, email, password, phone_number, roles_id)
+INSERT INTO user_service_schema.users (user_id, first_name, last_name, email, password, phone_number, role_id)
 VALUES
     ('a1b2c3d4-e5f6-4789-8a7b-1234567890ab', 'Сергей', 'Кузнецов', 'admin@example.com', 'admin123', '+79990000000', 1),
     ('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe95', 'Алексей', 'Петров', 'alexey.petrov@example.com', 'password123', '+79995432100', 3),
@@ -29,7 +29,7 @@ VALUES
     (10, 'Массаж спины', 45.00, 60);
 
 
-INSERT INTO procedure_service_schema.(master_execution_id , master_id, procedure_id)
+INSERT INTO procedure_service_schema.masters_has_procedures(master_execution_id , master_id, procedure_id)
 VALUES
     (1, 'f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe95', 1),
     (2, 'f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe95', 2),
