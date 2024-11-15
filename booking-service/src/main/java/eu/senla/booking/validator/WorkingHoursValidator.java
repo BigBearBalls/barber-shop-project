@@ -17,7 +17,7 @@ public class WorkingHoursValidator implements ConstraintValidator<WorkingHours, 
         try {
             this.startTime = LocalTime.parse(constraintAnnotation.start());
             this.endTime = LocalTime.parse(constraintAnnotation.end());
-        }catch (DateTimeParseException e) {
+        } catch (DateTimeParseException e) {
             throw new IllegalArgumentException("Invalid time format in @BusinessHours annotation");
         }
     }

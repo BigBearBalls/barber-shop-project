@@ -16,32 +16,30 @@ VALUES
     ('8e3a34ac-119b-453d-bba7-478c23361d59', 'Мария', 'Сидорова', 'maria.sidorova@example.com', 'password123', '+79991234568', 2);
 
 INSERT INTO procedure_service_schema.procedures (procedure_id, procedure_name, procedure_price, procedure_duration)
-VALUES
-    (1, 'Классическая стрижка', 25.00, 30),
-    (2, 'Коррекция бороды', 20.00, 30),
-    (3, 'Массаж шеи и плеч', 40.00, 45),
-    (4, 'Тонирование волос', 50.00, 90),
-    (5, 'Коррекция усов', 15.00, 30),
-    (6, 'Чистка лица (мужская)', 35.00, 60),
-    (7, 'Мужской уход за руками', 20.00, 30),
-    (8, 'Мужской уход за кожей лица', 30.00, 60),
-    (9, 'Укладка волос (мужская)', 25.00, 45),
-    (10, 'Массаж спины', 45.00, 60);
+VALUES (1, 'Классическая стрижка', 25.00, 30),
+       (2, 'Коррекция бороды', 20.00, 30),
+       (3, 'Массаж шеи и плеч', 40.00, 45),
+       (4, 'Тонирование волос', 50.00, 90),
+       (5, 'Коррекция усов', 15.00, 30),
+       (6, 'Чистка лица (мужская)', 35.00, 60),
+       (7, 'Мужской уход за руками', 20.00, 30),
+       (8, 'Мужской уход за кожей лица', 30.00, 60),
+       (9, 'Укладка волос (мужская)', 25.00, 45),
+       (10, 'Массаж спины', 45.00, 60);
 
 
-INSERT INTO procedure_service_schema.masters_has_procedures(master_execution_id , master_id, procedure_id)
-VALUES
-    (1, 'f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe95', 1),
-    (2, 'f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe95', 2),
-    (3, 'f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe95', 3),
-    (4, 'f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe95', 6),
-    (5, 'd5b6a7b5-48ab-433d-b0a7-888763fa19b3', 2),
-    (6, 'd5b6a7b5-48ab-433d-b0a7-888763fa19b3', 4),
-    (7, 'd5b6a7b5-48ab-433d-b0a7-888763fa19b3', 5),
-    (8, 'd5b6a7b5-48ab-433d-b0a7-888763fa19b3', 7),
-    (9, 'c1e2d3f4-56a7-89b0-c1d2-456789ab0123', 8),
-    (10, 'c1e2d3f4-56a7-89b0-c1d2-456789ab0123', 9),
-    (11, 'c1e2d3f4-56a7-89b0-c1d2-456789ab0123', 10);
+INSERT INTO procedure_service_schema.masters_has_procedures(master_execution_id, master_id, procedure_id)
+VALUES (1, 'f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe95', 1),
+       (2, 'f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe95', 2),
+       (3, 'f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe95', 3),
+       (4, 'f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe95', 6),
+       (5, 'd5b6a7b5-48ab-433d-b0a7-888763fa19b3', 2),
+       (6, 'd5b6a7b5-48ab-433d-b0a7-888763fa19b3', 4),
+       (7, 'd5b6a7b5-48ab-433d-b0a7-888763fa19b3', 5),
+       (8, 'd5b6a7b5-48ab-433d-b0a7-888763fa19b3', 7),
+       (9, 'c1e2d3f4-56a7-89b0-c1d2-456789ab0123', 8),
+       (10, 'c1e2d3f4-56a7-89b0-c1d2-456789ab0123', 9),
+       (11, 'c1e2d3f4-56a7-89b0-c1d2-456789ab0123', 10);
 
 
 INSERT INTO booking_service_schema.working_days (working_day_id, master_id, working_date, work_start, work_end)
