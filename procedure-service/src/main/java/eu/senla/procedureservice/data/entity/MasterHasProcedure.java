@@ -1,13 +1,10 @@
-package eu.senla.procedureservice.entity;
+package eu.senla.procedureservice.data.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.UUID;
 
@@ -16,7 +13,8 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "master_has_procedures", schema = "procedure_service_schema")
+@Builder
+@Table(name = "masters_has_procedures", schema = "procedure_service_schema")
 public class MasterHasProcedure {
     @Id
     @Column(name = "master_execution_id")

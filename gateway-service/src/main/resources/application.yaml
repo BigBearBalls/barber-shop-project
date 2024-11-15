@@ -30,7 +30,7 @@ spring:
           - id: procedure-service
             uri: http://procedure-service:8080
             predicates:
-              - Path=/api/v1/procedure/**
+              - Path=/api/v1/procedures/**
             filters:
               - AddRequestHeader=X-Request-Api-Key, ${API_KEY}
               - AddRequestHeader=X-Request-Source, EXTERNAL
