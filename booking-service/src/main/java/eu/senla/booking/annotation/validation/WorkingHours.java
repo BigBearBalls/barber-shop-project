@@ -12,9 +12,12 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface WorkingHours {
     String message() default "Reservation start time must be within business hours (e.g., 09:00 to 18:00)";
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 
     String start() default "09:00";
+
     String end() default "21:00";
 }

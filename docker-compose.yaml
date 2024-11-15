@@ -1,9 +1,4 @@
 services:
-  barber-shop-project:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: barber-shop-project:latest
 
   zookeeper:
     image: confluentinc/cp-zookeeper:6.2.4
@@ -34,10 +29,9 @@ services:
       - "5433:5432"
     volumes:
       - "./db/init-scripts:/docker-entrypoint-initdb.d/"
+      - local_pgdata:/var/lib/postgresql/data
     networks:
       - barber-shop-network
-    volumes:
-      - local_pgdata:/var/lib/postgresql/data
 
   pgadmin-ui:
     image: dpage/pgadmin4
@@ -92,17 +86,20 @@ services:
       - barber-shop-network
 
   auth-service:
-    image: quay.io/keycloak/keycloak:26.0.4
+    #    image: quay.io/keycloak/keycloak:26.0.4
+    build: ./auth-service
     restart: always
     env_file:
-      - env/keycloak.env
+      - env/security.env
+      - env/feign-services-url.env
+    #      - env/keycloak.env
     ports:
       - "9000:8080"
     depends_on:
       user-service:
         condition: service_healthy
-    command:
-      - start-dev
+    #    command:
+    #      - start-dev
     networks:
       - barber-shop-network
 
@@ -118,8 +115,6 @@ services:
       start_period: 30s
     restart: always
     depends_on:
-      barber-shop-project:
-        condition: service_completed_successfully
       kafka-topics-generator:
         condition: service_completed_successfully
       kafka:
@@ -140,11 +135,10 @@ services:
       retries: 3
       start_period: 30s
     env_file:
+      - env/security.env
       - env/datasource.env
     restart: always
     depends_on:
-      barber-shop-project:
-        condition: service_completed_successfully
       kafka-topics-generator:
         condition: service_completed_successfully
       kafka:
@@ -166,9 +160,8 @@ services:
       start_period: 30s
     env_file:
       - env/datasource.env
+      - env/security.env
     depends_on:
-      barber-shop-project:
-        condition: service_completed_successfully
       barber-shop-database:
         condition: service_healthy
     networks:
@@ -187,8 +180,42 @@ services:
     env_file:
       - env/datasource.env
     depends_on:
-      barber-shop-project:
-        condition: service_completed_successfully
+      barber-shop-database:
+        condition: service_healthy
+    networks:
+      - barber-shop-network
+
+  working-day-service:
+    build: ./working-day-service
+    ports:
+      - "9005:8080"
+    healthcheck:
+      test: curl -f http://localhost:8080/actuator/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    env_file:
+      - env/datasource.env
+    depends_on:
+      barber-shop-database:
+        condition: service_healthy
+    networks:
+      - barber-shop-network
+
+  calendar-service:
+    build: ./calendar-service
+    ports:
+      - "9010:8080"
+    healthcheck:
+      test: curl -f http://localhost:8080/actuator/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    env_file:
+      - env/datasource.env
+    depends_on:
       barber-shop-database:
         condition: service_healthy
     networks:
@@ -205,18 +232,8 @@ services:
       retries: 3
       start_period: 30s
     restart: always
-    depends_on:
-      user-service:
-        condition: service_healthy
-      procedure-service:
-        condition: service_healthy
-      booking-service:
-        condition: service_healthy
-      notification-service:
-        condition: service_healthy
-      auth-service:
-        condition: service_started
     env_file:
+      - env/security.env
       - env/keycloak.env
     networks:
       - barber-shop-network

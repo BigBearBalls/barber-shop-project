@@ -1,6 +1,6 @@
 package eu.senla.booking.service.exception;
 
-public class ApplicationException extends RuntimeException{
+public class ApplicationException extends RuntimeException {
     public ApplicationException(String message) {
         super(message);
     }

@@ -4,3 +4,6 @@ include "gateway-service"
 include "booking-service"
 include "user-service"
 include "procedure-service"
+include 'working-day-service'
+include "calendar-service"
+include "auth-service"
