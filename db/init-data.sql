@@ -29,7 +29,7 @@ VALUES
     (10, 'Массаж спины', 45.00, 60);
 
 
-INSERT INTO procedure_service_schema.(master_execution_id , master_id, procedure_id)
+INSERT INTO procedure_service_schema.masters_has_procedures(master_execution_id , master_id, procedure_id)
 VALUES
     (1, 'f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe95', 1),
     (2, 'f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe95', 2),
