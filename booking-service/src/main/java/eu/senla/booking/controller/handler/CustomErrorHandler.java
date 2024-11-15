@@ -30,7 +30,7 @@ public class CustomErrorHandler {
                 .body(errorResponse);
     }
 
-    @ExceptionHandler({TimeAlreadyBookedException.class, MasterNotWorkException.class, NotWorkingDayException.class})
+    @ExceptionHandler({TimeAlreadyBookedException.class, MasterNotWorkException.class})
     @ResponseBody
     public ResponseEntity<ErrorResponse> handleResourceNotFound(ApplicationException ex) {
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.toString(),

@@ -1,6 +1,5 @@
 package eu.senla.booking.service.impl;
 
-import eu.senla.booking.client.CalendarServiceClient;
 import eu.senla.booking.data.ProcedureDTO;
 import eu.senla.booking.data.mapper.BookingMapper;
 import eu.senla.booking.data.request.AggregatedBooking;
@@ -11,7 +10,6 @@ import eu.senla.booking.entity.WorkingDay;
 import eu.senla.booking.repository.BookingRepository;
 import eu.senla.booking.service.BookingService;
 import eu.senla.booking.service.exception.MasterNotWorkException;
-import eu.senla.booking.service.exception.NotWorkingDayException;
 import eu.senla.booking.service.exception.ResourceNotFoundException;
 import eu.senla.booking.service.exception.TimeAlreadyBookedException;
 import lombok.AllArgsConstructor;
@@ -31,16 +29,10 @@ public class BookingServiceImpl implements BookingService {
 
     private final BookingRepository bookingRepository;
     private final BookingMapper bookingMapper;
-    private final CalendarServiceClient calendarServiceClient;
 
     @Transactional
     @Override
     public IdResponseDTO saveBooking(AggregatedBooking aggregatedBookingData, BookingRequestDTO bookingRequestDTO) {
-
-        if (!calendarServiceClient.checkDay(bookingRequestDTO.getWorkingDate())){
-            log.warn("Try to booking a not working day");
-            throw new NotWorkingDayException(THE_DAY_IS_NOT_WORKING);
-        }
 
         WorkingDay workingMasterDay = aggregatedBookingData.getWorkingMasterDay();
         ProcedureDTO procedure = aggregatedBookingData.getProcedure();

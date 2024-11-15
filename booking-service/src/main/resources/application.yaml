@@ -40,5 +40,3 @@ feign:
   clients:
     user-service:
       url: ${USER_SERVICE_URL}/api/v1/user
-    calendar-service:
-      url: ${CALENDAR_SERVICE_URL}/api/v1/calendar

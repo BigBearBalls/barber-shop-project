@@ -26,7 +26,6 @@ public class BookingController {
 
     @PostMapping
     public ResponseEntity<IdResponseDTO> save(@RequestBody @Valid BookingRequestDTO bookingDTO) {
-        log.info("Saving Booking!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         return ResponseEntity
                 .ok(bookingFacade.saveBooking(bookingDTO));
     }
