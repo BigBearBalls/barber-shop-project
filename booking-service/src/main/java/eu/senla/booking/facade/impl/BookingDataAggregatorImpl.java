@@ -13,10 +13,11 @@ import eu.senla.booking.entity.WorkingDay;
 import eu.senla.booking.facade.BookingDataAggregator;
 import eu.senla.booking.service.WorkingDayService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class BookingDataAggregatorImpl implements BookingDataAggregator {
 
     private final WorkingDayService workingDayService;

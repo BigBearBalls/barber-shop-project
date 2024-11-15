@@ -268,4 +268,3 @@ networks:
 volumes:
   local_pgdata:
   pgadmin_data:
-  ./db/init-scripts:
