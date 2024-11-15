@@ -5,4 +5,5 @@ public class ErrorMessage {
     public static final String TIME_ALREADY_BOOKED = "This time has already booked ";
     public static final String BOOKING_NOT_FOUND = "There are no any bookings with id: ";
     public static final String MASTER_DOESNT_WORK = "This master doesnt work at time you are looking for";
+    public static final String THE_DAY_IS_NOT_WORKING = "This day is not working ";
 }
