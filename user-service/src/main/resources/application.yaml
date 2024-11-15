@@ -10,7 +10,7 @@ spring:
       api-key: ${API_KEY}
   liquibase:
     change-log: classpath:/db/changelog/db.changelog-user-master.yaml
-    enabled: false
+    enabled: true
     default-schema: user_service_schema
   datasource:
     username: ${DATABASE_USERNAME:postgres}
@@ -19,7 +19,7 @@ spring:
     url: ${DATABASE_URL:jdbc:postgresql://localhost:5433/}${DATABASE_NAME:barber-shop-database}
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     database: postgresql
     properties:
       hibernate:

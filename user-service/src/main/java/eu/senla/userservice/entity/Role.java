@@ -13,7 +13,7 @@ import org.springframework.security.core.GrantedAuthority;
 @Getter
 @Setter
 @Entity
-@Table(name = "roles", schema = "user_service_schema")
+@Table(name = "role", schema = "user_service_schema")
 public class Role implements GrantedAuthority {
 
     @Id
