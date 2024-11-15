@@ -10,6 +10,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -18,12 +19,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/booking")
 @AllArgsConstructor
 @Validated
+@Slf4j
 public class BookingController {
 
     private final BookingFacade bookingFacade;
 
     @PostMapping
     public ResponseEntity<IdResponseDTO> save(@RequestBody @Valid BookingRequestDTO bookingDTO) {
+        log.info("Saving Booking!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         return ResponseEntity
                 .ok(bookingFacade.saveBooking(bookingDTO));
     }

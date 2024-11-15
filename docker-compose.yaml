@@ -137,6 +137,7 @@ services:
     env_file:
       - env/security.env
       - env/datasource.env
+      - env/feign-services-url.env
     restart: always
     depends_on:
       kafka-topics-generator:
@@ -266,3 +267,4 @@ networks:
 volumes:
   local_pgdata:
   pgadmin_data:
+  ./db/init-scripts:
