@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface WorkingDayRepository extends JpaRepository<WorkingDay, Integer> {
 
-    Optional<WorkingDay> getByDate(LocalDate date);
+    Boolean existsWorkingDayByMasterIdAndWorkingDate(UUID masterId, LocalDate date);
 
-    Optional<WorkingDay> getWorkingDayByMasterAndWorkingDate(UUID master, LocalDate workingDate);
+    Optional<WorkingDay> getWorkingDayByMasterIdAndWorkingDate(UUID masterId, LocalDate workingDate);
 }

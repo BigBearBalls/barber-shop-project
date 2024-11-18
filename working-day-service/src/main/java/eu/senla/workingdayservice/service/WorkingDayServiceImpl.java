@@ -2,6 +2,7 @@ package eu.senla.workingdayservice.service;
 
 import eu.senla.workingdayservice.dto.WorkingDayDto;
 import eu.senla.workingdayservice.entity.WorkingDay;
+import eu.senla.workingdayservice.exception.NotFoundByDateAndByIdException;
 import eu.senla.workingdayservice.exception.NotFoundByIdException;
 import eu.senla.workingdayservice.mapper.WorkingDayMapper;
 import eu.senla.workingdayservice.repository.WorkingDayRepository;
@@ -30,12 +31,13 @@ public class WorkingDayServiceImpl implements WorkingDayService {
 
     @Override
     public Integer save(WorkingDayDto workingDayDto) {
+
         WorkingDay workingDay = workingDayMapper.toWorkingDay(workingDayDto);
 
-        workingDayRepository
-                .getByDate(workingDay.getWorkingDate())
-                .orElseThrow(() -> new NotFoundByIdException(ExceptionInfo.WORKING_DAY_NOT_FOUND_BY_DATE.getExceptionCode(),
-                                                             ExceptionInfo.WORKING_DAY_NOT_FOUND_BY_DATE.getExceptionMessage()));
+        if(workingDayRepository.existsWorkingDayByMasterIdAndWorkingDate(workingDay.getMasterId(), workingDay.getWorkingDate())) {
+            throw new NotFoundByDateAndByIdException(ExceptionInfo.WORKING_DAY_NOT_FOUND_BY_ID_DATE.getExceptionCode(),
+                    ExceptionInfo.WORKING_DAY_NOT_FOUND_BY_ID_DATE.getExceptionMessage());
+        }
 
         return workingDayRepository.save(workingDay).getId();
     }
@@ -46,8 +48,8 @@ public class WorkingDayServiceImpl implements WorkingDayService {
 
         return workingDayMapper
                 .toWorkingDayDto(workingDayRepository
-                        .getWorkingDayByMasterAndWorkingDate(masterId, workingDate)
-                        .orElseThrow(() -> new NotFoundByIdException(ExceptionInfo.WORKING_DAY_NOT_FOUND_BY_ID_DATE.getExceptionCode(),
+                        .getWorkingDayByMasterIdAndWorkingDate(masterId, workingDate)
+                        .orElseThrow(() -> new NotFoundByDateAndByIdException(ExceptionInfo.WORKING_DAY_NOT_FOUND_BY_ID_DATE.getExceptionCode(),
                                                                      ExceptionInfo.WORKING_DAY_NOT_FOUND_BY_ID_DATE.getExceptionMessage())));
     }
 }
