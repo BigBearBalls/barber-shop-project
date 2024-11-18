@@ -27,7 +27,6 @@ VALUES (1, 'Классическая стрижка', 25.00, 30),
        (9, 'Укладка волос (мужская)', 25.00, 45),
        (10, 'Массаж спины', 45.00, 60);
 
-
 INSERT INTO procedure_service_schema.masters_has_procedures(master_execution_id, master_id, procedure_id)
 VALUES (1, 'f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe95', 1),
        (2, 'f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe95', 2),
@@ -41,8 +40,7 @@ VALUES (1, 'f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe95', 1),
        (10, 'c1e2d3f4-56a7-89b0-c1d2-456789ab0123', 9),
        (11, 'c1e2d3f4-56a7-89b0-c1d2-456789ab0123', 10);
 
-
-INSERT INTO booking_service_schema.working_days (working_day_id, master_id, working_date, work_start, work_end)
+INSERT INTO working_day_service_schema.working_days (working_day_id, master_id, working_date, work_start, work_end)
 VALUES
     (1, 'f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe95', '2024-11-24', '09:00', '21:00'),
     (2, 'd5b6a7b5-48ab-433d-b0a7-888763fa19b3', '2024-11-24', '09:00', '21:00'),
