@@ -30,6 +30,7 @@ public class WorkingDayServiceImpl implements WorkingDayService {
     }
 
     @Override
+    @Transactional
     public Integer save(WorkingDayDto workingDayDto) {
 
         WorkingDay workingDay = workingDayMapper.toWorkingDay(workingDayDto);
