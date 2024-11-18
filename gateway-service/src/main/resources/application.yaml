@@ -43,6 +43,14 @@ spring:
               - AddRequestHeader=X-Request-Api-Key, ${API_KEY}
               - AddRequestHeader=X-Request-Source, EXTERNAL
 
+          - id: calendar-service
+            uri: http://calendar-service:8080
+            predicates:
+              - Path=/api/v1/calendar/**
+            filters:
+              - AddRequestHeader=X-Request-Api-Key, ${API_KEY}
+              - AddRequestHeader=X-Request-Source, EXTERNAL
+
 #jwt:
 #  auth:
 #    converter:

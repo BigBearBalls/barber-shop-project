@@ -1,6 +1,5 @@
 package eu.senla.calendarservice.mapper;
 
-import eu.senla.calendarservice.dto.IsHolidayResponse;
 import eu.senla.calendarservice.entity.DayOff;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -14,7 +13,5 @@ public interface CalendarMapper {
 
     @Mapping(target = "id", ignore = true)
     DayOff toCalendarDayOff(LocalDate date);
-
-    IsHolidayResponse toIsHolidayResponse(Boolean isHolidayDay);
 
 }

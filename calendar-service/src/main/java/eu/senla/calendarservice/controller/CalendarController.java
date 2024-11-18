@@ -1,6 +1,5 @@
 package eu.senla.calendarservice.controller;
 
-import eu.senla.calendarservice.dto.IsHolidayResponse;
 import eu.senla.calendarservice.service.CalendarService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -27,6 +26,6 @@ public class CalendarController {
 
     @GetMapping("{day}")
     public Boolean checkDay(@PathVariable @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate day) {
-        return calendarService.isHoliday(day);
+        return calendarService.checkDay(day);
     }
 }

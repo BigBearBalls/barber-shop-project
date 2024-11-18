@@ -44,10 +44,10 @@ public class CalendarExceptionHandler {
 
     private ErrorResponse errorResponseBuilder(String message, String errorCode, String path) {
         return ErrorResponse.builder()
-                .message(message)
-                .errorCode(errorCode)
-                .path(path)
                 .timestamp(LocalDateTime.now())
+                .errorCode(errorCode)
+                .message(message)
+                .path(path)
                 .build();
     }
 
