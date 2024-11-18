@@ -17,6 +17,7 @@ databaseChangeLog:
                   name: "calendar_day_off_date"
                   type: "DATE"
                   constraints:
+                    unique: true
                     nullable: false
 
         - createSequence:

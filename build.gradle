@@ -39,6 +39,10 @@ ext {
     set("validationApiVersion", "3.0.2")
     set("mapstructVersion", "1.5.5.Final")
     set("jwtVer", "0.11.5")
+    set("testContainersVersion", "1.18.3")
+    set("junitJupiter", "5.10.0")
+    set("mockitoCore", "5.4.0")
+    set("tcJupiter", "1.19.0")
 }
 
 
@@ -79,6 +83,11 @@ subprojects { subproject ->
             implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
             implementation "jakarta.validation:jakarta.validation-api:${validationApiVersion}"
             implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+            testImplementation 'org.springframework.boot:spring-boot-starter-test'
+            testImplementation "org.testcontainers:postgresql:${testContainersVersion}"
+            testImplementation "org.testcontainers:junit-jupiter:${tcJupiter}"
+            testImplementation "org.junit.jupiter:junit-jupiter:${junitJupiter}"
+            testImplementation "org.mockito:mockito-core:${mockitoCore}"
         }
     }
 
