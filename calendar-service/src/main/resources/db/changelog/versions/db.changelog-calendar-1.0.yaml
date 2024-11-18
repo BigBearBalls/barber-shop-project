@@ -17,6 +17,7 @@ databaseChangeLog:
                   name: "calendar_day_off_date"
                   type: "DATE"
                   constraints:
+                    unique: true
                     nullable: false
 
         - createSequence:
@@ -34,3 +35,51 @@ databaseChangeLog:
             tableName: "calendar_days_off"
             incrementBy: 1
             startWith: 1
+
+  - changeSet:
+      id: "insert-holiday-data"
+      author: "Dany"
+      changes:
+        - insert:
+            tableName: "calendar_days_off"
+            schemaName: "calendar_service_schema"
+            columns:
+              - column:
+                  name: calendar_day_off_id
+                  value: "1"
+              - column:
+                  name: calendar_day_off_date
+                  valueDate: 2025-01-01
+
+        - insert:
+            tableName: "calendar_days_off"
+            schemaName: "calendar_service_schema"
+            columns:
+              - column:
+                  name: calendar_day_off_id
+                  value: "2"
+              - column:
+                  name: calendar_day_off_date
+                  valueDate: 2025-01-02
+
+        - insert:
+            tableName: "calendar_days_off"
+            schemaName: "calendar_service_schema"
+            columns:
+              - column:
+                  name: calendar_day_off_id
+                  value: "3"
+              - column:
+                  name: calendar_day_off_date
+                  valueDate: 2025-03-08
+
+        - insert:
+            tableName: "calendar_days_off"
+            schemaName: "calendar_service_schema"
+            columns:
+              - column:
+                  name: calendar_day_off_id
+                  value: "4"
+              - column:
+                  name: calendar_day_off_date
+                  valueDate: 2025-05-09

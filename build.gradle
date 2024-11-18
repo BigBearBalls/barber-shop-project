@@ -38,7 +38,11 @@ ext {
     set("springSecurityOauth2Version", "6.3.4")
     set("validationApiVersion", "3.0.2")
     set("mapstructVersion", "1.5.5.Final")
-    set("jwtVer", "0.11.5")
+    set("jwtVersion", "0.11.5")
+    set("testContainersVersion", "1.18.3")
+    set("junitJupiterVersion", "5.10.0")
+    set("mockitoCoreVersion", "5.4.0")
+    set("tcJupiterVersion", "1.19.0")
 }
 
 
@@ -79,6 +83,11 @@ subprojects { subproject ->
             implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
             implementation "jakarta.validation:jakarta.validation-api:${validationApiVersion}"
             implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+            testImplementation 'org.springframework.boot:spring-boot-starter-test'
+            testImplementation "org.testcontainers:postgresql:${testContainersVersion}"
+            testImplementation "org.testcontainers:junit-jupiter:${tcJupiterVersion}"
+            testImplementation "org.junit.jupiter:junit-jupiter:${junitJupiterVersion}"
+            testImplementation "org.mockito:mockito-core:${mockitoCoreVersion}"
         }
     }
 
@@ -95,9 +104,9 @@ subprojects { subproject ->
             implementation "org.springframework.security:spring-security-oauth2-resource-server:${springSecurityOauth2Version}"
             implementation "org.springframework.security:spring-security-oauth2-jose:${springSecurityOauth2Version}"
             implementation "org.springframework.security:spring-security-oauth2-client:${springSecurityOauth2Version}"
-            implementation "io.jsonwebtoken:jjwt-api:${jwtVer}"
-            implementation "io.jsonwebtoken:jjwt-impl:${jwtVer}"
-            implementation "io.jsonwebtoken:jjwt-gson:${jwtVer}"
+            implementation "io.jsonwebtoken:jjwt-api:${jwtVersion}"
+            implementation "io.jsonwebtoken:jjwt-impl:${jwtVersion}"
+            implementation "io.jsonwebtoken:jjwt-gson:${jwtVersion}"
             testImplementation 'org.springframework.security:spring-security-test'
         }
     }
