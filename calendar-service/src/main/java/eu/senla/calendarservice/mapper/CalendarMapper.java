@@ -7,11 +7,9 @@ import org.mapstruct.MappingConstants;
 
 import java.time.LocalDate;
 
-
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface CalendarMapper {
 
     @Mapping(target = "id", ignore = true)
     DayOff toCalendarDayOff(LocalDate date);
-
 }

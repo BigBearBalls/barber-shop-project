@@ -30,7 +30,7 @@ public class CalendarServiceImpl implements CalendarService {
 
     @Transactional
     @Override
-    public void setWorkingDay(LocalDate day) {
+    public void cancelDayOff(LocalDate day) {
         if (calendarRepository.existsByDate(day)) {
             calendarRepository.deleteByDate(day);
         } else {

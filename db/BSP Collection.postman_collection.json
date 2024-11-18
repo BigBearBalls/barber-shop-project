@@ -38,7 +38,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:7080/api/v1/calendars/working-day/2024-12-15",
+							"raw": "http://localhost:7080/api/v1/calendars/working-days/2024-12-15",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -48,7 +48,7 @@
 								"api",
 								"v1",
 								"calendars",
-								"working-day",
+								"working-days",
 								"2024-12-15"
 							]
 						}

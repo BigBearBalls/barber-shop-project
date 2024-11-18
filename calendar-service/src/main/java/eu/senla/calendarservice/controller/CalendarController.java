@@ -19,9 +19,9 @@ public class CalendarController {
         return calendarService.setDayOff(day);
     }
 
-    @DeleteMapping("working-day/{day}")
+    @DeleteMapping("working-days/{day}")
     public void cancelDayOff(@PathVariable @DateTimeFormat(pattern = "yyyy-mm-dd") LocalDate day) {
-        calendarService.setWorkingDay(day);
+        calendarService.cancelDayOff(day);
     }
 
     @GetMapping("{day}")

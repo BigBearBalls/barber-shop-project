@@ -6,7 +6,7 @@ public interface CalendarService {
 
     LocalDate setDayOff(LocalDate day);
 
-    void setWorkingDay(LocalDate day);
+    void cancelDayOff(LocalDate day);
 
     Boolean checkDay(LocalDate day);
 }
