@@ -26,7 +26,7 @@ services:
       timeout: 3s
       retries: 3
     ports:
-      - "5433:5432"
+      - "5432"
     volumes:
       - "./db/init-scripts:/docker-entrypoint-initdb.d/"
       - local_pgdata:/var/lib/postgresql/data
@@ -94,7 +94,7 @@ services:
       - env/feign-services-url.env
     #      - env/keycloak.env
     ports:
-      - "9000:8080"
+      - "8080"
     depends_on:
       user-service:
         condition: service_healthy
@@ -106,7 +106,7 @@ services:
   notification-service:
     build: ./notification-service
     ports:
-      - "9002:8080"
+      - "8080"
     healthcheck:
       test: curl -f http://localhost:8080/actuator/health
       interval: 30s
@@ -127,7 +127,7 @@ services:
   booking-service:
     build: ./booking-service
     ports:
-      - "9003:8080"
+      - "8080"
     healthcheck:
       test: curl -f http://localhost:8080/actuator/health
       interval: 30s
@@ -137,6 +137,7 @@ services:
     env_file:
       - env/security.env
       - env/datasource.env
+      - env/feign-services-url.env
     restart: always
     depends_on:
       kafka-topics-generator:
@@ -151,7 +152,7 @@ services:
   user-service:
     build: ./user-service
     ports:
-      - "9001:8080"
+      - "8080"
     healthcheck:
       test: curl -f http://localhost:8080/actuator/health
       interval: 30s
@@ -170,7 +171,7 @@ services:
   procedure-service:
     build: ./procedure-service
     ports:
-      - "9004:8080"
+      - "8080"
     healthcheck:
       test: curl -f http://localhost:8080/actuator/health
       interval: 30s
@@ -178,6 +179,7 @@ services:
       retries: 3
       start_period: 30s
     env_file:
+      - env/security.env
       - env/datasource.env
     depends_on:
       barber-shop-database:
@@ -188,7 +190,7 @@ services:
   working-day-service:
     build: ./working-day-service
     ports:
-      - "9005:8080"
+      - "8080"
     healthcheck:
       test: curl -f http://localhost:8080/actuator/health
       interval: 30s
@@ -206,7 +208,7 @@ services:
   calendar-service:
     build: ./calendar-service
     ports:
-      - "9010:8080"
+      - "8080"
     healthcheck:
       test: curl -f http://localhost:8080/actuator/health
       interval: 30s

@@ -1,6 +1,13 @@
 spring:
   application:
     name: "procedure-service"
+    security:
+      jwt:
+        access-key:
+          value: ${ACCESS_KEY}
+        refresh-key:
+          value: ${REFRESH_KEY}
+      api-key: ${API_KEY}
   liquibase:
     change-log: classpath:/db/changelog/db.changelog-procedure-master.yaml
     enabled: true

@@ -1,16 +1,20 @@
 package eu.senla.booking.controller.handler;
 
 import eu.senla.booking.data.response.ErrorResponse;
-import eu.senla.booking.service.exception.ApplicationException;
-import eu.senla.booking.service.exception.MasterNotWorkException;
-import eu.senla.booking.service.exception.ResourceNotFoundException;
-import eu.senla.booking.service.exception.TimeAlreadyBookedException;
+import eu.senla.booking.service.exception.*;
+import feign.FeignException;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 @RestControllerAdvice
 @Slf4j
@@ -35,5 +39,22 @@ public class CustomErrorHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(errorResponse);
     }
+
+//    @ExceptionHandler(FeignException.class)
+//    public ResponseEntity<?> handleFeignException(FeignException e, HttpServletRequest request) {
+//        HttpStatus httpStatus = HttpStatus.valueOf(e.status() != 0 ? e.status() : HttpStatus.INTERNAL_SERVER_ERROR.value());
+//        ExceptionResponse exceptionResponse = new ExceptionResponse(LocalDateTime.now(), ErrorCode.ERR_UNKNOWN_CODE,
+//                ErrorCode.ERR_UNKNOWN_CODE.getMessage(), request.getRequestURI());
+//        try {
+//            Optional<ByteBuffer> responseBody = e.responseBody();
+//            if (responseBody.isPresent()) {
+//                String body = StandardCharsets.UTF_8.decode(responseBody.get()).toString();
+//                exceptionResponse = objectMapper.readValue(body, ExceptionResponse.class);
+//            }
+//        } catch (Exception ex) {
+//            log.error(ex.getMessage(), ex);
+//        }
+//        return ResponseEntity.status(httpStatus).body(exceptionResponse);
+//    }
 
 }

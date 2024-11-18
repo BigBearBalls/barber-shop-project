@@ -13,10 +13,11 @@ import eu.senla.booking.entity.WorkingDay;
 import eu.senla.booking.facade.BookingDataAggregator;
 import eu.senla.booking.service.WorkingDayService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class BookingDataAggregatorImpl implements BookingDataAggregator {
 
     private final WorkingDayService workingDayService;
@@ -45,8 +46,8 @@ public class BookingDataAggregatorImpl implements BookingDataAggregator {
         ProcedureDTO procedure = procedureClient.findProcedureByIdAndMasterId(booking.getProcedureId(),
                 workingDay.getMaster());
 
-        UserDTO client = userClient.findUserById(booking.getClientId());
-        UserDTO master = userClient.findUserById(workingDay.getMaster());
+        UserDTO client = userClient.getUserById(booking.getClientId());
+        UserDTO master = userClient.getUserById(workingDay.getMaster());
 
         return bookingMapper.toBookingResponseDTO(client, master, procedure, booking, workingDay);
     }

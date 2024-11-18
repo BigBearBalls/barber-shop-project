@@ -43,7 +43,7 @@ public class CalendarServiceImpl implements CalendarService {
 
     @Transactional
     @Override
-    public IsHolidayResponse isHoliday(LocalDate day) {
-        return calendarMapper.toIsHolidayResponse(calendarRepository.existsByDate(day));
+    public Boolean isHoliday(LocalDate day) {
+        return calendarRepository.existsByDate(day);
     }
 }
