@@ -1,6 +1,5 @@
 package eu.senla.authservice.dto;
 
-import eu.senla.authservice.model.Role;
 import lombok.*;
 
 import java.util.UUID;
@@ -10,7 +9,7 @@ import java.util.UUID;
 @Setter
 @Getter
 @Builder
-public class UserDTO {
+public class UserDataDTO {
 
     private UUID id;
 
@@ -18,9 +17,5 @@ public class UserDTO {
 
     private String lastName;
 
-    private String email;
-
     private String phoneNumber;
-
-    private Role role;
 }

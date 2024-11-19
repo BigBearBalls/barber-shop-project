@@ -1,14 +1,19 @@
 package eu.senla.authservice.service.impl;
 
-import eu.senla.authservice.client.UserClient;
 import eu.senla.authservice.dto.RegistrationRequest;
-import eu.senla.authservice.dto.UserDTO;
+import eu.senla.authservice.enums.ErrorCode;
+import eu.senla.authservice.exception.LogExceptionWrapper;
+import eu.senla.authservice.exception.NotFoundException;
 import eu.senla.authservice.mapper.UserMapper;
+import eu.senla.authservice.model.RoleValue;
 import eu.senla.authservice.model.User;
+import eu.senla.authservice.repository.UserRepository;
+import eu.senla.authservice.service.RoleService;
 import eu.senla.authservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -16,27 +21,30 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private final UserClient userClient;
     private final UserMapper userMapper;
+    private final UserRepository userRepository;
+    private final RoleService roleService;
 
     @Override
-    public void regUser(RegistrationRequest registrationRequest) {
-        userClient.createUser(registrationRequest);
+    @Transactional
+    public UUID regUser(RegistrationRequest registrationRequest) {
+        User user = userMapper.toEntity(registrationRequest);
+        user.setRole(roleService.getRoleByValue(RoleValue.ROLE_CLIENT));
+        return userRepository.save(user).getId();
     }
 
     @Override
+    @Transactional
+    public void deleteUserById(UUID id) {
+        userRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
     public User findByEmail(String email) {
-        return userMapper.toEntity(userClient.getUserByEmail(email));
-    }
-
-    @Override
-    public String getUserPasswordById(UUID id) {
-        return userClient.getUserPasswordById(id);
-    }
-
-    @Override
-    public UserDTO getUserByEmail(String email) {
-        return userClient.getUserByEmail(email);
+        return userRepository.findByEmail(email).orElseThrow(() -> LogExceptionWrapper
+                .logErrorException(new NotFoundException(String.format(ErrorCode.ERR_USER_NOT_FOUND.getMessage(),
+                        "email", email), ErrorCode.ERR_USER_NOT_FOUND)));
     }
 
     @Override

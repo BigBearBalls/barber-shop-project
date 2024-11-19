@@ -10,8 +10,6 @@ services:
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
-    ports:
-      - "22181:2181"
     networks:
       - barber-shop-network
 
@@ -25,8 +23,6 @@ services:
       interval: 10s
       timeout: 3s
       retries: 3
-    ports:
-      - "5432"
     volumes:
       - "./db/init-scripts:/docker-entrypoint-initdb.d/"
       - local_pgdata:/var/lib/postgresql/data
@@ -53,8 +49,6 @@ services:
     depends_on:
       zookeeper:
         condition: service_healthy
-    ports:
-      - "29092:29092"
     healthcheck:
       test: kafka-topics --bootstrap-server localhost:9092 --list
       interval: 30s
@@ -92,9 +86,8 @@ services:
     env_file:
       - env/security.env
       - env/feign-services-url.env
+      - env/datasource.env
     #      - env/keycloak.env
-    ports:
-      - "8080"
     depends_on:
       user-service:
         condition: service_healthy
@@ -105,8 +98,6 @@ services:
 
   notification-service:
     build: ./notification-service
-    ports:
-      - "8080"
     healthcheck:
       test: curl -f http://localhost:8080/actuator/health
       interval: 30s
@@ -126,8 +117,6 @@ services:
 
   booking-service:
     build: ./booking-service
-    ports:
-      - "8080"
     healthcheck:
       test: curl -f http://localhost:8080/actuator/health
       interval: 30s
@@ -151,8 +140,6 @@ services:
 
   user-service:
     build: ./user-service
-    ports:
-      - "8080"
     healthcheck:
       test: curl -f http://localhost:8080/actuator/health
       interval: 30s
@@ -170,8 +157,6 @@ services:
 
   procedure-service:
     build: ./procedure-service
-    ports:
-      - "8080"
     healthcheck:
       test: curl -f http://localhost:8080/actuator/health
       interval: 30s
@@ -189,8 +174,6 @@ services:
 
   working-day-service:
     build: ./working-day-service
-    ports:
-      - "8080"
     healthcheck:
       test: curl -f http://localhost:8080/actuator/health
       interval: 30s
@@ -207,8 +190,6 @@ services:
 
   calendar-service:
     build: ./calendar-service
-    ports:
-      - "8080"
     healthcheck:
       test: curl -f http://localhost:8080/actuator/health
       interval: 30s
@@ -254,7 +235,7 @@ services:
       kafka-topics --bootstrap-server kafka:9092 --list
 
       # echo -e 'Creating kafka topics'
-      # kafka-topics --bootstrap-server kafka:9092 --create --if-not-exists --topic notification-topic --replication-factor 1 --partitions 3
+       kafka-topics --bootstrap-server kafka:9092 --create --if-not-exists --topic notification-topic --replication-factor 1 --partitions 3
       # kafka-topics --bootstrap-server kafka:9092 --create --if-not-exists --topic order-topic --replication-factor 1 --partitions 3
 
       echo -e 'Successfully created the following topics:'
