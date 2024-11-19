@@ -1,6 +1,4 @@
 package eu.senla.calendarservice.service.impl;
-
-import eu.senla.calendarservice.dto.IsHolidayResponse;
 import eu.senla.calendarservice.entity.DayOff;
 import eu.senla.calendarservice.exception.EmptyDateException;
 import eu.senla.calendarservice.exception.InvalidDateException;
@@ -11,7 +9,6 @@ import eu.senla.calendarservice.util.constants.ErrorConstants;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 
 @Service
@@ -33,7 +30,7 @@ public class CalendarServiceImpl implements CalendarService {
 
     @Transactional
     @Override
-    public void setWorkingDay(LocalDate day) {
+    public void cancelDayOff(LocalDate day) {
         if (calendarRepository.existsByDate(day)) {
             calendarRepository.deleteByDate(day);
         } else {
@@ -43,7 +40,7 @@ public class CalendarServiceImpl implements CalendarService {
 
     @Transactional
     @Override
-    public Boolean isHoliday(LocalDate day) {
+    public Boolean checkDay(LocalDate day) {
         return calendarRepository.existsByDate(day);
     }
 }

@@ -13,9 +13,9 @@ import java.time.LocalDateTime;
 @Setter
 public class ErrorResponse implements Serializable {
 
-    private String message;
-    private String errorCode;
-    private String path;
     private LocalDateTime timestamp;
+    private String errorCode;
+    private String message;
+    private String path;
 
 }

@@ -3,8 +3,6 @@ package eu.senla.calendarservice.controller.handler;
 
 import eu.senla.calendarservice.dto.ErrorResponse;
 import eu.senla.calendarservice.exception.CalendarApiException;
-import eu.senla.calendarservice.exception.EmptyDateException;
-import eu.senla.calendarservice.exception.InvalidDateException;
 import eu.senla.calendarservice.util.constants.ErrorConstants;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -44,10 +42,10 @@ public class CalendarExceptionHandler {
 
     private ErrorResponse errorResponseBuilder(String message, String errorCode, String path) {
         return ErrorResponse.builder()
-                .message(message)
-                .errorCode(errorCode)
-                .path(path)
                 .timestamp(LocalDateTime.now())
+                .errorCode(errorCode)
+                .message(message)
+                .path(path)
                 .build();
     }
 

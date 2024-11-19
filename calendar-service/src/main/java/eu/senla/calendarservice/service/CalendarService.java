@@ -1,14 +1,12 @@
 package eu.senla.calendarservice.service;
 
-import eu.senla.calendarservice.dto.IsHolidayResponse;
-
 import java.time.LocalDate;
 
 public interface CalendarService {
 
     LocalDate setDayOff(LocalDate day);
 
-    void setWorkingDay(LocalDate day);
+    void cancelDayOff(LocalDate day);
 
-    Boolean isHoliday(LocalDate day);
+    Boolean checkDay(LocalDate day);
 }
