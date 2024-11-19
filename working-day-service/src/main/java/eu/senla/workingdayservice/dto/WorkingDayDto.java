@@ -16,6 +16,8 @@ import lombok.Setter;
 @Setter
 public class WorkingDayDto {
 
+    @NotNull(message = ValidationConstants.WORKING_DAY_ID_CANNOT_BE_NULL_VALIDATION_MESSAGE)
+    private UUID id;
     @NotNull(message = ValidationConstants.MASTER_ID_CANNOT_BE_NULL_VALIDATION_MESSAGE)
     private UUID masterId;
     @NotNull(message = ValidationConstants.WORKING_DATE_CANNOT_BE_NULL_VALIDATION_MESSAGE)

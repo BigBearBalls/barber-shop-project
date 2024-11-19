@@ -6,9 +6,9 @@ import java.util.UUID;
 
 public interface WorkingDayService {
 
-    WorkingDayDto findById(int id);
+    WorkingDayDto findById(UUID id);
 
-    Integer save(WorkingDayDto workingDayDto);
+    UUID save(WorkingDayDto workingDayDto);
 
     WorkingDayDto findByMasterAndWorkingDate(UUID master, LocalDate workingDate);
 }

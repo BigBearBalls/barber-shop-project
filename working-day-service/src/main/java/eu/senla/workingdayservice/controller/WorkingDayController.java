@@ -21,18 +21,18 @@ public class WorkingDayController {
     private final WorkingDayService workingDayService;
 
     @GetMapping("{id}")
-    public WorkingDayDto findById(@PathVariable Integer id) {
+    public WorkingDayDto findById(@PathVariable UUID id) {
         return workingDayService.findById(id);
     }
 
-    @GetMapping("{masterId}/master/{date}/date")
+    @GetMapping("{masterId}/masters/{date}/dates")
     public WorkingDayDto findByMasterIdAndWorkingDate(@PathVariable UUID masterId,
                                                       @PathVariable @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate date) {
         return workingDayService.findByMasterAndWorkingDate(masterId, date);
     }
 
     @PostMapping()
-    public Integer addWorkingDay(@RequestBody WorkingDayDto workingDayDto) {
+    public UUID addWorkingDay(@RequestBody WorkingDayDto workingDayDto) {
         return workingDayService.save(workingDayDto);
     }
 }

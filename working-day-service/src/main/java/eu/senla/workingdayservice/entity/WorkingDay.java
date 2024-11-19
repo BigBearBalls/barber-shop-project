@@ -5,7 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -26,10 +25,9 @@ import lombok.ToString;
 public class WorkingDay {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "working_days_id_gen")
-    @SequenceGenerator(name = "working_days_id_gen", sequenceName = "working_days_working_day_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "working_day_id")
-    private Integer id;
+    private UUID id;
 
     @Column(name = "master_id")
     private UUID masterId;
@@ -42,5 +40,4 @@ public class WorkingDay {
 
     @Column(name = "work_end")
     private LocalTime workEnd;
-
 }
