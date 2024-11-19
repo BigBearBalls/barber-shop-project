@@ -22,7 +22,7 @@ public interface ProcedureMapper {
     @Mapping(target = "id", source = "id")
     @Mapping(target = "procedureName", source = "procedureName")
     @Mapping(target = "procedurePrice", source = "procedurePrice")
-    @Mapping(target = "procedureDuration", source = "procedureDuration")
+    @Mapping(target = "duration", source = "procedureDuration")
     ProcedureDTO toProcedureDTO(Procedure procedure);
 
     default List<ProcedureDTO> toListDTO(Page<Procedure> procedures) {

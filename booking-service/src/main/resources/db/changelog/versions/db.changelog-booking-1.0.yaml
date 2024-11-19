@@ -3,19 +3,14 @@ databaseChangeLog:
       id: "booking-1.0"
       author: Dany
       changes:
-        - createSequence:
-            sequenceName: booking_service_schema.bookings_booking_id_seq
-            startValue: 1
-            incrementBy: 1
-
         - createTable:
             schemaName: booking_service_schema
             tableName: bookings
             columns:
               - column:
                   name: booking_id
-                  type: INTEGER
-                  autoIncrement: true
+                  type: uuid
+                  autoIncrement: false
                   constraints:
                     primaryKey: true
                     nullable: false

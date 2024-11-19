@@ -51,7 +51,7 @@ public class ProcedureServiceImpl implements ProcedureService {
 
     @Override
     @Transactional
-    public ProcedureDTO findProcedureByIdAndMasterId(Integer id, UUID masterId) {
+    public ProcedureDTO findProcedureByIdAndMasterId(UUID id, UUID masterId) {
         if (!masterHasProcedureService.checkMasterHasProcedure(id, masterId)) {
             throw LogExceptionWrapper.logErrorException(new NotFoundException(
                     ErrorCode.ERR_MASTER_DOESNT_PROVIDE_THIS_PROCEDURE));
@@ -65,7 +65,7 @@ public class ProcedureServiceImpl implements ProcedureService {
 
     @Override
     @Transactional
-    public void subscribeOnProcedure(Integer procedureId, UUID masterId) {
+    public void subscribeOnProcedure(UUID procedureId, UUID masterId) {
         if (!procedureRepository.existsById(procedureId)) {
             throw LogExceptionWrapper.logErrorException(new NotFoundException(String.format(
                     ErrorCode.ERR_PROCEDURE_NOT_FOUND.getMessage(), "id", procedureId), ErrorCode.ERR_PROCEDURE_NOT_FOUND));

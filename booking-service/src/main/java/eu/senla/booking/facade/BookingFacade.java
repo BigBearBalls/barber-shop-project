@@ -4,8 +4,10 @@ import eu.senla.booking.data.request.BookingRequestDTO;
 import eu.senla.booking.data.response.BookingResponseDTO;
 import eu.senla.booking.data.response.IdResponseDTO;
 
+import java.util.UUID;
+
 public interface BookingFacade {
     IdResponseDTO saveBooking(BookingRequestDTO bookingRequestDto);
 
-    BookingResponseDTO findById(int id);
+    BookingResponseDTO findById(UUID id);
 }

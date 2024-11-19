@@ -1,7 +1,7 @@
 package eu.senla.booking.data.request;
 
 import eu.senla.booking.data.ProcedureDTO;
-import eu.senla.booking.entity.WorkingDay;
+import eu.senla.booking.data.WorkingDayDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AggregatedBooking {
 
-    private WorkingDay workingMasterDay;
+    private WorkingDayDto workingMasterDay;
     private ProcedureDTO procedure;
 }

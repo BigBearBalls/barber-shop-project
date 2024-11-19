@@ -27,13 +27,13 @@ public class ProcedureController {
     }
 
     @GetMapping("/{id}")
-    public ProcedureDTO findProcedureByIdAndMasterId(@PathVariable Integer id, @RequestParam UUID masterId) {
+    public ProcedureDTO findProcedureByIdAndMasterId(@PathVariable UUID id, @RequestParam UUID masterId) {
         return procedureService.findProcedureByIdAndMasterId(id, masterId);
     }
 
     @PostMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    private void subscribeOnProcedure(@PathVariable Integer id, @RequestParam UUID masterId) {
+    private void subscribeOnProcedure(@PathVariable UUID id, @RequestParam UUID masterId) {
         procedureService.subscribeOnProcedure(id, masterId);
     }
 

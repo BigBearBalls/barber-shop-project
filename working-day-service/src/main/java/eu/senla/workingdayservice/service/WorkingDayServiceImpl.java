@@ -22,7 +22,7 @@ public class WorkingDayServiceImpl implements WorkingDayService {
 
     @Override
     @Transactional(readOnly = true)
-    public WorkingDayDto findById(int id) {
+    public WorkingDayDto findById(UUID id) {
             return workingDayMapper.toWorkingDayDto(workingDayRepository
                     .findById(id)
                     .orElseThrow(() -> new NotFoundByIdException(ExceptionInfo.WORKING_DAY_NOT_FOUND_BY_ID.getExceptionCode(),
@@ -31,7 +31,7 @@ public class WorkingDayServiceImpl implements WorkingDayService {
 
     @Override
     @Transactional
-    public Integer save(WorkingDayDto workingDayDto) {
+    public UUID save(WorkingDayDto workingDayDto) {
 
         WorkingDay workingDay = workingDayMapper.toWorkingDay(workingDayDto);
 

@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/api/v1/booking")
 @AllArgsConstructor
@@ -37,8 +39,7 @@ public class BookingController {
                                        @Max(value = Integer.MAX_VALUE,
                                                message = ValidationConstants.BOOKING_ID_CANNOT_BE_MORE_THEN_VALIDATION_MESSAGE)
                                        @NotNull(message = ValidationConstants.BOOKING_ID_CANNOT_BE_NULL_VALIDATION_MESSAGE)
-                                       Integer id) {
-        bookingFacade.findById(id);
+                                       UUID id) {
         return bookingFacade.findById(id);
     }
 

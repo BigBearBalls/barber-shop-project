@@ -16,10 +16,9 @@ import java.util.UUID;
 @Builder
 public class Booking {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bookings_id_gen")
-    @SequenceGenerator(name = "bookings_id_gen", sequenceName = "bookings_booking_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "booking_id")
-    private Integer id;
+    private UUID id;
 
     @Column(name = "client_id")
     private UUID clientId;
@@ -31,10 +30,10 @@ public class Booking {
     private LocalTime reservationEnd;
 
     @Column(name = "procedure_id")
-    private Integer procedureId;
+    private UUID procedureId;
 
     @Column(name = "working_day_id")
-    private Integer workingDayId;
+    private UUID workingDayId;
 
 
 }

@@ -22,7 +22,7 @@ public class BookingRequestDTO {
     @Max(value = Integer.MAX_VALUE,
             message = ValidationConstants.PROCEDURE_ID_CANNOT_BE_MORE_THEN_VALIDATION_MESSAGE)
     @NotNull(message = ValidationConstants.PROCEDURE_ID_CANNOT_BE_NULL_VALIDATION_MESSAGE)
-    Integer procedureId;
+    UUID procedureId;
 
     @NotNull(message = ValidationConstants.MASTER_ID_CANNOT_BE_NULL_VALIDATION_MESSAGE)
     UUID masterId;

@@ -12,9 +12,9 @@ public interface ProcedureService {
 
     IdResponseDTO save(CreateProcedureRequest request);
 
-    ProcedureDTO findProcedureByIdAndMasterId(Integer id, UUID masterId);
+    ProcedureDTO findProcedureByIdAndMasterId(UUID id, UUID masterId);
 
-    void subscribeOnProcedure(Integer procedureId, UUID masterId);
+    void subscribeOnProcedure(UUID procedureId, UUID masterId);
 
     ProceduresPageResponse getPageOfProcedures(Pageable pageable);
 }

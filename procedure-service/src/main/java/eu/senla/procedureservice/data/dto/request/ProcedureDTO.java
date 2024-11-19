@@ -5,13 +5,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProcedureDTO {
-    private String id;
+    private UUID id;
     private String procedureName;
     private BigDecimal procedurePrice;
-    private Integer procedureDuration;
+    private Integer duration;
 }

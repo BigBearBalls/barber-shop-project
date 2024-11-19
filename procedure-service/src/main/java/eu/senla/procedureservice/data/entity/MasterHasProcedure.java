@@ -15,13 +15,13 @@ import java.util.UUID;
 public class MasterHasProcedure {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "master_execution_id")
-    private Integer id;
+    private UUID id;
 
     @Column(name = "master_id")
     private UUID masterId;
 
     @Column(name = "procedure_id")
-    private Integer procedureId;
+    private UUID procedureId;
 }

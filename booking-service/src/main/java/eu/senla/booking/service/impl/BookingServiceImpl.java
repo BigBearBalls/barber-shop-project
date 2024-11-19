@@ -1,12 +1,12 @@
 package eu.senla.booking.service.impl;
 
 import eu.senla.booking.data.ProcedureDTO;
+import eu.senla.booking.data.WorkingDayDto;
 import eu.senla.booking.data.mapper.BookingMapper;
 import eu.senla.booking.data.request.AggregatedBooking;
 import eu.senla.booking.data.request.BookingRequestDTO;
 import eu.senla.booking.data.response.IdResponseDTO;
 import eu.senla.booking.entity.Booking;
-import eu.senla.booking.entity.WorkingDay;
 import eu.senla.booking.repository.BookingRepository;
 import eu.senla.booking.service.BookingService;
 import eu.senla.booking.service.exception.MasterNotWorkException;
@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalTime;
 import java.util.List;
+import java.util.UUID;
 
 import static eu.senla.booking.data.response.ErrorMessage.*;
 
@@ -34,7 +35,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public IdResponseDTO saveBooking(AggregatedBooking aggregatedBookingData, BookingRequestDTO bookingRequestDTO) {
 
-        WorkingDay workingMasterDay = aggregatedBookingData.getWorkingMasterDay();
+        WorkingDayDto workingMasterDay = aggregatedBookingData.getWorkingMasterDay();
         ProcedureDTO procedure = aggregatedBookingData.getProcedure();
 
         List<Booking> masterBookingsPerDay = bookingRepository
@@ -47,7 +48,6 @@ public class BookingServiceImpl implements BookingService {
 
         Booking booking = bookingMapper.toBooking(bookingRequestDTO, procedure,
                 workingMasterDay, bookingRequestDTO.getReservationStart().plusMinutes(procedure.getDuration()));
-
         bookingRepository.save(booking);
         log.info("Booking with id: ${} has been created", booking.getId());
         return new IdResponseDTO(booking.getId());
@@ -55,12 +55,12 @@ public class BookingServiceImpl implements BookingService {
 
     @Transactional
     @Override
-    public Booking findBookingById(int id) {
+    public Booking findBookingById(UUID id) {
         return (Booking) bookingRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(BOOKING_NOT_FOUND + id));
     }
 
-    private void checkFreeTime(WorkingDay workingDay,
+    private void checkFreeTime(WorkingDayDto workingDay,
                                List<Booking> bookings,
                                Integer duration,
                                LocalTime desiredStartTime) {

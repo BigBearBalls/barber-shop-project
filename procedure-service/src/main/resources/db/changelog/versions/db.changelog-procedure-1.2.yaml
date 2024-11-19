@@ -1,9 +1,0 @@
-databaseChangeLog:
-  - changeSet:
-      id: "procedure-service-1.2"
-      author: "Viachaslau Tsarankou"
-      changes:
-        - createSequence:
-            sequenceName: procedures_booking_id_seq
-            startValue: 1
-            incrementBy: 1

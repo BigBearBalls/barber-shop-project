@@ -42,3 +42,5 @@ feign:
       url: ${USER_SERVICE_URL}/api/v1/user
     procedure-service:
       url: ${PROCEDURE_SERVICE_URL}/api/v1/procedures
+    working-day-service:
+      url: ${WORKING_DAY_SERVICE_URL}/api/v1/working-days
