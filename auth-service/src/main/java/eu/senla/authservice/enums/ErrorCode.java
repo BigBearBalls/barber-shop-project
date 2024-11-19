@@ -12,6 +12,7 @@ public enum ErrorCode {
     ERR_USER_ALREADY_EXISTS("User with email '%s' already exists!"),
     ERR_JWT_VALIDATION_EXCEPTION("Something went wrong during jwt validation!"),
     ERR_HEADER_NOT_EXIST_OR_WRONG_VALUE("Header not exists or value is wrong!"),
+    ERR_METHOD_ARGUMENTS_VALIDATION_EXCEPTION("Method arguments validation failed!"),
     ERR_ACCESS_DENIED("Access Denied!");
 
     private final String message;
