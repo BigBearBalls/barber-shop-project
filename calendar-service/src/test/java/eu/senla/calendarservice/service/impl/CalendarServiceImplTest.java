@@ -68,7 +68,7 @@ class CalendarServiceImplTest {
 
         EmptyDateException exception = assertThrows(
                 EmptyDateException.class,
-                () -> calendarService.setWorkingDay(notExistingDate),
+                () -> calendarService.cancelDayOff(notExistingDate),
                 "Expected not exist date to throw InvalidDateException, but it didn't"
         );
 
