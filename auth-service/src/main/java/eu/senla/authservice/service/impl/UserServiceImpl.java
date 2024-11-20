@@ -2,6 +2,7 @@ package eu.senla.authservice.service.impl;
 
 import eu.senla.authservice.dto.RegistrationRequest;
 import eu.senla.authservice.enums.ErrorCode;
+import eu.senla.authservice.exception.ExistsException;
 import eu.senla.authservice.exception.LogExceptionWrapper;
 import eu.senla.authservice.exception.NotFoundException;
 import eu.senla.authservice.mapper.UserMapper;
@@ -28,6 +29,11 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UUID regUser(RegistrationRequest registrationRequest) {
+        if (userRepository.existsByEmail(registrationRequest.getEmail())) {
+            throw LogExceptionWrapper.logErrorException(new ExistsException(String.format(
+                    ErrorCode.ERR_USER_ALREADY_EXISTS.getMessage(), "email", registrationRequest.getEmail()),
+                    ErrorCode.ERR_USER_ALREADY_EXISTS));
+        }
         User user = userMapper.toEntity(registrationRequest);
         user.setRole(roleService.getRoleByValue(RoleValue.ROLE_CLIENT));
         return userRepository.save(user).getId();
