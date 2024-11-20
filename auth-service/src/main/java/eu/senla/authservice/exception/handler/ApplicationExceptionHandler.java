@@ -2,20 +2,24 @@ package eu.senla.authservice.exception.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.authservice.dto.exception.ExceptionResponse;
+import eu.senla.authservice.dto.exception.Violation;
 import eu.senla.authservice.enums.ErrorCode;
 import eu.senla.authservice.exception.ApiException;
 import feign.FeignException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -51,6 +55,15 @@ public class ApplicationExceptionHandler {
             log.error(ex.getMessage(), ex);
         }
         return ResponseEntity.status(httpStatus).body(exceptionResponse);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<?> validationExceptions(MethodArgumentNotValidException e, HttpServletRequest request) {
+        final List<Violation> violations = e.getBindingResult().getFieldErrors().stream()
+                .map(error -> new Violation(error.getField(), error.getDefaultMessage())).toList();
+        ExceptionResponse exceptionResponse = buildExceptionResponse(ErrorCode.ERR_METHOD_ARGUMENTS_VALIDATION_EXCEPTION,
+                violations.toString(), request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exceptionResponse);
     }
 
     private ExceptionResponse buildExceptionResponse(ApiException e, String uri) {
