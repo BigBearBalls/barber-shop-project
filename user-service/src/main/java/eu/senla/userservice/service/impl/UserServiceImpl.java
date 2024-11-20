@@ -3,6 +3,7 @@ package eu.senla.userservice.service.impl;
 import eu.senla.userservice.dto.UserDataDTO;
 import eu.senla.userservice.entity.User;
 import eu.senla.userservice.enums.ErrorCode;
+import eu.senla.userservice.exception.ExistsException;
 import eu.senla.userservice.exception.LogExceptionWrapper;
 import eu.senla.userservice.exception.NotFoundException;
 import eu.senla.userservice.mapper.UserMapper;
@@ -24,6 +25,11 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void createUser(UserDataDTO dto) {
+        if (userRepository.existsByPhoneNumber(dto.getPhoneNumber())) {
+            throw LogExceptionWrapper.logErrorException(new ExistsException(String.format(
+                    ErrorCode.ERR_USER_ALREADY_EXISTS.getMessage(), "phoneNumber", dto.getPhoneNumber()),
+                    ErrorCode.ERR_USER_ALREADY_EXISTS));
+        }
         User user = userMapper.toEntity(dto);
         userRepository.save(user);
     }
