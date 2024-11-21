@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/bookings")
+@RequestMapping("/api/v1/bookings/")
 @AllArgsConstructor
 @Validated
 public class BookingController {
