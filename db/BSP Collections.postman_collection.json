@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "453e5d39-1bb1-4e82-b452-3f1992b3336a",
-		"name": "BSP Collection",
+		"_postman_id": "f8794af4-d32c-4e1c-8b3d-427121102852",
+		"name": "BSP Collections",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "38840921"
 	},
@@ -80,156 +80,272 @@
 			]
 		},
 		{
-			"name": "1. Create booking",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"clientId\": \"8e3a34ac-119b-453d-bba7-478c23361d59\",\r\n  \"masterId\": \"c1e2d3f4-56a7-89b0-c1d2-456789ab0123\",\r\n  \"procedureId\": \"8\",\r\n  \"reservationStart\": \"13:45\",  \r\n  \"workingDate\" : \"2024-11-24\"\r\n}\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "User API Collention",
+			"item": []
+		},
+		{
+			"name": "Booking API Collection",
+			"item": [
+				{
+					"name": "1. Create booking",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"clientId\": \"8e3a34ac-119b-453d-bba7-478c23361d59\",\r\n  \"masterId\": \"c1e2d3f4-56a7-89b0-c1d2-456789ab0123\",\r\n  \"procedureId\": \"80747cea-d970-4658-b6b1-134bbbb7d899\",\r\n  \"reservationStart\": \"15:45\",  \r\n  \"workingDate\" : \"2024-12-15\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7080/api/v1/bookings",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7080",
+							"path": [
+								"api",
+								"v1",
+								"bookings"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:9003/bookings",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "9003",
-					"path": [
-						"bookings"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "2. Get exception(wrong working time)",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"clientId\": \"8e3a34ac-119b-453d-bba7-478c23361d59\",\r\n  \"masterId\": \"c1e2d3f4-56a7-89b0-c1d2-456789ab0123\",\r\n  \"procedureId\": \"8\",\r\n  \"reservationStart\": \"21:45\",  \r\n  \"workingDate\" : \"2024-11-24\"\r\n}\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "5. Get booking by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7080/api/v1/bookings/96e102c9-c91e-4463-9a29-519d3dc34818",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7080",
+							"path": [
+								"api",
+								"v1",
+								"bookings",
+								"96e102c9-c91e-4463-9a29-519d3dc34818"
+							]
 						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:9003/bookings",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "9003",
-					"path": [
-						"bookings"
-					]
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "3. Get exception(master doesn't work)",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"clientId\": \"8e3a34ac-119b-453d-bba7-478c23361d59\",\r\n  \"masterId\": \"c1e2d3f4-56a7-89b0-c1d2-456789ab0123\",\r\n  \"procedureId\": \"8\",\r\n  \"reservationStart\": \"21:45\",  \r\n  \"workingDate\" : \"2024-11-21\"\r\n}\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Procedure API Collection",
+			"item": [
+				{
+					"name": "Add new procedure",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"procedureName\":\"hair coloring\",\n    \"procedurePrice\":\"70\",\n    \"procedureDuration\":\"60\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7080/api/v1/procedures/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7080",
+							"path": [
+								"api",
+								"v1",
+								"procedures",
+								""
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:9003/bookings",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "9003",
-					"path": [
-						"bookings"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "4. Get exception(This time has already booked)",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"clientId\": \"8e3a34ac-119b-453d-bba7-478c23361d59\",\r\n  \"masterId\": \"c1e2d3f4-56a7-89b0-c1d2-456789ab0123\",\r\n  \"procedureId\": \"8\",\r\n  \"reservationStart\": \"11:15\",  \r\n  \"workingDate\" : \"2024-11-24\"\r\n}\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "Get procedure if master provide it",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7080/api/v1/procedures/1?masterId=48285916-11d3-4be8-b759-7d36ee7d4983",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7080",
+							"path": [
+								"api",
+								"v1",
+								"procedures",
+								"1"
+							],
+							"query": [
+								{
+									"key": "masterId",
+									"value": "48285916-11d3-4be8-b759-7d36ee7d4983"
+								}
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:9003/bookings",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "9003",
-					"path": [
-						"bookings"
-					]
+				{
+					"name": "Assign procedure to master",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7080/api/v1/procedures/3?masterId=8915bbde-5662-4728-bc66-f2d58577a29b",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7080",
+							"path": [
+								"api",
+								"v1",
+								"procedures",
+								"3"
+							],
+							"query": [
+								{
+									"key": "masterId",
+									"value": "8915bbde-5662-4728-bc66-f2d58577a29b"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all procedures",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7080/api/v1/procedures/?page=0&size=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7080",
+							"path": [
+								"api",
+								"v1",
+								"procedures",
+								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "5. Get booking by id",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:9003/bookings/2",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "9003",
-					"path": [
-						"bookings",
-						"2"
-					]
+			"name": "WorkingDay API Collection",
+			"item": [
+				{
+					"name": "Get working day by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7080/api/v1/working-days/c1e2d3f4-56a7-89b0-c1d2-456789ab0124",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7080",
+							"path": [
+								"api",
+								"v1",
+								"working-days",
+								"c1e2d3f4-56a7-89b0-c1d2-456789ab0124"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add working day",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"masterId\": \"c1e2d3f4-56a7-89b0-c1d2-456789ab0123\",\n    \"workingDate\": \"2024-12-15\",\n    \"workStart\": \"10:00\",\n    \"workEnd\": \"18:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7080/api/v1/working-days/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7080",
+							"path": [
+								"api",
+								"v1",
+								"working-days",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get master and working day",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7080/api/v1/working-days/c1e2d3f4-56a7-89b0-c1d2-456789ab0123/master/2024-12-15/date",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7080",
+							"path": [
+								"api",
+								"v1",
+								"working-days",
+								"c1e2d3f4-56a7-89b0-c1d2-456789ab0123",
+								"master",
+								"2024-12-15",
+								"date"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get exception(Not exists)",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:9003/bookings/546546",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "9003",
-					"path": [
-						"bookings",
-						"546546"
-					]
-				}
-			},
-			"response": []
+			]
 		},
 		{
 			"name": "Registration",
@@ -474,97 +590,6 @@
 			"response": []
 		},
 		{
-			"name": "Get page of procedures",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:7080/api/v1/procedures/?page=0&size=1",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7080",
-					"path": [
-						"api",
-						"v1",
-						"procedures",
-						""
-					],
-					"query": [
-						{
-							"key": "page",
-							"value": "0"
-						},
-						{
-							"key": "size",
-							"value": "1"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Add new procedure",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"procedureName\":\"asdd\",\n    \"procedurePrice\":\"123.123\",\n    \"procedureDuration\":\"20\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:7080/api/v1/procedures/",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7080",
-					"path": [
-						"api",
-						"v1",
-						"procedures",
-						""
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get procedure if master provide it (Exception)",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:7080/api/v1/procedures/1?masterId=48285916-11d3-4be8-b759-7d36ee7d4983",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7080",
-					"path": [
-						"api",
-						"v1",
-						"procedures",
-						"1"
-					],
-					"query": [
-						{
-							"key": "masterId",
-							"value": "48285916-11d3-4be8-b759-7d36ee7d4983"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Get user pass by Id (exception)",
 			"request": {
 				"method": "GET",
@@ -611,90 +636,6 @@
 						"user",
 						"8915bbde-5662-4728-bc66-f2d58577a29b",
 						"password"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get procedure if master provide it",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:7080/api/v1/procedures/1?masterId=8915bbde-5662-4728-bc66-f2d58577a29b",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7080",
-					"path": [
-						"api",
-						"v1",
-						"procedures",
-						"1"
-					],
-					"query": [
-						{
-							"key": "masterId",
-							"value": "8915bbde-5662-4728-bc66-f2d58577a29b"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Subscribe master on procedure (Not found)",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:7080/api/v1/procedures/3?masterId=8915bbde-5662-4728-bc66-f2d58577a29b",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7080",
-					"path": [
-						"api",
-						"v1",
-						"procedures",
-						"3"
-					],
-					"query": [
-						{
-							"key": "masterId",
-							"value": "8915bbde-5662-4728-bc66-f2d58577a29b"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Subscribe master on procedure",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:7080/api/v1/procedures/1?masterId=8915bbde-5662-4728-bc66-f2d58577a29b",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7080",
-					"path": [
-						"api",
-						"v1",
-						"procedures",
-						"1"
-					],
-					"query": [
-						{
-							"key": "masterId",
-							"value": "8915bbde-5662-4728-bc66-f2d58577a29b"
-						}
 					]
 				}
 			},

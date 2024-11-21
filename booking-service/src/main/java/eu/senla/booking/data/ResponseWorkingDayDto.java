@@ -1,16 +1,16 @@
 package eu.senla.booking.data;
 
-import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
 @Builder
-public class WorkingDayDto {
+@AllArgsConstructor
+public class ResponseWorkingDayDto {
 
     private UUID id;
     private UUID masterId;

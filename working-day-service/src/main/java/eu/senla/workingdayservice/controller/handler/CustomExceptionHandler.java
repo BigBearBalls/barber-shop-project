@@ -5,6 +5,7 @@ import eu.senla.workingdayservice.exception.EntityExistException;
 import eu.senla.workingdayservice.exception.NotFoundByDateAndByIdException;
 import eu.senla.workingdayservice.exception.NotFoundByDateException;
 import eu.senla.workingdayservice.exception.NotFoundByIdException;
+import eu.senla.workingdayservice.util.ExceptionInfo;
 import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import org.springframework.http.HttpStatus;
@@ -19,39 +20,45 @@ public class CustomExceptionHandler {
     public ResponseEntity<ExceptionResponse> handleNotFoundByDateException(HttpServletRequest request, AbstractException exception) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
-                .body(new ExceptionResponse(exception.getMessage(),
-                                            exception.getCode(),
-                                            request.getRequestURI(),
-                                            LocalDateTime.now()));
+                .body(exceptionResponseBuilder(exception.getCode(), exception.getMessage(), request.getRequestURI()));
     }
 
     @ExceptionHandler(NotFoundByIdException.class)
     public ResponseEntity<ExceptionResponse> handleNotFoundByIdException(HttpServletRequest request, AbstractException exception) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
-                .body(new ExceptionResponse(exception.getMessage(),
-                                            exception.getCode(),
-                                            request.getRequestURI(),
-                                            LocalDateTime.now()));
+                .body(exceptionResponseBuilder(exception.getCode(), exception.getMessage(), request.getRequestURI()));
     }
 
     @ExceptionHandler(NotFoundByDateAndByIdException.class)
     public ResponseEntity<ExceptionResponse> handleNotFoundByDateAndByIdException(HttpServletRequest request, AbstractException exception) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
-                .body(new ExceptionResponse(exception.getMessage(),
-                                            exception.getCode(),
-                                            request.getRequestURI(),
-                                            LocalDateTime.now()));
+                .body(exceptionResponseBuilder(exception.getCode(), exception.getMessage(), request.getRequestURI()));
     }
 
     @ExceptionHandler(EntityExistException.class)
     public ResponseEntity<ExceptionResponse> handleEntityExistException(HttpServletRequest request, AbstractException exception) {
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
-                .body(new ExceptionResponse(exception.getMessage(),
-                                            exception.getCode(),
-                                            request.getRequestURI(),
-                                            LocalDateTime.now()));
+                .body(exceptionResponseBuilder(exception.getCode(), exception.getMessage(), request.getRequestURI()));
     }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ExceptionResponse> handleEntityExistException(HttpServletRequest request, Exception exception) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(exceptionResponseBuilder(ExceptionInfo.HANDLER_EXCEPTION.getExceptionCode(),
+                        ExceptionInfo.HANDLER_EXCEPTION.getExceptionMessage(), request.getRequestURI()));
+    }
+
+    private ExceptionResponse exceptionResponseBuilder(String errorCode, String message, String path){
+        return ExceptionResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .errorCode(errorCode)
+                .message(message)
+                .path(path)
+                .build();
+    }
+
 }

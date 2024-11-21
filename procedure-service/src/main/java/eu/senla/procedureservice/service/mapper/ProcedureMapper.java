@@ -25,7 +25,7 @@ public interface ProcedureMapper {
     @Mapping(target = "duration", source = "procedureDuration")
     ProcedureDTO toProcedureDTO(Procedure procedure);
 
-    default List<ProcedureDTO> toListDTO(Page<Procedure> procedures) {
+    default List<ProcedureDTO> toListDTO(List<Procedure> procedures) {
         return procedures.stream().map(this::toProcedureDTO).toList();
     }
 }

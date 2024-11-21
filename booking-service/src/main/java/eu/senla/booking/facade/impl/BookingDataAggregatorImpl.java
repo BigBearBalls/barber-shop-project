@@ -4,8 +4,8 @@ import eu.senla.booking.client.ProcedureClient;
 import eu.senla.booking.client.UserClient;
 import eu.senla.booking.client.WorkingDayClient;
 import eu.senla.booking.data.ProcedureDTO;
+import eu.senla.booking.data.ResponseWorkingDayDto;
 import eu.senla.booking.data.UserDTO;
-import eu.senla.booking.data.WorkingDayDto;
 import eu.senla.booking.data.mapper.BookingResponseMapper;
 import eu.senla.booking.data.request.AggregatedBooking;
 import eu.senla.booking.data.request.BookingRequestDTO;
@@ -29,7 +29,7 @@ public class BookingDataAggregatorImpl implements BookingDataAggregator {
 
     @Override
     public AggregatedBooking collectDataForSaving(BookingRequestDTO bookingRequestDto) {
-        WorkingDayDto workingMasterDay = workingDayClient.findByMasterIdAndWorkingDate(bookingRequestDto.getMasterId(),
+        ResponseWorkingDayDto workingMasterDay = workingDayClient.findByMasterIdAndWorkingDate(bookingRequestDto.getMasterId(),
                 bookingRequestDto.getWorkingDate());
 
 
@@ -37,13 +37,13 @@ public class BookingDataAggregatorImpl implements BookingDataAggregator {
                 .findProcedureByIdAndMasterId(bookingRequestDto.getProcedureId(),
                         bookingRequestDto.getMasterId());
 
-        return new AggregatedBooking(workingMasterDay, procedure);
+        return new AggregatedBooking(workingMasterDay, procedure, bookingRequestDto);
     }
 
     @Override
     public BookingResponseDTO collectResponseData(Booking booking) {
 
-        WorkingDayDto workingDay = workingDayClient.findById(booking.getWorkingDayId());
+        ResponseWorkingDayDto workingDay = workingDayClient.findById(booking.getWorkingDayId());
         ProcedureDTO procedure = procedureClient.findProcedureByIdAndMasterId(booking.getProcedureId(),
                 workingDay.getMasterId());
 

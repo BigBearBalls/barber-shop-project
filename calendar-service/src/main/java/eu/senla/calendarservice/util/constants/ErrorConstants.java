@@ -10,5 +10,7 @@ public class ErrorConstants {
     public static final String DATE_IS_ALREADY_EXIST_ERROR_MESSAGE = "This date is already day-off";
     public static final String EMPTY_DATE_ERROR_CODE = "400003";
     public static final String EMPTY_DATE_ERROR_MESSAGE = "This day is already a working day";
+    public static final String EXCEPTION_ERROR_CODE = "500009";
+    public static final String EXCEPTION_ERROR_MESSAGE = "Application exception";
 
 }

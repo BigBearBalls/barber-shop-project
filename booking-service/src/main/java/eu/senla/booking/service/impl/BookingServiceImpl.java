@@ -1,10 +1,9 @@
 package eu.senla.booking.service.impl;
 
 import eu.senla.booking.data.ProcedureDTO;
-import eu.senla.booking.data.WorkingDayDto;
+import eu.senla.booking.data.ResponseWorkingDayDto;
 import eu.senla.booking.data.mapper.BookingMapper;
 import eu.senla.booking.data.request.AggregatedBooking;
-import eu.senla.booking.data.request.BookingRequestDTO;
 import eu.senla.booking.data.response.IdResponseDTO;
 import eu.senla.booking.entity.Booking;
 import eu.senla.booking.repository.BookingRepository;
@@ -33,21 +32,16 @@ public class BookingServiceImpl implements BookingService {
 
     @Transactional
     @Override
-    public IdResponseDTO saveBooking(AggregatedBooking aggregatedBookingData, BookingRequestDTO bookingRequestDTO) {
+    public IdResponseDTO saveBooking(AggregatedBooking aggregatedBookingData) {
 
-        WorkingDayDto workingMasterDay = aggregatedBookingData.getWorkingMasterDay();
+        ResponseWorkingDayDto workingMasterDay = aggregatedBookingData.getWorkingMasterDay();
         ProcedureDTO procedure = aggregatedBookingData.getProcedure();
 
-        List<Booking> masterBookingsPerDay = bookingRepository
-                .findAllByWorkingDayId(workingMasterDay.getId());
+        checkFreeTime(workingMasterDay,procedure.getDuration(),
+                aggregatedBookingData.getBookingRequest().getReservationStart());
 
-        checkFreeTime(workingMasterDay, masterBookingsPerDay,
-                procedure.getDuration(),
-                bookingRequestDTO.getReservationStart());
-
-
-        Booking booking = bookingMapper.toBooking(bookingRequestDTO, procedure,
-                workingMasterDay, bookingRequestDTO.getReservationStart().plusMinutes(procedure.getDuration()));
+        Booking booking = bookingMapper.toBooking(aggregatedBookingData.getBookingRequest(), procedure,
+                workingMasterDay, aggregatedBookingData.getBookingRequest().getReservationStart().plusMinutes(procedure.getDuration()));
         bookingRepository.save(booking);
         log.info("Booking with id: ${} has been created", booking.getId());
         return new IdResponseDTO(booking.getId());
@@ -56,14 +50,16 @@ public class BookingServiceImpl implements BookingService {
     @Transactional
     @Override
     public Booking findBookingById(UUID id) {
-        return (Booking) bookingRepository.findById(id)
+        return bookingRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(BOOKING_NOT_FOUND + id));
     }
 
-    private void checkFreeTime(WorkingDayDto workingDay,
-                               List<Booking> bookings,
+    private void checkFreeTime(ResponseWorkingDayDto workingDay,
                                Integer duration,
                                LocalTime desiredStartTime) {
+
+        List<Booking> masterBookingsPerDay = bookingRepository
+                .findAllByWorkingDayId(workingDay.getId());
 
         LocalTime workTimeStart = workingDay.getWorkStart();
         LocalTime workTimeEnd = workingDay.getWorkEnd();
@@ -73,7 +69,7 @@ public class BookingServiceImpl implements BookingService {
             throw new MasterNotWorkException(MASTER_DOESNT_WORK);
         }
 
-        for (Booking booking : bookings) {
+        for (Booking booking : masterBookingsPerDay) {
             LocalTime bookingTimeStart = booking.getReservationStart();
             LocalTime bookingTimeEnd = booking.getReservationEnd();
 

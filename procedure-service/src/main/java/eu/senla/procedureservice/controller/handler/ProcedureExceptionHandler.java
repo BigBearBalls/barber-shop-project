@@ -18,7 +18,7 @@ public class ProcedureExceptionHandler {
 
     @ExceptionHandler(ApiException.class)
     public ResponseEntity<?> handleApiException(ApiException e, HttpServletRequest request) {
-        return ResponseEntity.status(e.getStatus()).body(buildExceptionResponse(e, request.getRequestURI()));
+        return ResponseEntity.status(e.getStatus()).body(buildExceptionResponse(ErrorCode.APP_EXCEPTION, e.getMessage(), request.getRequestURI()));
     }
 
 //    @ExceptionHandler(AuthorizationDeniedException.class)
@@ -38,11 +38,12 @@ public class ProcedureExceptionHandler {
                 buildExceptionResponse(ErrorCode.ERR_UNKNOWN_CODE, e.getMessage(), request.getRequestURI()));
     }
 
-    private ExceptionResponse buildExceptionResponse(ApiException e, String uri) {
-        return buildExceptionResponse(e.getErrorCode(), e.getMessage(), uri);
-    }
-
-    private ExceptionResponse buildExceptionResponse(ErrorCode errorCode, String message, String uri) {
-        return new ExceptionResponse(LocalDateTime.now(), errorCode, message, uri);
+    private ExceptionResponse buildExceptionResponse(ErrorCode errorCode, String message, String path) {
+        return ExceptionResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .errorCode(errorCode)
+                .message(message)
+                .path(path)
+                .build();
     }
 }

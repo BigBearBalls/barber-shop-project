@@ -26,8 +26,7 @@ public class BookingFacadeImpl implements BookingFacade {
         AggregatedBooking aggregatedBookingData = bookingDataAggregator
                 .collectDataForSaving(bookingRequestDto);
 
-        return bookingService
-                .saveBooking(aggregatedBookingData, bookingRequestDto);
+        return bookingService.saveBooking(aggregatedBookingData);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package eu.senla.booking.client;
 
 import eu.senla.booking.configuration.FeignConfig;
-import eu.senla.booking.data.WorkingDayDto;
+import eu.senla.booking.data.ResponseWorkingDayDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +14,10 @@ import java.util.UUID;
 public interface WorkingDayClient {
 
     @GetMapping("{masterId}/master/{date}/date")
-    WorkingDayDto findByMasterIdAndWorkingDate(@PathVariable UUID masterId,
-                                               @PathVariable @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate date);
+    ResponseWorkingDayDto findByMasterIdAndWorkingDate(@PathVariable UUID masterId,
+                                                       @PathVariable @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate date);
 
     @GetMapping("{id}")
-    WorkingDayDto findById(@PathVariable UUID id);
+    ResponseWorkingDayDto findById(@PathVariable UUID id);
 
 }

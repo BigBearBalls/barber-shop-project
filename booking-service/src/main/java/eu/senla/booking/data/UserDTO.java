@@ -1,11 +1,13 @@
 package eu.senla.booking.data;
 
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
 @Builder
 public class UserDTO {
     private UUID id;

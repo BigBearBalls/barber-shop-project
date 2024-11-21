@@ -1,8 +1,8 @@
 package eu.senla.booking.data.mapper;
 
 import eu.senla.booking.data.ProcedureDTO;
+import eu.senla.booking.data.ResponseWorkingDayDto;
 import eu.senla.booking.data.UserDTO;
-import eu.senla.booking.data.WorkingDayDto;
 import eu.senla.booking.data.response.BookingResponseDTO;
 import eu.senla.booking.entity.Booking;
 import org.mapstruct.Mapper;
@@ -22,6 +22,6 @@ public interface BookingResponseMapper {
     @Mapping(source = "workingDay.workingDate", target = "date")
     @Mapping(source = "booking.reservationStart", target = "time")
     BookingResponseDTO toBookingResponseDTO(UserDTO client, UserDTO master,
-                                            ProcedureDTO procedure, Booking booking, WorkingDayDto workingDay);
+                                            ProcedureDTO procedure, Booking booking, ResponseWorkingDayDto workingDay);
 
 }

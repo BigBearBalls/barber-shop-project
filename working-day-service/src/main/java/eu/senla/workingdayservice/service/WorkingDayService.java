@@ -1,14 +1,16 @@
 package eu.senla.workingdayservice.service;
 
-import eu.senla.workingdayservice.dto.WorkingDayDto;
+import eu.senla.workingdayservice.dto.RequestWorkingDayDto;
+import eu.senla.workingdayservice.dto.ResponseWorkingDayDto;
+
 import java.time.LocalDate;
 import java.util.UUID;
 
 public interface WorkingDayService {
 
-    WorkingDayDto findById(UUID id);
+    ResponseWorkingDayDto findById(UUID id);
 
-    UUID save(WorkingDayDto workingDayDto);
+    UUID save(RequestWorkingDayDto requestWorkingDayDto);
 
-    WorkingDayDto findByMasterAndWorkingDate(UUID master, LocalDate workingDate);
+    ResponseWorkingDayDto findByMasterAndWorkingDate(UUID master, LocalDate workingDate);
 }

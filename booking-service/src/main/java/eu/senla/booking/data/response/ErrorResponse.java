@@ -1,13 +1,20 @@
 package eu.senla.booking.data.response;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
 @AllArgsConstructor
+@Builder
 public class ErrorResponse {
-    private String status;
+    private LocalDateTime timestamp;
+    private String errorCode;
     private String message;
-    private int code;
+    private String path;
 
 }

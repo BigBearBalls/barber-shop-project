@@ -8,7 +8,7 @@ import eu.senla.booking.entity.Booking;
 import java.util.UUID;
 
 public interface BookingService {
-    IdResponseDTO saveBooking(AggregatedBooking aggregatedBookingData, BookingRequestDTO bookingRequestDTO);
+    IdResponseDTO saveBooking(AggregatedBooking aggregatedBookingData);
 
     Booking findBookingById(UUID id);
 }

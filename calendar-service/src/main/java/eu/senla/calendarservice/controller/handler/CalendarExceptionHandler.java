@@ -40,6 +40,13 @@ public class CalendarExceptionHandler {
                 request.getRequestURI()));
     }
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleException(HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponseBuilder(
+                ErrorConstants.EXCEPTION_ERROR_MESSAGE, ErrorConstants.EXCEPTION_ERROR_CODE,
+                request.getRequestURI()));
+    }
+
     private ErrorResponse errorResponseBuilder(String message, String errorCode, String path) {
         return ErrorResponse.builder()
                 .timestamp(LocalDateTime.now())
