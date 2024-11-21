@@ -32,7 +32,6 @@ public class ProcedureServiceImpl implements ProcedureService {
     private final ProcedureRepository procedureRepository;
     private final ProcedureMapper procedureMapper;
     private final MasterHasProcedureService masterHasProcedureService;
-    private final MasterHasProcedureRepository masterHasProcedureRepository;
 
     @Override
     @Transactional
@@ -51,7 +50,7 @@ public class ProcedureServiceImpl implements ProcedureService {
 
     @Override
     @Transactional
-    public ProcedureDTO findProcedureByIdAndMasterId(Integer id, UUID masterId) {
+    public ProcedureDTO findProcedureByIdAndMasterId(UUID id, UUID masterId) {
         if (!masterHasProcedureService.checkMasterHasProcedure(id, masterId)) {
             throw LogExceptionWrapper.logErrorException(new NotFoundException(
                     ErrorCode.ERR_MASTER_DOESNT_PROVIDE_THIS_PROCEDURE));
@@ -65,7 +64,7 @@ public class ProcedureServiceImpl implements ProcedureService {
 
     @Override
     @Transactional
-    public void subscribeOnProcedure(Integer procedureId, UUID masterId) {
+    public void assignProcedureToMaster(UUID procedureId, UUID masterId) {
         if (!procedureRepository.existsById(procedureId)) {
             throw LogExceptionWrapper.logErrorException(new NotFoundException(String.format(
                     ErrorCode.ERR_PROCEDURE_NOT_FOUND.getMessage(), "id", procedureId), ErrorCode.ERR_PROCEDURE_NOT_FOUND));
@@ -75,9 +74,8 @@ public class ProcedureServiceImpl implements ProcedureService {
 
     @Override
     @Transactional
-    public ProceduresPageResponse getPageOfProcedures(Pageable pageable) {
-        Page<Procedure> procedurePage = procedureRepository.findAll(pageable);
-        List<ProcedureDTO> procedureDTOS = procedureMapper.toListDTO(procedurePage);
-        return new ProceduresPageResponse(procedureDTOS, procedurePage.getTotalElements());
+    public List<ProcedureDTO> getAllProcedures() {
+        List<Procedure> procedures = procedureRepository.findAll();
+        return procedureMapper.toListDTO(procedures);
     }
 }

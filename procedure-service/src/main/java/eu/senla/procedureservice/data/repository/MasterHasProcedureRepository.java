@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface MasterHasProcedureRepository extends JpaRepository<MasterHasProcedure, Integer> {
+public interface MasterHasProcedureRepository extends JpaRepository<MasterHasProcedure, UUID> {
 
-    boolean existsByProcedureIdAndMasterId(Integer procedureId, UUID masterId);
+    boolean existsByProcedureIdAndMasterId(UUID procedureId, UUID masterId);
 }

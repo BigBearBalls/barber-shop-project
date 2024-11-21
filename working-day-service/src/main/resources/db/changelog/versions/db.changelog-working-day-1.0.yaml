@@ -3,17 +3,13 @@ databaseChangeLog:
       id: working-day-table
       author: Yevgany Tyurin
       changes:
-        - createSequence:
-            sequenceName: working_day_service_schema.working_days_working_day_id_seq
-            startValue: 1
-            incrementBy: 1
         - createTable:
             schemaName: working_day_service_schema
             tableName: working_days
             columns:
               - column:
                   name: working_day_id
-                  type: INTEGER
+                  type: uuid
                   constraints:
                     primaryKey: true
                     nullable: false
@@ -41,14 +37,3 @@ databaseChangeLog:
                   type: TIME
                   constraints:
                     nullable: false
-
-  - changeSet:
-      id: set-working-day-sequence-generator
-      author: Yevgany Tyurin
-      changes:
-        - addAutoIncrement:
-            schemaName: working_day_service_schema
-            columnName: working_day_id
-            tableName: working_days
-            incrementBy: 1
-            startWith: 1

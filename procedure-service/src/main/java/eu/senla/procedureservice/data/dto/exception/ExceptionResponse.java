@@ -1,8 +1,22 @@
 package eu.senla.procedureservice.data.dto.exception;
 
 import eu.senla.procedureservice.enums.ErrorCode;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-public record ExceptionResponse(LocalDateTime timestamp, ErrorCode code, String message, String path) {
+@Getter
+@Setter
+@AllArgsConstructor
+@Builder
+public class ExceptionResponse {
+
+    private LocalDateTime timestamp;
+    private ErrorCode errorCode;
+    private String message;
+    private String path;
+
 }

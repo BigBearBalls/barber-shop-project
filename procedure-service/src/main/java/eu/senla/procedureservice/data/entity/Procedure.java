@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,9 +18,8 @@ public class Procedure {
 
     @Id
     @Column(name = "procedure_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "procedures_id_gen")
-    @SequenceGenerator(name = "procedures_id_gen", sequenceName = "procedures_booking_id_seq", allocationSize = 1)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column(name = "procedure_name")
     private String procedureName;

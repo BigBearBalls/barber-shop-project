@@ -9,7 +9,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: procedure_id
-                  type: INTEGER
+                  type: uuid
                   constraints:
                     primaryKey: true
                     nullable: false

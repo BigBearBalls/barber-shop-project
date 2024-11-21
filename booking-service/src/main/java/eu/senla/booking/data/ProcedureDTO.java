@@ -1,16 +1,21 @@
 package eu.senla.booking.data;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
-@Data
+@Getter
+@Setter
 @Builder
+@AllArgsConstructor
 public class ProcedureDTO {
 
-    private Integer id;
-    private String name;
-    private BigDecimal price;
+    private UUID id;
+    private String procedureName;
+    private BigDecimal procedurePrice;
     private Integer duration;
 }

@@ -12,5 +12,5 @@ import java.util.UUID;
 public interface ProcedureClient {
 
     @GetMapping("/{id}")
-    ProcedureDTO findProcedureByIdAndMasterId(@PathVariable Integer id, @RequestParam UUID masterId);
+    ProcedureDTO findProcedureByIdAndMasterId(@PathVariable UUID id, @RequestParam UUID masterId);
 }

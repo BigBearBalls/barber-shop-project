@@ -1,43 +1,39 @@
 package eu.senla.booking.controller.handler;
 
+import eu.senla.booking.constant.ErrorConstants;
 import eu.senla.booking.data.response.ErrorResponse;
 import eu.senla.booking.service.exception.*;
-import feign.FeignException;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.util.Optional;
+
 
 @RestControllerAdvice
-@Slf4j
 public class CustomErrorHandler {
 
-    @ExceptionHandler(ResourceNotFoundException.class)
-    @ResponseBody
-    public ResponseEntity<ErrorResponse> handleResourceNotFound(ResourceNotFoundException ex) {
-        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND.toString(),
-                ex.getMessage(), HttpStatus.NOT_FOUND.value());
-        log.warn(ex.getMessage());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(errorResponse);
+    @ExceptionHandler(ApplicationException.class)
+    public ResponseEntity<ErrorResponse> handleResourceNotFound(HttpServletRequest request, ApplicationException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(errorResponseBuilder(ErrorConstants.HANDLE_RESOURCE_NOT_FOUND_BAD_REQUEST, ex.getMessage(), request.getRequestURI()));
     }
 
-    @ExceptionHandler({TimeAlreadyBookedException.class, MasterNotWorkException.class})
-    @ResponseBody
-    public ResponseEntity<ErrorResponse> handleResourceNotFound(ApplicationException ex) {
-        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.toString(),
-                ex.getMessage(), HttpStatus.BAD_REQUEST.value());
-        log.warn(ex.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(errorResponse);
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleException(HttpServletRequest request, ApplicationException ex) {
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+                .body(errorResponseBuilder(ErrorConstants.HANDLE_EXCEPTION, ex.getMessage(), request.getRequestURI()));
+    }
+
+    private ErrorResponse errorResponseBuilder(String errorCode, String message, String path) {
+        return ErrorResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .errorCode(errorCode)
+                .message(message)
+                .path(path)
+                .build();
     }
 
 //    @ExceptionHandler(FeignException.class)

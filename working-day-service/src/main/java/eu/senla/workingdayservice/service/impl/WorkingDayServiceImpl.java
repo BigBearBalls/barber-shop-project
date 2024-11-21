@@ -1,11 +1,13 @@
-package eu.senla.workingdayservice.service;
+package eu.senla.workingdayservice.service.impl;
 
-import eu.senla.workingdayservice.dto.WorkingDayDto;
+import eu.senla.workingdayservice.dto.RequestWorkingDayDto;
+import eu.senla.workingdayservice.dto.ResponseWorkingDayDto;
 import eu.senla.workingdayservice.entity.WorkingDay;
 import eu.senla.workingdayservice.exception.NotFoundByDateAndByIdException;
 import eu.senla.workingdayservice.exception.NotFoundByIdException;
 import eu.senla.workingdayservice.mapper.WorkingDayMapper;
 import eu.senla.workingdayservice.repository.WorkingDayRepository;
+import eu.senla.workingdayservice.service.WorkingDayService;
 import eu.senla.workingdayservice.util.ExceptionInfo;
 import java.time.LocalDate;
 import java.util.UUID;
@@ -22,7 +24,7 @@ public class WorkingDayServiceImpl implements WorkingDayService {
 
     @Override
     @Transactional(readOnly = true)
-    public WorkingDayDto findById(int id) {
+    public ResponseWorkingDayDto findById(UUID id) {
             return workingDayMapper.toWorkingDayDto(workingDayRepository
                     .findById(id)
                     .orElseThrow(() -> new NotFoundByIdException(ExceptionInfo.WORKING_DAY_NOT_FOUND_BY_ID.getExceptionCode(),
@@ -31,9 +33,9 @@ public class WorkingDayServiceImpl implements WorkingDayService {
 
     @Override
     @Transactional
-    public Integer save(WorkingDayDto workingDayDto) {
+    public UUID save(RequestWorkingDayDto requestWorkingDayDto) {
 
-        WorkingDay workingDay = workingDayMapper.toWorkingDay(workingDayDto);
+        WorkingDay workingDay = workingDayMapper.toWorkingDay(requestWorkingDayDto);
 
         if(workingDayRepository.existsWorkingDayByMasterIdAndWorkingDate(workingDay.getMasterId(), workingDay.getWorkingDate())) {
             throw new NotFoundByDateAndByIdException(ExceptionInfo.WORKING_DAY_NOT_FOUND_BY_ID_DATE.getExceptionCode(),
@@ -45,7 +47,7 @@ public class WorkingDayServiceImpl implements WorkingDayService {
 
     @Override
     @Transactional(readOnly = true)
-    public WorkingDayDto findByMasterAndWorkingDate(UUID masterId, LocalDate workingDate) {
+    public ResponseWorkingDayDto findByMasterAndWorkingDate(UUID masterId, LocalDate workingDate) {
 
         return workingDayMapper
                 .toWorkingDayDto(workingDayRepository

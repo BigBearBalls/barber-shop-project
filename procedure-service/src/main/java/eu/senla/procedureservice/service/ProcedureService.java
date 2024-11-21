@@ -6,15 +6,16 @@ import eu.senla.procedureservice.data.dto.response.IdResponseDTO;
 import eu.senla.procedureservice.data.dto.response.ProceduresPageResponse;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface ProcedureService {
 
     IdResponseDTO save(CreateProcedureRequest request);
 
-    ProcedureDTO findProcedureByIdAndMasterId(Integer id, UUID masterId);
+    ProcedureDTO findProcedureByIdAndMasterId(UUID id, UUID masterId);
 
-    void subscribeOnProcedure(Integer procedureId, UUID masterId);
+    void assignProcedureToMaster(UUID procedureId, UUID masterId);
 
-    ProceduresPageResponse getPageOfProcedures(Pageable pageable);
+    List<ProcedureDTO> getAllProcedures();
 }

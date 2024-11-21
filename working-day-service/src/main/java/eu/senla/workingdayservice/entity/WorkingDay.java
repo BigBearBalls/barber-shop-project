@@ -26,10 +26,9 @@ import lombok.ToString;
 public class WorkingDay {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "working_days_id_gen")
-    @SequenceGenerator(name = "working_days_id_gen", sequenceName = "working_days_working_day_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "working_day_id")
-    private Integer id;
+    private UUID id;
 
     @Column(name = "master_id")
     private UUID masterId;

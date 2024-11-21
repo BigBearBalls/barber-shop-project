@@ -1,11 +1,15 @@
 package eu.senla.booking.data.response;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+import java.util.UUID;
+
+@Getter
+@Setter
 @AllArgsConstructor
 public class IdResponseDTO {
-    private int id;
+    private UUID id;
 }
 

@@ -5,8 +5,10 @@ import eu.senla.booking.data.request.BookingRequestDTO;
 import eu.senla.booking.data.response.IdResponseDTO;
 import eu.senla.booking.entity.Booking;
 
-public interface BookingService {
-    IdResponseDTO saveBooking(AggregatedBooking aggregatedBookingData, BookingRequestDTO bookingRequestDTO);
+import java.util.UUID;
 
-    Booking findBookingById(int id);
+public interface BookingService {
+    IdResponseDTO saveBooking(AggregatedBooking aggregatedBookingData);
+
+    Booking findBookingById(UUID id);
 }

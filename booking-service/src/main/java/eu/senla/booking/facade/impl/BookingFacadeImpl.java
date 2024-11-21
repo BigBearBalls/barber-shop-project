@@ -11,6 +11,8 @@ import eu.senla.booking.service.BookingService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @AllArgsConstructor
 public class BookingFacadeImpl implements BookingFacade {
@@ -24,12 +26,11 @@ public class BookingFacadeImpl implements BookingFacade {
         AggregatedBooking aggregatedBookingData = bookingDataAggregator
                 .collectDataForSaving(bookingRequestDto);
 
-        return bookingService
-                .saveBooking(aggregatedBookingData, bookingRequestDto);
+        return bookingService.saveBooking(aggregatedBookingData);
     }
 
     @Override
-    public BookingResponseDTO findById(int id) {
+    public BookingResponseDTO findById(UUID id) {
 
         Booking foundBooking = bookingService.findBookingById(id);
 

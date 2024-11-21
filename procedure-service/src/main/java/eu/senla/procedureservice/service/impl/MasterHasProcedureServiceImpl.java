@@ -17,13 +17,13 @@ public class MasterHasProcedureServiceImpl implements MasterHasProcedureService 
 
     @Override
     @Transactional
-    public boolean checkMasterHasProcedure(Integer procedureId, UUID masterId) {
+    public boolean checkMasterHasProcedure(UUID procedureId, UUID masterId) {
         return masterHasProcedureRepository.existsByProcedureIdAndMasterId(procedureId, masterId);
     }
 
     @Override
     @Transactional
-    public void subscribeOnProcedure(Integer procedureId, UUID masterId) {
+    public void subscribeOnProcedure(UUID procedureId, UUID masterId) {
         if (!masterHasProcedureRepository.existsByProcedureIdAndMasterId(procedureId, masterId)) {
             MasterHasProcedure masterHasProcedure = MasterHasProcedure.builder()
                     .procedureId(procedureId)

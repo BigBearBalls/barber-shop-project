@@ -9,8 +9,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: master_execution_id
-                  type: INT
-                  autoIncrement: true
+                  type: UUID
                   constraints:
                     primaryKey: true
                     nullable: false
@@ -23,7 +22,7 @@ databaseChangeLog:
 
               - column:
                   name: procedure_id
-                  type: INT
+                  type: uuid
                   constraints:
                     nullable: false
 

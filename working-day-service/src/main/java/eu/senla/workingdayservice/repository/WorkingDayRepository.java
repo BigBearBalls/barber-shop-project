@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface WorkingDayRepository extends JpaRepository<WorkingDay, Integer> {
+public interface WorkingDayRepository extends JpaRepository<WorkingDay, UUID> {
 
     Boolean existsWorkingDayByMasterIdAndWorkingDate(UUID masterId, LocalDate date);
 

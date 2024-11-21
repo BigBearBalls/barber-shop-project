@@ -22,7 +22,7 @@ spring:
           - id: booking-service-route
             uri: http://booking-service:8080
             predicates:
-              - Path=/api/v1/booking/**
+              - Path=/api/v1/bookings/**
             filters:
               - AddRequestHeader=X-Request-Api-Key, ${API_KEY}
               - AddRequestHeader=X-Request-Source, EXTERNAL
@@ -47,6 +47,14 @@ spring:
             uri: http://calendar-service:8080
             predicates:
               - Path=/api/v1/calendars/**
+            filters:
+              - AddRequestHeader=X-Request-Api-Key, ${API_KEY}
+              - AddRequestHeader=X-Request-Source, EXTERNAL
+
+          - id: working-day-service
+            uri: http://working-day-service:8080
+            predicates:
+              - Path=/api/v1/working-days/**
             filters:
               - AddRequestHeader=X-Request-Api-Key, ${API_KEY}
               - AddRequestHeader=X-Request-Source, EXTERNAL
