@@ -1,46 +1,55 @@
 package eu.senla.authservice.service.impl;
 
+import eu.senla.authservice.client.UserDataClient;
 import eu.senla.authservice.component.JwtUtils;
 import eu.senla.authservice.dto.LoginRequest;
 import eu.senla.authservice.dto.LoginResponse;
 import eu.senla.authservice.dto.RegistrationRequest;
-import eu.senla.authservice.dto.UserDTO;
+import eu.senla.authservice.dto.UserDataDTO;
 import eu.senla.authservice.enums.ErrorCode;
 import eu.senla.authservice.exception.AuthenticationException;
+import eu.senla.authservice.mapper.UserMapper;
+import eu.senla.authservice.model.User;
 import eu.senla.authservice.service.AuthService;
 import eu.senla.authservice.service.UserService;
+import eu.senla.authservice.urility.CallbackExceptionWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
     private final UserService userService;
+    private final UserDataClient userDataClient;
     private final JwtUtils jwtUtils;
-
+    private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
 
     @Override
     public void regUser(RegistrationRequest registrationRequest) {
         registrationRequest.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
-        userService.regUser(registrationRequest);
+        UserDataDTO userDataDTO = userMapper.toUserInfoDTO(registrationRequest);
+        UUID userId = userService.regUser(registrationRequest);
+        userDataDTO.setId(userId);
+        CallbackExceptionWrapper.wrap(() -> userDataClient.createUser(userDataDTO),
+                () -> userService.deleteUserById(userId));
     }
 
     @Override
     public LoginResponse loginUser(LoginRequest loginRequest) {
-        UserDTO userDTO = userService.getUserByEmail(loginRequest.getEmail());
-        String password = userService.getUserPasswordById(userDTO.getId());
-        if (!passwordEncoder.matches(loginRequest.getPassword(), password)) {
+        User user = userService.findByEmail(loginRequest.getEmail());
+        if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
             throw new AuthenticationException(ErrorCode.ERR_WRONG_CREDENTIALS);
         }
-        String accessToken = jwtUtils.generateAccessToken(userDTO);
-        String refreshToken = jwtUtils.generateRefreshToken(userDTO);
+        String accessToken = jwtUtils.generateAccessToken(user);
+        String refreshToken = jwtUtils.generateRefreshToken(user);
         return LoginResponse.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
-                .userDTO(userDTO)
                 .build();
     }
 }

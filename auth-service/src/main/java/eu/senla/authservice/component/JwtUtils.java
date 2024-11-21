@@ -1,8 +1,8 @@
 package eu.senla.authservice.component;
 
-import eu.senla.authservice.dto.UserDTO;
 import eu.senla.authservice.enums.ErrorCode;
 import eu.senla.authservice.exception.JwtValidateException;
+import eu.senla.authservice.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -52,7 +52,7 @@ public class JwtUtils {
      * @param user user object
      * @return token
      */
-    public String generateAccessToken(UserDTO user) {
+    public String generateAccessToken(User user) {
         final LocalDateTime now = LocalDateTime.now();
         final Instant accessExpirationInstant = now.plusMinutes(jwtAccessExpiration)
                 .atZone(ZoneId.systemDefault()).toInstant();
@@ -61,7 +61,7 @@ public class JwtUtils {
                 .setExpiration(Date.from(accessExpirationInstant))
                 .signWith(getAccessSigningKey())
                 .claim("id", user.getId())
-                .claim("role", user.getRole())
+                .claim("permissions", user.getPermissions())
                 .compact();
     }
 
@@ -72,7 +72,7 @@ public class JwtUtils {
      * @return token
      */
 
-    public String generateRefreshToken(UserDTO user) {
+    public String generateRefreshToken(User user) {
         final LocalDateTime now = LocalDateTime.now();
         final Instant refreshExpirationInstant = now.plusMinutes(jwtRefreshExpiration)
                 .atZone(ZoneId.systemDefault()).toInstant();

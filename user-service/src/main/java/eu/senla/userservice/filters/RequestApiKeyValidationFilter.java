@@ -20,7 +20,8 @@ public class RequestApiKeyValidationFilter extends OncePerRequestFilter {
     private String apiKey;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
         String key = request.getHeader(SecurityConstants.API_KEY_HEADER);
         if (key == null || !key.equals(apiKey)) {
             throw new HeadersParseException(ErrorCode.ERR_HEADER_NOT_EXIST_OR_WRONG_VALUE);

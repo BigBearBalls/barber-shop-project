@@ -1,5 +1,6 @@
 package eu.senla.authservice.model;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,57 +9,42 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@Entity
+@Table(name = "users", schema = "auth_service_schema")
 public class User implements UserDetails {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "user_id")
     private UUID id;
 
-    private String firstName;
-
-    private String lastName;
-
+    @Column(name = "email")
     private String email;
 
+    @Column(name = "password")
     private String password;
 
-    private String phoneNumber;
-
-    private Role role;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_permission",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "permission_id"))
+    private Set<Permission> permissions;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(role);
+        return permissions;
     }
 
     @Override
     public String getUsername() {
         return email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
     }
 }
 

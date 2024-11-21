@@ -1,26 +1,10 @@
 databaseChangeLog:
   - changeSet:
       id: "user-1.0"
-      author: Dany
+      author: Artsem Yushkevich
       changes:
         - createTable:
             schemaName: user_service_schema
-            tableName: role
-            columns:
-              - column:
-                  name: role_id
-                  type: SMALLINT
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-
-              - column:
-                  name: role_value
-                  type: VARCHAR(50)
-                  constraints:
-                    nullable: false
-
-        - createTable:
             tableName: users
             columns:
               - column:
@@ -43,31 +27,8 @@ databaseChangeLog:
                     nullable: false
 
               - column:
-                  name: email
-                  type: VARCHAR(255)
+                  name: phone_number
+                  type: VARCHAR(25)
                   constraints:
                     nullable: false
                     unique: true
-
-              - column:
-                  name: password
-                  type: VARCHAR(255)
-                  constraints:
-                    nullable: false
-
-              - column:
-                  name: phone_number
-                  type: VARCHAR(25)
-
-              - column:
-                  name: role_id
-                  type: SMALLINT
-                  constraints:
-                    nullable: false
-
-        - addForeignKeyConstraint:
-            baseTableName: users
-            baseColumnNames: role_id
-            constraintName: fk_user_role
-            referencedTableName: role
-            referencedColumnNames: role_id

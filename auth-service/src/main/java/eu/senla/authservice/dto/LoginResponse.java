@@ -11,8 +11,6 @@ import lombok.NoArgsConstructor;
 @Getter
 public class LoginResponse {
 
-    private UserDTO userDTO;
-
     private String accessToken;
 
     private String refreshToken;
