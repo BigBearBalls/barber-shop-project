@@ -14,8 +14,7 @@ public enum ErrorCode {
     ERR_UNKNOWN_CODE("Something went wrong!"),
     ERR_JWT_VALIDATION_EXCEPTION("Something went wrong during jwt validation!"),
     ERR_HEADER_NOT_EXIST_OR_WRONG_VALUE("Header not exists or value is wrong!"),
-    ERR_ACCESS_DENIED("Access Denied!"),
-    APP_EXCEPTION("Application Exception!"),;
+    ERR_ACCESS_DENIED("Access Denied!");
 
     private final String message;
 

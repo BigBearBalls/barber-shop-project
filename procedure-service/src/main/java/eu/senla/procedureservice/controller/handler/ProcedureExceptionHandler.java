@@ -18,7 +18,7 @@ public class ProcedureExceptionHandler {
 
     @ExceptionHandler(ApiException.class)
     public ResponseEntity<?> handleApiException(ApiException e, HttpServletRequest request) {
-        return ResponseEntity.status(e.getStatus()).body(buildExceptionResponse(ErrorCode.APP_EXCEPTION, e.getMessage(), request.getRequestURI()));
+        return ResponseEntity.status(e.getStatus()).body(buildExceptionResponse(ErrorCode.ERR_UNKNOWN_CODE, e.getMessage(), request.getRequestURI()));
     }
 
 //    @ExceptionHandler(AuthorizationDeniedException.class)
