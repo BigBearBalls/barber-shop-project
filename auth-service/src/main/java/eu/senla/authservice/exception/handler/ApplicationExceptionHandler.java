@@ -7,13 +7,11 @@ import eu.senla.authservice.enums.ErrorCode;
 import eu.senla.authservice.exception.ApiException;
 import feign.FeignException;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -62,8 +60,18 @@ public class ApplicationExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exceptionResponse);
     }
 
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<?> handleHttpMessageNotReadableException(HttpMessageNotReadableException e,
+                                                                   HttpServletRequest request) {
+
+        ExceptionResponse response = buildExceptionResponse(ErrorCode.ERR_JSON_PARSE_EXCEPTION,
+                ErrorCode.ERR_JSON_PARSE_EXCEPTION.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleException(Exception e, HttpServletRequest request) {
+        log.error(e.getClass().getName(), e);
         return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(
                 buildExceptionResponse(ErrorCode.ERR_UNKNOWN_CODE, e.getMessage(), request.getRequestURI()));
     }

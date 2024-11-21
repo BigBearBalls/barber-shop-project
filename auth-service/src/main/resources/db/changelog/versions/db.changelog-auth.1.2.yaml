@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: "auth-1.1"
+      author: Artsem Yushkevich
+      changes:
+        - insert:
+            tableName: permission
+            columns:
+              - column:
+                  name: permission_value
+                  value: VIEW_PERMISSIONS
+        - insert:
+            tableName: permission
+            columns:
+              - column:
+                  name: permission_value
+                  value: VIEW_SELF_PERMISSIONS
