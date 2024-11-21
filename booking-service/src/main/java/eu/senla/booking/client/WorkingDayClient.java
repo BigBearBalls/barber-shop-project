@@ -13,7 +13,7 @@ import java.util.UUID;
 @FeignClient(url = "${feign.clients.working-day-service.url}", name = "workingDayClient", configuration = FeignConfig.class)
 public interface WorkingDayClient {
 
-    @GetMapping("{masterId}/master/{date}/date")
+    @GetMapping("master/{masterId}/date/{date}")
     ResponseWorkingDayDto findByMasterIdAndWorkingDate(@PathVariable UUID masterId,
                                                        @PathVariable @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate date);
 

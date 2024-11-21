@@ -26,7 +26,7 @@ public class WorkingDayController {
         return workingDayService.findById(id);
     }
 
-    @GetMapping("{masterId}/master/{date}/date")
+    @GetMapping("master/{masterId}/date/{date}")
     public ResponseWorkingDayDto findByMasterIdAndWorkingDate(@PathVariable UUID masterId,
                                                               @PathVariable @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate date) {
         return workingDayService.findByMasterAndWorkingDate(masterId, date);
