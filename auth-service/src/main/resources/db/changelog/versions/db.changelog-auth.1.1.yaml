@@ -4,29 +4,92 @@ databaseChangeLog:
       author: Artsem Yushkevich
       changes:
         - insert:
-            tableName: role
+            tableName: permission
             columns:
               - column:
-                  name: role_id
-                  valueNumeric: 1
-              - column:
-                  name: role_value
-                  value: ROLE_ADMIN
+                  name: permission_value
+                  value: CREATE_USER
         - insert:
-            tableName: role
+            tableName: permission
             columns:
               - column:
-                  name: role_id
-                  valueNumeric: 2
-              - column:
-                  name: role_value
-                  value: ROLE_CLIENT
+                  name: permission_value
+                  value: ADD_PERMISSION
         - insert:
-            tableName: role
+            tableName: permission
             columns:
               - column:
-                  name: role_id
-                  valueNumeric: 3
+                  name: permission_value
+                  value: REMOVE_PERMISSION
+        - insert:
+            tableName: permission
+            columns:
               - column:
-                  name: role_value
-                  value: ROLE_MASTER
+                  name: permission_value
+                  value: VIEW_ACCOUNT
+        - insert:
+            tableName: permission
+            columns:
+              - column:
+                  name: permission_value
+                  value: EDIT_ACCOUNT
+        - insert:
+            tableName: permission
+            columns:
+              - column:
+                  name: permission_value
+                  value: CREATE_BOOKING
+        - insert:
+            tableName: permission
+            columns:
+              - column:
+                  name: permission_value
+                  value: VIEW_SELF_BOOKINGS
+        - insert:
+            tableName: permission
+            columns:
+              - column:
+                  name: permission_value
+                  value: VIEW_BOOKINGS
+        - insert:
+            tableName: permission
+            columns:
+              - column:
+                  name: permission_value
+                  value: CREATE_PROCEDURE
+        - insert:
+            tableName: permission
+            columns:
+              - column:
+                  name: permission_value
+                  value: DELETE_PROCEDURE
+        - insert:
+            tableName: permission
+            columns:
+              - column:
+                  name: permission_value
+                  value: EDIT_PROCEDURE
+        - insert:
+            tableName: permission
+            columns:
+              - column:
+                  name: permission_value
+                  value: SELF_ASSIGN_ON_PROCEDURE
+        - insert:
+            tableName: permission
+            columns:
+              - column:
+                  name: permission_value
+                  value: VIEW_PROCEDURE
+        - insert:
+            tableName: permission
+            columns:
+              - column:
+                  name: permission_value
+                  value: EDIT_USER
+        - insert:
+            tableName: permission
+            columns:
+              - column:
+                  name: permission_value
+                  value: VIEW_USER

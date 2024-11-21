@@ -14,6 +14,7 @@ public enum ErrorCode {
     ERR_HEADER_NOT_EXIST_OR_WRONG_VALUE("Header not exists or value is wrong!"),
     ERR_METHOD_ARGUMENTS_VALIDATION_EXCEPTION("Method arguments validation failed!"),
     ERR_ACCESS_DENIED("Access Denied!"),
+    ERR_JSON_PARSE_EXCEPTION("JSON parse exception!"),
     ERR_CONSTRAINT_VIOLATION_EXCEPTION("Constraint violation!");
 
     private final String message;

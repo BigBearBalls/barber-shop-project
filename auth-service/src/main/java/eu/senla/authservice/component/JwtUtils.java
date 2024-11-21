@@ -61,7 +61,7 @@ public class JwtUtils {
                 .setExpiration(Date.from(accessExpirationInstant))
                 .signWith(getAccessSigningKey())
                 .claim("id", user.getId())
-                .claim("role", user.getRole())
+                .claim("permissions", user.getPermissions())
                 .compact();
     }
 
