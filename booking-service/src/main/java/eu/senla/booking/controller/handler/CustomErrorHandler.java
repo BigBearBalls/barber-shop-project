@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @RestControllerAdvice
 public class CustomErrorHandler {
 
-    @ExceptionHandler({TimeAlreadyBookedException.class, MasterNotWorkException.class, ResourceNotFoundException.class})
+    @ExceptionHandler(ApplicationException.class)
     public ResponseEntity<ErrorResponse> handleResourceNotFound(HttpServletRequest request, ApplicationException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(errorResponseBuilder(ErrorConstants.HANDLE_RESOURCE_NOT_FOUND_BAD_REQUEST, ex.getMessage(), request.getRequestURI()));
@@ -23,7 +23,7 @@ public class CustomErrorHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleException(HttpServletRequest request, ApplicationException ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
                 .body(errorResponseBuilder(ErrorConstants.HANDLE_EXCEPTION, ex.getMessage(), request.getRequestURI()));
     }
 

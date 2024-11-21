@@ -42,7 +42,7 @@ public class CalendarExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleException(HttpServletRequest request) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponseBuilder(
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(errorResponseBuilder(
                 ErrorConstants.EXCEPTION_ERROR_MESSAGE, ErrorConstants.EXCEPTION_ERROR_CODE,
                 request.getRequestURI()));
     }

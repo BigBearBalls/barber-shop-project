@@ -43,7 +43,7 @@ public class BookingServiceImpl implements BookingService {
         Booking booking = bookingMapper.toBooking(aggregatedBookingData.getBookingRequest(), procedure,
                 workingMasterDay, aggregatedBookingData.getBookingRequest().getReservationStart().plusMinutes(procedure.getDuration()));
         bookingRepository.save(booking);
-        log.info("Booking with id: ${} has been created", booking.getId());
+        log.debug("Booking with id: ${} has been created", booking.getId());
         return new IdResponseDTO(booking.getId());
     }
 
