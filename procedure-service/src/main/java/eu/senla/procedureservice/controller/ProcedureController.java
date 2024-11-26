@@ -4,6 +4,7 @@ import eu.senla.procedureservice.data.dto.request.CreateProcedureRequest;
 import eu.senla.procedureservice.data.dto.request.ProcedureDTO;
 import eu.senla.procedureservice.data.dto.response.IdResponseDTO;
 import eu.senla.procedureservice.service.ProcedureService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class ProcedureController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public IdResponseDTO save(@RequestBody CreateProcedureRequest request) {
+    public IdResponseDTO save(@RequestBody @Valid CreateProcedureRequest request) {
         return procedureService.save(request);
     }
 

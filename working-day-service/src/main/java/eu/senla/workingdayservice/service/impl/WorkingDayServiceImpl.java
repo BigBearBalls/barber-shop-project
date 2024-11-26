@@ -38,8 +38,8 @@ public class WorkingDayServiceImpl implements WorkingDayService {
         WorkingDay workingDay = workingDayMapper.toWorkingDay(requestWorkingDayDto);
 
         if(workingDayRepository.existsWorkingDayByMasterIdAndWorkingDate(workingDay.getMasterId(), workingDay.getWorkingDate())) {
-            throw new NotFoundByDateAndByIdException(ExceptionInfo.WORKING_DAY_NOT_FOUND_BY_ID_DATE.getExceptionCode(),
-                    ExceptionInfo.WORKING_DAY_NOT_FOUND_BY_ID_DATE.getExceptionMessage());
+            throw new NotFoundByDateAndByIdException(ExceptionInfo.WORKING_DAY_ALREADY_EXIST.getExceptionCode(),
+                    ExceptionInfo.WORKING_DAY_ALREADY_EXIST.getExceptionMessage());
         }
 
         return workingDayRepository.save(workingDay).getId();

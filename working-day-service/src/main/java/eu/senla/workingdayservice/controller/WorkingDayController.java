@@ -5,6 +5,8 @@ import eu.senla.workingdayservice.dto.ResponseWorkingDayDto;
 import eu.senla.workingdayservice.service.WorkingDayService;
 import java.time.LocalDate;
 import java.util.UUID;
+
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,12 +30,12 @@ public class WorkingDayController {
 
     @GetMapping("master/{masterId}/date/{date}")
     public ResponseWorkingDayDto findByMasterIdAndWorkingDate(@PathVariable UUID masterId,
-                                                              @PathVariable @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate date) {
+                                                              @PathVariable @DateTimeFormat(pattern = "yyyy-mm-dd") LocalDate date) {
         return workingDayService.findByMasterAndWorkingDate(masterId, date);
     }
 
     @PostMapping()
-    public UUID addWorkingDay(@RequestBody RequestWorkingDayDto requestWorkingDayDto) {
+    public UUID addWorkingDay(@RequestBody @Valid RequestWorkingDayDto requestWorkingDayDto) {
         return workingDayService.save(requestWorkingDayDto);
     }
 }

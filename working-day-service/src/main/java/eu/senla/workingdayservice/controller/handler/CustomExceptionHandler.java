@@ -10,6 +10,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -44,13 +47,33 @@ public class CustomExceptionHandler {
                 .body(exceptionResponseBuilder(exception.getCode(), exception.getMessage(), request.getRequestURI()));
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ExceptionResponse> handleEntityExistException(HttpServletRequest request, Exception exception) {
-        return ResponseEntity
-                .status(HttpStatus.CONFLICT)
-                .body(exceptionResponseBuilder(ExceptionInfo.HANDLER_EXCEPTION.getExceptionCode(),
-                        ExceptionInfo.HANDLER_EXCEPTION.getExceptionMessage(), request.getRequestURI()));
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<?> handleValidException(MethodArgumentNotValidException e, HttpServletRequest request) {
+        String fieldErrors = e.getBindingResult().getFieldErrors()
+                .stream()
+                .map(FieldError::getDefaultMessage)
+                .reduce((msg1, msg2) -> msg1 + "; " + msg2)
+                .orElse("");
+        String globalErrors = e.getBindingResult().getGlobalErrors()
+                .stream()
+                .map(ObjectError::getDefaultMessage)
+                .reduce((msg1, msg2) -> msg1 + "; " + msg2)
+                .orElse("");
+        String errorMessages = (fieldErrors + " " + globalErrors).trim();
+        if (errorMessages.endsWith(";")) {
+            errorMessages = errorMessages.substring(0, errorMessages.length() - 1);
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                exceptionResponseBuilder(ExceptionInfo.VALIDATION_ERROR.getExceptionCode(), errorMessages, request.getRequestURI()));
     }
+
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<ExceptionResponse> handleEntityExistException(HttpServletRequest request, Exception exception) {
+//        return ResponseEntity
+//                .status(HttpStatus.CONFLICT)
+//                .body(exceptionResponseBuilder(ExceptionInfo.HANDLER_EXCEPTION.getExceptionCode(),
+//                        ExceptionInfo.HANDLER_EXCEPTION.getExceptionMessage(), request.getRequestURI()));
+//    }
 
     private ExceptionResponse exceptionResponseBuilder(String errorCode, String message, String path){
         return ExceptionResponse.builder()

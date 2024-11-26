@@ -108,7 +108,7 @@ class WorkingDayServiceImplTest {
         verify(workingDayMapper, times(1)).toWorkingDay(requestWorkingDayDto);
         verify(workingDayRepository, times(1)).existsWorkingDayByMasterIdAndWorkingDate(workingDay.getMasterId(),
                 workingDay.getWorkingDate());
-        assertEquals("This master doesnt work at date you are looking for", exception.getMessage());
+        assertEquals("This master is already working on this day.", exception.getMessage());
     }
 
     @Test

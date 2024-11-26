@@ -15,7 +15,7 @@ public interface WorkingDayClient {
 
     @GetMapping("master/{masterId}/date/{date}")
     ResponseWorkingDayDto findByMasterIdAndWorkingDate(@PathVariable UUID masterId,
-                                                       @PathVariable @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate date);
+                                                       @PathVariable @DateTimeFormat(pattern = "yyyy-mm-dd") LocalDate date);
 
     @GetMapping("{id}")
     ResponseWorkingDayDto findById(@PathVariable UUID id);

@@ -2,10 +2,9 @@ package eu.senla.booking.data.request;
 
 import eu.senla.booking.annotation.validation.WorkingHours;
 import eu.senla.booking.constant.ValidationConstants;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -16,6 +15,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookingRequestDTO {
+
+
     @NotNull(message = ValidationConstants.PROCEDURE_ID_CANNOT_BE_NULL_VALIDATION_MESSAGE)
     UUID procedureId;
 
