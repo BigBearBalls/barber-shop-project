@@ -12,6 +12,6 @@ public class TrimStringDeserializer extends JsonDeserializer<String> {
     @Override
     public String deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JacksonException {
         String str = p.getValueAsString();
-        return  (str != null) ? str.trim() : null;
+        return (str != null) ? str.trim() : null;
     }
 }

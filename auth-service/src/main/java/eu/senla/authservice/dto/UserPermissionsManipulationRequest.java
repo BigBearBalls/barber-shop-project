@@ -1,12 +1,13 @@
 package eu.senla.authservice.dto;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import eu.senla.authservice.constant.ValidationConstants;
 import eu.senla.authservice.enums.PermissionValue;
-import eu.senla.authservice.serialization.TrimStringDeserializer;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Set;
 import java.util.UUID;

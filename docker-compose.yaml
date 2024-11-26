@@ -82,6 +82,12 @@ services:
   auth-service:
     #    image: quay.io/keycloak/keycloak:26.0.4
     build: ./auth-service
+    healthcheck:
+      test: curl -f http://localhost:8080/actuator/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
     restart: always
     env_file:
       - env/security.env
@@ -151,6 +157,26 @@ services:
       - env/security.env
     depends_on:
       barber-shop-database:
+        condition: service_healthy
+    networks:
+      - barber-shop-network
+
+  account-service:
+    build: ./account-service
+    healthcheck:
+      test: curl -f http://localhost:8080/actuator/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    env_file:
+      - env/datasource.env
+      - env/security.env
+      - env/feign-services-url.env
+    depends_on:
+      user-service:
+        condition: service_healthy
+      auth-service:
         condition: service_healthy
     networks:
       - barber-shop-network

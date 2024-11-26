@@ -4,9 +4,11 @@ import eu.senla.authservice.annotation.CheckPermission;
 import eu.senla.authservice.dto.PermissionsDTO;
 import eu.senla.authservice.dto.UserPermissionsManipulationRequest;
 import eu.senla.authservice.enums.PermissionValue;
+import eu.senla.authservice.model.User;
 import eu.senla.authservice.service.PermissionService;
 import eu.senla.authservice.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,15 +25,22 @@ public class PermissionController {
         return permissionService.getPermissions();
     }
 
-    @PostMapping("/user")
+    @PostMapping("user")
     @CheckPermission(value = PermissionValue.ADD_PERMISSION)
     public void addPermissionsToUser(@RequestBody UserPermissionsManipulationRequest permissions) {
-        userService.addPermissionsToUser(permissions);
+        permissionService.addPermissionsToUser(permissions);
     }
 
-    @DeleteMapping("/user")
+    @DeleteMapping("user")
     @CheckPermission(value = PermissionValue.REMOVE_PERMISSION)
     public void removeUserPermissions(@RequestBody UserPermissionsManipulationRequest permissions) {
-        userService.removeUserPermissions(permissions);
+        permissionService.removeUserPermissions(permissions);
+    }
+
+    @GetMapping("user")
+    @CheckPermission(value = PermissionValue.VIEW_SELF_PERMISSIONS)
+    public PermissionsDTO getUserPermissions() {
+        String email = ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getEmail();
+        return permissionService.getUserPermissions(email);
     }
 }

@@ -14,7 +14,7 @@ spring:
           - id: auth-service-route
             uri: http://auth-service:8080
             predicates:
-              - Path=/api/v1/auth/**, /api/v1/account/**, /api/v1/permissions/**
+              - Path=/api/v1/auth/**, /api/v1/permissions/**
             filters:
               - AddRequestHeader=X-Request-Api-Key, ${API_KEY}
               - AddRequestHeader=X-Request-Source, EXTERNAL
@@ -55,6 +55,14 @@ spring:
             uri: http://working-day-service:8080
             predicates:
               - Path=/api/v1/working-days/**
+            filters:
+              - AddRequestHeader=X-Request-Api-Key, ${API_KEY}
+              - AddRequestHeader=X-Request-Source, EXTERNAL
+
+          - id: account-service
+            uri: http://account-service:8080
+            predicates:
+              - Path=/api/v1/account/**
             filters:
               - AddRequestHeader=X-Request-Api-Key, ${API_KEY}
               - AddRequestHeader=X-Request-Source, EXTERNAL

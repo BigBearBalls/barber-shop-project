@@ -9,14 +9,17 @@ import eu.senla.authservice.dto.UserDataDTO;
 import eu.senla.authservice.enums.ErrorCode;
 import eu.senla.authservice.exception.AuthenticationException;
 import eu.senla.authservice.mapper.UserMapper;
+import eu.senla.authservice.model.Permission;
 import eu.senla.authservice.model.User;
 import eu.senla.authservice.service.AuthService;
+import eu.senla.authservice.service.PermissionService;
 import eu.senla.authservice.service.UserService;
-import eu.senla.authservice.urility.CallbackExceptionWrapper;
+import eu.senla.authservice.utility.CallbackExceptionWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -28,12 +31,17 @@ public class AuthServiceImpl implements AuthService {
     private final JwtUtils jwtUtils;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
+    private final PermissionService permissionService;
 
     @Override
     public void regUser(RegistrationRequest registrationRequest) {
         registrationRequest.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
         UserDataDTO userDataDTO = userMapper.toUserInfoDTO(registrationRequest);
-        UUID userId = userService.regUser(registrationRequest);
+        Set<Permission> permissions = permissionService.getDefaultUserPermissions();
+        User user = userMapper.toEntity(registrationRequest);
+        user.setPermissions(permissions);
+
+        UUID userId = userService.saveUser(user);
         userDataDTO.setId(userId);
         CallbackExceptionWrapper.wrap(() -> userDataClient.createUser(userDataDTO),
                 () -> userService.deleteUserById(userId));
