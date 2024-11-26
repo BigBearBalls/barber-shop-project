@@ -12,5 +12,7 @@ public class ErrorConstants {
     public static final String EMPTY_DATE_ERROR_MESSAGE = "This day is already a working day";
     public static final String EXCEPTION_ERROR_CODE = "500009";
     public static final String EXCEPTION_ERROR_MESSAGE = "Application exception";
+    public static final String HANDLE_FEIGN_CLIENT_EXCEPTION = "400004";
+    public static final String HANDLE_FEIGN_CLIENT_EXCEPTION_MESSAGE = "Feign client exception!";
 
 }
