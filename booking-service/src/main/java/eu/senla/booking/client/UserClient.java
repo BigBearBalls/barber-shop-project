@@ -11,6 +11,6 @@ import java.util.UUID;
 @FeignClient(url = "${feign.clients.user-service.url}", name = "userClient", configuration = FeignConfig.class)
 public interface UserClient {
 
-    @GetMapping("/{userId}")
+    @GetMapping("internal/users/{userId}")
     UserDTO getUserById(@PathVariable UUID userId);
 }

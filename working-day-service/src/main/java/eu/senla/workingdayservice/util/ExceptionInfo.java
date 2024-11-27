@@ -13,7 +13,8 @@ public enum ExceptionInfo {
     WORKING_DAY_NOT_FOUND_BY_ID_DATE("This master doesnt work at date you are looking for", "40403"),
     WORKING_DAY_ALREADY_EXIST("This master is already working on this day.", "40404"),
     HANDLER_EXCEPTION ("Application exception", "409000"),
-    VALIDATION_ERROR ("Validation error", "400001");
+    VALIDATION_ERROR ("Validation error", "400001"),
+    DAY_IS_HOLIDAY ("This Date is not working", "400002");
     private final String exceptionMessage;
     private final String exceptionCode;
 }

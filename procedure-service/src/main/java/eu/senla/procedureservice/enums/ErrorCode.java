@@ -16,7 +16,8 @@ public enum ErrorCode {
     ERR_HEADER_NOT_EXIST_OR_WRONG_VALUE("Header not exists or value is wrong!"),
     ERR_ACCESS_DENIED("Access Denied!"),
     ERR_VALIDATION("Validation failed!"),
-    ERR_VALIDATION_NOT_NULL_PROCEDURE("Procedure name cannot be null");
+    ERR_VALIDATION_NOT_NULL_PROCEDURE("Procedure name cannot be null"),
+    ERR_MASTER_PROCEDURE_EXIST("This master is already assigned to this procedure.");
 
 
     private final String message;

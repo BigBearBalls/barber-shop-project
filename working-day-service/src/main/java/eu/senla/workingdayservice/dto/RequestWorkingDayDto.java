@@ -24,7 +24,7 @@ public class RequestWorkingDayDto {
 
     @NotNull(message = ValidationConstants.WORKING_MASTER_CANNOT_BE_NULL_VALIDATION_MESSAGE)
     private UUID masterId;
-    @DateTimeFormat(pattern = "yyyy-mm-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @FutureOrPresent(message = "Working date must be today or in the future")
     @NotNull(message = ValidationConstants.WORKING_DATE_CANNOT_BE_NULL_VALIDATION_MESSAGE)
     private LocalDate workingDate;

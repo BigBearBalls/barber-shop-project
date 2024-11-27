@@ -1,5 +1,6 @@
 package eu.senla.workingdayservice.service.impl;
 
+import eu.senla.workingdayservice.data.req.CalendarFeignData;
 import eu.senla.workingdayservice.dto.RequestWorkingDayDto;
 import eu.senla.workingdayservice.dto.ResponseWorkingDayDto;
 import eu.senla.workingdayservice.entity.WorkingDay;
@@ -33,9 +34,14 @@ public class WorkingDayServiceImpl implements WorkingDayService {
 
     @Override
     @Transactional
-    public UUID save(RequestWorkingDayDto requestWorkingDayDto) {
+    public UUID save(CalendarFeignData calendarFeignData) {
 
-        WorkingDay workingDay = workingDayMapper.toWorkingDay(requestWorkingDayDto);
+        WorkingDay workingDay = workingDayMapper.toWorkingDay(calendarFeignData.getRequestWorkingDayDto());
+
+        if (calendarFeignData.getIsHoliday()){
+         throw new NotFoundByDateAndByIdException (ExceptionInfo.DAY_IS_HOLIDAY.getExceptionCode(),
+                 ExceptionInfo.DAY_IS_HOLIDAY.getExceptionMessage());
+        }
 
         if(workingDayRepository.existsWorkingDayByMasterIdAndWorkingDate(workingDay.getMasterId(), workingDay.getWorkingDate())) {
             throw new NotFoundByDateAndByIdException(ExceptionInfo.WORKING_DAY_ALREADY_EXIST.getExceptionCode(),
