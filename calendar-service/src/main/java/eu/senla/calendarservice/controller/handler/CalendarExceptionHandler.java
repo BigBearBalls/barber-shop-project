@@ -74,10 +74,10 @@ public class CalendarExceptionHandler {
                 request.getRequestURI()));
     }
 
-    private ErrorResponse errorResponseBuilder(String message, String errorCode, String path) {
+    private ErrorResponse errorResponseBuilder(String message, String code, String path) {
         return ErrorResponse.builder()
                 .timestamp(LocalDateTime.now())
-                .errorCode(errorCode)
+                .code(code)
                 .message(message)
                 .path(path)
                 .build();
