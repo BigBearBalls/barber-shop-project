@@ -1,11 +1,14 @@
 package eu.senla.authservice.service.impl;
 
 import eu.senla.authservice.dto.PermissionsDTO;
+import eu.senla.authservice.dto.UserPermissionsManipulationRequest;
 import eu.senla.authservice.enums.PermissionValue;
 import eu.senla.authservice.mapper.PermissionMapper;
 import eu.senla.authservice.model.Permission;
+import eu.senla.authservice.model.User;
 import eu.senla.authservice.repository.PermissionRepository;
 import eu.senla.authservice.service.PermissionService;
+import eu.senla.authservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -20,6 +23,7 @@ public class PermissionServiceImpl implements PermissionService {
 
     private final PermissionRepository permissionRepository;
     private final PermissionMapper permissionMapper;
+    private final UserService userService;
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS)
@@ -46,5 +50,28 @@ public class PermissionServiceImpl implements PermissionService {
     public PermissionsDTO getPermissions() {
         Set<Permission> set = new HashSet<>(permissionRepository.findAll());
         return permissionMapper.toDTO(set);
+    }
+
+    @Override
+    @Transactional
+    public void addPermissionsToUser(UserPermissionsManipulationRequest request) {
+        User user = userService.findById(request.getUserId());
+        Set<Permission> permissions = this.getPermissions(request.getPermissionValues());
+        user.getPermissions().addAll(permissions);
+    }
+
+    @Override
+    @Transactional
+    public void removeUserPermissions(UserPermissionsManipulationRequest request) {
+        User user = userService.findById(request.getUserId());
+        Set<Permission> permissions = this.getPermissions(request.getPermissionValues());
+        user.getPermissions().removeAll(permissions);
+    }
+
+    @Override
+    public PermissionsDTO getUserPermissions(String email) {
+        User user = userService.findByEmail(email);
+        Set<Permission> permissions = user.getPermissions();
+        return permissionMapper.toDTO(permissions);
     }
 }

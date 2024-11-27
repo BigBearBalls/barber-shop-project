@@ -36,7 +36,7 @@ public class ApplicationExceptionHandler {
 
     @ExceptionHandler(FeignException.class)
     public ResponseEntity<?> handleFeignException(FeignException e, HttpServletRequest request) {
-        HttpStatus httpStatus = HttpStatus.valueOf(e.status() != 0 ? e.status() : HttpStatus.INTERNAL_SERVER_ERROR.value());
+        HttpStatus httpStatus = HttpStatus.valueOf(e.status() != 0 ? e.status() : HttpStatus.SERVICE_UNAVAILABLE.value());
         ExceptionResponse exceptionResponse = new ExceptionResponse(LocalDateTime.now(), ErrorCode.ERR_UNKNOWN_CODE,
                 ErrorCode.ERR_UNKNOWN_CODE.getMessage(), request.getRequestURI());
         try {

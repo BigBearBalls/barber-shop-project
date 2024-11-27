@@ -1,4 +1,4 @@
-package eu.senla.authservice.urility;
+package eu.senla.authservice.utility;
 
 import lombok.experimental.UtilityClass;
 

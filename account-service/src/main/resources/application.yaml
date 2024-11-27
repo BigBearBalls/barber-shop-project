@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: account-service
+    security:
+      api-key: ${API_KEY}
+feign:
+  clients:
+    user-data-service:
+      url: "${USER_SERVICE_URL}"
+    user-credentials-service:
+      url: "${AUTH_SERVICE_URL}"

@@ -1,9 +1,12 @@
 package eu.senla.procedureservice.controller.advice;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.procedureservice.data.dto.exception.ExceptionResponse;
 import eu.senla.procedureservice.enums.ErrorCode;
 import eu.senla.procedureservice.exception.ApiException;
+import feign.FeignException;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,17 +15,24 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
 @Slf4j
+@RequiredArgsConstructor
 public class ProcedureExceptionHandler {
+
+    private final ObjectMapper objectMapper;
 
     @ExceptionHandler(ApiException.class)
     public ResponseEntity<?> handleApiException(ApiException e, HttpServletRequest request) {
-        return ResponseEntity.status(e.getStatus()).body(buildExceptionResponse(ErrorCode.ERR_UNKNOWN_CODE, e.getMessage(), request.getRequestURI()));
+        return ResponseEntity.status(e.getStatus()).body(buildExceptionResponse(e.getErrorCode(),
+                e.getMessage(), request.getRequestURI()));
     }
 
 //    @ExceptionHandler(AuthorizationDeniedException.class)
@@ -35,23 +45,28 @@ public class ProcedureExceptionHandler {
 //        ));
 //    }
 
+    @ExceptionHandler(FeignException.class)
+    public ResponseEntity<?> handleFeignException(FeignException e, HttpServletRequest request) {
+        HttpStatus httpStatus = HttpStatus.valueOf(e.status() != 0 ? e.status() : HttpStatus.INTERNAL_SERVER_ERROR.value());
+        ExceptionResponse exceptionResponse = new ExceptionResponse(LocalDateTime.now(), ErrorCode.ERR_UNKNOWN_CODE,
+                ErrorCode.ERR_UNKNOWN_CODE.getMessage(), request.getRequestURI());
+        try {
+            Optional<ByteBuffer> responseBody = e.responseBody();
+            if (responseBody.isPresent()) {
+                String body = StandardCharsets.UTF_8.decode(responseBody.get()).toString();
+                exceptionResponse = objectMapper.readValue(body, ExceptionResponse.class);
+            }
+        } catch (Exception ex) {
+            log.error(ex.getMessage(), ex);
+        }
+        return ResponseEntity.status(httpStatus).body(exceptionResponse);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleException(Exception e, HttpServletRequest request) {
         log.error(e.getMessage(), e);
         return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(
                 buildExceptionResponse(ErrorCode.ERR_UNKNOWN_CODE, e.getMessage(), request.getRequestURI()));
-    }
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<?> handleValidException(MethodArgumentNotValidException e, HttpServletRequest request) {
-        log.error(e.getMessage(), e);
-        String errorMessages = e.getBindingResult().getFieldErrors()
-                .stream()
-                .map(FieldError::getDefaultMessage)
-                .reduce((msg1, msg2) -> msg1 + "; " + msg2)
-                .orElse("Validation error occurred");
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                buildExceptionResponse(ErrorCode.ERR_VALIDATION, errorMessages, request.getRequestURI()));
     }
 
     private ExceptionResponse buildExceptionResponse(ErrorCode errorCode, String message, String path) {
@@ -62,5 +77,4 @@ public class ProcedureExceptionHandler {
                 .path(path)
                 .build();
     }
-
 }
