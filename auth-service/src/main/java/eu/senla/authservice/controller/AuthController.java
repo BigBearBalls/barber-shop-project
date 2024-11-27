@@ -3,6 +3,7 @@ package eu.senla.authservice.controller;
 import eu.senla.authservice.dto.LoginRequest;
 import eu.senla.authservice.dto.LoginResponse;
 import eu.senla.authservice.dto.RegistrationRequest;
+import eu.senla.authservice.dto.UserCredentialsDTO;
 import eu.senla.authservice.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

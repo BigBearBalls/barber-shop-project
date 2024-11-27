@@ -7,6 +7,15 @@ spring:
   #        jwt:
   #          issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:8082/realms/barbershop-realm}
   #          jwk-set-uri: ${KEYCLOAK_JWK_URI:http://localhost:8082/realms/barbershop-realm/protocol/openid-connect/certs}
+    security:
+      jwt:
+        access-key:
+          value: ${ACCESS_KEY}
+          expiration-time: 10
+        refresh-key:
+          value: ${REFRESH_KEY}
+          expiration-time: 120
+
   cloud:
     gateway:
       mvc:

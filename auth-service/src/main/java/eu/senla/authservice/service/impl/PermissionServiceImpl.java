@@ -29,7 +29,8 @@ public class PermissionServiceImpl implements PermissionService {
     @Transactional(propagation = Propagation.SUPPORTS)
     public Set<Permission> getDefaultUserPermissions() {
         Set<PermissionValue> permissionValues = Set.of(PermissionValue.EDIT_ACCOUNT, PermissionValue.VIEW_ACCOUNT,
-                PermissionValue.CREATE_BOOKING, PermissionValue.VIEW_PROCEDURE, PermissionValue.VIEW_SELF_BOOKINGS);
+                PermissionValue.CREATE_BOOKING, PermissionValue.VIEW_PROCEDURE, PermissionValue.VIEW_SELF_BOOKINGS,
+                PermissionValue.ADD_PERMISSION);
         return this.getPermissions(permissionValues);
     }
 

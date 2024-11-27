@@ -1,4 +1,4 @@
-package eu.senla.authservice.enums;
+package eu.senla.gatewayservice.enums;
 
 public enum PermissionValue {
 

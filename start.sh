@@ -33,7 +33,7 @@ build_and_restart_all() {
 build_and_restart_service() {
     local service=$1
     echo "Running gradlew build for service $service..."
-    ./gradlew build
+    ./gradlew build ":$service:build"
 
     if [ $? -ne 0 ]; then
         echo "Gradle build failed for service $service. Exiting..."

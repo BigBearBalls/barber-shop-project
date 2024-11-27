@@ -2,10 +2,7 @@ package eu.senla.authservice.service.impl;
 
 import eu.senla.authservice.client.UserDataClient;
 import eu.senla.authservice.component.JwtUtils;
-import eu.senla.authservice.dto.LoginRequest;
-import eu.senla.authservice.dto.LoginResponse;
-import eu.senla.authservice.dto.RegistrationRequest;
-import eu.senla.authservice.dto.UserDataDTO;
+import eu.senla.authservice.dto.*;
 import eu.senla.authservice.enums.ErrorCode;
 import eu.senla.authservice.exception.AuthenticationException;
 import eu.senla.authservice.mapper.UserMapper;
@@ -53,6 +50,7 @@ public class AuthServiceImpl implements AuthService {
         if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
             throw new AuthenticationException(ErrorCode.ERR_WRONG_CREDENTIALS);
         }
+
         String accessToken = jwtUtils.generateAccessToken(user);
         String refreshToken = jwtUtils.generateRefreshToken(user);
         return LoginResponse.builder()

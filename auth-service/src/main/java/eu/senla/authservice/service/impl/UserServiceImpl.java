@@ -57,6 +57,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS)
+    public UserCredentialsDTO getUserCredentialsById(UUID id) {
+        User user = this.findById(id);
+        return new UserCredentialsDTO(user.getId(), user.getEmail());
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS)
     public UserCredentialsDTO getUserCredentialsByEmail(String email) {
         User user = this.findByEmail(email);
         return new UserCredentialsDTO(user.getId(), user.getEmail());
