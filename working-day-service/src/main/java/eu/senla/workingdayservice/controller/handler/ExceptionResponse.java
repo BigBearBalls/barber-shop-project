@@ -14,7 +14,7 @@ import lombok.Setter;
 public class ExceptionResponse implements Serializable {
 
     private LocalDateTime timestamp;
-    private String errorCode;
+    private String code;
     private String message;
     private String path;
 

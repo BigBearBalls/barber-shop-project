@@ -75,10 +75,10 @@ public class CustomExceptionHandler {
 //                        ExceptionInfo.HANDLER_EXCEPTION.getExceptionMessage(), request.getRequestURI()));
 //    }
 
-    private ExceptionResponse exceptionResponseBuilder(String errorCode, String message, String path){
+    private ExceptionResponse exceptionResponseBuilder(String code, String message, String path){
         return ExceptionResponse.builder()
                 .timestamp(LocalDateTime.now())
-                .errorCode(errorCode)
+                .code(code)
                 .message(message)
                 .path(path)
                 .build();

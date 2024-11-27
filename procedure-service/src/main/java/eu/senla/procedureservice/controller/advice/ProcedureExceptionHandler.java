@@ -69,10 +69,10 @@ public class ProcedureExceptionHandler {
                 buildExceptionResponse(ErrorCode.ERR_UNKNOWN_CODE, e.getMessage(), request.getRequestURI()));
     }
 
-    private ExceptionResponse buildExceptionResponse(ErrorCode errorCode, String message, String path) {
+    private ExceptionResponse buildExceptionResponse(ErrorCode code, String message, String path) {
         return ExceptionResponse.builder()
                 .timestamp(LocalDateTime.now())
-                .errorCode(errorCode)
+                .code(code)
                 .message(message)
                 .path(path)
                 .build();
