@@ -1,16 +1,12 @@
 package eu.senla.authservice.service.impl;
 
-import eu.senla.authservice.dto.RegistrationRequest;
-import eu.senla.authservice.dto.UserPermissionsManipulationRequest;
+import eu.senla.authservice.dto.UserCredentialsDTO;
 import eu.senla.authservice.enums.ErrorCode;
 import eu.senla.authservice.exception.ExistsException;
 import eu.senla.authservice.exception.LogExceptionWrapper;
 import eu.senla.authservice.exception.NotFoundException;
-import eu.senla.authservice.mapper.UserMapper;
-import eu.senla.authservice.model.Permission;
 import eu.senla.authservice.model.User;
 import eu.senla.authservice.repository.UserRepository;
-import eu.senla.authservice.service.PermissionService;
 import eu.senla.authservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,28 +14,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Set;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private final UserMapper userMapper;
     private final UserRepository userRepository;
-    private final PermissionService permissionService;
 
     @Override
     @Transactional
-    public UUID regUser(RegistrationRequest registrationRequest) {
-        if (userRepository.existsByEmail(registrationRequest.getEmail())) {
+    public UUID saveUser(User user) {
+        if (userRepository.existsByEmail(user.getEmail())) {
             throw LogExceptionWrapper.logErrorException(new ExistsException(String.format(
-                    ErrorCode.ERR_USER_ALREADY_EXISTS.getMessage(), "email", registrationRequest.getEmail()),
+                    ErrorCode.ERR_USER_ALREADY_EXISTS.getMessage(), "email", user.getEmail()),
                     ErrorCode.ERR_USER_ALREADY_EXISTS));
         }
-        User user = userMapper.toEntity(registrationRequest);
-        Set<Permission> permissions = permissionService.getDefaultUserPermissions();
-        user.setPermissions(permissions);
         return userRepository.save(user).getId();
     }
 
@@ -50,7 +40,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.SUPPORTS)
     public User findByEmail(String email) {
         return userRepository.findByEmail(email).orElseThrow(() -> LogExceptionWrapper
                 .logErrorException(new NotFoundException(String.format(ErrorCode.ERR_USER_NOT_FOUND.getMessage(),
@@ -66,19 +56,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
-    public void addPermissionsToUser(UserPermissionsManipulationRequest request) {
-        User user = findById(request.getUserId());
-        Set<Permission> permissions = permissionService.getPermissions(request.getPermissionValues());
-        user.getPermissions().addAll(permissions);
-    }
-
-    @Override
-    @Transactional
-    public void removeUserPermissions(UserPermissionsManipulationRequest request) {
-        User user = findById(request.getUserId());
-        Set<Permission> permissions = permissionService.getPermissions(request.getPermissionValues());
-        user.getPermissions().removeAll(permissions);
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public UserCredentialsDTO getUserCredentialsByEmail(String email) {
+        User user = this.findByEmail(email);
+        return new UserCredentialsDTO(user.getId(), user.getEmail());
     }
 
     @Override

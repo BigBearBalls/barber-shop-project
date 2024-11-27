@@ -33,7 +33,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private final JwtUtils jwtUtils;
     private final UserService userService;
 
-    private final List<String> ignoreUrls = List.of("/api/v1/auth/login", "/api/v1/auth/registration");
+    private final List<String> ignoreUrls = List.of("/api/v1/auth/login", "/api/v1/auth/registration",
+            "/actuator/health");
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,

@@ -37,7 +37,8 @@ public class SecurityConfiguration {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/v1/auth/login", "/api/v1/auth/registration").permitAll()
+                        .requestMatchers("/api/v1/auth/login", "/api/v1/auth/registration",
+                                "/actuator/health", "/internal/**").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .addFilterBefore(filtersExceptionHandler, UsernamePasswordAuthenticationFilter.class)

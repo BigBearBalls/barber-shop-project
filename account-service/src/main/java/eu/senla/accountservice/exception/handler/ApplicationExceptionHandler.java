@@ -1,10 +1,9 @@
-package eu.senla.authservice.exception.handler;
+package eu.senla.accountservice.exception.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import eu.senla.authservice.dto.exception.ExceptionResponse;
-import eu.senla.authservice.dto.exception.Violation;
-import eu.senla.authservice.enums.ErrorCode;
-import eu.senla.authservice.exception.ApiException;
+import eu.senla.accountservice.dto.exception.ExceptionResponse;
+import eu.senla.accountservice.dto.exception.Violation;
+import eu.senla.accountservice.enums.ErrorCode;
 import feign.FeignException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -29,20 +28,17 @@ public class ApplicationExceptionHandler {
 
     private final ObjectMapper objectMapper;
 
-    @ExceptionHandler(ApiException.class)
-    public ResponseEntity<?> handleApiException(ApiException e, HttpServletRequest request) {
-        return ResponseEntity.status(e.getStatus()).body(buildExceptionResponse(e, request.getRequestURI()));
-    }
-
     @ExceptionHandler(FeignException.class)
     public ResponseEntity<?> handleFeignException(FeignException e, HttpServletRequest request) {
         HttpStatus httpStatus = HttpStatus.valueOf(e.status() != 0 ? e.status() : HttpStatus.SERVICE_UNAVAILABLE.value());
         ExceptionResponse exceptionResponse = new ExceptionResponse(LocalDateTime.now(), ErrorCode.ERR_UNKNOWN_CODE,
                 ErrorCode.ERR_UNKNOWN_CODE.getMessage(), request.getRequestURI());
+        log.error(e.getClass().getName(), e);
         try {
             Optional<ByteBuffer> responseBody = e.responseBody();
-            if (responseBody.isPresent()) {
+            if (responseBody.isPresent() && responseBody.get().hasRemaining()) {
                 String body = StandardCharsets.UTF_8.decode(responseBody.get()).toString();
+                System.err.println(responseBody.get());
                 exceptionResponse = objectMapper.readValue(body, ExceptionResponse.class);
             }
         } catch (Exception ex) {
@@ -74,10 +70,6 @@ public class ApplicationExceptionHandler {
         log.error(e.getClass().getName(), e);
         return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(
                 buildExceptionResponse(ErrorCode.ERR_UNKNOWN_CODE, e.getMessage(), request.getRequestURI()));
-    }
-
-    private ExceptionResponse buildExceptionResponse(ApiException e, String uri) {
-        return buildExceptionResponse(e.getErrorCode(), e.getMessage(), uri);
     }
 
     private ExceptionResponse buildExceptionResponse(ErrorCode errorCode, String message, String uri) {

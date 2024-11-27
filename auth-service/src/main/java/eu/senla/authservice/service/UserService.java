@@ -1,7 +1,6 @@
 package eu.senla.authservice.service;
 
-import eu.senla.authservice.dto.RegistrationRequest;
-import eu.senla.authservice.dto.UserPermissionsManipulationRequest;
+import eu.senla.authservice.dto.UserCredentialsDTO;
 import eu.senla.authservice.model.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -9,7 +8,7 @@ import java.util.UUID;
 
 public interface UserService {
 
-    UUID regUser(RegistrationRequest registrationRequest);
+    UUID saveUser(User user);
 
     void deleteUserById(UUID id);
 
@@ -17,9 +16,7 @@ public interface UserService {
 
     User findById(UUID id);
 
-    void addPermissionsToUser(UserPermissionsManipulationRequest request);
-
-    void removeUserPermissions(UserPermissionsManipulationRequest request);
+    UserCredentialsDTO getUserCredentialsByEmail(String email);
 
     UserDetailsService userDetailsService();
 }
