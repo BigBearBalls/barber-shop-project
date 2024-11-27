@@ -11,8 +11,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "masters_has_procedures", schema = "procedure_service_schema")
-public class MasterHasProcedure {
+@Table(name = "masters_procedures", schema = "procedure_service_schema")
+public class MasterProcedure {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

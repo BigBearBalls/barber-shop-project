@@ -6,8 +6,6 @@ import eu.senla.booking.data.response.BookingResponseDTO;
 import eu.senla.booking.data.response.IdResponseDTO;
 import eu.senla.booking.facade.BookingFacade;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

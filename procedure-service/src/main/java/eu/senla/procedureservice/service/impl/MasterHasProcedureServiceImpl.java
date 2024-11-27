@@ -1,7 +1,9 @@
 package eu.senla.procedureservice.service.impl;
 
-import eu.senla.procedureservice.data.entity.MasterHasProcedure;
+import eu.senla.procedureservice.data.entity.MasterProcedure;
 import eu.senla.procedureservice.data.repository.MasterHasProcedureRepository;
+import eu.senla.procedureservice.enums.ErrorCode;
+import eu.senla.procedureservice.exception.ExistsException;
 import eu.senla.procedureservice.service.MasterHasProcedureService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,11 +27,13 @@ public class MasterHasProcedureServiceImpl implements MasterHasProcedureService 
     @Transactional
     public void subscribeOnProcedure(UUID procedureId, UUID masterId) {
         if (!masterHasProcedureRepository.existsByProcedureIdAndMasterId(procedureId, masterId)) {
-            MasterHasProcedure masterHasProcedure = MasterHasProcedure.builder()
+            MasterProcedure masterHasProcedure = MasterProcedure.builder()
                     .procedureId(procedureId)
                     .masterId(masterId)
                     .build();
             masterHasProcedureRepository.save(masterHasProcedure);
+        } else {
+            throw new ExistsException(ErrorCode.ERR_MASTER_PROCEDURE_EXIST.getMessage(), ErrorCode.ERR_MASTER_PROCEDURE_EXIST);
         }
     }
 }

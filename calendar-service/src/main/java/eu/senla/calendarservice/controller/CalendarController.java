@@ -15,17 +15,17 @@ public class CalendarController {
     private final CalendarService calendarService;
 
     @PostMapping("days-off/{day}")
-    public LocalDate setDayOff(@PathVariable @DateTimeFormat(pattern = "yyyy-mm-dd") LocalDate day) {
+    public LocalDate setDayOff(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate day) {
         return calendarService.setDayOff(day);
     }
 
     @DeleteMapping("working-days/{day}")
-    public void cancelDayOff(@PathVariable @DateTimeFormat(pattern = "yyyy-mm-dd") LocalDate day) {
+    public void cancelDayOff(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate day) {
         calendarService.cancelDayOff(day);
     }
 
     @GetMapping("{day}")
-    public Boolean checkDay(@PathVariable @DateTimeFormat(pattern = "yyyy-mm-dd") LocalDate day) {
+    public Boolean checkDay(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate day) {
         return calendarService.checkDay(day);
     }
 }
