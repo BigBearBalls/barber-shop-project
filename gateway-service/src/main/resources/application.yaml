@@ -10,11 +10,10 @@ spring:
     security:
       jwt:
         access-key:
-          value: ${ACCESS_KEY}
           expiration-time: 10
         refresh-key:
-          value: ${REFRESH_KEY}
           expiration-time: 120
+      api-key: ${API_KEY}
 
   cloud:
     gateway:
@@ -89,6 +88,24 @@ management:
   endpoint:
     health:
       show-details: always
+
+feign:
+  clients:
+    auth-service:
+      url: ${AUTH_SERVICE_URL}
+
+http-configuration:
+  filters:
+    enable: true
+    get-user-id-header-filter:
+      enable: false
+    api-key-header-filter:
+      enable: false
+  feign:
+    enable: true
+    interceptor:
+      add-user-id-to-headers:
+        enable: true
 
 logging:
   level:

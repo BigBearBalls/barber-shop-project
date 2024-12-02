@@ -3,8 +3,8 @@ package eu.senla.gatewayservice.configuration;
 import eu.senla.gatewayservice.enums.ErrorCode;
 import eu.senla.gatewayservice.enums.PermissionValue;
 import eu.senla.gatewayservice.exception.AuthenticationException;
-import eu.senla.gatewayservice.filters.FiltersExceptionHandler;
 import eu.senla.gatewayservice.filters.JwtAuthFilter;
+import eu.senla.gatewayservice.filters.SecurityContextUserIdHandlerFilter;
 import eu.senla.gatewayservice.model.Permission;
 import eu.senla.gatewayservice.model.User;
 import lombok.RequiredArgsConstructor;
@@ -32,9 +32,9 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @RequiredArgsConstructor
 public class SecurityConfiguration {
 
-    private final FiltersExceptionHandler filtersExceptionHandler;
-
     private final JwtAuthFilter jwtAuthFilter;
+
+    private final SecurityContextUserIdHandlerFilter securityContextUserIdHandlerFilter;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -45,14 +45,15 @@ public class SecurityConfiguration {
                     authorize.anyRequest().permitAll();
                 })
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
-                .addFilterBefore(filtersExceptionHandler, UsernamePasswordAuthenticationFilter.class)
-                .addFilterAfter(jwtAuthFilter, FiltersExceptionHandler.class)
+                .anonymous(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
+                .addFilterAfter(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(securityContextUserIdHandlerFilter, JwtAuthFilter.class)
                 .build();
     }
 
     private void configureAuthServiceUrl(AuthorizeHttpRequestsConfigurer<HttpSecurity>
                                                  .AuthorizationManagerRequestMatcherRegistry authorize) {
-
         applyPermission(authorize, HttpMethod.GET, "/api/v1/permissions/", PermissionValue.VIEW_PERMISSIONS);
         applyPermission(authorize, HttpMethod.POST, "/api/v1/permissions/user", PermissionValue.ADD_PERMISSION);
         applyPermission(authorize, HttpMethod.DELETE, "/api/v1/permissions/user", PermissionValue.REMOVE_PERMISSION);
@@ -65,7 +66,6 @@ public class SecurityConfiguration {
                                  HttpMethod method,
                                  String url,
                                  PermissionValue requiredPermission) {
-
         authorize.requestMatchers(method, url).access(hasPermission(requiredPermission));
     }
 

@@ -13,4 +13,5 @@ public class SecurityConstants {
     public static final String API_KEY_HEADER = "X-Request-Api-Key";
     public static final String REQUEST_SOURCE_HEADER = "X-Request-Source";
     public static final String INTERNAL_REQUEST_SOURCE = "INTERNAL";
+    public static final String EXCEPTION_MESSAGE_TEMPLATE = "%s: %s";
 }

@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -63,17 +64,24 @@ public class ApplicationExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<?> handleHttpMessageNotReadableException(HttpMessageNotReadableException e,
                                                                    HttpServletRequest request) {
-
         ExceptionResponse response = buildExceptionResponse(ErrorCode.ERR_JSON_PARSE_EXCEPTION,
                 ErrorCode.ERR_JSON_PARSE_EXCEPTION.getMessage(), request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
+    @ExceptionHandler(MissingRequestHeaderException.class)
+    public ResponseEntity<?> handleMissingRequestHeaderException(MissingRequestHeaderException e, HttpServletRequest r) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(buildExceptionResponse(
+                ErrorCode.ERR_MISSING_HEADER, String.format("%s: %s", e.getClass().getSimpleName(), e.getMessage()),
+                r.getRequestURI()));
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleException(Exception e, HttpServletRequest request) {
         log.error(e.getClass().getName(), e);
-        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(
-                buildExceptionResponse(ErrorCode.ERR_UNKNOWN_CODE, e.getMessage(), request.getRequestURI()));
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(buildExceptionResponse(
+                ErrorCode.ERR_UNKNOWN_CODE, String.format("%s: %s", e.getClass().getSimpleName(), e.getMessage()),
+                request.getRequestURI()));
     }
 
     private ExceptionResponse buildExceptionResponse(ApiException e, String uri) {

@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -70,8 +71,8 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public PermissionsDTO getUserPermissions(String email) {
-        User user = userService.findByEmail(email);
+    public PermissionsDTO getUserPermissions(UUID userId) {
+        User user = userService.findById(userId);
         Set<Permission> permissions = user.getPermissions();
         return permissionMapper.toDTO(permissions);
     }

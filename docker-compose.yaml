@@ -242,6 +242,7 @@ services:
       start_period: 30s
     restart: always
     env_file:
+      - env/feign-services-url.env
       - env/security.env
       - env/keycloak.env
     networks:

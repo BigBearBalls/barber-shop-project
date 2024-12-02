@@ -6,6 +6,7 @@ import eu.senla.authservice.enums.PermissionValue;
 import eu.senla.authservice.model.Permission;
 
 import java.util.Set;
+import java.util.UUID;
 
 public interface PermissionService {
 
@@ -15,7 +16,7 @@ public interface PermissionService {
 
     Permission getPermission(PermissionValue permissionValue);
 
-    PermissionsDTO getUserPermissions(String email);
+    PermissionsDTO getUserPermissions(UUID userId);
 
     PermissionsDTO getPermissions();
 
