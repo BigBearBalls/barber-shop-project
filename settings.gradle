@@ -8,3 +8,5 @@ include "working-day-service"
 include "calendar-service"
 include "auth-service"
 include "account-service"
+include "http-configuration"
+project(":http-configuration").projectDir = file("libs/http-configuration")

@@ -9,7 +9,6 @@ import eu.senla.authservice.model.User;
 import eu.senla.authservice.repository.UserRepository;
 import eu.senla.authservice.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,11 +67,4 @@ public class UserServiceImpl implements UserService {
         User user = this.findByEmail(email);
         return new UserCredentialsDTO(user.getId(), user.getEmail());
     }
-
-    @Override
-    public UserDetailsService userDetailsService() {
-        return this::findByEmail;
-    }
-
-
 }

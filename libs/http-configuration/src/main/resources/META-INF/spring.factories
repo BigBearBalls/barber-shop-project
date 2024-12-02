@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+eu.senla.httpconfiguration.configuration.FeignGlobalConfiguration,\
+eu.senla.httpconfiguration.configuration.FiltersConfiguration

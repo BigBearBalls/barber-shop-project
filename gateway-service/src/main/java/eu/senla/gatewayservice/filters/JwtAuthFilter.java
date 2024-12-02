@@ -1,17 +1,12 @@
 package eu.senla.gatewayservice.filters;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.TypeFactory;
-import eu.senla.gatewayservice.component.JwtUtils;
+import eu.senla.gatewayservice.client.AuthClient;
+import eu.senla.gatewayservice.component.TrustedTokenManager;
 import eu.senla.gatewayservice.constant.SecurityConstants;
+import eu.senla.gatewayservice.dto.AccessTokenExtractedData;
 import eu.senla.gatewayservice.enums.ErrorCode;
-import eu.senla.gatewayservice.enums.PermissionValue;
 import eu.senla.gatewayservice.exception.JwtValidateException;
-import eu.senla.gatewayservice.model.Permission;
 import eu.senla.gatewayservice.model.User;
-import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,9 +32,9 @@ import java.util.*;
 @Slf4j
 public class JwtAuthFilter extends OncePerRequestFilter {
 
-    private final JwtUtils jwtUtils;
+    private final AuthClient authClient;
 
-    private final ObjectMapper objectMapper;
+    private final TrustedTokenManager tokenManager;
 
     private final List<String> ignoreUrls = List.of("/api/v1/auth/login", "/api/v1/auth/registration",
             "/actuator/health");
@@ -54,13 +49,16 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             return;
         }
         String token = authorizationHeader.substring(SecurityConstants.TOKEN_PATTERN.length());
-        jwtUtils.validateAccessToken(token);
-        String email = jwtUtils.getAccessClaims(token).getSubject();
+        if (!tokenManager.isTrustedToken(token)) {
+            User user = getUserFromToken(token);
+            tokenManager.saveToken(token, user);
+        }
+        User user = tokenManager.getUserByToken(token);
+        String email = user.getEmail();
         if (SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = getUserFromToken(token);
             SecurityContext context = SecurityContextHolder.createEmptyContext();
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                    userDetails, null, userDetails.getAuthorities()
+                    user, null, user.getAuthorities()
             );
 
             authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
@@ -77,7 +75,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+    protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getRequestURI();
         for (String ignoreUrl : ignoreUrls) {
             if (path.contains(ignoreUrl)) {
@@ -87,17 +85,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         return false;
     }
 
-    private User getUserFromToken(String token) throws JsonProcessingException {
-        Claims claims = jwtUtils.getAccessClaims(token);
-        String email = claims.getSubject();
-        UUID id = UUID.fromString(claims.get("id", String.class));
-        String array = objectMapper.writeValueAsString(claims.get("permissions"));
-        JavaType javaType = TypeFactory.defaultInstance().constructCollectionType(Set.class, Permission.class);
-        Set<Permission> permissions = objectMapper.readValue(array, javaType);
+    private User getUserFromToken(String token) {
+        AccessTokenExtractedData accessTokenExtractedData = authClient.getAccessTokenExtractedData(token);
         return User.builder()
-                .id(id)
-                .email(email)
-                .permissions(permissions)
+                .id(accessTokenExtractedData.getUserId())
+                .email(accessTokenExtractedData.getEmail())
+                .permissions(accessTokenExtractedData.getPermissions())
                 .build();
     }
 }

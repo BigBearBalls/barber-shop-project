@@ -15,6 +15,7 @@ public enum ErrorCode {
     ERR_METHOD_ARGUMENTS_VALIDATION_EXCEPTION("Method arguments validation failed!"),
     ERR_ACCESS_DENIED("Access Denied!"),
     ERR_JSON_PARSE_EXCEPTION("JSON parse exception!"),
+    ERR_MISSING_HEADER("Missing header!"),
     ERR_CONSTRAINT_VIOLATION_EXCEPTION("Constraint violation!");
 
     private final String message;

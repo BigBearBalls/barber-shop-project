@@ -41,7 +41,7 @@ public class JwtUtils {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parse(token);
         } catch (Exception e) {
-            throw new JwtValidateException(String.format("%s: %s", e.getClass(), e.getMessage()),
+            throw new JwtValidateException(String.format("%s: %s", e.getClass().getSimpleName(), e.getMessage()),
                     ErrorCode.ERR_JWT_VALIDATION_EXCEPTION);
         }
     }
