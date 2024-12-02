@@ -6,7 +6,6 @@ import eu.senla.procedureservice.data.entity.Procedure;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
-import org.springframework.data.domain.Page;
 
 import java.util.List;
 

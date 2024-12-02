@@ -1,7 +1,10 @@
 package eu.senla.procedureservice.data.dto.response;
 
 import eu.senla.procedureservice.data.dto.request.ProcedureDTO;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 

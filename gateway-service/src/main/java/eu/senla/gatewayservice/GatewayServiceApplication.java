@@ -1,6 +1,5 @@
 package eu.senla.gatewayservice;
 
-import eu.senla.httpconfiguration.configuration.FeignGlobalConfiguration;
 import eu.senla.httpconfiguration.configuration.HttpConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

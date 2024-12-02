@@ -1,17 +1,14 @@
 package eu.senla.workingdayservice.controller.handler;
 
-import eu.senla.workingdayservice.exception.AbstractException;
-import eu.senla.workingdayservice.exception.EntityExistException;
-import eu.senla.workingdayservice.exception.NotFoundByDateAndByIdException;
-import eu.senla.workingdayservice.exception.NotFoundByDateException;
-import eu.senla.workingdayservice.exception.NotFoundByIdException;
+import eu.senla.workingdayservice.exception.*;
 import eu.senla.workingdayservice.util.ExceptionInfo;
 import jakarta.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.time.LocalDateTime;
 
 @RestControllerAdvice
 public class CustomExceptionHandler {
@@ -52,7 +49,7 @@ public class CustomExceptionHandler {
                         ExceptionInfo.HANDLER_EXCEPTION.getExceptionMessage(), request.getRequestURI()));
     }
 
-    private ExceptionResponse exceptionResponseBuilder(String errorCode, String message, String path){
+    private ExceptionResponse exceptionResponseBuilder(String errorCode, String message, String path) {
         return ExceptionResponse.builder()
                 .timestamp(LocalDateTime.now())
                 .errorCode(errorCode)

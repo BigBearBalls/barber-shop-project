@@ -58,7 +58,7 @@ public class SecurityConfiguration {
         applyPermission(authorize, HttpMethod.POST, "/api/v1/permissions/user", PermissionValue.ADD_PERMISSION);
         applyPermission(authorize, HttpMethod.DELETE, "/api/v1/permissions/user", PermissionValue.REMOVE_PERMISSION);
         applyPermission(authorize, HttpMethod.GET, "/api/v1/permissions/user", PermissionValue.VIEW_SELF_PERMISSIONS);
-        applyPermission(authorize, HttpMethod.GET, "/api/v1/account/", PermissionValue.VIEW_USER_ACCOUNTS);
+        applyPermission(authorize, HttpMethod.GET, "/api/v1/account/", PermissionValue.VIEW_ACCOUNT);
     }
 
     private void applyPermission(AuthorizeHttpRequestsConfigurer<HttpSecurity>

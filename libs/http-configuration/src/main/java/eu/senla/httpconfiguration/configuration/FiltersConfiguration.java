@@ -1,23 +1,23 @@
 package eu.senla.httpconfiguration.configuration;
 
+import eu.senla.httpconfiguration.factory.CustomYamlPropertySourceFactory;
 import eu.senla.httpconfiguration.filter.FiltersExceptionHandler;
 import eu.senla.httpconfiguration.filter.RequestApiKeyValidationFilter;
 import eu.senla.httpconfiguration.filter.UserIdHeaderConsumerFilter;
 import jakarta.servlet.Filter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.*;
 import org.springframework.core.Ordered;
 
 import java.util.List;
 
 @Configuration
 @ConditionalOnProperty(prefix = FiltersConfiguration.PREFIX, name = "enable", havingValue = "true")
+@PropertySource(value = "classpath:application-http-configuration.yaml", factory = CustomYamlPropertySourceFactory.class)
 @ComponentScan(basePackages = "eu.senla.httpconfiguration.filter")
+@Import(PropertiesConfiguration.class)
 public class FiltersConfiguration {
 
     public final static String PREFIX = "http-configuration.filters";
@@ -27,7 +27,7 @@ public class FiltersConfiguration {
             havingValue = "true")
     public FilterRegistrationBean<UserIdHeaderConsumerFilter> userIdHeaderFilterRegistrationBean(
             @Autowired UserIdHeaderConsumerFilter filter) {
-        return filterRegistrationBean(filter, List.of("/*"), Ordered.HIGHEST_PRECEDENCE+2);
+        return filterRegistrationBean(filter, List.of("/*"), Ordered.HIGHEST_PRECEDENCE + 2);
     }
 
     @Bean
@@ -35,7 +35,7 @@ public class FiltersConfiguration {
             havingValue = "true")
     public FilterRegistrationBean<RequestApiKeyValidationFilter> requestApiKeyValidationFilterRegistrationBean(
             @Autowired RequestApiKeyValidationFilter filter) {
-        return filterRegistrationBean(filter, List.of("/*"), Ordered.HIGHEST_PRECEDENCE+1);
+        return filterRegistrationBean(filter, List.of("/*"), Ordered.HIGHEST_PRECEDENCE + 1);
     }
 
     @Bean

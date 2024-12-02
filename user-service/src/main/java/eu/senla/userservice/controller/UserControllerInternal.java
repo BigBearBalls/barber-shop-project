@@ -21,8 +21,8 @@ public class UserControllerInternal {
         userService.createUser(dto);
     }
 
-    @GetMapping(value = "/{userId}")
-    public UserDataDTO getUserById(@PathVariable UUID userId) {
+    @GetMapping
+    public UserDataDTO getUser(@RequestHeader("X-User-Id") UUID userId) {
         return userService.getUserById(userId);
     }
 }

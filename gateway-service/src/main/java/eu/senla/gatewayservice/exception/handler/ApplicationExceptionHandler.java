@@ -1,6 +1,5 @@
 package eu.senla.gatewayservice.exception.handler;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.gatewayservice.dto.exception.ExceptionResponse;
 import eu.senla.gatewayservice.dto.exception.Violation;
 import eu.senla.gatewayservice.enums.ErrorCode;
@@ -15,11 +14,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @RestControllerAdvice

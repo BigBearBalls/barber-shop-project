@@ -3,7 +3,7 @@ package eu.senla.booking.controller.handler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.booking.constant.ErrorConstants;
 import eu.senla.booking.data.response.ErrorResponse;
-import eu.senla.booking.service.exception.*;
+import eu.senla.booking.service.exception.ApplicationException;
 import feign.FeignException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
