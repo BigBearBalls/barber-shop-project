@@ -1,20 +1,18 @@
 spring:
   application:
     name: gateway-service
-  #  security:
-  #    oauth2:
-  #      resourceserver:
-  #        jwt:
-  #          issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:8082/realms/barbershop-realm}
-  #          jwk-set-uri: ${KEYCLOAK_JWK_URI:http://localhost:8082/realms/barbershop-realm/protocol/openid-connect/certs}
+    #  security:
+    #    oauth2:
+    #      resourceserver:
+    #        jwt:
+    #          issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:8082/realms/barbershop-realm}
+    #          jwk-set-uri: ${KEYCLOAK_JWK_URI:http://localhost:8082/realms/barbershop-realm/protocol/openid-connect/certs}
     security:
       jwt:
         access-key:
           expiration-time: 10
         refresh-key:
           expiration-time: 120
-      api-key: ${API_KEY}
-
   cloud:
     gateway:
       mvc:
@@ -96,16 +94,10 @@ feign:
 
 http-configuration:
   filters:
-    enable: true
     get-user-id-header-filter:
       enable: false
     api-key-header-filter:
       enable: false
-  feign:
-    enable: true
-    interceptor:
-      add-user-id-to-headers:
-        enable: true
 
 logging:
   level:

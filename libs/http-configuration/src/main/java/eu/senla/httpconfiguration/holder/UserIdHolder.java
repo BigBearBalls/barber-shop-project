@@ -4,11 +4,11 @@ import java.util.UUID;
 
 public abstract class UserIdHolder {
 
+    private static final ThreadLocal<UUID> userIdContext = new ThreadLocal<>();
+
     private UserIdHolder() {
 
     }
-
-    private static final ThreadLocal<UUID> userIdContext = new ThreadLocal<>();
 
     public static UUID getUserId() {
         return userIdContext.get();

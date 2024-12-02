@@ -9,7 +9,6 @@ spring:
         refresh-key:
           value: ${REFRESH_KEY}
           expiration-time: 120
-      api-key: ${API_KEY}
   liquibase:
     change-log: classpath:/db/changelog/db.changelog-auth-master.yaml
     enabled: true
@@ -34,20 +33,6 @@ management:
   endpoint:
     health:
       show-details: always
-
-http-configuration:
-  filters:
-    enable: true
-    get-user-id-header-filter:
-      enable: true
-    api-key-header-filter:
-      enable: true
-  feign:
-    enable: true
-    interceptor:
-      add-user-id-to-headers:
-        enable: true
-
 feign:
   clients:
     user-service:

@@ -15,7 +15,5 @@ public interface UserService {
 
     User findById(UUID id);
 
-    UserCredentialsDTO getUserCredentialsByEmail(String email);
-
     UserCredentialsDTO getUserCredentialsById(UUID id);
 }

@@ -1,17 +1,17 @@
 services:
 
-#  zookeeper:
-#    image: confluentinc/cp-zookeeper:6.2.4
-#    healthcheck:
-#      test: nc -z localhost 2181 || exit -1
-#      interval: 10s
-#      timeout: 3s
-#      retries: 3
-#    environment:
-#      ZOOKEEPER_CLIENT_PORT: 2181
-#      ZOOKEEPER_TICK_TIME: 2000
-#    networks:
-#      - barber-shop-network
+  #  zookeeper:
+  #    image: confluentinc/cp-zookeeper:6.2.4
+  #    healthcheck:
+  #      test: nc -z localhost 2181 || exit -1
+  #      interval: 10s
+  #      timeout: 3s
+  #      retries: 3
+  #    environment:
+  #      ZOOKEEPER_CLIENT_PORT: 2181
+  #      ZOOKEEPER_TICK_TIME: 2000
+  #    networks:
+  #      - barber-shop-network
 
   barber-shop-database:
     image: postgres:14.7-alpine
@@ -44,40 +44,40 @@ services:
     volumes:
       - pgadmin_data:/var/lib/pgadmin
 
-#  kafka:
-#    image: confluentinc/cp-kafka:6.2.4
-#    depends_on:
-#      zookeeper:
-#        condition: service_healthy
-#    healthcheck:
-#      test: kafka-topics --bootstrap-server localhost:9092 --list
-#      interval: 30s
-#      timeout: 10s
-#      retries: 3
-#    environment:
-#      KAFKA_BROKER_ID: 1
-#      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-#      KAFKA_LISTENERS: OUTSIDE://:29092,INTERNAL://:9092
-#      KAFKA_ADVERTISED_LISTENERS: OUTSIDE://localhost:29092,INTERNAL://kafka:9092
-#      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,OUTSIDE:PLAINTEXT
-#      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
-#      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-#    networks:
-#      - barber-shop-network
+  #  kafka:
+  #    image: confluentinc/cp-kafka:6.2.4
+  #    depends_on:
+  #      zookeeper:
+  #        condition: service_healthy
+  #    healthcheck:
+  #      test: kafka-topics --bootstrap-server localhost:9092 --list
+  #      interval: 30s
+  #      timeout: 10s
+  #      retries: 3
+  #    environment:
+  #      KAFKA_BROKER_ID: 1
+  #      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+  #      KAFKA_LISTENERS: OUTSIDE://:29092,INTERNAL://:9092
+  #      KAFKA_ADVERTISED_LISTENERS: OUTSIDE://localhost:29092,INTERNAL://kafka:9092
+  #      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,OUTSIDE:PLAINTEXT
+  #      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+  #      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+  #    networks:
+  #      - barber-shop-network
 
-#  kafka-ui:
-#    image: provectuslabs/kafka-ui
-#    ports:
-#      - "8080:8080"
-#    restart: always
-#    depends_on:
-#      kafka:
-#        condition: service_healthy
-#    environment:
-#      KAFKA_CLUSTERS_0_NAME: local
-#      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
-#    networks:
-#      - barber-shop-network
+  #  kafka-ui:
+  #    image: provectuslabs/kafka-ui
+  #    ports:
+  #      - "8080:8080"
+  #    restart: always
+  #    depends_on:
+  #      kafka:
+  #        condition: service_healthy
+  #    environment:
+  #      KAFKA_CLUSTERS_0_NAME: local
+  #      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
+  #    networks:
+  #      - barber-shop-network
 
   auth-service:
     #    image: quay.io/keycloak/keycloak:26.0.4
@@ -87,7 +87,7 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 30s
+      start_period: 10s
     restart: always
     env_file:
       - env/security.env
@@ -102,24 +102,24 @@ services:
     networks:
       - barber-shop-network
 
-#  notification-service:
-#    build: ./notification-service
-#    healthcheck:
-#      test: curl -f http://localhost:8080/actuator/health
-#      interval: 30s
-#      timeout: 10s
-#      retries: 3
-#      start_period: 30s
-#    restart: always
-#    depends_on:
-#      kafka-topics-generator:
-#        condition: service_completed_successfully
-#      kafka:
-#        condition: service_healthy
-#      auth-service:
-#        condition: service_started
-#    networks:
-#      - barber-shop-network
+  #  notification-service:
+  #    build: ./notification-service
+  #    healthcheck:
+  #      test: curl -f http://localhost:8080/actuator/health
+  #      interval: 30s
+  #      timeout: 10s
+  #      retries: 3
+  #      start_period: 30s
+  #    restart: always
+  #    depends_on:
+  #      kafka-topics-generator:
+  #        condition: service_completed_successfully
+  #      kafka:
+  #        condition: service_healthy
+  #      auth-service:
+  #        condition: service_started
+  #    networks:
+  #      - barber-shop-network
 
   booking-service:
     build: ./booking-service
@@ -128,17 +128,17 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 30s
+      start_period: 10s
     env_file:
       - env/security.env
       - env/datasource.env
       - env/feign-services-url.env
     restart: always
     depends_on:
-#      kafka-topics-generator:
-#        condition: service_completed_successfully
-#      kafka:
-#        condition: service_healthy
+      #      kafka-topics-generator:
+      #        condition: service_completed_successfully
+      #      kafka:
+      #        condition: service_healthy
       auth-service:
         condition: service_started
     networks:
@@ -151,7 +151,7 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 30s
+      start_period: 10s
     env_file:
       - env/datasource.env
       - env/security.env
@@ -168,7 +168,7 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 30s
+      start_period: 10s
     env_file:
       - env/datasource.env
       - env/security.env
@@ -188,7 +188,7 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 30s
+      start_period: 10s
     env_file:
       - env/security.env
       - env/datasource.env
@@ -205,7 +205,7 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 30s
+      start_period: 10s
     env_file:
       - env/datasource.env
     depends_on:
@@ -221,7 +221,7 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 30s
+      start_period: 10s
     env_file:
       - env/datasource.env
     depends_on:
@@ -239,7 +239,7 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 30s
+      start_period: 10s
     restart: always
     env_file:
       - env/feign-services-url.env

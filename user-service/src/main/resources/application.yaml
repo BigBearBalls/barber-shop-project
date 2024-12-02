@@ -7,7 +7,6 @@ spring:
           value: ${ACCESS_KEY}
         refresh-key:
           value: ${REFRESH_KEY}
-      api-key: ${API_KEY}
   liquibase:
     change-log: classpath:/db/changelog/db.changelog-user-master.yaml
     enabled: true

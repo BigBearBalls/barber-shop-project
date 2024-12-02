@@ -19,9 +19,9 @@ public class AccountServiceImpl implements AccountService {
     private final AccountMapper accountMapper;
 
     @Override
-    public AccountDetailsDTO getAccountDetails(String email) {
-        UserCredentialsDTO user = userCredentialsClient.getUserCredentialsByEmail(email);
-        UserDataDTO userData = userDataClient.getUserDataById(user.getId());
+    public AccountDetailsDTO getAccountDetails() {
+        UserCredentialsDTO user = userCredentialsClient.getUserCredentials();
+        UserDataDTO userData = userDataClient.getUserData();
         return accountMapper.toDTO(user, userData);
     }
 }

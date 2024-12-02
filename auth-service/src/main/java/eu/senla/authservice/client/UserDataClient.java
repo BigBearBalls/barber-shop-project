@@ -3,9 +3,10 @@ package eu.senla.authservice.client;
 import eu.senla.authservice.dto.UserDataDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @FeignClient(url = "${feign.clients.user-service.url}", name = "userClient")
 public interface UserDataClient {
@@ -14,6 +15,6 @@ public interface UserDataClient {
     @ResponseStatus(HttpStatus.CREATED)
     void createUser(@RequestBody UserDataDTO userDataDTO);
 
-    @GetMapping(value = "/internal/users/{userId}")
-    UserDataDTO getUserById(@PathVariable UUID userId);
+    @GetMapping(value = "/internal/users/")
+    UserDataDTO getUserData();
 }
