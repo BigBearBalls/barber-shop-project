@@ -1,6 +1,6 @@
 package eu.senla.authservice.client;
 
-import eu.senla.authservice.dto.UserDataDTO;
+import eu.senla.common.auth.dto.UserDataDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;

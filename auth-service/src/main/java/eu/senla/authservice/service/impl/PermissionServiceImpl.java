@@ -1,14 +1,14 @@
 package eu.senla.authservice.service.impl;
 
-import eu.senla.authservice.dto.PermissionsDTO;
-import eu.senla.authservice.dto.UserPermissionsManipulationRequest;
-import eu.senla.authservice.enums.PermissionValue;
 import eu.senla.authservice.mapper.PermissionMapper;
 import eu.senla.authservice.model.Permission;
 import eu.senla.authservice.model.User;
 import eu.senla.authservice.repository.PermissionRepository;
 import eu.senla.authservice.service.PermissionService;
 import eu.senla.authservice.service.UserService;
+import eu.senla.common.auth.dto.PermissionsDTO;
+import eu.senla.common.auth.dto.UserPermissionsManipulationRequest;
+import eu.senla.common.enums.PermissionValue;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;

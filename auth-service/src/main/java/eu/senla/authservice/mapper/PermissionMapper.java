@@ -1,8 +1,8 @@
 package eu.senla.authservice.mapper;
 
-import eu.senla.authservice.dto.PermissionsDTO;
-import eu.senla.authservice.enums.PermissionValue;
 import eu.senla.authservice.model.Permission;
+import eu.senla.common.auth.dto.PermissionsDTO;
+import eu.senla.common.enums.PermissionValue;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 

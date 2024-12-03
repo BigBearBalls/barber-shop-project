@@ -1,9 +1,9 @@
 package eu.senla.accountservice.exception.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import eu.senla.accountservice.dto.exception.ExceptionResponse;
-import eu.senla.accountservice.dto.exception.Violation;
-import eu.senla.accountservice.enums.ErrorCode;
+import eu.senla.common.dto.exception.ExceptionResponse;
+import eu.senla.common.dto.exception.Violation;
+import eu.senla.common.enums.ErrorCode;
 import feign.FeignException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;

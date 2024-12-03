@@ -1,7 +1,7 @@
 package eu.senla.authservice.repository;
 
-import eu.senla.authservice.enums.PermissionValue;
 import eu.senla.authservice.model.Permission;
+import eu.senla.common.enums.PermissionValue;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,6 @@
 package eu.senla.gatewayservice.model;
 
-import eu.senla.gatewayservice.enums.PermissionValue;
+import eu.senla.common.enums.PermissionValue;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 

@@ -1,10 +1,10 @@
 package eu.senla.authservice.service.impl;
 
-import eu.senla.authservice.dto.UserCredentialsDTO;
-import eu.senla.authservice.enums.ErrorCode;
-import eu.senla.authservice.exception.ExistsException;
-import eu.senla.authservice.exception.LogExceptionWrapper;
-import eu.senla.authservice.exception.NotFoundException;
+import eu.senla.common.auth.dto.UserCredentialsDTO;
+import eu.senla.common.enums.ErrorCode;
+import eu.senla.common.exception.ExistsException;
+import eu.senla.common.exception.LogExceptionWrapper;
+import eu.senla.common.exception.NotFoundException;
 import eu.senla.authservice.model.User;
 import eu.senla.authservice.repository.UserRepository;
 import eu.senla.authservice.service.UserService;

@@ -1,8 +1,8 @@
 package eu.senla.authservice.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import eu.senla.authservice.dto.AccessTokenExtractedData;
 import eu.senla.authservice.service.JwtService;
+import eu.senla.authservice.dto.AccessTokenExtractedData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

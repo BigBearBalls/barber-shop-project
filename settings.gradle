@@ -8,5 +8,17 @@ include "working-day-service"
 include "calendar-service"
 include "auth-service"
 include "account-service"
-include "http-configuration"
-project(":http-configuration").projectDir = file("libs/http-configuration")
+include ":libs.http-configuration.security"
+project(":libs.http-configuration.security").projectDir = file("libs/http-configuration/security")
+include ":libs.http-configuration.core"
+project(":libs.http-configuration.core").projectDir = file("libs/http-configuration/core")
+include ":libs.common"
+project(":libs.common").projectDir = file("libs/common")
+include ":libs.common:auth"
+include ":libs.common:account"
+include ":libs.common:booking"
+include ":libs.common:gateway"
+include ":libs.common:notification"
+include ":libs.common:procedure"
+include ":libs.common:user"
+include ":libs.common:working-day"

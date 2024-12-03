@@ -1,11 +1,11 @@
 package eu.senla.gatewayservice.filters;
 
+import eu.senla.common.enums.ErrorCode;
+import eu.senla.common.exception.JwtValidateException;
 import eu.senla.gatewayservice.client.AuthClient;
 import eu.senla.gatewayservice.component.TrustedTokenManager;
-import eu.senla.gatewayservice.constant.SecurityConstants;
+import eu.senla.common.constant.SecurityConstants;
 import eu.senla.gatewayservice.dto.AccessTokenExtractedData;
-import eu.senla.gatewayservice.enums.ErrorCode;
-import eu.senla.gatewayservice.exception.JwtValidateException;
 import eu.senla.gatewayservice.model.User;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

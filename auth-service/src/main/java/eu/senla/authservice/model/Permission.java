@@ -1,6 +1,6 @@
 package eu.senla.authservice.model;
 
-import eu.senla.authservice.enums.PermissionValue;
+import eu.senla.common.enums.PermissionValue;
 import jakarta.persistence.*;
 import lombok.*;
 

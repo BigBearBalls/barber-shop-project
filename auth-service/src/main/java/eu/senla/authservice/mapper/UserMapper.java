@@ -1,8 +1,8 @@
 package eu.senla.authservice.mapper;
 
-import eu.senla.authservice.dto.RegistrationRequest;
-import eu.senla.authservice.dto.UserDataDTO;
 import eu.senla.authservice.model.User;
+import eu.senla.common.auth.dto.RegistrationRequest;
+import eu.senla.common.auth.dto.UserDataDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
