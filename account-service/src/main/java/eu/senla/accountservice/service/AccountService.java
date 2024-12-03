@@ -1,6 +1,6 @@
 package eu.senla.accountservice.service;
 
-import eu.senla.accountservice.dto.AccountDetailsDTO;
+import eu.senla.common.account.dto.AccountDetailsDTO;
 
 public interface AccountService {
 

@@ -1,7 +1,7 @@
 package eu.senla.gatewayservice.filters;
 
 import eu.senla.gatewayservice.model.User;
-import eu.senla.httpconfiguration.holder.UserIdHolder;
+import eu.senla.httpconfiguration.security.holder.UserIdHolder;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

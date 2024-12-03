@@ -1,8 +1,8 @@
 package eu.senla.gatewayservice.configuration;
 
-import eu.senla.gatewayservice.enums.ErrorCode;
-import eu.senla.gatewayservice.enums.PermissionValue;
-import eu.senla.gatewayservice.exception.AuthenticationException;
+import eu.senla.common.enums.ErrorCode;
+import eu.senla.common.exception.AuthenticationException;
+import eu.senla.common.enums.PermissionValue;
 import eu.senla.gatewayservice.filters.JwtAuthFilter;
 import eu.senla.gatewayservice.filters.SecurityContextUserIdHandlerFilter;
 import eu.senla.gatewayservice.model.Permission;

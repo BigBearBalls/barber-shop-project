@@ -1,8 +1,8 @@
 package eu.senla.authservice.controller;
 
-import eu.senla.authservice.dto.PermissionsDTO;
-import eu.senla.authservice.dto.UserPermissionsManipulationRequest;
 import eu.senla.authservice.service.PermissionService;
+import eu.senla.common.auth.dto.PermissionsDTO;
+import eu.senla.common.auth.dto.UserPermissionsManipulationRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

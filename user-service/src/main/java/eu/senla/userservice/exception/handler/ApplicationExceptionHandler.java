@@ -1,9 +1,9 @@
 package eu.senla.userservice.exception.handler;
 
-import eu.senla.userservice.dto.exception.ExceptionResponse;
-import eu.senla.userservice.dto.exception.Violation;
-import eu.senla.userservice.enums.ErrorCode;
-import eu.senla.userservice.exception.ApiException;
+import eu.senla.common.dto.exception.ExceptionResponse;
+import eu.senla.common.dto.exception.Violation;
+import eu.senla.common.enums.ErrorCode;
+import eu.senla.common.exception.ApiException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

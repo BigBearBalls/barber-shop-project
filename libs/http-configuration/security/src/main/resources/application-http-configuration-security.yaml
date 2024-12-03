@@ -1,0 +1,17 @@
+http-configuration:
+  security:
+    filters:
+      enable: true
+      get-user-id-header-filter:
+        enable: true
+      api-key-header-filter:
+        enable: true
+    feign:
+      enable: true
+      interceptor:
+        add-user-id-to-headers:
+          enable: true
+spring:
+  application:
+    security:
+      api-key: ${API_KEY}

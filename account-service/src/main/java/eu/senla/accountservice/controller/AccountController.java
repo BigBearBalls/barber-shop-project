@@ -1,7 +1,7 @@
 package eu.senla.accountservice.controller;
 
-import eu.senla.accountservice.dto.AccountDetailsDTO;
 import eu.senla.accountservice.service.AccountService;
+import eu.senla.common.account.dto.AccountDetailsDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

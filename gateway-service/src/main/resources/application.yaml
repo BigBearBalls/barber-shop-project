@@ -93,11 +93,12 @@ feign:
       url: ${AUTH_SERVICE_URL}
 
 http-configuration:
-  filters:
-    get-user-id-header-filter:
-      enable: false
-    api-key-header-filter:
-      enable: false
+  security:
+    filters:
+      get-user-id-header-filter:
+        enable: false
+      api-key-header-filter:
+        enable: false
 
 logging:
   level:

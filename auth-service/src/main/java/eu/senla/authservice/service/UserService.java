@@ -1,7 +1,7 @@
 package eu.senla.authservice.service;
 
-import eu.senla.authservice.dto.UserCredentialsDTO;
 import eu.senla.authservice.model.User;
+import eu.senla.common.auth.dto.UserCredentialsDTO;
 
 import java.util.UUID;
 

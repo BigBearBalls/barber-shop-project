@@ -1,10 +1,10 @@
 package eu.senla.authservice.exception.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import eu.senla.authservice.dto.exception.ExceptionResponse;
-import eu.senla.authservice.dto.exception.Violation;
-import eu.senla.authservice.enums.ErrorCode;
-import eu.senla.authservice.exception.ApiException;
+import eu.senla.common.dto.exception.ExceptionResponse;
+import eu.senla.common.dto.exception.Violation;
+import eu.senla.common.enums.ErrorCode;
+import eu.senla.common.exception.ApiException;
 import feign.FeignException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
 package eu.senla.accountservice.client;
 
-import eu.senla.accountservice.dto.UserCredentialsDTO;
+import eu.senla.common.account.dto.UserCredentialsDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 

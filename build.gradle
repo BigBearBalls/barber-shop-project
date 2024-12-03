@@ -1,6 +1,7 @@
 plugins {
     id "checkstyle"
     id "java"
+    id 'java-library'
     id "org.springframework.boot" version '3.3.5'
     id "io.spring.dependency-management" version '1.1.6'
 }
@@ -81,7 +82,8 @@ subprojects { subproject ->
 
     if (subproject in webProjects) {
         dependencies {
-            implementation project(':http-configuration')
+            implementation project(':libs.http-configuration.security')
+            implementation project(':libs.http-configuration.core')
             implementation "org.springframework.boot:spring-boot-starter-web"
             implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
             implementation "org.springframework.boot:spring-boot-starter-validation"
@@ -110,9 +112,30 @@ subprojects { subproject ->
         }
     }
 
+    if (!subproject.path.startsWith(':libs')) {
+        dependencies {
+            implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+            implementation project(":libs.common")
+            implementation "org.springframework.boot:spring-boot-starter-actuator"
+        }
+    } else {
+        apply {
+            plugin('java-library')
+        }
+        bootJar {
+            enabled = false
+            archivesBaseName = subproject.name
+        }
+        dependencies {
+            if (!subproject.path.equals(":libs.common")) {
+                implementation project(":libs.common")
+            }
+            implementation "org.springframework.boot:spring-boot-starter-validation"
+            implementation "org.springframework.boot:spring-boot-starter-web"
+        }
+    }
+
     dependencies {
-        implementation "org.mapstruct:mapstruct:${mapstructVersion}"
-        implementation "org.springframework.boot:spring-boot-starter-actuator"
         compileOnly "org.projectlombok:lombok"
         testImplementation "org.springframework.boot:spring-boot-starter-test"
         testRuntimeOnly "org.junit.platform:junit-platform-launcher"
