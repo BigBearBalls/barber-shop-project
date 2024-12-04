@@ -69,25 +69,25 @@
 //        assertEquals("Working day couldn't be found by date", exception.getMessage());
 //    }
 //
-////    @Test
-////    public void save_shouldReturnSavedId() {
-////
-////        WorkingDay workingDay = new WorkingDay(UUID.randomUUID(), UUID.randomUUID(),
-////                LocalDate.of(2024, 12, 15), LocalTime.of(10, 0), LocalTime.of(18, 0));
-////
-////        RequestWorkingDayDto requestWorkingDayDto = new RequestWorkingDayDto(UUID.randomUUID(),
-////                LocalDate.of(2024, 12, 15), LocalTime.of(10, 0), LocalTime.of(18, 0));
-////
-////        when(workingDayMapper.toWorkingDay(requestWorkingDayDto)).thenReturn(workingDay);
-////        when(workingDayRepository.existsWorkingDayByMasterIdAndWorkingDate(workingDay.getMasterId(), workingDay.getWorkingDate())).thenReturn(false);
-////        when(workingDayRepository.save(workingDay)).thenReturn(workingDay);
-////
-////        UUID result = workingDayService.save(requestWorkingDayDto);
-////        verify(workingDayMapper, times(1)).toWorkingDay(requestWorkingDayDto);
-////        verify(workingDayRepository, times(1)).existsWorkingDayByMasterIdAndWorkingDate(workingDay.getMasterId(), workingDay.getWorkingDate());
-////        verify(workingDayRepository, times(1)).save(workingDay);
-////        assertEquals(workingDay.getId(), result);
-////    }
+/// /    @Test
+/// /    public void save_shouldReturnSavedId() {
+/// /
+/// /        WorkingDay workingDay = new WorkingDay(UUID.randomUUID(), UUID.randomUUID(),
+/// /                LocalDate.of(2024, 12, 15), LocalTime.of(10, 0), LocalTime.of(18, 0));
+/// /
+/// /        RequestWorkingDayDto requestWorkingDayDto = new RequestWorkingDayDto(UUID.randomUUID(),
+/// /                LocalDate.of(2024, 12, 15), LocalTime.of(10, 0), LocalTime.of(18, 0));
+/// /
+/// /        when(workingDayMapper.toWorkingDay(requestWorkingDayDto)).thenReturn(workingDay);
+/// /        when(workingDayRepository.existsWorkingDayByMasterIdAndWorkingDate(workingDay.getMasterId(), workingDay.getWorkingDate())).thenReturn(false);
+/// /        when(workingDayRepository.save(workingDay)).thenReturn(workingDay);
+/// /
+/// /        UUID result = workingDayService.save(requestWorkingDayDto);
+/// /        verify(workingDayMapper, times(1)).toWorkingDay(requestWorkingDayDto);
+/// /        verify(workingDayRepository, times(1)).existsWorkingDayByMasterIdAndWorkingDate(workingDay.getMasterId(), workingDay.getWorkingDate());
+/// /        verify(workingDayRepository, times(1)).save(workingDay);
+/// /        assertEquals(workingDay.getId(), result);
+/// /    }
 //
 //    @Test
 //    public void save_shouldReturnException() {
