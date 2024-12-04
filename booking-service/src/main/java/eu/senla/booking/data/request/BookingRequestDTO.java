@@ -17,8 +17,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookingRequestDTO {
-
-
     @NotNull(message = ValidationConstants.PROCEDURE_ID_CANNOT_BE_NULL_VALIDATION_MESSAGE)
     UUID procedureId;
 
