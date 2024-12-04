@@ -18,7 +18,11 @@ public enum ErrorCode {
     ERR_USER_ALREADY_EXISTS("User with %s '%s' already exists!"),
     ERR_METHOD_ARGUMENTS_VALIDATION_EXCEPTION("Method arguments validation failed!"),
     ERR_JSON_PARSE_EXCEPTION("JSON parse exception!"),
-    ERR_CONSTRAINT_VIOLATION_EXCEPTION("Constraint violation!");
+    ERR_CONSTRAINT_VIOLATION_EXCEPTION("Constraint violation!"),
+    ERR_VALIDATION("Validation failed!"),
+    ERR_VALIDATION_NOT_NULL_PROCEDURE("Procedure name cannot be null"),
+    ERR_MASTER_PROCEDURE_EXIST("This master is already assigned to this procedure.");
+
 
     private final String message;
 

@@ -1,5 +1,6 @@
 package eu.senla.workingdayservice.service.impl;
 
+import eu.senla.workingdayservice.data.req.CalendarFeignData;
 import eu.senla.workingdayservice.dto.RequestWorkingDayDto;
 import eu.senla.workingdayservice.dto.ResponseWorkingDayDto;
 import eu.senla.workingdayservice.entity.WorkingDay;
@@ -9,12 +10,11 @@ import eu.senla.workingdayservice.mapper.WorkingDayMapper;
 import eu.senla.workingdayservice.repository.WorkingDayRepository;
 import eu.senla.workingdayservice.service.WorkingDayService;
 import eu.senla.workingdayservice.util.ExceptionInfo;
+import java.time.LocalDate;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDate;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -26,21 +26,26 @@ public class WorkingDayServiceImpl implements WorkingDayService {
     @Override
     @Transactional(readOnly = true)
     public ResponseWorkingDayDto findById(UUID id) {
-        return workingDayMapper.toWorkingDayDto(workingDayRepository
-                .findById(id)
-                .orElseThrow(() -> new NotFoundByIdException(ExceptionInfo.WORKING_DAY_NOT_FOUND_BY_ID.getExceptionCode(),
-                        ExceptionInfo.WORKING_DAY_NOT_FOUND_BY_ID.getExceptionMessage())));
+            return workingDayMapper.toWorkingDayDto(workingDayRepository
+                    .findById(id)
+                    .orElseThrow(() -> new NotFoundByIdException(ExceptionInfo.WORKING_DAY_NOT_FOUND_BY_ID.getExceptionCode(),
+                                                                 ExceptionInfo.WORKING_DAY_NOT_FOUND_BY_ID.getExceptionMessage())));
     }
 
     @Override
     @Transactional
-    public UUID save(RequestWorkingDayDto requestWorkingDayDto) {
+    public UUID save(CalendarFeignData calendarFeignData) {
 
-        WorkingDay workingDay = workingDayMapper.toWorkingDay(requestWorkingDayDto);
+        WorkingDay workingDay = workingDayMapper.toWorkingDay(calendarFeignData.getRequestWorkingDayDto());
 
-        if (workingDayRepository.existsWorkingDayByMasterIdAndWorkingDate(workingDay.getMasterId(), workingDay.getWorkingDate())) {
-            throw new NotFoundByDateAndByIdException(ExceptionInfo.WORKING_DAY_NOT_FOUND_BY_ID_DATE.getExceptionCode(),
-                    ExceptionInfo.WORKING_DAY_NOT_FOUND_BY_ID_DATE.getExceptionMessage());
+        if (calendarFeignData.getIsHoliday()){
+         throw new NotFoundByDateAndByIdException (ExceptionInfo.DAY_IS_HOLIDAY.getExceptionCode(),
+                 ExceptionInfo.DAY_IS_HOLIDAY.getExceptionMessage());
+        }
+
+        if(workingDayRepository.existsWorkingDayByMasterIdAndWorkingDate(workingDay.getMasterId(), workingDay.getWorkingDate())) {
+            throw new NotFoundByDateAndByIdException(ExceptionInfo.WORKING_DAY_ALREADY_EXIST.getExceptionCode(),
+                    ExceptionInfo.WORKING_DAY_ALREADY_EXIST.getExceptionMessage());
         }
 
         return workingDayRepository.save(workingDay).getId();
@@ -54,6 +59,6 @@ public class WorkingDayServiceImpl implements WorkingDayService {
                 .toWorkingDayDto(workingDayRepository
                         .getWorkingDayByMasterIdAndWorkingDate(masterId, workingDate)
                         .orElseThrow(() -> new NotFoundByDateAndByIdException(ExceptionInfo.WORKING_DAY_NOT_FOUND_BY_ID_DATE.getExceptionCode(),
-                                ExceptionInfo.WORKING_DAY_NOT_FOUND_BY_ID_DATE.getExceptionMessage())));
+                                                                     ExceptionInfo.WORKING_DAY_NOT_FOUND_BY_ID_DATE.getExceptionMessage())));
     }
 }
