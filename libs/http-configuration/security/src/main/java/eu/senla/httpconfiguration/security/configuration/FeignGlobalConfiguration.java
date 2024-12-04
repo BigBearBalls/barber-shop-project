@@ -1,8 +1,8 @@
 package eu.senla.httpconfiguration.security.configuration;
 
 import eu.senla.common.constant.SecurityConstants;
-import eu.senla.httpconfiguration.security.holder.UserIdHolder;
 import eu.senla.httpconfiguration.core.factory.CustomYamlPropertySourceFactory;
+import eu.senla.httpconfiguration.security.holder.UserIdHolder;
 import feign.RequestInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,7 +21,7 @@ import java.util.UUID;
 @Import(PropertiesConfiguration.class)
 public class FeignGlobalConfiguration {
 
-    public static final String PREFIX = "http-configuration.feign";
+    public static final String PREFIX = "http-configuration.security.feign";
 
     @Value("${spring.application.security.api-key}")
     private String apiKey;

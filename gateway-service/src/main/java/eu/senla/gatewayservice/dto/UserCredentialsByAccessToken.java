@@ -1,6 +1,6 @@
-package eu.senla.authservice.dto;
+package eu.senla.gatewayservice.dto;
 
-import eu.senla.authservice.model.Permission;
+import eu.senla.gatewayservice.model.Permission;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,12 +13,11 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-public class AccessTokenExtractedData {
+public class UserCredentialsByAccessToken {
 
     private String email;
 
     private UUID userId;
 
     private Set<Permission> permissions;
-
 }

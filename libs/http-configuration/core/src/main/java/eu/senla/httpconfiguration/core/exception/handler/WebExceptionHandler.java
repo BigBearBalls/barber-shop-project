@@ -1,10 +1,11 @@
-package eu.senla.authservice.exception.handler;
+package eu.senla.httpconfiguration.core.exception.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.common.dto.exception.ExceptionResponse;
 import eu.senla.common.dto.exception.Violation;
 import eu.senla.common.enums.ErrorCode;
 import eu.senla.common.exception.ApiException;
+import eu.senla.common.exception.AuthenticationException;
 import feign.FeignException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -23,10 +25,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import static eu.senla.httpconfiguration.core.util.ExceptionWrapper.buildExceptionResponse;
+
 @Slf4j
 @RestControllerAdvice
 @RequiredArgsConstructor
-public class ApplicationExceptionHandler {
+public class WebExceptionHandler {
 
     private final ObjectMapper objectMapper;
 
@@ -61,6 +65,13 @@ public class ApplicationExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exceptionResponse);
     }
 
+    @ExceptionHandler(MissingRequestHeaderException.class)
+    public ResponseEntity<?> handleMissingRequestHeaderException(MissingRequestHeaderException e, HttpServletRequest r) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(buildExceptionResponse(
+                ErrorCode.ERR_MISSING_HEADER, String.format("%s: %s", e.getClass().getSimpleName(), e.getMessage()),
+                r.getRequestURI()));
+    }
+
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<?> handleHttpMessageNotReadableException(HttpMessageNotReadableException e,
                                                                    HttpServletRequest request) {
@@ -69,26 +80,24 @@ public class ApplicationExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
-    @ExceptionHandler(MissingRequestHeaderException.class)
-    public ResponseEntity<?> handleMissingRequestHeaderException(MissingRequestHeaderException e, HttpServletRequest r) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(buildExceptionResponse(
-                ErrorCode.ERR_MISSING_HEADER, String.format("%s: %s", e.getClass().getSimpleName(), e.getMessage()),
-                r.getRequestURI()));
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ExceptionResponse> handleAuthenticationException(AuthenticationException e,
+                                                                           HttpServletRequest request) {
+        return ResponseEntity.status(e.getStatus()).body(buildExceptionResponse(e, request.getRequestURI()));
+    }
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<?> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e,
+                                                                          HttpServletRequest request) {
+        ExceptionResponse exceptionResponse = buildExceptionResponse(ErrorCode.ERR_HTTP_METHOD_NOT_ALLOWED,
+                ErrorCode.ERR_HTTP_METHOD_NOT_ALLOWED.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(exceptionResponse);
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleException(Exception e, HttpServletRequest request) {
         log.error(e.getClass().getName(), e);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(buildExceptionResponse(
-                ErrorCode.ERR_UNKNOWN_CODE, String.format("%s: %s", e.getClass().getSimpleName(), e.getMessage()),
-                request.getRequestURI()));
-    }
-
-    private ExceptionResponse buildExceptionResponse(ApiException e, String uri) {
-        return buildExceptionResponse(e.getErrorCode(), e.getMessage(), uri);
-    }
-
-    private ExceptionResponse buildExceptionResponse(ErrorCode errorCode, String message, String uri) {
-        return new ExceptionResponse(LocalDateTime.now(), errorCode, message, uri);
+        return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).body(
+                buildExceptionResponse(ErrorCode.ERR_UNKNOWN_CODE, e.getMessage(), request.getRequestURI()));
     }
 }

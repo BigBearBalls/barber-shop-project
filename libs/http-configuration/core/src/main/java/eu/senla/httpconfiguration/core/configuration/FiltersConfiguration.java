@@ -28,7 +28,7 @@ public class FiltersConfiguration {
         return filterRegistrationBean(handler, List.of("/*"), Ordered.HIGHEST_PRECEDENCE);
     }
 
-    protected  <T extends Filter> FilterRegistrationBean<T> filterRegistrationBean(T filter, List<String> urls, int order) {
+    protected <T extends Filter> FilterRegistrationBean<T> filterRegistrationBean(T filter, List<String> urls, int order) {
         FilterRegistrationBean<T> bean = new FilterRegistrationBean<>();
         bean.setFilter(filter);
         bean.setUrlPatterns(urls);

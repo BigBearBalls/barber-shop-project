@@ -1,9 +1,7 @@
 package eu.senla.gatewayservice.filters;
 
-import eu.senla.gatewayservice.model.User;
+import eu.senla.httpconfiguration.security.holder.UserIdHolder;
 import org.springframework.cloud.gateway.server.mvc.common.MvcUtils;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.function.HandlerFilterFunction;
 import org.springframework.web.servlet.function.HandlerFunction;
@@ -18,10 +16,9 @@ public class UserIdHeaderInterceptorFilter implements HandlerFilterFunction<Serv
     @Override
     public ServerResponse filter(ServerRequest request, HandlerFunction<ServerResponse> next) throws Exception {
         ServerRequest requestToUse = request;
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated()) {
+        if (UserIdHolder.getUserId() != null) {
             String headerName = "X-User-Id";
-            UUID userId = ((User) authentication.getPrincipal()).getId();
+            UUID userId = UserIdHolder.getUserId();
             String expandedValues = MvcUtils.expand(request, userId.toString());
             requestToUse = ServerRequest.from(request).header(headerName, expandedValues).build();
         }

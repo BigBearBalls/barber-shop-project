@@ -1,10 +1,11 @@
 package eu.senla.gatewayservice.configuration;
 
 import eu.senla.common.enums.ErrorCode;
-import eu.senla.common.exception.AuthenticationException;
 import eu.senla.common.enums.PermissionValue;
+import eu.senla.common.exception.AuthenticationException;
 import eu.senla.gatewayservice.filters.JwtAuthFilter;
 import eu.senla.gatewayservice.filters.SecurityContextUserIdHandlerFilter;
+import eu.senla.gatewayservice.handler.CustomAccessDeniedHandler;
 import eu.senla.gatewayservice.model.Permission;
 import eu.senla.gatewayservice.model.User;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,8 @@ public class SecurityConfiguration {
 
     private final SecurityContextUserIdHandlerFilter securityContextUserIdHandlerFilter;
 
+    private final CustomAccessDeniedHandler customAccessDeniedHandler;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
@@ -47,8 +50,10 @@ public class SecurityConfiguration {
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .anonymous(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
+                .exceptionHandling(exception ->
+                        exception.accessDeniedHandler(customAccessDeniedHandler))
                 .addFilterAfter(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(securityContextUserIdHandlerFilter, JwtAuthFilter.class)
+                .addFilterAfter(securityContextUserIdHandlerFilter, JwtAuthFilter.class)
                 .build();
     }
 

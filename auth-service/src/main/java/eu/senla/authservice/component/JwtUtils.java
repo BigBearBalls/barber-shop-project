@@ -57,11 +57,11 @@ public class JwtUtils {
         final Instant accessExpirationInstant = now.plusMinutes(jwtAccessExpiration)
                 .atZone(ZoneId.systemDefault()).toInstant();
         return Jwts.builder()
-                .setSubject(user.getEmail())
+//                .setSubject(user.getEmail())
+                .setSubject(user.getId().toString())
                 .setExpiration(Date.from(accessExpirationInstant))
                 .signWith(getAccessSigningKey())
-                .claim("id", user.getId())
-                .claim("permissions", user.getPermissions())
+//                .claim("id", user.getId())
                 .compact();
     }
 

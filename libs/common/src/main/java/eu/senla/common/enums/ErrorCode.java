@@ -17,6 +17,7 @@ public enum ErrorCode {
     ERR_JSON_PARSE_EXCEPTION("JSON parse exception!"),
     ERR_DONT_AUTHENTICATED("Don't authenticated!"),
     ERR_MISSING_HEADER("Missing header!"),
+    ERR_HTTP_METHOD_NOT_ALLOWED("HTTP Method not allowed!"),
     ERR_CONSTRAINT_VIOLATION_EXCEPTION("Constraint violation!");
 
     private final String message;

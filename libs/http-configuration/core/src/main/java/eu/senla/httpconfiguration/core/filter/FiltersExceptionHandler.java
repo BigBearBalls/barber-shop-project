@@ -5,8 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.common.constant.SecurityConstants;
 import eu.senla.common.dto.exception.ExceptionResponse;
 import eu.senla.common.enums.ErrorCode;
+import eu.senla.common.exception.AuthenticationException;
 import eu.senla.common.exception.FilterException;
 import eu.senla.httpconfiguration.core.configuration.ObjectMapperConfiguration;
+import eu.senla.httpconfiguration.core.util.ExceptionWrapper;
 import feign.FeignException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -45,13 +47,17 @@ public class FiltersExceptionHandler extends OncePerRequestFilter {
             ExceptionResponse exceptionResponse = extractFilterExceptionInExceptionResponse(e, request.getRequestURI());
             makeHttpServletResponseWithExceptionResponse(response, e.getStatus().value(), exceptionResponse);
         } catch (FeignException e) {
-            HttpStatus httpStatus = HttpStatus.valueOf(e.status() != 0 ? e.status() : HttpStatus.SERVICE_UNAVAILABLE.value());
+            HttpStatus httpStatus = HttpStatus.valueOf(e.status() != 0 ? e.status() : HttpStatus.I_AM_A_TEAPOT.value());
             ExceptionResponse exceptionResponse = extractFeignHttpResponseBodyToExceptionResponseObject(e, request);
+            makeHttpServletResponseWithExceptionResponse(response, httpStatus.value(), exceptionResponse);
+        } catch (AuthenticationException e) {
+            HttpStatus httpStatus = HttpStatus.UNAUTHORIZED;
+            ExceptionResponse exceptionResponse = ExceptionWrapper.buildExceptionResponse(e, request.getRequestURI());
             makeHttpServletResponseWithExceptionResponse(response, httpStatus.value(), exceptionResponse);
         } catch (Exception e) {
             if (!response.isCommitted()) {
                 ExceptionResponse exceptionResponse = extractExceptionInExceptionResponse(e, request.getRequestURI());
-                makeHttpServletResponseWithExceptionResponse(response, HttpServletResponse.SC_BAD_REQUEST, exceptionResponse);
+                makeHttpServletResponseWithExceptionResponse(response, HttpStatus.I_AM_A_TEAPOT.value(), exceptionResponse);
             }
         }
     }
