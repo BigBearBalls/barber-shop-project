@@ -3,7 +3,7 @@ package eu.senla.authservice.service.impl;
 import eu.senla.authservice.model.User;
 import eu.senla.authservice.repository.UserRepository;
 import eu.senla.authservice.service.UserService;
-import eu.senla.common.auth.dto.UserCredentialsDTO;
+import eu.senla.common.dto.UserCredentialsDTO;
 import eu.senla.common.enums.ErrorCode;
 import eu.senla.common.exception.ExistsException;
 import eu.senla.common.exception.LogExceptionWrapper;

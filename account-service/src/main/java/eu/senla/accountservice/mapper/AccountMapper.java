@@ -1,8 +1,8 @@
 package eu.senla.accountservice.mapper;
 
 import eu.senla.common.account.dto.AccountDetailsDTO;
-import eu.senla.common.account.dto.UserCredentialsDTO;
-import eu.senla.common.account.dto.UserDataDTO;
+import eu.senla.common.dto.UserCredentialsDTO;
+import eu.senla.common.dto.UserDataDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;

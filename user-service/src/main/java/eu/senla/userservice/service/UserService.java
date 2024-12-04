@@ -1,6 +1,6 @@
 package eu.senla.userservice.service;
 
-import eu.senla.common.user.dto.UserDataDTO;
+import eu.senla.common.dto.UserDataDTO;
 
 import java.util.UUID;
 

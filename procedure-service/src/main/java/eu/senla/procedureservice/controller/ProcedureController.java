@@ -1,8 +1,8 @@
 package eu.senla.procedureservice.controller;
 
-import eu.senla.procedureservice.data.dto.request.CreateProcedureRequest;
-import eu.senla.procedureservice.data.dto.request.ProcedureDTO;
-import eu.senla.procedureservice.data.dto.response.IdResponseDTO;
+import eu.senla.common.dto.ProcedureDTO;
+import eu.senla.common.procedure.dto.request.CreateProcedureRequest;
+import eu.senla.common.procedure.dto.response.IdResponseDTO;
 import eu.senla.procedureservice.service.ProcedureService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

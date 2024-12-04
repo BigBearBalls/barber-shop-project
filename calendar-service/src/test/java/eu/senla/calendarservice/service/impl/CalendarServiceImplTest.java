@@ -1,10 +1,10 @@
 package eu.senla.calendarservice.service.impl;
 
 import eu.senla.calendarservice.entity.DayOff;
-import eu.senla.calendarservice.exception.EmptyDateException;
-import eu.senla.calendarservice.exception.InvalidDateException;
 import eu.senla.calendarservice.mapper.CalendarMapper;
 import eu.senla.calendarservice.repository.CalendarRepository;
+import eu.senla.common.exception.InvalidValueException;
+import eu.senla.common.exception.NotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -49,13 +49,13 @@ class CalendarServiceImplTest {
     void setDayOff_shouldReturnDateBeforeNowError() {
         LocalDate pastDate = LocalDate.of(2022, 5, 3);
 
-        InvalidDateException exception = assertThrows(
-                InvalidDateException.class,
+        InvalidValueException exception = assertThrows(
+                InvalidValueException.class,
                 () -> calendarService.setDayOff(pastDate),
                 "Expected validateDate to throw InvalidDateException, but it didn't"
         );
 
-        assertEquals("Can't use a past date ", exception.getErrorMessage());
+        assertEquals("Date cannot be in the past!", exception.getMessage());
 
     }
 
@@ -66,13 +66,13 @@ class CalendarServiceImplTest {
 
         when(calendarRepository.existsByDate(notExistingDate)).thenReturn(false);
 
-        EmptyDateException exception = assertThrows(
-                EmptyDateException.class,
+        NotFoundException exception = assertThrows(
+                NotFoundException.class,
                 () -> calendarService.cancelDayOff(notExistingDate),
                 "Expected not exist date to throw InvalidDateException, but it didn't"
         );
 
-        assertEquals("This day is already a working day", exception.getErrorMessage());
+        assertEquals(String.format("This day (%s) is not day off!", notExistingDate), exception.getMessage());
     }
 
     @Test

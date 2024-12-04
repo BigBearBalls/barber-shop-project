@@ -1,14 +1,15 @@
 package eu.senla.workingdayservice.service.impl;
 
-import eu.senla.workingdayservice.data.req.CalendarFeignData;
-import eu.senla.workingdayservice.dto.ResponseWorkingDayDto;
+import eu.senla.common.enums.ErrorCode;
+import eu.senla.common.exception.ExistsException;
+import eu.senla.common.exception.LogExceptionWrapper;
+import eu.senla.common.exception.NotFoundException;
+import eu.senla.common.workingday.dto.request.CalendarFeignData;
+import eu.senla.common.workingday.dto.response.ResponseWorkingDayDTO;
 import eu.senla.workingdayservice.entity.WorkingDay;
-import eu.senla.workingdayservice.exception.NotFoundByDateAndByIdException;
-import eu.senla.workingdayservice.exception.NotFoundByIdException;
 import eu.senla.workingdayservice.mapper.WorkingDayMapper;
 import eu.senla.workingdayservice.repository.WorkingDayRepository;
 import eu.senla.workingdayservice.service.WorkingDayService;
-import eu.senla.workingdayservice.util.ExceptionInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,11 +26,10 @@ public class WorkingDayServiceImpl implements WorkingDayService {
 
     @Override
     @Transactional(readOnly = true)
-    public ResponseWorkingDayDto findById(UUID id) {
-        return workingDayMapper.toWorkingDayDto(workingDayRepository
-                .findById(id)
-                .orElseThrow(() -> new NotFoundByIdException(ExceptionInfo.WORKING_DAY_NOT_FOUND_BY_ID.getExceptionCode(),
-                        ExceptionInfo.WORKING_DAY_NOT_FOUND_BY_ID.getExceptionMessage())));
+    public ResponseWorkingDayDTO findById(UUID id) {
+        return workingDayMapper.toWorkingDayDto(workingDayRepository.findById(id).orElseThrow(() -> LogExceptionWrapper
+                .logErrorException(new NotFoundException(String.format(ErrorCode.ERR_WORKING_DAY_NOT_FOUND.getMessage(),
+                        "id", id), ErrorCode.ERR_WORKING_DAY_NOT_FOUND))));
     }
 
     @Override
@@ -39,13 +39,11 @@ public class WorkingDayServiceImpl implements WorkingDayService {
         WorkingDay workingDay = workingDayMapper.toWorkingDay(calendarFeignData.getRequestWorkingDayDto());
 
         if (calendarFeignData.getIsHoliday()) {
-            throw new NotFoundByDateAndByIdException(ExceptionInfo.DAY_IS_HOLIDAY.getExceptionCode(),
-                    ExceptionInfo.DAY_IS_HOLIDAY.getExceptionMessage());
+            throw LogExceptionWrapper.logErrorException(new NotFoundException(ErrorCode.ERR_DAY_IS_HOLIDAY));
         }
 
         if (workingDayRepository.existsWorkingDayByMasterIdAndWorkingDate(workingDay.getMasterId(), workingDay.getWorkingDate())) {
-            throw new NotFoundByDateAndByIdException(ExceptionInfo.WORKING_DAY_ALREADY_EXIST.getExceptionCode(),
-                    ExceptionInfo.WORKING_DAY_ALREADY_EXIST.getExceptionMessage());
+            throw LogExceptionWrapper.logErrorException(new ExistsException(ErrorCode.ERR_WORKING_DAY_ALREADY_EXIST));
         }
 
         return workingDayRepository.save(workingDay).getId();
@@ -53,12 +51,12 @@ public class WorkingDayServiceImpl implements WorkingDayService {
 
     @Override
     @Transactional(readOnly = true)
-    public ResponseWorkingDayDto findByMasterAndWorkingDate(UUID masterId, LocalDate workingDate) {
+    public ResponseWorkingDayDTO findByMasterAndWorkingDate(UUID masterId, LocalDate workingDate) {
 
         return workingDayMapper
-                .toWorkingDayDto(workingDayRepository
-                        .getWorkingDayByMasterIdAndWorkingDate(masterId, workingDate)
-                        .orElseThrow(() -> new NotFoundByDateAndByIdException(ExceptionInfo.WORKING_DAY_NOT_FOUND_BY_ID_DATE.getExceptionCode(),
-                                ExceptionInfo.WORKING_DAY_NOT_FOUND_BY_ID_DATE.getExceptionMessage())));
+                .toWorkingDayDto(workingDayRepository.getWorkingDayByMasterIdAndWorkingDate(masterId, workingDate)
+                        .orElseThrow(() -> LogExceptionWrapper.logErrorException(new NotFoundException(String.format(
+                                ErrorCode.ERR_WORKING_DAY_NOT_FOUND_BY_ID_DATE.getMessage(), workingDate),
+                                ErrorCode.ERR_WORKING_DAY_NOT_FOUND_BY_ID_DATE))));
     }
 }

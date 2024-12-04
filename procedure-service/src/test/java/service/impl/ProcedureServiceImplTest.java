@@ -1,12 +1,12 @@
 package service.impl;
 
-import eu.senla.procedureservice.data.dto.request.CreateProcedureRequest;
-import eu.senla.procedureservice.data.dto.request.ProcedureDTO;
-import eu.senla.procedureservice.data.dto.response.IdResponseDTO;
+import eu.senla.common.dto.ProcedureDTO;
+import eu.senla.common.exception.ExistsException;
+import eu.senla.common.exception.NotFoundException;
+import eu.senla.common.procedure.dto.request.CreateProcedureRequest;
+import eu.senla.common.procedure.dto.response.IdResponseDTO;
 import eu.senla.procedureservice.data.entity.Procedure;
 import eu.senla.procedureservice.data.repository.ProcedureRepository;
-import eu.senla.procedureservice.exception.ExistsException;
-import eu.senla.procedureservice.exception.NotFoundException;
 import eu.senla.procedureservice.service.MasterHasProcedureService;
 import eu.senla.procedureservice.service.impl.ProcedureServiceImpl;
 import eu.senla.procedureservice.service.mapper.ProcedureMapper;
@@ -74,7 +74,7 @@ class ProcedureServiceImplTest {
         );
 
         verify(procedureRepository, times(1)).existsByProcedureName(createProcedureRequest.getProcedureName());
-        assertEquals("Procedure with name '" + procedure.getProcedureName() + "' already exists!", exception.getMessage());
+        assertEquals(String.format("Procedure with name '%s' already exists!", procedure.getProcedureName()), exception.getMessage());
     }
 
     @Test
@@ -143,7 +143,7 @@ class ProcedureServiceImplTest {
 
         verify(masterHasProcedureService, times(1)).checkMasterHasProcedure(randomId, secondRandomId);
         verify(procedureRepository, times(1)).findById(procedure.getId());
-        assertEquals("Procedure with id '" + procedure.getId() + "' was not found!", exception.getMessage());
+        assertEquals(String.format("Procedure with id '%s' was not found!", procedure.getId()), exception.getMessage());
     }
 
     @Test
@@ -161,6 +161,6 @@ class ProcedureServiceImplTest {
         );
 
         verify(procedureRepository, times(1)).existsById(randomId);
-        assertEquals("Procedure with id '" + randomId + "' was not found!", exception.getMessage());
+        assertEquals(String.format("Procedure with id '%s' was not found!", randomId), exception.getMessage());
     }
 }

@@ -12,7 +12,7 @@ import eu.senla.authservice.utility.CallbackExceptionWrapper;
 import eu.senla.common.auth.dto.LoginRequest;
 import eu.senla.common.auth.dto.LoginResponse;
 import eu.senla.common.auth.dto.RegistrationRequest;
-import eu.senla.common.auth.dto.UserDataDTO;
+import eu.senla.common.dto.UserDataDTO;
 import eu.senla.common.enums.ErrorCode;
 import eu.senla.common.exception.AuthenticationException;
 import eu.senla.common.exception.NotFoundException;

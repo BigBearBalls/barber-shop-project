@@ -1,10 +1,10 @@
 package eu.senla.userservice.service.impl;
 
+import eu.senla.common.dto.UserDataDTO;
 import eu.senla.common.enums.ErrorCode;
 import eu.senla.common.exception.ExistsException;
 import eu.senla.common.exception.LogExceptionWrapper;
 import eu.senla.common.exception.NotFoundException;
-import eu.senla.common.user.dto.UserDataDTO;
 import eu.senla.userservice.entity.User;
 import eu.senla.userservice.mapper.UserMapper;
 import eu.senla.userservice.repository.UserRepository;

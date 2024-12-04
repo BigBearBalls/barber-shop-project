@@ -1,8 +1,8 @@
 package eu.senla.booking.service;
 
-import eu.senla.booking.data.request.AggregatedBooking;
-import eu.senla.booking.data.response.IdResponseDTO;
 import eu.senla.booking.entity.Booking;
+import eu.senla.common.booking.dto.request.AggregatedBooking;
+import eu.senla.common.booking.dto.response.IdResponseDTO;
 
 import java.util.UUID;
 

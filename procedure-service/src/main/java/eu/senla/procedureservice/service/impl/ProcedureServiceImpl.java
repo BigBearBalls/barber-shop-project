@@ -1,14 +1,14 @@
 package eu.senla.procedureservice.service.impl;
 
-import eu.senla.procedureservice.data.dto.request.CreateProcedureRequest;
-import eu.senla.procedureservice.data.dto.request.ProcedureDTO;
-import eu.senla.procedureservice.data.dto.response.IdResponseDTO;
+import eu.senla.common.dto.ProcedureDTO;
+import eu.senla.common.enums.ErrorCode;
+import eu.senla.common.exception.ExistsException;
+import eu.senla.common.exception.LogExceptionWrapper;
+import eu.senla.common.exception.NotFoundException;
+import eu.senla.common.procedure.dto.request.CreateProcedureRequest;
+import eu.senla.common.procedure.dto.response.IdResponseDTO;
 import eu.senla.procedureservice.data.entity.Procedure;
 import eu.senla.procedureservice.data.repository.ProcedureRepository;
-import eu.senla.procedureservice.enums.ErrorCode;
-import eu.senla.procedureservice.exception.ExistsException;
-import eu.senla.procedureservice.exception.LogExceptionWrapper;
-import eu.senla.procedureservice.exception.NotFoundException;
 import eu.senla.procedureservice.service.MasterHasProcedureService;
 import eu.senla.procedureservice.service.ProcedureService;
 import eu.senla.procedureservice.service.mapper.ProcedureMapper;

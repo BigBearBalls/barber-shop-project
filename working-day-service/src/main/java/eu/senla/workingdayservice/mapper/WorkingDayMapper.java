@@ -1,7 +1,7 @@
 package eu.senla.workingdayservice.mapper;
 
-import eu.senla.workingdayservice.dto.RequestWorkingDayDto;
-import eu.senla.workingdayservice.dto.ResponseWorkingDayDto;
+import eu.senla.common.workingday.dto.request.RequestWorkingDayDTO;
+import eu.senla.common.workingday.dto.response.ResponseWorkingDayDTO;
 import eu.senla.workingdayservice.entity.WorkingDay;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -11,8 +11,7 @@ import org.mapstruct.MappingConstants;
 public interface WorkingDayMapper {
 
     @Mapping(target = "id", ignore = true)
-    WorkingDay toWorkingDay(RequestWorkingDayDto requestWorkingDayDto);
+    WorkingDay toWorkingDay(RequestWorkingDayDTO requestWorkingDayDto);
 
-
-    ResponseWorkingDayDto toWorkingDayDto(WorkingDay workingDay);
+    ResponseWorkingDayDTO toWorkingDayDto(WorkingDay workingDay);
 }

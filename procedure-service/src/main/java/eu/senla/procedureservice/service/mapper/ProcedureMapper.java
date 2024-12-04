@@ -1,7 +1,7 @@
 package eu.senla.procedureservice.service.mapper;
 
-import eu.senla.procedureservice.data.dto.request.CreateProcedureRequest;
-import eu.senla.procedureservice.data.dto.request.ProcedureDTO;
+import eu.senla.common.dto.ProcedureDTO;
+import eu.senla.common.procedure.dto.request.CreateProcedureRequest;
 import eu.senla.procedureservice.data.entity.Procedure;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

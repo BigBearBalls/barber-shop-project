@@ -1,7 +1,7 @@
 package eu.senla.workingdayservice.controller;
 
-import eu.senla.workingdayservice.dto.RequestWorkingDayDto;
-import eu.senla.workingdayservice.dto.ResponseWorkingDayDto;
+import eu.senla.common.workingday.dto.request.RequestWorkingDayDTO;
+import eu.senla.common.workingday.dto.response.ResponseWorkingDayDTO;
 import eu.senla.workingdayservice.facade.WorkingDayFacade;
 import eu.senla.workingdayservice.service.WorkingDayService;
 import jakarta.validation.Valid;
@@ -21,18 +21,18 @@ public class WorkingDayController {
     private final WorkingDayFacade workingDayFacade;
 
     @GetMapping("{id}")
-    public ResponseWorkingDayDto findById(@PathVariable UUID id) {
+    public ResponseWorkingDayDTO findById(@PathVariable UUID id) {
         return workingDayService.findById(id);
     }
 
     @GetMapping("master/{masterId}/date/{date}")
-    public ResponseWorkingDayDto findByMasterIdAndWorkingDate(@PathVariable UUID masterId,
+    public ResponseWorkingDayDTO findByMasterIdAndWorkingDate(@PathVariable UUID masterId,
                                                               @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
         return workingDayService.findByMasterAndWorkingDate(masterId, date);
     }
 
     @PostMapping()
-    public UUID addWorkingDay(@RequestBody @Valid RequestWorkingDayDto requestWorkingDayDto) {
+    public UUID addWorkingDay(@RequestBody @Valid RequestWorkingDayDTO requestWorkingDayDto) {
         return workingDayFacade.collectDataFromCalendar(requestWorkingDayDto);
     }
 }

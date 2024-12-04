@@ -13,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingRequestHeaderException;
@@ -58,10 +60,22 @@ public class WebExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> validationExceptions(MethodArgumentNotValidException e, HttpServletRequest request) {
-        final List<Violation> violations = e.getBindingResult().getFieldErrors().stream()
-                .map(error -> new Violation(error.getField(), error.getDefaultMessage())).toList();
+        String fieldErrors = e.getBindingResult().getFieldErrors()
+                .stream()
+                .map(FieldError::getDefaultMessage)
+                .reduce((msg1, msg2) -> msg1 + "; " + msg2)
+                .orElse("");
+        String globalErrors = e.getBindingResult().getGlobalErrors()
+                .stream()
+                .map(ObjectError::getDefaultMessage)
+                .reduce((msg1, msg2) -> msg1 + "; " + msg2)
+                .orElse("");
+        String errorMessages = (fieldErrors + " " + globalErrors).trim();
+        if (errorMessages.endsWith(";")) {
+            errorMessages = errorMessages.substring(0, errorMessages.length() - 1);
+        }
         ExceptionResponse exceptionResponse = buildExceptionResponse(ErrorCode.ERR_METHOD_ARGUMENTS_VALIDATION_EXCEPTION,
-                violations.toString(), request.getRequestURI());
+                errorMessages, request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exceptionResponse);
     }
 

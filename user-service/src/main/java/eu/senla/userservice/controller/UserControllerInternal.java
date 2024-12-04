@@ -1,6 +1,6 @@
 package eu.senla.userservice.controller;
 
-import eu.senla.common.user.dto.UserDataDTO;
+import eu.senla.common.dto.UserDataDTO;
 import eu.senla.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

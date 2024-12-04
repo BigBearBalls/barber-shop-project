@@ -24,5 +24,14 @@ public class ValidationConstants {
     public static final String LAST_NAME_IS_NOT_VALID_VALIDATION_MESSAGE = "Last name is not valid!";
     public static final String USER_ID_CANNOT_BE_NULL_VALIDATION_MESSAGE = "User ID cannot be null!";
     public static final int MIN_PERMISSIONS_LIST_SIZE = 1;
+    public static final String PROCEDURE_ID_CANNOT_BE_NULL_VALIDATION_MESSAGE = "Procedure ID cannot be null!";
+    public static final String MASTER_ID_CANNOT_BE_NULL_VALIDATION_MESSAGE = "Master ID cannot be null!";
+    public static final String CLIENT_ID_CANNOT_BE_NULL_VALIDATION_MESSAGE = "Client ID cannot be null!";
+    public static final String RESERVATION_START_TIME_CANNOT_BE_NULL_VALIDATION_MESSAGE = "Reservation start time cannot be null!";
+    public static final String WORKING_DATE_CANNOT_BE_NULL_VALIDATION_MESSAGE = "Working date cannot be null!";
+    public static final String BOOKING_ID_CANNOT_BE_NULL_VALIDATION_MESSAGE = "Booking ID cannot be null!";
     public static final String SIZE_OF_PERMISSIONS_LIST_CANNOT_BE_LESS_THEN_VALIDATION_MESSAGE = "Size of permissions list cannot be less then 1!";
+    public static final String WORKING_DAY_START_TIME_CANNOT_BE_NULL_VALIDATION_MESSAGE = "Working day start time cannot be null!";
+    public static final String WORKING_DAY_END_TIME_CANNOT_BE_NULL_VALIDATION_MESSAGE = "Working day end time cannot be null!";
+    public static final String WORKING_MASTER_CANNOT_BE_NULL_VALIDATION_MESSAGE = "Master id cannot be null!";
 }

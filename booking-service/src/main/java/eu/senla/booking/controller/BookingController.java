@@ -1,14 +1,13 @@
 package eu.senla.booking.controller;
 
-import eu.senla.booking.constant.ValidationConstants;
-import eu.senla.booking.data.request.BookingRequestDTO;
-import eu.senla.booking.data.response.BookingResponseDTO;
-import eu.senla.booking.data.response.IdResponseDTO;
 import eu.senla.booking.facade.BookingFacade;
+import eu.senla.common.booking.dto.request.BookingRequestDTO;
+import eu.senla.common.booking.dto.response.BookingResponseDTO;
+import eu.senla.common.booking.dto.response.IdResponseDTO;
+import eu.senla.common.constant.ValidationConstants;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,9 +22,8 @@ public class BookingController {
     private final BookingFacade bookingFacade;
 
     @PostMapping
-    public ResponseEntity<IdResponseDTO> save(@RequestBody @Valid BookingRequestDTO bookingDTO) {
-        return ResponseEntity
-                .ok(bookingFacade.saveBooking(bookingDTO));
+    public IdResponseDTO save(@RequestBody @Valid BookingRequestDTO bookingDTO) {
+        return bookingFacade.saveBooking(bookingDTO);
     }
 
     @GetMapping("{id}")

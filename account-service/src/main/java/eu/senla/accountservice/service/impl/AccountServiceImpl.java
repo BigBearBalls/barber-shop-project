@@ -5,8 +5,8 @@ import eu.senla.accountservice.client.UserDataClient;
 import eu.senla.accountservice.mapper.AccountMapper;
 import eu.senla.accountservice.service.AccountService;
 import eu.senla.common.account.dto.AccountDetailsDTO;
-import eu.senla.common.account.dto.UserCredentialsDTO;
-import eu.senla.common.account.dto.UserDataDTO;
+import eu.senla.common.dto.UserCredentialsDTO;
+import eu.senla.common.dto.UserDataDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

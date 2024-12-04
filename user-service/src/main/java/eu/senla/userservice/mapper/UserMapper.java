@@ -1,6 +1,6 @@
 package eu.senla.userservice.mapper;
 
-import eu.senla.common.user.dto.UserDataDTO;
+import eu.senla.common.dto.UserDataDTO;
 import eu.senla.userservice.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

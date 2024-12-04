@@ -1,6 +1,6 @@
 package eu.senla.booking.client;
 
-import eu.senla.booking.data.ProcedureDTO;
+import eu.senla.common.dto.ProcedureDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

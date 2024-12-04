@@ -1,16 +1,18 @@
 package eu.senla.booking.service.impl;
 
-import eu.senla.booking.data.ProcedureDTO;
-import eu.senla.booking.data.ResponseWorkingDayDto;
 import eu.senla.booking.data.mapper.BookingMapper;
-import eu.senla.booking.data.request.AggregatedBooking;
-import eu.senla.booking.data.response.IdResponseDTO;
 import eu.senla.booking.entity.Booking;
 import eu.senla.booking.repository.BookingRepository;
 import eu.senla.booking.service.BookingService;
-import eu.senla.booking.service.exception.MasterNotWorkException;
-import eu.senla.booking.service.exception.ResourceNotFoundException;
-import eu.senla.booking.service.exception.TimeAlreadyBookedException;
+import eu.senla.common.booking.dto.request.AggregatedBooking;
+import eu.senla.common.booking.dto.response.IdResponseDTO;
+import eu.senla.common.booking.dto.response.ResponseWorkingDayDTO;
+import eu.senla.common.dto.ProcedureDTO;
+import eu.senla.common.enums.ErrorCode;
+import eu.senla.common.exception.ExistsException;
+import eu.senla.common.exception.LogExceptionWrapper;
+import eu.senla.common.exception.MasterNotWorkException;
+import eu.senla.common.exception.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,8 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
-
-import static eu.senla.booking.data.response.ErrorMessage.*;
 
 @Service
 @AllArgsConstructor
@@ -34,7 +34,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public IdResponseDTO saveBooking(AggregatedBooking aggregatedBookingData) {
 
-        ResponseWorkingDayDto workingMasterDay = aggregatedBookingData.getWorkingMasterDay();
+        ResponseWorkingDayDTO workingMasterDay = aggregatedBookingData.getWorkingMasterDay();
         ProcedureDTO procedure = aggregatedBookingData.getProcedure();
 
         checkFreeTime(workingMasterDay, procedure.getDuration(),
@@ -51,10 +51,11 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public Booking findBookingById(UUID id) {
         return bookingRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(BOOKING_NOT_FOUND + id));
+                .orElseThrow(() -> LogExceptionWrapper.logErrorException(new NotFoundException(String.format(
+                        ErrorCode.ERR_BOOKING_NOT_FOUND.getMessage(), id), ErrorCode.ERR_BOOKING_NOT_FOUND)));
     }
 
-    private void checkFreeTime(ResponseWorkingDayDto workingDay,
+    private void checkFreeTime(ResponseWorkingDayDTO workingDay,
                                Integer duration,
                                LocalTime desiredStartTime) {
 
@@ -66,7 +67,7 @@ public class BookingServiceImpl implements BookingService {
         LocalTime desiredEndTime = desiredStartTime.plusMinutes(duration);
 
         if (desiredStartTime.isBefore(workTimeStart) || desiredEndTime.isAfter(workTimeEnd)) {
-            throw new MasterNotWorkException(MASTER_DOESNT_WORK);
+            throw LogExceptionWrapper.logErrorException(new MasterNotWorkException(ErrorCode.ERR_MASTER_NOT_WORKING));
         }
 
         for (Booking booking : masterBookingsPerDay) {
@@ -74,7 +75,7 @@ public class BookingServiceImpl implements BookingService {
             LocalTime bookingTimeEnd = booking.getReservationEnd();
 
             if (desiredStartTime.isBefore(bookingTimeEnd) && desiredEndTime.isAfter(bookingTimeStart)) {
-                throw new TimeAlreadyBookedException(TIME_ALREADY_BOOKED);
+                throw LogExceptionWrapper.logErrorException(new ExistsException(ErrorCode.ERR_TIME_ALREADY_BOOKED));
             }
         }
 
