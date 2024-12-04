@@ -192,6 +192,7 @@ services:
     env_file:
       - env/security.env
       - env/datasource.env
+      - env/feign-services-url.env
     depends_on:
       barber-shop-database:
         condition: service_healthy
@@ -208,6 +209,8 @@ services:
       start_period: 10s
     env_file:
       - env/datasource.env
+      - env/feign-services-url.env
+      - env/security.env
     depends_on:
       barber-shop-database:
         condition: service_healthy
