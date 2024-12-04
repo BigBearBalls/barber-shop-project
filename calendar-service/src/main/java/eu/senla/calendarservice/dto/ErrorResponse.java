@@ -1,7 +1,6 @@
 package eu.senla.calendarservice.dto;
 
 import lombok.*;
-import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

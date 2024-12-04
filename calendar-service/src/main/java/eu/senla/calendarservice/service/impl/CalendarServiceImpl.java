@@ -1,4 +1,5 @@
 package eu.senla.calendarservice.service.impl;
+
 import eu.senla.calendarservice.entity.DayOff;
 import eu.senla.calendarservice.exception.EmptyDateException;
 import eu.senla.calendarservice.exception.InvalidDateException;
@@ -9,6 +10,7 @@ import eu.senla.calendarservice.util.constants.ErrorConstants;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
 
 @Service
