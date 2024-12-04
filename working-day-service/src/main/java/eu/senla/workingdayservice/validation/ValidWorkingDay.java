@@ -11,6 +11,8 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidWorkingDay {
     String message() default "Work start time must be before work end time";
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }

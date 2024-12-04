@@ -8,7 +8,6 @@ import eu.senla.workingdayservice.service.WorkingDayService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.UUID;
 
 @Service
