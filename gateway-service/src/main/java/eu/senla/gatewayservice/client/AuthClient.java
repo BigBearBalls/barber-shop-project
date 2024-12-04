@@ -1,6 +1,6 @@
 package eu.senla.gatewayservice.client;
 
-import eu.senla.gatewayservice.dto.AccessTokenExtractedData;
+import eu.senla.gatewayservice.dto.UserCredentialsByAccessToken;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -9,5 +9,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface AuthClient {
 
     @GetMapping("/internal/jwt/access")
-    AccessTokenExtractedData getAccessTokenExtractedData(@RequestParam String accessToken);
+    UserCredentialsByAccessToken getUserCredentialsByAccessToken(@RequestParam String accessToken);
 }

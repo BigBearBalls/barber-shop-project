@@ -23,7 +23,6 @@ public class SecurityContextUserIdHandlerFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
         if (authentication != null && authentication.isAuthenticated()) {
             UUID userId = ((User) authentication.getPrincipal()).getId();
             UserIdHolder.setUserId(userId);

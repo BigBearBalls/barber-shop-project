@@ -1,8 +1,8 @@
 package eu.senla.authservice.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import eu.senla.authservice.dto.UserCredentialsByAccessToken;
 import eu.senla.authservice.service.JwtService;
-import eu.senla.authservice.dto.AccessTokenExtractedData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,9 +17,9 @@ public class InternalJwtController {
     private final JwtService jwtService;
 
     @GetMapping("access")
-    public AccessTokenExtractedData getAccessTokenExtractedData(@RequestParam String accessToken)
+    public UserCredentialsByAccessToken getUserCredentialsByAccessToken(@RequestParam String accessToken)
             throws JsonProcessingException {
         jwtService.validateAccessToken(accessToken);
-        return jwtService.getAccessTokenExtractedData(accessToken);
+        return jwtService.getUserCredentialsByAccessToken(accessToken);
     }
 }

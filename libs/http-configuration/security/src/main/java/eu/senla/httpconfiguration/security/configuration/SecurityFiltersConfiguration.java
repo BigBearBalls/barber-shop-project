@@ -1,9 +1,9 @@
 package eu.senla.httpconfiguration.security.configuration;
 
 import eu.senla.httpconfiguration.core.configuration.FiltersConfiguration;
+import eu.senla.httpconfiguration.core.factory.CustomYamlPropertySourceFactory;
 import eu.senla.httpconfiguration.security.filter.RequestApiKeyValidationFilter;
 import eu.senla.httpconfiguration.security.filter.UserIdHeaderConsumerFilter;
-import eu.senla.httpconfiguration.core.factory.CustomYamlPropertySourceFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;

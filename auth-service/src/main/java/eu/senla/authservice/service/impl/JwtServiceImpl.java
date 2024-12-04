@@ -1,19 +1,17 @@
 package eu.senla.authservice.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.TypeFactory;
 import eu.senla.authservice.component.JwtUtils;
-import eu.senla.authservice.model.Permission;
+import eu.senla.authservice.dto.UserCredentialsByAccessToken;
+import eu.senla.authservice.model.User;
 import eu.senla.authservice.service.JwtService;
-import eu.senla.authservice.dto.AccessTokenExtractedData;
+import eu.senla.authservice.service.UserService;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -23,6 +21,8 @@ public class JwtServiceImpl implements JwtService {
 
     private final JwtUtils jwtUtils;
 
+    private final UserService userService;
+
     private final ObjectMapper objectMapper;
 
     @Override
@@ -31,13 +31,15 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public AccessTokenExtractedData getAccessTokenExtractedData(String token) throws JsonProcessingException {
+    public UserCredentialsByAccessToken getUserCredentialsByAccessToken(String token) throws JsonProcessingException {
         Claims claims = jwtUtils.getAccessClaims(token);
-        String email = claims.getSubject();
-        UUID id = UUID.fromString(claims.get("id", String.class));
-        String array = objectMapper.writeValueAsString(claims.get("permissions"));
-        JavaType javaType = TypeFactory.defaultInstance().constructCollectionType(Set.class, Permission.class);
-        Set<Permission> permissions = objectMapper.readValue(array, javaType);
-        return new AccessTokenExtractedData(email, id, permissions);
+//        String email = claims.getSubject();
+//        UUID id = UUID.fromString(claims.get("id", String.class));
+        UUID id = UUID.fromString(claims.getSubject());
+        User user = userService.findById(id);
+//        String array = objectMapper.writeValueAsString(claims.get("permissions"));
+//        JavaType javaType = TypeFactory.defaultInstance().constructCollectionType(Set.class, Permission.class);
+//        Set<Permission> permissions = objectMapper.readValue(array, javaType);
+        return new UserCredentialsByAccessToken(user.getEmail(), id, user.getPermissions());
     }
 }

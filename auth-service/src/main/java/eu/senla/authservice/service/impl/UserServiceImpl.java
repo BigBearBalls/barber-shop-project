@@ -1,13 +1,13 @@
 package eu.senla.authservice.service.impl;
 
+import eu.senla.authservice.model.User;
+import eu.senla.authservice.repository.UserRepository;
+import eu.senla.authservice.service.UserService;
 import eu.senla.common.auth.dto.UserCredentialsDTO;
 import eu.senla.common.enums.ErrorCode;
 import eu.senla.common.exception.ExistsException;
 import eu.senla.common.exception.LogExceptionWrapper;
 import eu.senla.common.exception.NotFoundException;
-import eu.senla.authservice.model.User;
-import eu.senla.authservice.repository.UserRepository;
-import eu.senla.authservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -24,11 +24,12 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UUID saveUser(User user) {
-        if (userRepository.existsByEmail(user.getEmail())) {
+        if (userRepository.existsByEmailIgnoreCase(user.getEmail())) {
             throw LogExceptionWrapper.logErrorException(new ExistsException(String.format(
                     ErrorCode.ERR_USER_ALREADY_EXISTS.getMessage(), "email", user.getEmail()),
                     ErrorCode.ERR_USER_ALREADY_EXISTS));
         }
+        user.setEmail(user.getEmail().toLowerCase());
         return userRepository.save(user).getId();
     }
 
@@ -41,7 +42,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(propagation = Propagation.SUPPORTS)
     public User findByEmail(String email) {
-        return userRepository.findByEmail(email).orElseThrow(() -> LogExceptionWrapper
+        return userRepository.findByEmailIgnoreCase(email).orElseThrow(() -> LogExceptionWrapper
                 .logErrorException(new NotFoundException(String.format(ErrorCode.ERR_USER_NOT_FOUND.getMessage(),
                         "email", email), ErrorCode.ERR_USER_NOT_FOUND)));
     }
