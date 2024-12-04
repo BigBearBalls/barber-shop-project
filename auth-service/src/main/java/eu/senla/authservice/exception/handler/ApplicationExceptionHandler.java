@@ -2,6 +2,7 @@ package eu.senla.authservice.exception.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.authservice.dto.exception.ExceptionResponse;
+import eu.senla.authservice.dto.exception.ExceptionVioResponse;
 import eu.senla.authservice.dto.exception.Violation;
 import eu.senla.authservice.enums.ErrorCode;
 import eu.senla.authservice.exception.ApiException;
@@ -55,8 +56,13 @@ public class ApplicationExceptionHandler {
     public ResponseEntity<?> validationExceptions(MethodArgumentNotValidException e, HttpServletRequest request) {
         final List<Violation> violations = e.getBindingResult().getFieldErrors().stream()
                 .map(error -> new Violation(error.getField(), error.getDefaultMessage())).toList();
-        ExceptionResponse exceptionResponse = buildExceptionResponse(ErrorCode.ERR_METHOD_ARGUMENTS_VALIDATION_EXCEPTION,
-                violations.toString(), request.getRequestURI());
+        ExceptionVioResponse exceptionResponse = ExceptionVioResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .code(ErrorCode.ERR_METHOD_ARGUMENTS_VALIDATION_EXCEPTION)
+                .message("Validation failed")
+                .path(request.getRequestURI())
+                .violations(violations)
+                .build();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exceptionResponse);
     }
 

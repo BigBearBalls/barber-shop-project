@@ -1,6 +1,9 @@
 package eu.senla.calendarservice.service;
 
+import eu.senla.calendarservice.entity.DayOff;
+
 import java.time.LocalDate;
+import java.util.List;
 
 public interface CalendarService {
 
@@ -9,4 +12,6 @@ public interface CalendarService {
     void cancelDayOff(LocalDate day);
 
     Boolean checkDay(LocalDate day);
+
+    List<DayOff> getAllHolidays();
 }

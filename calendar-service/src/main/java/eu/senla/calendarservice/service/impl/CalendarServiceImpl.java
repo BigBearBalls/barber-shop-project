@@ -10,6 +10,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -42,5 +43,11 @@ public class CalendarServiceImpl implements CalendarService {
     @Override
     public Boolean checkDay(LocalDate day) {
         return calendarRepository.existsByDate(day);
+    }
+
+    @Transactional
+    @Override
+    public List<DayOff> getAllHolidays() {
+        return calendarRepository.findAll();
     }
 }

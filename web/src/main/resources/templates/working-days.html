@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule Form</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .message {
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            text-align: center;
+        }
+        .message.success {
+            background-color: lightgrey;
+            color: black;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div th:if="${message}" class="message success" th:text="${message}"></div>
+    <h1>Schedule Form</h1>
+    <form th:action="@{/working-days}" th:object="${addWorkingDayRequest}" method="post">
+        <label for="date">Select a Date:</label>
+        <input type="text" id="date" th:field="*{workingDate}" placeholder="Select a date" readonly>
+
+        <label for="startTime">Workday Start Time:</label>
+        <input type="text" id="startTime" th:field="*{workStart}" placeholder="Select start time" readonly>
+
+        <label for="endTime">Workday End Time:</label>
+        <input type="text" id="endTime" th:field="*{workEnd}" placeholder="Select end time" readonly>
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<script th:inline="javascript">
+    const unavailableDates = /*[[${unavailableDates}]]*/ [];
+    console.log("Unavailable dates:", unavailableDates);
+
+    flatpickr("#date", {
+        dateFormat: "Y-m-d",
+        disable: unavailableDates,
+        minDate: "today"
+    });
+
+    flatpickr("#startTime", {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true,
+        defaultHour: 9,
+        defaultMinute: 0
+    });
+
+    flatpickr("#endTime", {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true,
+        defaultHour: 18,
+        defaultMinute: 0
+    });
+</script>
+</body>
+</html>

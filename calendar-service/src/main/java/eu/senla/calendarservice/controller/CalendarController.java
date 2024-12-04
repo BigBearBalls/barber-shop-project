@@ -1,11 +1,13 @@
 package eu.senla.calendarservice.controller;
 
+import eu.senla.calendarservice.entity.DayOff;
 import eu.senla.calendarservice.service.CalendarService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/calendars/")
@@ -27,5 +29,10 @@ public class CalendarController {
     @GetMapping("{day}")
     public Boolean checkDay(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate day) {
         return calendarService.checkDay(day);
+    }
+
+    @GetMapping
+    public List<DayOff> getAllHolidays() {
+        return calendarService.getAllHolidays();
     }
 }
