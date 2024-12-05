@@ -3,14 +3,13 @@ package eu.senla.httpconfiguration.core.configuration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import eu.senla.common.enums.PermissionValue;
-import eu.senla.httpconfiguration.core.serialization.CustomLocalDateTimeDeserializer;
-import eu.senla.httpconfiguration.core.serialization.CustomLocalDateTimeSerializer;
-import eu.senla.httpconfiguration.core.serialization.PermissionValueUpperCaseDeserializer;
-import eu.senla.httpconfiguration.core.serialization.TrimStringDeserializer;
+import eu.senla.httpconfiguration.core.serialization.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Configuration
 public class ObjectMapperConfiguration {
@@ -21,8 +20,12 @@ public class ObjectMapperConfiguration {
         SimpleModule simpleModule = new SimpleModule();
         simpleModule.addDeserializer(String.class, new TrimStringDeserializer());
         simpleModule.addDeserializer(LocalDateTime.class, new CustomLocalDateTimeDeserializer());
+        simpleModule.addDeserializer(LocalTime.class, new CustomLocalTimeDeserializer());
+        simpleModule.addDeserializer(LocalDate.class, new CustomLocalDateDeserializer());
         simpleModule.addDeserializer(PermissionValue.class, new PermissionValueUpperCaseDeserializer());
         simpleModule.addSerializer(LocalDateTime.class, new CustomLocalDateTimeSerializer());
+        simpleModule.addSerializer(LocalTime.class, new CustomLocalTimeSerializer());
+        simpleModule.addSerializer(LocalDate.class, new CustomLocalDateSerializer());
         objectMapper.registerModule(simpleModule);
         return objectMapper;
     }
