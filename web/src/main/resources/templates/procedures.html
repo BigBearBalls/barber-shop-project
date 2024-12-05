@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Procedures</title>
+</head>
+<body>
+<h1>Procedures</h1>
+
+<!-- Проверка на наличие ошибок -->
+<div th:if="${error}" style="color: red;">
+    <p th:text="${error}"></p>
+</div>
+
+<!-- Отображение списка процедур -->
+<ul th:if="${procedures}" th:each="procedure : ${procedures}">
+    <li>
+        <strong th:text="${procedure.procedureName}">Procedure Name</strong>:
+        <span th:text="${procedure.procedurePrice}">Price</span> руб.
+        (<span th:text="${procedure.duration}">Duration</span> мин.)
+    </li>
+</ul>
+
+<p th:if="${procedures == null}">No procedures found.</p>
+</body>
+</html>

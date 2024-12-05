@@ -1,0 +1,84 @@
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Пример страницы</title>
+    <link rel="stylesheet" th:href="@{/css/welcome.css}">
+</head>
+<body>
+<div th:if="${info}">
+    <p th:text="${info}"></p>
+</div>
+<div class="container right-panel-active">
+    <!-- Sign Up -->
+    <div class="container__form container--signup">
+        <form th:action="@{/do_reg}" class="form" th:object="${registrationRequest}" method="post" id="form1">
+            <h2 class="form__title">Sign Up</h2>
+            <input type="text" th:field="*{firstName}" name="firstname" placeholder=firstname class="input" />
+            <input type="text" th:field="*{lastName}" name="lastname" placeholder=lastname class="input" />
+            <input type="email" th:field="*{email}" name="mail" placeholder=email class="input" />
+            <input type="password" th:field="*{password}" name="password" placeholder=password class="input" />
+            <input type="text" th:field="*{phoneNumber}" name="phone" placeholder=phone class="input" />
+            <button class="btn" type="submit">Sign Up</button>
+        </form>
+    </div>
+
+    <!-- Sign In -->
+    <div class="container__form container--signin">
+        <form  th:action="@{/do_auth}" class="form" th:object="${loginRequest}" method="post" id="form2">
+            <h2 class="form__title">Sign In</h2>
+            <input type="email" th:field="*{email}" name="login" placeholder=email class="input" />
+            <input type="password" th:field="*{password}" name="password" placeholder=password class="input" />
+            <button type="submit" class="btn">Sign In</button>
+        </form>
+    </div>
+
+    <!-- Overlay -->
+    <div class="container__overlay">
+        <div class="overlay">
+            <div class="overlay__panel overlay--left">
+                <button class="btn" id="signIn">Sign In</button>
+            </div>
+            <div class="overlay__panel overlay--right">
+                <button class="btn" id="signUp">Sign UP</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="
+    position: fixed;
+    top: 49%;
+    right: 14%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 0, 0, 0.1);
+    color: red;
+    padding: 15px 20px;
+    border: 1px solid red;
+    border-radius: 5px;
+    font-size: 1rem;
+    text-align: left;
+    z-index: 1000;
+    width: 250px;
+    word-wrap: break-word;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);" th:if="${error != null}">
+    <div th:if="${error?.get('general') != null}">
+        <p th:each="err : ${error.get('general')}" th:text="${err}"></p>
+    </div>
+    <div th:if="${error?.get('firstName') != null}" >
+        <p th:each="err : ${error.get('firstName')}" th:text="${err}"></p>
+    </div>
+    <div th:if="${error?.get('lastName') != null}">
+        <p th:each="err : ${error.get('lastName')}" th:text="${err}"></p>
+    </div>
+    <div th:if="${error?.get('email') != null}" >
+        <p th:each="err : ${error.get('email')}" th:text="${err}"></p>
+    </div>
+    <div th:if="${error?.get('password') != null}" >
+        <p th:each="err : ${error.get('password')}" th:text="${err}"></p>
+    </div>
+    <div th:if="${error?.get('phoneNumber') != null}" >
+        <p th:each="err : ${error.get('phoneNumber')}" th:text="${err}"></p>
+    </div>
+</div>
+<script th:src="@{/js/welcome.js}"></script>
+</body>
+</html>
