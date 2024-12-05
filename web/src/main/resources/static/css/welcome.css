@@ -21,7 +21,7 @@ body {
     align-items: center;
     background-color: var(--white);
     /*background: url("https://res.cloudinary.com/dci1eujqw/image/upload/v1616769558/Codepen/waldemar-brandt-aThdSdgx0YM-unsplash_cnq4sb.jpg");*/
-    background: url("https://raw.githubusercontent.com/zEndurance/BarberShop/refs/heads/master/src/view/background.png");
+    background: url("https://img.freepik.com/free-photo/barber-wallpaper-black-marble-background_53876-145654.jpg?t=st=1733382705~exp=1733386305~hmac=054e8817af44b761c17cdf4081fe3ed63e2e59244a4ef5063c1eec67dd9d3afa&w=1380");
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
@@ -110,7 +110,8 @@ body {
 .overlay {
     background-color: var(--lightblue);
     /*background: url("https://res.cloudinary.com/dci1eujqw/image/upload/v1616769558/Codepen/waldemar-brandt-aThdSdgx0YM-unsplash_cnq4sb.jpg");*/
-    background: url("https://raw.githubusercontent.com/zEndurance/BarberShop/refs/heads/master/src/view/background.png");
+    /*background: url("https://raw.githubusercontent.com/zEndurance/BarberShop/refs/heads/master/src/view/background.png");*/
+    background: url("https://img.freepik.com/free-photo/top-view-bath-concept-accessories-with-copy-space_23-2148419396.jpg?t=st=1733382665~exp=1733386265~hmac=134c9b34a486fc54bb8f126ff7190cb4a10491c81794cc61b5827831b706e07b&w=1380");
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
@@ -159,11 +160,11 @@ body {
 }
 
 .btn {
-    background-color: var(--blue);
-    background-image: linear-gradient(90deg, var(--blue) 0%, var(--lightblue) 74%);
+    background-color: rgba(241, 235, 238);
+    /*background-image: linear-gradient(90deg, var(--blue) 0%, var(--lightblue) 74%);*/
     border-radius: 20px;
     border: 1px solid var(--blue);
-    color: var(--white);
+    color: black;
     cursor: pointer;
     font-size: 0.8rem;
     font-weight: bold;
@@ -186,7 +187,7 @@ body {
 }
 
 .form {
-    background-color: rgba(249, 219, 169);
+    background-color: rgba(138, 129, 133);
     display: flex;
     align-items: center;
     justify-content: center;

@@ -51,24 +51,6 @@ public class AuthController {
         return "welcome";
     }
 
-    @GetMapping("/procedures")
-    public String getProcedures(Model model) {
-        try {
-
-            Mono<List> response = webClient
-                    .get()
-                    .uri("/procedures/")
-                    .retrieve()
-                    .bodyToMono(List.class);
-            List<?> procedures = response.block();
-            model.addAttribute("procedures", procedures);
-
-        } catch (Exception e) {
-            model.addAttribute("error", "Ошибка получения данных с бэкенда: " + e.getMessage());
-        }
-
-        return "procedures";
-    }
 
     @PostMapping("/do_reg")
     public String doRegistration(@ModelAttribute RegistrationRequest registrationRequest, Model model) {
@@ -109,6 +91,7 @@ public class AuthController {
                     .block();
 
             session.setAttribute("accountId", accountRequest.getId());
+
 //            session.setAttribute("accessToken", response.getAccessToken());
 //            session.setAttribute("refreshToken", response.getRefreshToken());
 

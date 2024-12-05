@@ -10,7 +10,7 @@ public class WebClientConfig {
     @Bean
     public WebClient webClient(WebClient.Builder webClientBuilder) {
         return webClientBuilder
-                .baseUrl("http://localhost:7080/api/v1") // Базовый URL для всех запросов
+                .baseUrl("http://localhost:7080/api/v1")
                 .build();
     }
 
