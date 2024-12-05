@@ -3,9 +3,7 @@ package eu.senla.procedureservice.service.impl;
 import eu.senla.procedureservice.data.dto.request.CreateProcedureRequest;
 import eu.senla.procedureservice.data.dto.request.ProcedureDTO;
 import eu.senla.procedureservice.data.dto.response.IdResponseDTO;
-import eu.senla.procedureservice.data.dto.response.ProceduresPageResponse;
 import eu.senla.procedureservice.data.entity.Procedure;
-import eu.senla.procedureservice.data.repository.MasterHasProcedureRepository;
 import eu.senla.procedureservice.data.repository.ProcedureRepository;
 import eu.senla.procedureservice.enums.ErrorCode;
 import eu.senla.procedureservice.exception.ExistsException;
@@ -16,8 +14,6 @@ import eu.senla.procedureservice.service.ProcedureService;
 import eu.senla.procedureservice.service.mapper.ProcedureMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

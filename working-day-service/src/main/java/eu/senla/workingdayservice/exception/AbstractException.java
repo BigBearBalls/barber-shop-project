@@ -3,7 +3,7 @@ package eu.senla.workingdayservice.exception;
 import lombok.Getter;
 
 @Getter
-public abstract class AbstractException extends RuntimeException{
+public abstract class AbstractException extends RuntimeException {
 
     private final String code;
     private final String message;

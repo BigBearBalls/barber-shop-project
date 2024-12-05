@@ -1,7 +1,6 @@
 package eu.senla.workingdayservice.service;
 
 import eu.senla.workingdayservice.data.req.CalendarFeignData;
-import eu.senla.workingdayservice.dto.RequestWorkingDayDto;
 import eu.senla.workingdayservice.dto.ResponseWorkingDayDto;
 
 import java.time.LocalDate;

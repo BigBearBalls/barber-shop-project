@@ -1,0 +1,21 @@
+<div id="deleteStudentModal" class="modal fade" role="dialog" th:fragment="assign-master-procedure" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title font-weight-bold" style="color:red;">Assign procedure denied</h4>
+            </div>
+            <div class="modal-body">
+                <p>Procedure was already assigned</p>
+            </div>
+
+            <form th:action="@{/assign-master-procedure}" method="post" id="delete-student-form">
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>

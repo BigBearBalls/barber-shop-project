@@ -11,6 +11,8 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface WorkingTimeConstraint {
     String message() default "Working time must be between 09:00 and 21:00";
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }

@@ -1,10 +1,10 @@
 # Barber-shop-project
 
->For starting this project you should clone repository and execute script:  
->> Build and Run all services. Also rebuild if needed. 
->> - Linux: _start.sh_ 
->> - Windows: _start.ps1_ 
-> 
+> For starting this project you should clone repository and execute script:
+>> Build and Run all services. Also rebuild if needed.
+>> - Linux: _start.sh_
+>> - Windows: _start.ps1_
+>
 >> Build and Run single service. Also rebuild if needed.
 >> - Linux: _start.sh_ service-name
 >> - Windows: _start.ps1_ -ServiceName "service-name"

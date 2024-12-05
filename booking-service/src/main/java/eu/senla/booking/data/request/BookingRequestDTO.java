@@ -3,8 +3,10 @@ package eu.senla.booking.data.request;
 import eu.senla.booking.annotation.validation.WorkingHours;
 import eu.senla.booking.constant.ValidationConstants;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

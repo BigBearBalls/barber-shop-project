@@ -37,7 +37,7 @@ public class BookingServiceImpl implements BookingService {
         ResponseWorkingDayDto workingMasterDay = aggregatedBookingData.getWorkingMasterDay();
         ProcedureDTO procedure = aggregatedBookingData.getProcedure();
 
-        checkFreeTime(workingMasterDay,procedure.getDuration(),
+        checkFreeTime(workingMasterDay, procedure.getDuration(),
                 aggregatedBookingData.getBookingRequest().getReservationStart());
 
         Booking booking = bookingMapper.toBooking(aggregatedBookingData.getBookingRequest(), procedure,

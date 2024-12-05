@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.web.dto.authDto.AddWorkingDayRequest;
 import eu.senla.web.dto.authDto.RegistrationRequest;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Controller;
