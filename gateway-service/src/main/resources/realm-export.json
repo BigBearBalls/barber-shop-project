@@ -1,6 +1,6 @@
 {
   "id": "7137a933-8635-480d-b2ae-9e5c9d2d7c14",
-  "realm": "barbershop-realm",
+  "realm": "plahctoh-realm",
   "displayName": "",
   "displayNameHtml": "",
   "notBefore": 0,
@@ -60,7 +60,7 @@
       },
       {
         "id": "f4fa23a4-3c0b-4728-82cf-939df03ecf0a",
-        "name": "default-roles-barbershop-realm",
+        "name": "default-roles-plahctoh-realm",
         "description": "${role_default-roles}",
         "composite": true,
         "composites": {
@@ -320,7 +320,7 @@
           "attributes": {}
         }
       ],
-      "barbershop-client": [
+      "plahctoh-client": [
         {
           "id": "96f899d7-bab7-4952-a256-3937ae757d9b",
           "name": "uma_protection",
@@ -437,7 +437,7 @@
   "groups": [],
   "defaultRole": {
     "id": "f4fa23a4-3c0b-4728-82cf-939df03ecf0a",
-    "name": "default-roles-barbershop-realm",
+    "name": "default-roles-plahctoh-realm",
     "description": "${role_default-roles}",
     "composite": true,
     "clientRole": false,
@@ -512,13 +512,13 @@
       "clientId": "account",
       "name": "${client_account}",
       "rootUrl": "${authBaseUrl}",
-      "baseUrl": "/realms/barbershop-realm/account/",
+      "baseUrl": "/realms/plahctoh-realm/account/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "/realms/barbershop-realm/account/*"
+        "/realms/plahctoh-realm/account/*"
       ],
       "webOrigins": [],
       "notBefore": 0,
@@ -559,13 +559,13 @@
       "clientId": "account-console",
       "name": "${client_account-console}",
       "rootUrl": "${authBaseUrl}",
-      "baseUrl": "/realms/barbershop-realm/account/",
+      "baseUrl": "/realms/plahctoh-realm/account/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "/realms/barbershop-realm/account/*"
+        "/realms/plahctoh-realm/account/*"
       ],
       "webOrigins": [],
       "notBefore": 0,
@@ -657,7 +657,7 @@
     },
     {
       "id": "8b05936a-cbd4-4289-814f-bae38fb07d99",
-      "clientId": "barbershop-client",
+      "clientId": "plahctoh-client",
       "name": "",
       "description": "",
       "rootUrl": "",
@@ -848,13 +848,13 @@
       "clientId": "security-admin-console",
       "name": "${client_security-admin-console}",
       "rootUrl": "${authAdminUrl}",
-      "baseUrl": "/admin/barbershop-realm/console/",
+      "baseUrl": "/admin/plahctoh-realm/console/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "/admin/barbershop-realm/console/*"
+        "/admin/plahctoh-realm/console/*"
       ],
       "webOrigins": [
         "+"
@@ -1429,7 +1429,7 @@
     },
     {
       "id": "b869e8c9-8727-4888-a335-46db89dcae25",
-      "name": "barbershop-realm",
+      "name": "plahctoh-realm",
       "description": "",
       "protocol": "openid-connect",
       "attributes": {

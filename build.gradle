@@ -11,11 +11,9 @@ bootJar {
 }
 
 def BOOKING_SERVICE = project(":booking-service")
-def PROCEDURE_SERVICE = project(":procedure-service")
 def USER_SERVICE = project(":user-service")
 def GATEWAY_SERVICE = project(":gateway-service")
 def NOTIFICATION_SERVICE = project(":notification-service")
-def WORKING_DAY_SERVICE = project(":working-day-service")
 def CALENDAR_SERVICE = project(":calendar-service")
 def AUTH_SERVICE = project(":auth-service")
 def ACCOUNT_SERVICE = project(":account-service")
@@ -48,11 +46,10 @@ ext {
 }
 
 
-Set<Project> datasourceProjects = Set.of(BOOKING_SERVICE, PROCEDURE_SERVICE, USER_SERVICE, CALENDAR_SERVICE,
-        WORKING_DAY_SERVICE, AUTH_SERVICE)
+Set<Project> datasourceProjects = Set.of(BOOKING_SERVICE, USER_SERVICE, CALENDAR_SERVICE, AUTH_SERVICE)
 Set<Project> kafkaProjects = Set.of(NOTIFICATION_SERVICE, BOOKING_SERVICE, CALENDAR_SERVICE)
-Set<Project> webProjects = Set.of(BOOKING_SERVICE, PROCEDURE_SERVICE, USER_SERVICE, NOTIFICATION_SERVICE,
-        CALENDAR_SERVICE, WORKING_DAY_SERVICE, AUTH_SERVICE, ACCOUNT_SERVICE, GATEWAY_SERVICE)
+Set<Project> webProjects = Set.of(BOOKING_SERVICE, USER_SERVICE, NOTIFICATION_SERVICE,
+        CALENDAR_SERVICE, AUTH_SERVICE, ACCOUNT_SERVICE, GATEWAY_SERVICE)
 Set<Project> securityProjects = Set.of(/*BOOKING_SERVICE, PROCEDURE_SERVICE, USER_SERVICE, */ GATEWAY_SERVICE)
 
 bootJar {
