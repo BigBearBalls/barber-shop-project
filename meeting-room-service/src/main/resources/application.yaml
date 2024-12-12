@@ -1,10 +1,10 @@
 spring:
   application:
-    name: "calendar-service"
+    name: "meeting-room-service"
   liquibase:
-    change-log: classpath:/db/changelog/db.changelog-calendar-master.yaml
+    change-log: classpath:/db/changelog/db.changelog-meeting-room-master.yaml
     enabled: true
-    default-schema: "calendar_service_schema"
+    default-schema: "meeting_room_service_schema"
   datasource:
     username: ${DATABASE_USERNAME:postgres}
     password: ${DATABASE_PASSWORD:1234}
@@ -13,6 +13,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
+    database: postgresql
     properties:
       hibernate:
         show_sql: true
