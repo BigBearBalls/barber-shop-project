@@ -10,6 +10,6 @@ import java.util.UUID;
 @FeignClient(url = "${feign.clients.user-service.url}", name = "userClient")
 public interface UserClient {
 
-//    @GetMapping("internal/users/{userId}")
-//    UserDataDTO getUserById(@PathVariable UUID userId);
+    @GetMapping("internal/users/{userId}")
+    UserDataDTO getUserById(@PathVariable UUID userId);
 }

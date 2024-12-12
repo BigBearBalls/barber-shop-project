@@ -33,18 +33,18 @@ spring:
               - AddRequestHeader=X-Request-Api-Key, ${API_KEY}
               - AddRequestHeader=X-Request-Source, EXTERNAL
 
-          - id: user-service
-            uri: http://user-service:8080
-            predicates:
-              - Path=/api/v1/user/**
-            filters:
-              - AddRequestHeader=X-Request-Api-Key, ${API_KEY}
-              - AddRequestHeader=X-Request-Source, EXTERNAL
-
           - id: calendar-service
             uri: http://calendar-service:8080
             predicates:
               - Path=/api/v1/calendars/**
+            filters:
+              - AddRequestHeader=X-Request-Api-Key, ${API_KEY}
+              - AddRequestHeader=X-Request-Source, EXTERNAL
+
+          - id: user-service
+            uri: http://user-service:8080
+            predicates:
+              - Path=/api/v1/user/**
             filters:
               - AddRequestHeader=X-Request-Api-Key, ${API_KEY}
               - AddRequestHeader=X-Request-Source, EXTERNAL

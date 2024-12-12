@@ -1,0 +1,7 @@
+http.host: 0.0.0.0
+path.data: /usr/share/logstash/data
+path.logs: /usr/share/logstash/logs
+xpack.monitoring.elasticsearch.hosts: ${xpack.monitoring.elasticsearch.hosts}
+xpack.monitoring.elasticsearch.password: ${xpack.monitoring.elasticsearch.password}
+xpack.monitoring.elasticsearch.username: ${xpack.monitoring.elasticsearch.username}
+xpack.monitoring.enabled: ${xpack.monitoring.enabled}

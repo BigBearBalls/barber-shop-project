@@ -2,6 +2,7 @@ package eu.senla.authservice.service.impl;
 
 import eu.senla.authservice.client.UserDataClient;
 import eu.senla.authservice.component.JwtUtils;
+import eu.senla.authservice.kafka.KafkaProducer;
 import eu.senla.authservice.mapper.UserMapper;
 import eu.senla.authservice.model.Permission;
 import eu.senla.authservice.model.User;
@@ -33,6 +34,7 @@ public class AuthServiceImpl implements AuthService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final PermissionService permissionService;
+    private final KafkaProducer kafkaProducer;
 
     @Override
     public void regUser(RegistrationRequest registrationRequest) {
@@ -43,6 +45,9 @@ public class AuthServiceImpl implements AuthService {
         user.setPermissions(permissions);
 
         UUID userId = userService.saveUser(user);
+
+        kafkaProducer.sendUserRegistrationEvent("user-registration", "New user registered: user@example.com");
+
         userDataDTO.setId(userId);
         CallbackExceptionWrapper.wrap(() -> userDataClient.createUser(userDataDTO),
                 () -> userService.deleteUserById(userId));

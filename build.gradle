@@ -48,7 +48,7 @@ ext {
 
 
 Set<Project> datasourceProjects = Set.of(BOOKING_SERVICE, USER_SERVICE, CALENDAR_SERVICE, AUTH_SERVICE, MEETING_ROOM_SERVICE)
-Set<Project> kafkaProjects = Set.of(NOTIFICATION_SERVICE, BOOKING_SERVICE, CALENDAR_SERVICE, MEETING_ROOM_SERVICE)
+Set<Project> kafkaProjects = Set.of(NOTIFICATION_SERVICE, BOOKING_SERVICE, CALENDAR_SERVICE, AUTH_SERVICE, MEETING_ROOM_SERVICE)
 Set<Project> webProjects = Set.of(BOOKING_SERVICE, USER_SERVICE, NOTIFICATION_SERVICE,
         CALENDAR_SERVICE, AUTH_SERVICE, ACCOUNT_SERVICE, GATEWAY_SERVICE, MEETING_ROOM_SERVICE)
 Set<Project> securityProjects = Set.of(/*BOOKING_SERVICE, PROCEDURE_SERVICE, USER_SERVICE, */ GATEWAY_SERVICE)
@@ -96,7 +96,8 @@ subprojects { subproject ->
     if (subproject in kafkaProjects) {
         dependencies {
             implementation "org.springframework.kafka:spring-kafka"
-            testImplementation "org.springframework.kafka:spring-kafka-test"
+            implementation 'org.springframework.boot:spring-boot-starter-mail'
+//            testImplementation "org.springframework.kafka:spring-kafka-test"
         }
     }
 
@@ -139,6 +140,7 @@ subprojects { subproject ->
         testImplementation "org.springframework.boot:spring-boot-starter-test"
         testRuntimeOnly "org.junit.platform:junit-platform-launcher"
         developmentOnly "org.springframework.boot:spring-boot-devtools"
+        implementation 'net.logstash.logback:logstash-logback-encoder:7.4'
     }
 
     tasks.named("test") {
