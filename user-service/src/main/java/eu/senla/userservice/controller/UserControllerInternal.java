@@ -1,6 +1,6 @@
 package eu.senla.userservice.controller;
 
-import eu.senla.userservice.dto.UserDataDTO;
+import eu.senla.common.dto.UserDataDTO;
 import eu.senla.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,8 +21,8 @@ public class UserControllerInternal {
         userService.createUser(dto);
     }
 
-    @GetMapping(value = "/{userId}")
-    public UserDataDTO getUserById(@PathVariable UUID userId) {
+    @GetMapping
+    public UserDataDTO getUser(@RequestHeader("X-User-Id") UUID userId) {
         return userService.getUserById(userId);
     }
 }

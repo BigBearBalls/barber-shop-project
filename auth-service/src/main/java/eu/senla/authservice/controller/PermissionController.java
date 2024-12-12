@@ -1,46 +1,37 @@
 package eu.senla.authservice.controller;
 
-import eu.senla.authservice.annotation.CheckPermission;
-import eu.senla.authservice.dto.PermissionsDTO;
-import eu.senla.authservice.dto.UserPermissionsManipulationRequest;
-import eu.senla.authservice.enums.PermissionValue;
-import eu.senla.authservice.model.User;
 import eu.senla.authservice.service.PermissionService;
-import eu.senla.authservice.service.UserService;
+import eu.senla.common.auth.dto.PermissionsDTO;
+import eu.senla.common.auth.dto.UserPermissionsManipulationRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/api/v1/permissions/")
+@RequiredArgsConstructor
 public class PermissionController {
 
-    private final UserService userService;
     private final PermissionService permissionService;
 
-    @GetMapping
-    @CheckPermission(value = PermissionValue.VIEW_PERMISSIONS)
-    public PermissionsDTO getPermissions() {
-        return permissionService.getPermissions();
-    }
-
     @PostMapping("user")
-    @CheckPermission(value = PermissionValue.ADD_PERMISSION)
-    public void addPermissionsToUser(@RequestBody UserPermissionsManipulationRequest permissions) {
-        permissionService.addPermissionsToUser(permissions);
+    public void addPermissionsToUser(@RequestBody UserPermissionsManipulationRequest request) {
+        permissionService.addPermissionsToUser(request);
     }
 
     @DeleteMapping("user")
-    @CheckPermission(value = PermissionValue.REMOVE_PERMISSION)
-    public void removeUserPermissions(@RequestBody UserPermissionsManipulationRequest permissions) {
-        permissionService.removeUserPermissions(permissions);
+    public void removeUserPermissions(@RequestBody UserPermissionsManipulationRequest request) {
+        permissionService.removeUserPermissions(request);
     }
 
     @GetMapping("user")
-    @CheckPermission(value = PermissionValue.VIEW_SELF_PERMISSIONS)
-    public PermissionsDTO getUserPermissions() {
-        String email = ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getEmail();
-        return permissionService.getUserPermissions(email);
+    public PermissionsDTO getUserPermissions(@RequestHeader(name = "X-User-Id") UUID userId) {
+        return permissionService.getUserPermissions(userId);
+    }
+
+    @GetMapping
+    public PermissionsDTO getPermissions() {
+        return permissionService.getPermissions();
     }
 }

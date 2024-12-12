@@ -1,8 +1,8 @@
 package eu.senla.authservice.service;
 
-import eu.senla.authservice.dto.LoginRequest;
-import eu.senla.authservice.dto.LoginResponse;
-import eu.senla.authservice.dto.RegistrationRequest;
+import eu.senla.common.auth.dto.LoginRequest;
+import eu.senla.common.auth.dto.LoginResponse;
+import eu.senla.common.auth.dto.RegistrationRequest;
 
 public interface AuthService {
 

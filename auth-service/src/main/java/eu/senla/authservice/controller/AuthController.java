@@ -1,9 +1,9 @@
 package eu.senla.authservice.controller;
 
-import eu.senla.authservice.dto.LoginRequest;
-import eu.senla.authservice.dto.LoginResponse;
-import eu.senla.authservice.dto.RegistrationRequest;
 import eu.senla.authservice.service.AuthService;
+import eu.senla.common.auth.dto.LoginRequest;
+import eu.senla.common.auth.dto.LoginResponse;
+import eu.senla.common.auth.dto.RegistrationRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,6 +23,7 @@ public class AuthController {
     void register(@RequestBody @Valid RegistrationRequest registrationRequest) {
         authService.regUser(registrationRequest);
     }
+
 
     @PostMapping("login")
     LoginResponse login(@RequestBody @Valid LoginRequest loginRequest) {

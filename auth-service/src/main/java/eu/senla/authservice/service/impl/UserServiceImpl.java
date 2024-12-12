@@ -1,15 +1,14 @@
 package eu.senla.authservice.service.impl;
 
-import eu.senla.authservice.dto.UserCredentialsDTO;
-import eu.senla.authservice.enums.ErrorCode;
-import eu.senla.authservice.exception.ExistsException;
-import eu.senla.authservice.exception.LogExceptionWrapper;
-import eu.senla.authservice.exception.NotFoundException;
 import eu.senla.authservice.model.User;
 import eu.senla.authservice.repository.UserRepository;
 import eu.senla.authservice.service.UserService;
+import eu.senla.common.dto.UserCredentialsDTO;
+import eu.senla.common.enums.ErrorCode;
+import eu.senla.common.exception.ExistsException;
+import eu.senla.common.exception.LogExceptionWrapper;
+import eu.senla.common.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,11 +24,12 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UUID saveUser(User user) {
-        if (userRepository.existsByEmail(user.getEmail())) {
+        if (userRepository.existsByEmailIgnoreCase(user.getEmail())) {
             throw LogExceptionWrapper.logErrorException(new ExistsException(String.format(
                     ErrorCode.ERR_USER_ALREADY_EXISTS.getMessage(), "email", user.getEmail()),
                     ErrorCode.ERR_USER_ALREADY_EXISTS));
         }
+        user.setEmail(user.getEmail().toLowerCase());
         return userRepository.save(user).getId();
     }
 
@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(propagation = Propagation.SUPPORTS)
     public User findByEmail(String email) {
-        return userRepository.findByEmail(email).orElseThrow(() -> LogExceptionWrapper
+        return userRepository.findByEmailIgnoreCase(email).orElseThrow(() -> LogExceptionWrapper
                 .logErrorException(new NotFoundException(String.format(ErrorCode.ERR_USER_NOT_FOUND.getMessage(),
                         "email", email), ErrorCode.ERR_USER_NOT_FOUND)));
     }
@@ -57,15 +57,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS)
-    public UserCredentialsDTO getUserCredentialsByEmail(String email) {
-        User user = this.findByEmail(email);
+    public UserCredentialsDTO getUserCredentialsById(UUID id) {
+        User user = this.findById(id);
         return new UserCredentialsDTO(user.getId(), user.getEmail());
     }
-
-    @Override
-    public UserDetailsService userDetailsService() {
-        return this::findByEmail;
-    }
-
-
 }

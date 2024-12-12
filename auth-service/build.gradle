@@ -1,4 +1,8 @@
 dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+    implementation "io.jsonwebtoken:jjwt-api:${jwtVersion}"
+    implementation "io.jsonwebtoken:jjwt-impl:${jwtVersion}"
+    implementation "io.jsonwebtoken:jjwt-gson:${jwtVersion}"
+    implementation project(":libs.common:auth")
 }

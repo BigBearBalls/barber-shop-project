@@ -1,15 +1,15 @@
 package eu.senla.bookingservice.service.impl;
 
-import eu.senla.booking.data.ProcedureDTO;
-import eu.senla.booking.data.ResponseWorkingDayDto;
 import eu.senla.booking.data.mapper.BookingMapper;
-import eu.senla.booking.data.request.AggregatedBooking;
-import eu.senla.booking.data.request.BookingRequestDTO;
-import eu.senla.booking.data.response.IdResponseDTO;
 import eu.senla.booking.entity.Booking;
 import eu.senla.booking.repository.BookingRepository;
-import eu.senla.booking.service.exception.ResourceNotFoundException;
 import eu.senla.booking.service.impl.BookingServiceImpl;
+import eu.senla.common.booking.dto.request.AggregatedBooking;
+import eu.senla.common.booking.dto.request.BookingRequestDTO;
+import eu.senla.common.booking.dto.response.IdResponseDTO;
+import eu.senla.common.booking.dto.response.ResponseWorkingDayDTO;
+import eu.senla.common.dto.ProcedureDTO;
+import eu.senla.common.exception.NotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -48,7 +48,7 @@ class BookingServiceImplTest {
         ProcedureDTO procedure = new ProcedureDTO(UUID.randomUUID(), "Стрижка",
                 new BigDecimal(100), 30);
 
-        ResponseWorkingDayDto workingDay = new ResponseWorkingDayDto(UUID.randomUUID(), UUID.randomUUID(),
+        ResponseWorkingDayDTO workingDay = new ResponseWorkingDayDTO(UUID.randomUUID(), UUID.randomUUID(),
                 LocalDate.of(2024, 12, 15), LocalTime.of(10, 0),
                 LocalTime.of(18, 0));
 
@@ -91,14 +91,14 @@ class BookingServiceImplTest {
 
         when(bookingRepository.findById(randomId)).thenReturn(Optional.empty());
 
-        ResourceNotFoundException exception = assertThrows(
-                ResourceNotFoundException.class,
+        NotFoundException exception = assertThrows(
+                NotFoundException.class,
                 () -> bookingService.findBookingById(randomId),
                 "Expected to throw ResourceNotFoundException, but it didn't"
         );
 
         verify(bookingRepository, times(1)).findById(randomId);
-        assertEquals("There are no any bookings with id: " + randomId, exception.getMessage());
+        assertEquals(String.format("Booking with ID %s was not found!", randomId), exception.getMessage());
     }
 
 }

@@ -1,12 +1,14 @@
 package eu.senla.calendarservice.service.impl;
 
 import eu.senla.calendarservice.entity.DayOff;
-import eu.senla.calendarservice.exception.EmptyDateException;
-import eu.senla.calendarservice.exception.InvalidDateException;
 import eu.senla.calendarservice.mapper.CalendarMapper;
 import eu.senla.calendarservice.repository.CalendarRepository;
 import eu.senla.calendarservice.service.CalendarService;
-import eu.senla.calendarservice.util.constants.ErrorConstants;
+import eu.senla.common.enums.ErrorCode;
+import eu.senla.common.exception.ExistsException;
+import eu.senla.common.exception.InvalidValueException;
+import eu.senla.common.exception.LogExceptionWrapper;
+import eu.senla.common.exception.NotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,7 +26,11 @@ public class CalendarServiceImpl implements CalendarService {
     @Override
     public LocalDate setDayOff(LocalDate day) {
         if (day.isBefore(LocalDate.now())) {
-            throw new InvalidDateException(ErrorConstants.INVALID_DATE_ERROR_MESSAGE, ErrorConstants.INVALID_DATE_ERROR_CODE);
+            throw LogExceptionWrapper.logErrorException(new InvalidValueException(ErrorCode.ERR_DATE_CANNOT_BE_IN_PAST));
+        }
+        if (calendarRepository.existsByDate(day)) {
+            throw LogExceptionWrapper.logErrorException(new ExistsException(String.format(
+                    ErrorCode.ERR_ALREADY_DAY_OFF.getMessage(), day), ErrorCode.ERR_ALREADY_DAY_OFF));
         }
         DayOff calendarDayOff = calendarMapper.toCalendarDayOff(day);
         return calendarRepository.save(calendarDayOff).getDate();
@@ -33,11 +39,11 @@ public class CalendarServiceImpl implements CalendarService {
     @Transactional
     @Override
     public void cancelDayOff(LocalDate day) {
-        if (calendarRepository.existsByDate(day)) {
-            calendarRepository.deleteByDate(day);
-        } else {
-            throw new EmptyDateException(ErrorConstants.EMPTY_DATE_ERROR_MESSAGE, ErrorConstants.EMPTY_DATE_ERROR_CODE);
+        if (!calendarRepository.existsByDate(day)) {
+            throw LogExceptionWrapper.logErrorException(new NotFoundException(String.format(
+                    ErrorCode.ERR_NOT_DAY_OFF.getMessage(), day), ErrorCode.ERR_NOT_DAY_OFF));
         }
+        calendarRepository.deleteByDate(day);
     }
 
     @Transactional

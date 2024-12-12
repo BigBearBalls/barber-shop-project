@@ -1,12 +1,18 @@
 spring:
   application:
     name: gateway-service
-  #  security:
-  #    oauth2:
-  #      resourceserver:
-  #        jwt:
-  #          issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:8082/realms/barbershop-realm}
-  #          jwk-set-uri: ${KEYCLOAK_JWK_URI:http://localhost:8082/realms/barbershop-realm/protocol/openid-connect/certs}
+    #  security:
+    #    oauth2:
+    #      resourceserver:
+    #        jwt:
+    #          issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:8082/realms/plahctoh-realm}
+    #          jwk-set-uri: ${KEYCLOAK_JWK_URI:http://localhost:8082/realms/plahctoh-realm/protocol/openid-connect/certs}
+    security:
+      jwt:
+        access-key:
+          expiration-time: 10
+        refresh-key:
+          expiration-time: 120
   cloud:
     gateway:
       mvc:
@@ -27,22 +33,6 @@ spring:
               - AddRequestHeader=X-Request-Api-Key, ${API_KEY}
               - AddRequestHeader=X-Request-Source, EXTERNAL
 
-          - id: procedure-service
-            uri: http://procedure-service:8080
-            predicates:
-              - Path=/api/v1/procedures/**
-            filters:
-              - AddRequestHeader=X-Request-Api-Key, ${API_KEY}
-              - AddRequestHeader=X-Request-Source, EXTERNAL
-
-          - id: user-service
-            uri: http://user-service:8080
-            predicates:
-              - Path=/api/v1/user/**
-            filters:
-              - AddRequestHeader=X-Request-Api-Key, ${API_KEY}
-              - AddRequestHeader=X-Request-Source, EXTERNAL
-
           - id: calendar-service
             uri: http://calendar-service:8080
             predicates:
@@ -51,10 +41,10 @@ spring:
               - AddRequestHeader=X-Request-Api-Key, ${API_KEY}
               - AddRequestHeader=X-Request-Source, EXTERNAL
 
-          - id: working-day-service
-            uri: http://working-day-service:8080
+          - id: user-service
+            uri: http://user-service:8080
             predicates:
-              - Path=/api/v1/working-days/**
+              - Path=/api/v1/user/**
             filters:
               - AddRequestHeader=X-Request-Api-Key, ${API_KEY}
               - AddRequestHeader=X-Request-Source, EXTERNAL
@@ -70,7 +60,7 @@ spring:
 #jwt:
 #  auth:
 #    converter:
-#      resource-id: barbershop-realm
+#      resource-id: plahctoh-realm
 
 management:
   endpoints:
@@ -80,6 +70,19 @@ management:
   endpoint:
     health:
       show-details: always
+
+feign:
+  clients:
+    auth-service:
+      url: ${AUTH_SERVICE_URL}
+
+http-configuration:
+  security:
+    filters:
+      get-user-id-header-filter:
+        enable: false
+      api-key-header-filter:
+        enable: false
 
 logging:
   level:

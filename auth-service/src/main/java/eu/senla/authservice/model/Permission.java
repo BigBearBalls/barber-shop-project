@@ -1,9 +1,8 @@
 package eu.senla.authservice.model;
 
-import eu.senla.authservice.enums.PermissionValue;
+import eu.senla.common.enums.PermissionValue;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,7 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 @EqualsAndHashCode
 @Entity
 @Table(name = "permission", schema = "auth_service_schema")
-public class Permission implements GrantedAuthority {
+public class Permission {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,9 +21,4 @@ public class Permission implements GrantedAuthority {
     @Enumerated(EnumType.STRING)
     @Column(name = "permission_value")
     private PermissionValue permissionValue;
-
-    @Override
-    public String getAuthority() {
-        return permissionValue.name();
-    }
 }

@@ -1,11 +1,10 @@
 package eu.senla.accountservice.controller;
 
-import eu.senla.accountservice.dto.AccountDetailsDTO;
 import eu.senla.accountservice.service.AccountService;
+import eu.senla.common.account.dto.AccountDetailsDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -16,7 +15,7 @@ public class AccountController {
     private final AccountService accountService;
 
     @GetMapping
-    public AccountDetailsDTO getAccount(@RequestParam String email) {
-        return accountService.getAccountDetails(email);
+    public AccountDetailsDTO getAccount() {
+        return accountService.getAccountDetails();
     }
 }

@@ -1,4 +1,4 @@
-# Barber-shop-project
+# Plahctoh-project
 
 > For starting this project you should clone repository and execute script:
 >> Build and Run all services. Also rebuild if needed.
@@ -16,7 +16,7 @@
 > * import data
     for creating realm from real-export.json which is located in gateway-service in the resource folder
 > * Create user via Admin Console
-> * Get the token by using http://localhost:8082/realms/barbershop-realm/protocol/openid-connect/token with your user
+> * Get the token by using http://localhost:8082/realms/plahctoh-realm/protocol/openid-connect/token with your user
     data
 >> ![img.png](img.png)
 > Use the token you've got for sending request to the Gateway http://localhost:7080

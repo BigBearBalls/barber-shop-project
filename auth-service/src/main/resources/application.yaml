@@ -1,4 +1,19 @@
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  logstash:
+    appender:
+      destination: logstash:5000
+      encoder:
+        type: json
+
 spring:
+  kafka:
+    bootstrap-servers: kafka:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
   application:
     name: auth-service
     security:
@@ -9,7 +24,6 @@ spring:
         refresh-key:
           value: ${REFRESH_KEY}
           expiration-time: 120
-      api-key: ${API_KEY}
   liquibase:
     change-log: classpath:/db/changelog/db.changelog-auth-master.yaml
     enabled: true
@@ -18,7 +32,7 @@ spring:
     username: ${DATABASE_USERNAME:postgres}
     password: ${DATABASE_PASSWORD:1234}
     driver-class-name: org.postgresql.Driver
-    url: ${DATABASE_URL:jdbc:postgresql://localhost:5433/}${DATABASE_NAME:barber-shop-database}
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5433/}${DATABASE_NAME:plahctoh-database}
   jpa:
     hibernate:
       ddl-auto: validate
@@ -34,9 +48,6 @@ management:
   endpoint:
     health:
       show-details: always
-
-
-
 feign:
   clients:
     user-service:

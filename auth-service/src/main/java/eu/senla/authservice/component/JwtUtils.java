@@ -1,8 +1,8 @@
 package eu.senla.authservice.component;
 
-import eu.senla.authservice.enums.ErrorCode;
-import eu.senla.authservice.exception.JwtValidateException;
 import eu.senla.authservice.model.User;
+import eu.senla.common.enums.ErrorCode;
+import eu.senla.common.exception.JwtValidateException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -41,7 +41,7 @@ public class JwtUtils {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parse(token);
         } catch (Exception e) {
-            throw new JwtValidateException(String.format("%s: %s", e.getClass(), e.getMessage()),
+            throw new JwtValidateException(String.format("%s: %s", e.getClass().getSimpleName(), e.getMessage()),
                     ErrorCode.ERR_JWT_VALIDATION_EXCEPTION);
         }
     }
@@ -57,11 +57,11 @@ public class JwtUtils {
         final Instant accessExpirationInstant = now.plusMinutes(jwtAccessExpiration)
                 .atZone(ZoneId.systemDefault()).toInstant();
         return Jwts.builder()
-                .setSubject(user.getEmail())
+//                .setSubject(user.getEmail())
+                .setSubject(user.getId().toString())
                 .setExpiration(Date.from(accessExpirationInstant))
                 .signWith(getAccessSigningKey())
-                .claim("id", user.getId())
-                .claim("permissions", user.getPermissions())
+//                .claim("id", user.getId())
                 .compact();
     }
 

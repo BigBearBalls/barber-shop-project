@@ -2,11 +2,11 @@ package eu.senla.accountservice.service.impl;
 
 import eu.senla.accountservice.client.UserCredentialsClient;
 import eu.senla.accountservice.client.UserDataClient;
-import eu.senla.accountservice.dto.AccountDetailsDTO;
-import eu.senla.accountservice.dto.UserCredentialsDTO;
-import eu.senla.accountservice.dto.UserDataDTO;
 import eu.senla.accountservice.mapper.AccountMapper;
 import eu.senla.accountservice.service.AccountService;
+import eu.senla.common.account.dto.AccountDetailsDTO;
+import eu.senla.common.dto.UserCredentialsDTO;
+import eu.senla.common.dto.UserDataDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +19,9 @@ public class AccountServiceImpl implements AccountService {
     private final AccountMapper accountMapper;
 
     @Override
-    public AccountDetailsDTO getAccountDetails(String email) {
-        UserCredentialsDTO user = userCredentialsClient.getUserCredentialsByEmail(email);
-        UserDataDTO userData = userDataClient.getUserDataById(user.getId());
+    public AccountDetailsDTO getAccountDetails() {
+        UserCredentialsDTO user = userCredentialsClient.getUserCredentials();
+        UserDataDTO userData = userDataClient.getUserData();
         return accountMapper.toDTO(user, userData);
     }
 }

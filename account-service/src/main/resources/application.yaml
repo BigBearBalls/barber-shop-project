@@ -1,8 +1,7 @@
 spring:
   application:
     name: account-service
-    security:
-      api-key: ${API_KEY}
+
 feign:
   clients:
     user-data-service:
