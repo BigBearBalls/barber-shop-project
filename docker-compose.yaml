@@ -174,7 +174,7 @@ services:
       auth-service:
         condition: service_started
     volumes:
-      - ./logs:/app/logs  # Логи будут сохраняться в папке logs на хосте
+      - ./logs:/app/logs
     environment:
         - LOG_PATH=/app/logs/service.log
     networks:
