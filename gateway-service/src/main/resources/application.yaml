@@ -48,7 +48,7 @@ spring:
             filters:
               - AddRequestHeader=X-Request-Api-Key, ${API_KEY}
               - AddRequestHeader=X-Request-Source, EXTERNAL
-              -
+
           - id: account-service
             uri: http://account-service:8080
             predicates:

@@ -6,7 +6,7 @@ import eu.senla.common.booking.dto.request.BookingRequestDTO;
 import eu.senla.common.booking.dto.response.BookingResponseDTO;
 
 public interface BookingDataAggregator {
-    AggregatedBooking collectDataForSaving(BookingRequestDTO bookingRequestDto);
-
-    BookingResponseDTO collectResponseData(Booking booking);
+//    AggregatedBooking collectDataForSaving(BookingRequestDTO bookingRequestDto);
+//
+//    BookingResponseDTO collectResponseData(Booking booking);
 }

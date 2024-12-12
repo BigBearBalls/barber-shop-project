@@ -7,7 +7,7 @@ import eu.senla.common.booking.dto.response.IdResponseDTO;
 import java.util.UUID;
 
 public interface BookingFacade {
-    IdResponseDTO saveBooking(BookingRequestDTO bookingRequestDto);
-
-    BookingResponseDTO findById(UUID id);
+//    IdResponseDTO saveBooking(BookingRequestDTO bookingRequestDto);
+//
+//    BookingResponseDTO findById(UUID id);
 }
