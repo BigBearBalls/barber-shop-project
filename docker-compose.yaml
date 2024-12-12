@@ -11,6 +11,8 @@ services:
       - "ELASTICSEARCH_USERNAME=kibana_system"
       - "ELASTICSEARCH_PASSWORD=_rI6ySgpfznuLMUdSBS0"
       - "ELASTICSEARCH_SSL_VERIFICATIONMODE=none"
+    networks:
+      - plahctoh
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.10.2
@@ -27,8 +29,10 @@ services:
       test: [ "CMD-SHELL", "curl -fsSL http://localhost:9200/_cluster/health | grep green || exit 1" ]
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 10
       start_period: 30s
+    networks:
+      - plahctoh
 
   logstash:
     image: docker.elastic.co/logstash/logstash:8.16.1
@@ -51,6 +55,8 @@ services:
       - "xpack.monitoring.elasticsearch.username=elastic"
       - "xpack.monitoring.elasticsearch.password=XNV1iC2BZ7alheRmqo1_"
       - "xpack.monitoring.enabled=true"
+    networks:
+      - plahctoh
 
 
   zookeeper:
