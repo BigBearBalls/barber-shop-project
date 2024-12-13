@@ -13,6 +13,7 @@ public enum ErrorCode {
     ERR_JWT_VALIDATION_EXCEPTION("Something went wrong during jwt validation!"),
     ERR_HEADER_NOT_EXIST_OR_WRONG_VALUE("Header not exists or value is wrong!"),
     ERR_METHOD_ARGUMENTS_VALIDATION_EXCEPTION("Method arguments validation failed!"),
+    ERR_METHOD_ARGUMENTS_TYPE_MISMATCH("Method arguments type mismatch!"),
     ERR_ACCESS_DENIED("Access Denied!"),
     ERR_JSON_PARSE_EXCEPTION("JSON parse exception!"),
     ERR_DONT_AUTHENTICATED("Don't authenticated!"),
@@ -37,6 +38,8 @@ public enum ErrorCode {
     ERR_HANDLER_EXCEPTION("Application exception"),
     ERR_VALIDATION_ERROR("Validation error"),
     ERR_DAY_IS_HOLIDAY("This Date is not working"),
+    ERR_PHONE_NUMBER_ALREADY_EXISTS("This phone number already exists!"),
+    ERR_DEPARTMENT_NOT_FOUND("Department with %s '%s' was not found!"),
     ERR_ERR_CONSTRAINT_VIOLATION_EXCEPTION("Constraint violation!");
 
     private final String message;

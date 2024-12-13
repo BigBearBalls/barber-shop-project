@@ -34,4 +34,9 @@ public class ValidationConstants {
     public static final String WORKING_DAY_START_TIME_CANNOT_BE_NULL_VALIDATION_MESSAGE = "Working day start time cannot be null!";
     public static final String WORKING_DAY_END_TIME_CANNOT_BE_NULL_VALIDATION_MESSAGE = "Working day end time cannot be null!";
     public static final String WORKING_MASTER_CANNOT_BE_NULL_VALIDATION_MESSAGE = "Master id cannot be null!";
+    public static final String TEAM_LEADER_ID_CANNOT_BE_NULL_VALIDATION_MESSAGE = "Team leader id cannot be null!";
+    public static final String DEPARTMENT_NAME_CANNOT_BE_NULL_OR_BLANK_VALIDATION_MESSAGE = "Department name cannot be null or blank!";
+    public static final String DEPARTMENT_NAME_LENGTH_MUST_BE_BETWEEN_VALIDATION_MESSAGE = "Department name length must be between 5 and 20 chars!";
+    public static final int MAX_LENGTH_OF_DEPARTMENT_NAME = 20;
+    public static final int MIN_LENGTH_OF_DEPARTMENT_NAME = 5;
 }

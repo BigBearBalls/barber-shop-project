@@ -33,7 +33,4 @@ management:
   endpoint:
     health:
       show-details: always
-feign:
-  clients:
-    user-service:
-      url: ${USER_SERVICE_URL}
+

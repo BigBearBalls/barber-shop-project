@@ -10,6 +10,7 @@ bootJar {
     enabled = false
 }
 
+def DEPARTMENT_SERVICE = project(":department-service")
 def BOOKING_SERVICE = project(":booking-service")
 def USER_SERVICE = project(":user-service")
 def GATEWAY_SERVICE = project(":gateway-service")
@@ -46,10 +47,10 @@ ext {
 }
 
 
-Set<Project> datasourceProjects = Set.of(BOOKING_SERVICE, USER_SERVICE, CALENDAR_SERVICE, AUTH_SERVICE)
+Set<Project> datasourceProjects = Set.of(BOOKING_SERVICE, USER_SERVICE, CALENDAR_SERVICE, AUTH_SERVICE, DEPARTMENT_SERVICE)
 Set<Project> kafkaProjects = Set.of(NOTIFICATION_SERVICE, BOOKING_SERVICE, CALENDAR_SERVICE)
 Set<Project> webProjects = Set.of(BOOKING_SERVICE, USER_SERVICE, NOTIFICATION_SERVICE,
-        CALENDAR_SERVICE, AUTH_SERVICE, ACCOUNT_SERVICE, GATEWAY_SERVICE)
+        CALENDAR_SERVICE, AUTH_SERVICE, ACCOUNT_SERVICE, GATEWAY_SERVICE, DEPARTMENT_SERVICE)
 Set<Project> securityProjects = Set.of(/*BOOKING_SERVICE, PROCEDURE_SERVICE, USER_SERVICE, */ GATEWAY_SERVICE)
 
 bootJar {

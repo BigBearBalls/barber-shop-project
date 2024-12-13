@@ -2,4 +2,5 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
     implementation project(":libs.common:user")
+    implementation project(":libs.common:account")
 }
