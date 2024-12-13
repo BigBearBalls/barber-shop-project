@@ -6,7 +6,6 @@ include "user-service"
 include "calendar-service"
 include "auth-service"
 include "account-service"
-include "meeting-room-service"
 include ":libs.http-configuration.security"
 project(":libs.http-configuration.security").projectDir = file("libs/http-configuration/security")
 include ":libs.http-configuration.core"
