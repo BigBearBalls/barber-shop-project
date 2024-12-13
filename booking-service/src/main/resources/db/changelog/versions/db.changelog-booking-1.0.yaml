@@ -136,32 +136,14 @@ databaseChangeLog:
             referencedColumnNames: booking_id
             referencedTableName: bookings
 
-
-#databaseChangeLog:
-#  - changeSet:
-#      id: "booking-1.0"
-#      author: Dany
-#      changes:
-#        - createTable:
-#            schemaName: booking_service_schema
-#            tableName: bookings
-#            columns:
-#              - column:
-#                  name: booking_id
-#                  type: uuid
-#                  autoIncrement: false
-#                  constraints:
-#                    primaryKey: true
-#                    nullable: false
-#
-#              - column:
-#                  name: reservation_start
-#                  type: TIME
-#                  constraints:
-#                    nullable: false
-#
-#              - column:
-#                  name: reservation_end
-#                  type: TIME
-#                  constraints:
-#                    nullable: false
+  - changeSet:
+      id: booking-meeting_room-foreign-key
+      author: Yevgany Tyurin
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: meeting_room_id
+            baseTableName: bookings
+            constraintName: fk_booking_on_meeting_room
+            referencedColumnNames: meeting_room_id
+            referencedTableName: meeting_rooms

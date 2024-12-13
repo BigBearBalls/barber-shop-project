@@ -1,5 +1,7 @@
 package eu.senla.booking.entity;
 
+import eu.senla.common.constant.ValidationConstants;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.UUID;
@@ -8,6 +10,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
 @Setter
@@ -16,8 +19,13 @@ import lombok.Setter;
 @NoArgsConstructor
 public class BookingRequestDto {
 
+    @NotNull(message = ValidationConstants.BOOKING_ID_CANNOT_BE_NULL_VALIDATION_MESSAGE)
     private UUID meetingRoomId;
-    private LocalDate reservationDate;
-    private LocalTime reservationStart;
-    private LocalTime reservationEnd;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = ValidationConstants.BOOKING_DATE_CANNOT_BE_NULL_VALIDATION_MESSAGE)
+    private LocalDate bookingDate;
+    @NotNull(message = ValidationConstants.BOOKING_START_TIME_CANNOT_BE_NULL_VALIDATION_MESSAGE)
+    private LocalTime bookingStart;
+    @NotNull(message = ValidationConstants.BOOKING_END_TIME_CANNOT_BE_NULL_VALIDATION_MESSAGE)
+    private LocalTime bookingEnd;
 }

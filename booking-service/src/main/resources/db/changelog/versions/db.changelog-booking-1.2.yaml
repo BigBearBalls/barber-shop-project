@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert_time_slots
+      author: Yevgany Tyurin
+      changes:
+        - sql:
+            INSERT INTO meeting_rooms (meeting_room_id, number) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe95', 1);
+        - sql:
+            INSERT INTO meeting_rooms (meeting_room_id, number) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe94', 2);
+        - sql:
+            INSERT INTO meeting_rooms (meeting_room_id, number) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe93', 3);

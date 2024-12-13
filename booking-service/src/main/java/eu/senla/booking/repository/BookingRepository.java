@@ -1,7 +1,6 @@
 package eu.senla.booking.repository;
 
 import eu.senla.booking.entity.Booking;
-import eu.senla.booking.entity.TimeSlot;
 import java.time.LocalDate;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -12,5 +11,5 @@ import java.util.UUID;
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, UUID> {
 
-    List<Booking> findAllByReservationDateAndMeetingRoomId(LocalDate bookingDate, UUID meetingRoomId);
+    List<Booking> findAllByBookingDateAndMeetingRoomId(LocalDate bookingDate, UUID meetingRoomId);
 }

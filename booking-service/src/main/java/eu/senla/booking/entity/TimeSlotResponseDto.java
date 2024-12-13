@@ -1,5 +1,7 @@
 package eu.senla.booking.entity;
 
+import eu.senla.common.constant.ValidationConstants;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,8 +14,10 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TimeSlotDto {
+public class TimeSlotResponseDto {
 
+    @NotNull(message = ValidationConstants.BOOKING_START_TIME_CANNOT_BE_NULL_VALIDATION_MESSAGE)
     private LocalTime reservationStart;
+    @NotNull(message = ValidationConstants.BOOKING_END_TIME_CANNOT_BE_NULL_VALIDATION_MESSAGE)
     private LocalTime reservationEnd;
 }
