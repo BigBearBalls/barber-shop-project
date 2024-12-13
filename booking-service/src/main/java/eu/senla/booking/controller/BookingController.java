@@ -17,7 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/bookings/")
+@RequestMapping("/api/v1/bookings")
 @AllArgsConstructor
 @Validated
 public class BookingController {
@@ -32,13 +32,13 @@ public class BookingController {
     }
 
     @GetMapping
-    public List<TimeSlotResponseDto> findAvailableTimeSlots(@RequestParam(name = "bookingId")
+    public List<TimeSlotResponseDto> findAvailableTimeSlots(@RequestParam(name = "meetingRoomId")
                                                             @NotNull(message = ValidationConstants.BOOKING_ID_CANNOT_BE_NULL_VALIDATION_MESSAGE)
-                                                            UUID bookingId,
+                                                            UUID meetingRoomId,
                                                             @RequestParam(name = "bookingDate")
                                                             LocalDate bookingDate) {
 
-        return bookingService.findAvailableTimeSlotsDto(bookingId, bookingDate);
+        return bookingService.findAvailableTimeSlotsDto(meetingRoomId, bookingDate);
     }
 
     @PostMapping
