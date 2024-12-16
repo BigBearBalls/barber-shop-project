@@ -93,7 +93,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\n  \"meetingRoomId\": \"f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe95\",  \n  \"bookingDate\": \"2024-12-30\",\n  \"bookingStart\": \"14:30\",  \n  \"bookingEnd\": \"15:30\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -101,7 +101,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:7080/api/v1/bookings/",
+							"raw": "http://localhost:7080/api/v1/bookings",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -110,8 +110,38 @@
 							"path": [
 								"api",
 								"v1",
-								"bookings",
-								""
+								"bookings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find available time slots",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7080/api/v1/bookings?bookingId=f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe95&bookingDate=2024-12-13",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7080",
+							"path": [
+								"api",
+								"v1",
+								"bookings"
+							],
+							"query": [
+								{
+									"key": "bookingId",
+									"value": "f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe95"
+								},
+								{
+									"key": "bookingDate",
+									"value": "2024-12-13"
+								}
 							]
 						}
 					},
