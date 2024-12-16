@@ -1,3 +1,4 @@
 dependencies {
     annotationProcessor 'org.projectlombok:lombok'
+    implementation project(":libs.common:notification")
 }
