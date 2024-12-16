@@ -11,6 +11,7 @@ import eu.senla.booking.repository.TimeSlotRepository;
 import eu.senla.booking.service.BookingService;
 import eu.senla.booking.service.MeetingRoomService;
 import eu.senla.booking.service.TimeSlotService;
+import eu.senla.booking.service.kafka.BookingKafkaProducer;
 import eu.senla.common.booking.dto.response.IdResponseDTO;
 import eu.senla.common.enums.ErrorCode;
 import eu.senla.common.exception.ExistsException;
@@ -18,11 +19,17 @@ import eu.senla.common.exception.InvalidValueException;
 import eu.senla.common.exception.LogExceptionWrapper;
 import eu.senla.common.exception.NotFoundException;
 import java.time.LocalDate;
+
+import eu.senla.common.kafka.dto.KafkaMailDto;
+import eu.senla.common.kafka.dto.MailType;
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import org.springframework.transaction.annotation.Transactional;
+
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -37,6 +44,7 @@ public class BookingServiceImpl implements BookingService {
     private final TimeSlotService timeSlotService;
     private final BookingMapper bookingMapper;
     private final MeetingRoomService meetingRoomService;
+    private final BookingKafkaProducer bookingKafkaProducer;
 
     @Override
     public BookingResponseDTO findBookingById(UUID id) {
@@ -74,7 +82,7 @@ public class BookingServiceImpl implements BookingService {
         }
 
         List<TimeSlot> timeSlotsForBooking = timeSlotService.findTimeSlotsForBooking(timeSlot.getReservationStart(),
-                                                                                     timeSlot.getReservationEnd());
+                timeSlot.getReservationEnd());
 
         List<TimeSlot> availableTimeSlots = findAvailableTimeSlots(booking.getMeetingRoom().getId(), booking.getBookingDate());
 
@@ -86,8 +94,12 @@ public class BookingServiceImpl implements BookingService {
 
         booking.setTimeSlots(timeSlotsForBooking);
         booking.setUserId(UUID.fromString("f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe94")); //TODO
+        IdResponseDTO idResponseDTO = new IdResponseDTO(bookingRepository.save(booking).getId());
 
-        return new IdResponseDTO(bookingRepository.save(booking).getId());
+        bookingKafkaProducer.sendUserRegistrationEvent("user-registration",
+                new KafkaMailDto(MailType.BOOKING_MAIL, "evgturin@gmail.com", "NiHao" ,"You have successfully booked"));
+
+        return idResponseDTO;
     }
 
     @Override
@@ -118,16 +130,15 @@ public class BookingServiceImpl implements BookingService {
 
     private List<TimeSlot> findAvailableTimeSlots(UUID meetingRoomId, LocalDate bookingDate) {
 
-        List<Booking> bookings = bookingRepository.findAllByBookingDateAndMeetingRoomId(bookingDate,
-                                                                                        meetingRoomId);
+        List<Booking> bookings = bookingRepository.findAllByReservationDateAndMeetingRoomId(bookingDate,
+                meetingRoomId);
         List<UUID> bookedTimeSlotIds = bookings
                 .stream()
                 .map(Booking::getTimeSlots)
                 .flatMap(List::stream)
                 .map(TimeSlot::getId)
                 .toList();
-
-        if(bookedTimeSlotIds.isEmpty()) {
+        if (bookedTimeSlotIds.isEmpty()) {
             return timeSlotRepository.findAll();
         } else {
             return timeSlotRepository.findAllByIdNotIn(bookedTimeSlotIds);

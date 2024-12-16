@@ -182,7 +182,7 @@ services:
     volumes:
       - ./logs:/app/logs
     environment:
-        - LOG_PATH=/app/logs/service.log
+      - LOG_PATH=/app/logs/service.log
     networks:
       - plahctoh
 
