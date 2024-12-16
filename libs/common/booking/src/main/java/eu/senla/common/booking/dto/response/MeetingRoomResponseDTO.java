@@ -1,6 +1,5 @@
-package eu.senla.booking.entity;
+package eu.senla.common.booking.dto.response;
 
-import java.time.LocalTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,8 +11,7 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TimeSlotDto {
+public class MeetingRoomResponseDTO {
 
-    private LocalTime reservationStart;
-    private LocalTime reservationEnd;
+    private Integer number;
 }

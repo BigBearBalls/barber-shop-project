@@ -1,11 +1,8 @@
 package eu.senla.booking.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -29,7 +26,6 @@ public class TimeSlot {
 
     @JsonIgnore
     @Id
- //   @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "time_slot_id")
     private UUID id;
     @Column(name = "reservation_start")
@@ -37,7 +33,7 @@ public class TimeSlot {
     @Column(name = "reservation_end")
     private LocalTime reservationEnd;
     @JsonIgnore
-    @ManyToMany//(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToMany
     @JoinTable(name = "bookings_time_slots",
             joinColumns = @JoinColumn(name = "time_slot_id"),
             inverseJoinColumns = @JoinColumn(name = "booking_id"))

@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert_time_slots
+      author: Yevgany Tyurin
+      changes:
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe95', '11:00', '11:30');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe94', '11:30', '12:00');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe93', '12:00', '12:30');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe92', '12:30', '13:00');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe91', '13:00', '13:30');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe90', '13:30', '14:00');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe89', '14:00', '14:30');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe88', '14:30', '15:00');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe87', '15:00', '15:30');

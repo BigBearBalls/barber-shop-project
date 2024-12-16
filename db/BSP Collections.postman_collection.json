@@ -1,493 +1,539 @@
 {
-  "info": {
-    "_postman_id": "f8794af4-d32c-4e1c-8b3d-427121102852",
-    "name": "BSP Collections",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "38840921"
-  },
-  "item": [
-    {
-      "name": "Calendar API Collection",
-      "item": [
-        {
-          "name": "Add holiday",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:7080/api/v1/calendars/days-off/2025-10-15",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "7080",
-              "path": [
-                "api",
-                "v1",
-                "calendars",
-                "days-off",
-                "2025-10-15"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Cancel holiday",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:7080/api/v1/calendars/working-days/2025-10-15",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "7080",
-              "path": [
-                "api",
-                "v1",
-                "calendars",
-                "working-days",
-                "2025-10-15"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Check day",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:7080/api/v1/calendars/2024-12-29",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "7080",
-              "path": [
-                "api",
-                "v1",
-                "calendars",
-                "2024-12-29"
-              ]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "User API Collention",
-      "item": []
-    },
-    {
-      "name": "Booking API Collection",
-      "item": [
-        {
-          "name": "1. Create booking",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"procedureId\": \"882bc7f9-bd7f-4d8f-a80f-73eb20492950\",\r\n  \"masterId\": \"8e3a34ac-119b-453d-bb47-478c23361d59\",\r\n  \"clientId\": \"8e3a34ac-119b-453d-bb47-478c23361d59\",\r\n  \"reservationStart\": \"10:00\",  \r\n  \"workingDate\" : \"2025-01-10\"\r\n}\r\n",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:7080/api/v1/bookings/",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "7080",
-              "path": [
-                "api",
-                "v1",
-                "bookings",
-                ""
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "5. Get booking by id",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "",
-                "value": "",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "http://localhost:7080/api/v1/bookings/615d473b-eccd-4a26-8820-661ffacf6988",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "7080",
-              "path": [
-                "api",
-                "v1",
-                "bookings",
-                "615d473b-eccd-4a26-8820-661ffacf6988"
-              ]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "Procedure API Collection",
-      "item": [
-        {
-          "name": "Add new procedure",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"procedureName\":\"Покраска волос \",\n    \"procedurePrice\":\"10\",\n    \"procedureDuration\":\"30\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:7080/api/v1/procedures/",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "7080",
-              "path": [
-                "api",
-                "v1",
-                "procedures",
-                ""
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Get procedure if master provide it",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:7080/api/v1/procedures/882bc7f9-bd7f-4d8f-a80f-73eb20492950?masterId=8e3a34ac-119b-453d-bb47-478c23361d59",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "7080",
-              "path": [
-                "api",
-                "v1",
-                "procedures",
-                "882bc7f9-bd7f-4d8f-a80f-73eb20492950"
-              ],
-              "query": [
-                {
-                  "key": "masterId",
-                  "value": "8e3a34ac-119b-453d-bb47-478c23361d59"
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Assign procedure to master",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:7080/api/v1/procedures/882bc7f9-bd7f-4d8f-a80f-73eb20492950?masterId=8e3a34ac-119b-453d-bb47-478c23361d59",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "7080",
-              "path": [
-                "api",
-                "v1",
-                "procedures",
-                "882bc7f9-bd7f-4d8f-a80f-73eb20492950"
-              ],
-              "query": [
-                {
-                  "key": "masterId",
-                  "value": "8e3a34ac-119b-453d-bb47-478c23361d59"
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Get all procedures",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:7080/api/v1/procedures/",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "7080",
-              "path": [
-                "api",
-                "v1",
-                "procedures",
-                ""
-              ]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "WorkingDay API Collection",
-      "item": [
-        {
-          "name": "Get working day by ID",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:7080/api/v1/working-days/c1e2d3f4-56a7-89b0-c1d2-456789ab0124",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "7080",
-              "path": [
-                "api",
-                "v1",
-                "working-days",
-                "c1e2d3f4-56a7-89b0-c1d2-456789ab0124"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Add working day",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"masterId\": \"c1e2d3f4-56a7-89b0-c1d2-456789ab0123\",\n    \"workingDate\": \"2024-12-15\",\n    \"workStart\": \"10:00\",\n    \"workEnd\": \"18:00\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:7080/api/v1/working-days/",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "7080",
-              "path": [
-                "api",
-                "v1",
-                "working-days",
-                ""
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Get master and working day",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:7080/api/v1/working-days/master/c1e2d3f4-56a7-89b0-c1d2-456789ab0123/date/2024-12-15",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "7080",
-              "path": [
-                "api",
-                "v1",
-                "working-days",
-                "master",
-                "c1e2d3f4-56a7-89b0-c1d2-456789ab0123",
-                "date",
-                "2024-12-15"
-              ]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "Registration",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "X-Request-Api-Key",
-            "value": "U3Ryb25nUGFzc3dvcmRWZXJ5U3Ryb25nWWVzWWVz",
-            "type": "text",
-            "disabled": true
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n    \"email\":\"test@test.test\",\n    \"password\":\"1234\",\n    \"firstName\":\"Test\",\n    \"lastName\":\"Test\",\n    \"phoneNumber\":\"+123\"\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "localhost:7080/api/v1/auth/registration",
-          "host": [
-            "localhost"
-          ],
-          "port": "7080",
-          "path": [
-            "api",
-            "v1",
-            "auth",
-            "registration"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Login",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "X-Request-Api-Key",
-            "value": "U3Ryb25nUGFzc3dvcmRWZXJ5U3Ryb25nWWVzWWVz",
-            "type": "text"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n    \"email\":\"test@test.test\",\n    \"password\":\"1234\"\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "localhost:7080/api/v1/auth/login",
-          "host": [
-            "localhost"
-          ],
-          "port": "7080",
-          "path": [
-            "api",
-            "v1",
-            "auth",
-            "login"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Login (Wrong password)",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "X-Request-Api-Key",
-            "value": "U3Ryb25nUGFzc3dvcmRWZXJ5U3Ryb25nWWVzWWVz",
-            "type": "text"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n    \"email\":\"test@test.test\",\n    \"password\":\"1234d\"\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "localhost:7080/api/v1/auth/login",
-          "host": [
-            "localhost"
-          ],
-          "port": "7080",
-          "path": [
-            "api",
-            "v1",
-            "auth",
-            "login"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Login (User not found)",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "X-Request-Api-Key",
-            "value": "U3Ryb25nUGFzc3dvcmRWZXJ5U3Ryb25nWWVzWWVz",
-            "type": "text"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n    \"email\":\"test@test.est\",\n    \"password\":\"1234d\"\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "localhost:7080/api/v1/auth/login",
-          "host": [
-            "localhost"
-          ],
-          "port": "7080",
-          "path": [
-            "api",
-            "v1",
-            "auth",
-            "login"
-          ]
-        }
-      },
-      "response": []
-    }
-  ]
+	"info": {
+		"_postman_id": "8670fa41-1f4f-4d32-a97b-1b1d828795c7",
+		"name": "BSP Collections",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36164159"
+	},
+	"item": [
+		{
+			"name": "Calendar API Collection",
+			"item": [
+				{
+					"name": "Add holiday",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7080/api/v1/calendars/days-off/2025-10-15",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7080",
+							"path": [
+								"api",
+								"v1",
+								"calendars",
+								"days-off",
+								"2025-10-15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel holiday",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7080/api/v1/calendars/working-days/2025-10-15",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7080",
+							"path": [
+								"api",
+								"v1",
+								"calendars",
+								"working-days",
+								"2025-10-15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check day",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7080/api/v1/calendars/2024-12-29",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7080",
+							"path": [
+								"api",
+								"v1",
+								"calendars",
+								"2024-12-29"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User API Collention",
+			"item": []
+		},
+		{
+			"name": "Booking API Collection",
+			"item": [
+				{
+					"name": "Create booking",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"meetingRoomId\": \"f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe95\",  \n  \"bookingDate\": \"2024-12-30\",\n  \"bookingStart\": \"14:30\",  \n  \"bookingEnd\": \"15:30\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7080/api/v1/bookings",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7080",
+							"path": [
+								"api",
+								"v1",
+								"bookings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find available time slots",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7080/api/v1/bookings?bookingId=f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe95&bookingDate=2024-12-13",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7080",
+							"path": [
+								"api",
+								"v1",
+								"bookings"
+							],
+							"query": [
+								{
+									"key": "bookingId",
+									"value": "f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe95"
+								},
+								{
+									"key": "bookingDate",
+									"value": "2024-12-13"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find booking by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7080/api/v1/bookings/ id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7080",
+							"path": [
+								"api",
+								"v1",
+								"bookings",
+								" id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete booking by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7080/api/v1/bookings/ac4303e9-318d-4a3c-ae43-ae320839cdad",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7080",
+							"path": [
+								"api",
+								"v1",
+								"bookings",
+								"ac4303e9-318d-4a3c-ae43-ae320839cdad"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Procedure API Collection",
+			"item": [
+				{
+					"name": "Add new procedure",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"procedureName\":\"Покраска волос \",\n    \"procedurePrice\":\"10\",\n    \"procedureDuration\":\"30\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7080/api/v1/procedures/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7080",
+							"path": [
+								"api",
+								"v1",
+								"procedures",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get procedure if master provide it",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7080/api/v1/procedures/882bc7f9-bd7f-4d8f-a80f-73eb20492950?masterId=8e3a34ac-119b-453d-bb47-478c23361d59",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7080",
+							"path": [
+								"api",
+								"v1",
+								"procedures",
+								"882bc7f9-bd7f-4d8f-a80f-73eb20492950"
+							],
+							"query": [
+								{
+									"key": "masterId",
+									"value": "8e3a34ac-119b-453d-bb47-478c23361d59"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign procedure to master",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7080/api/v1/procedures/882bc7f9-bd7f-4d8f-a80f-73eb20492950?masterId=8e3a34ac-119b-453d-bb47-478c23361d59",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7080",
+							"path": [
+								"api",
+								"v1",
+								"procedures",
+								"882bc7f9-bd7f-4d8f-a80f-73eb20492950"
+							],
+							"query": [
+								{
+									"key": "masterId",
+									"value": "8e3a34ac-119b-453d-bb47-478c23361d59"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all procedures",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7080/api/v1/procedures/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7080",
+							"path": [
+								"api",
+								"v1",
+								"procedures",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "WorkingDay API Collection",
+			"item": [
+				{
+					"name": "Get working day by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7080/api/v1/working-days/c1e2d3f4-56a7-89b0-c1d2-456789ab0124",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7080",
+							"path": [
+								"api",
+								"v1",
+								"working-days",
+								"c1e2d3f4-56a7-89b0-c1d2-456789ab0124"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add working day",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"masterId\": \"c1e2d3f4-56a7-89b0-c1d2-456789ab0123\",\n    \"workingDate\": \"2024-12-15\",\n    \"workStart\": \"10:00\",\n    \"workEnd\": \"18:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7080/api/v1/working-days/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7080",
+							"path": [
+								"api",
+								"v1",
+								"working-days",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get master and working day",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7080/api/v1/working-days/master/c1e2d3f4-56a7-89b0-c1d2-456789ab0123/date/2024-12-15",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7080",
+							"path": [
+								"api",
+								"v1",
+								"working-days",
+								"master",
+								"c1e2d3f4-56a7-89b0-c1d2-456789ab0123",
+								"date",
+								"2024-12-15"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Registration",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Request-Api-Key",
+						"value": "U3Ryb25nUGFzc3dvcmRWZXJ5U3Ryb25nWWVzWWVz",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"test@test.test\",\n    \"password\":\"1234\",\n    \"firstName\":\"Test\",\n    \"lastName\":\"Test\",\n    \"phoneNumber\":\"+123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:7080/api/v1/auth/registration",
+					"host": [
+						"localhost"
+					],
+					"port": "7080",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"registration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Request-Api-Key",
+						"value": "U3Ryb25nUGFzc3dvcmRWZXJ5U3Ryb25nWWVzWWVz",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"test@test.test\",\n    \"password\":\"1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:7080/api/v1/auth/login",
+					"host": [
+						"localhost"
+					],
+					"port": "7080",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login (Wrong password)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Request-Api-Key",
+						"value": "U3Ryb25nUGFzc3dvcmRWZXJ5U3Ryb25nWWVzWWVz",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"test@test.test\",\n    \"password\":\"1234d\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:7080/api/v1/auth/login",
+					"host": [
+						"localhost"
+					],
+					"port": "7080",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login (User not found)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Request-Api-Key",
+						"value": "U3Ryb25nUGFzc3dvcmRWZXJ5U3Ryb25nWWVzWWVz",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"test@test.est\",\n    \"password\":\"1234d\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:7080/api/v1/auth/login",
+					"host": [
+						"localhost"
+					],
+					"port": "7080",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
 }

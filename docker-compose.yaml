@@ -302,23 +302,6 @@ services:
       kafka-topics --bootstrap-server kafka:9092 --list
       "
 
-  meeting-room-service:
-    build: ./meeting-room-service
-    healthcheck:
-      test: curl -f http://localhost:8080/actuator/health
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 10s
-    env_file:
-      - env/security.env
-      - env/datasource.env
-    depends_on:
-      plahctoh-database:
-        condition: service_healthy
-    networks:
-      - plahctoh
-
 networks:
   plahctoh:
     driver: bridge
