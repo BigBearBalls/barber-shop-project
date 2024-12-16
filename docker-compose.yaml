@@ -28,7 +28,7 @@ services:
     healthcheck:
       test: [ "CMD-SHELL", "curl -fsSL http://localhost:9200/_cluster/health | grep green || exit 1" ]
       interval: 10s
-      timeout: 5s
+      timeout: 10s
       retries: 10
       start_period: 30s
     networks:

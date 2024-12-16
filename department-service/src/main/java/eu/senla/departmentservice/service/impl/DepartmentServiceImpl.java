@@ -6,6 +6,7 @@ import eu.senla.common.department.dto.response.DepartmentDTO;
 import eu.senla.common.department.dto.response.DepartmentPageResponse;
 import eu.senla.common.department.dto.response.ShortDepartmentUserInfoResponse;
 import eu.senla.common.enums.ErrorCode;
+import eu.senla.common.exception.ExistsException;
 import eu.senla.common.exception.LogExceptionWrapper;
 import eu.senla.common.exception.NotFoundException;
 import eu.senla.common.department.dto.request.CreateDepartmentRequest;
@@ -39,6 +40,10 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Transactional
     public DepartmentDTO createDepartment(CreateDepartmentRequest createDepartmentRequest) {
         Department department = departmentMapper.toDepartment(createDepartmentRequest);
+        if (departmentRepository.existsByDepartmentName((department.getDepartmentName()))) {
+            throw LogExceptionWrapper.logErrorException(new ExistsException(String.format(ErrorCode.ERR_DEPARTMENT_EXISTS
+                    .getMessage(), "name", department.getDepartmentName()), ErrorCode.ERR_DEPARTMENT_EXISTS));
+        }
         return departmentMapper.toDepartmentDTO(departmentRepository.save(department));
     }
 
