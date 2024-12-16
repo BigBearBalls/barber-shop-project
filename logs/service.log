@@ -4376,3 +4376,4 @@ Test log entry 3
 2024-12-16 10:07:57 INFO  o.a.k.c.c.i.SubscriptionState - [Consumer clientId=consumer-notification-group-1, groupId=notification-group] Resetting offset for partition user-registration-0 to position FetchPosition{offset=0, offsetEpoch=Optional.empty, currentLeader=LeaderAndEpoch{leader=Optional[kafka:9092 (id: 1 rack: null)], epoch=0}}.
 2024-12-16 10:07:57 INFO  o.s.k.l.KafkaMessageListenerContainer - notification-group: partitions assigned: [user-registration-0]
 2024-12-16 10:16:52 INFO  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-notification-group-1, groupId=notification-group] Node -1 disconnected.
+2024-12-16 10:26:52 INFO  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-notification-group-1, groupId=notification-group] Node -1 disconnected.
