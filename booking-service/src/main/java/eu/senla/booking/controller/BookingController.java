@@ -1,9 +1,9 @@
 package eu.senla.booking.controller;
 
 import eu.senla.booking.data.mapper.BookingMapper;
-import eu.senla.booking.entity.BookingRequestDto;
-import eu.senla.booking.entity.BookingResponseDto;
-import eu.senla.booking.entity.TimeSlotResponseDto;
+import eu.senla.common.booking.dto.request.BookingRequestDTO;
+import eu.senla.common.booking.dto.response.BookingResponseDTO;
+import eu.senla.common.booking.dto.response.TimeSlotResponseDTO;
 import eu.senla.booking.service.BookingService;
 import eu.senla.common.booking.dto.response.IdResponseDTO;
 import eu.senla.common.constant.ValidationConstants;
@@ -26,13 +26,13 @@ public class BookingController {
     private final BookingMapper bookingMapper;
 
     @GetMapping("/{id}")
-    public BookingResponseDto findBookingById(@PathVariable UUID id) {
+    public BookingResponseDTO findBookingById(@PathVariable UUID id) {
 
         return bookingService.findBookingById(id);
     }
 
     @GetMapping
-    public List<TimeSlotResponseDto> findAvailableTimeSlots(@RequestParam(name = "meetingRoomId")
+    public List<TimeSlotResponseDTO> findAvailableTimeSlots(@RequestParam(name = "meetingRoomId")
                                                             @NotNull(message = ValidationConstants.BOOKING_ID_CANNOT_BE_NULL_VALIDATION_MESSAGE)
                                                             UUID meetingRoomId,
                                                             @RequestParam(name = "bookingDate")
@@ -46,7 +46,7 @@ public class BookingController {
                               String userId,
                               @RequestBody
                               @Valid
-                              BookingRequestDto bookingRequestDto) {
+                              BookingRequestDTO bookingRequestDto) {
 
         System.out.printf("Was the optional header present? %s!%n", (userId == null ? "No" : "Yes"));
 

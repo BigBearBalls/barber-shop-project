@@ -3,9 +3,9 @@ package eu.senla.booking.service.impl;
 import eu.senla.booking.data.mapper.BookingMapper;
 import eu.senla.booking.data.mapper.TimeSlotMapper;
 import eu.senla.booking.entity.Booking;
-import eu.senla.booking.entity.BookingResponseDto;
+import eu.senla.common.booking.dto.response.BookingResponseDTO;
 import eu.senla.booking.entity.TimeSlot;
-import eu.senla.booking.entity.TimeSlotResponseDto;
+import eu.senla.common.booking.dto.response.TimeSlotResponseDTO;
 import eu.senla.booking.repository.BookingRepository;
 import eu.senla.booking.repository.TimeSlotRepository;
 import eu.senla.booking.service.BookingService;
@@ -39,7 +39,7 @@ public class BookingServiceImpl implements BookingService {
     private final MeetingRoomService meetingRoomService;
 
     @Override
-    public BookingResponseDto findBookingById(UUID id) {
+    public BookingResponseDTO findBookingById(UUID id) {
 
         Booking booking = bookingRepository
                 .findById(id)
@@ -101,7 +101,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<TimeSlotResponseDto> findAvailableTimeSlotsDto(UUID meetingRoomId, LocalDate bookingDate) {
+    public List<TimeSlotResponseDTO> findAvailableTimeSlotsDto(UUID meetingRoomId, LocalDate bookingDate) {
 
         if (!meetingRoomService.existsById(meetingRoomId)) {
             throw LogExceptionWrapper.logErrorException(new NotFoundException(String.format(ErrorCode.ERR_MEETING_ROOM_NOT_FOUND.getMessage(),

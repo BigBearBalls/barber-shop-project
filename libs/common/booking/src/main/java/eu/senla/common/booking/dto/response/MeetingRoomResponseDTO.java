@@ -1,4 +1,4 @@
-package eu.senla.booking.entity;
+package eu.senla.common.booking.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,7 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class MeetingRoomResponseDto {
+public class MeetingRoomResponseDTO {
 
     private Integer number;
 }
