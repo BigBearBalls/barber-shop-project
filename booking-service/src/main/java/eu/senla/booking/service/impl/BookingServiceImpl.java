@@ -17,11 +17,11 @@ import eu.senla.common.enums.ErrorCode;
 import eu.senla.common.exception.ExistsException;
 import eu.senla.common.exception.InvalidValueException;
 import eu.senla.common.exception.LogExceptionWrapper;
-
 import java.time.LocalDate;
 
 import eu.senla.common.kafka.dto.KafkaMailDto;
 import eu.senla.common.kafka.dto.MailType;
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -29,6 +29,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -126,7 +127,6 @@ public class BookingServiceImpl implements BookingService {
                 .flatMap(List::stream)
                 .map(TimeSlot::getId)
                 .toList();
-
         if (bookedTimeSlotIds.isEmpty()) {
             return timeSlotRepository.findAll();
         } else {

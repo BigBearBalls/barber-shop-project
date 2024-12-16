@@ -4351,29 +4351,3 @@ Test log entry 3
 	ssl.truststore.password = null
 	ssl.truststore.type = JKS
 	value.deserializer = class org.springframework.kafka.support.serializer.JsonDeserializer
-
-2024-12-16 10:07:51 INFO  o.a.k.c.t.i.KafkaMetricsCollector - initializing Kafka metrics collector
-2024-12-16 10:07:52 INFO  o.a.kafka.common.utils.AppInfoParser - Kafka version: 3.7.1
-2024-12-16 10:07:52 INFO  o.a.kafka.common.utils.AppInfoParser - Kafka commitId: e2494e6ffb89f828
-2024-12-16 10:07:52 INFO  o.a.kafka.common.utils.AppInfoParser - Kafka startTimeMs: 1734343672094
-2024-12-16 10:07:52 INFO  o.a.k.c.c.i.LegacyKafkaConsumer - [Consumer clientId=consumer-notification-group-1, groupId=notification-group] Subscribed to topic(s): user-registration
-2024-12-16 10:07:52 INFO  e.s.n.NotificationServiceApplication - Started NotificationServiceApplication in 10.21 seconds (process running for 11.168)
-2024-12-16 10:07:52 WARN  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-notification-group-1, groupId=notification-group] Error while fetching metadata with correlation id 2 : {user-registration=LEADER_NOT_AVAILABLE}
-2024-12-16 10:07:52 INFO  org.apache.kafka.clients.Metadata - [Consumer clientId=consumer-notification-group-1, groupId=notification-group] Cluster ID: OFOdFP-TRvmaQFU_XjyGeg
-2024-12-16 10:07:54 INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-notification-group-1, groupId=notification-group] Discovered group coordinator kafka:9092 (id: 2147483646 rack: null)
-2024-12-16 10:07:54 INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-notification-group-1, groupId=notification-group] (Re-)joining group
-2024-12-16 10:07:54 INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-notification-group-1, groupId=notification-group] Request joining group due to: need to re-join with the given member-id: consumer-notification-group-1-96f6322b-6f10-4c44-9dfa-3b18cec604e9
-2024-12-16 10:07:54 INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-notification-group-1, groupId=notification-group] (Re-)joining group
-2024-12-16 10:07:56 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2024-12-16 10:07:56 INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-2024-12-16 10:07:56 INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 4 ms
-2024-12-16 10:07:57 INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-notification-group-1, groupId=notification-group] Successfully joined group with generation Generation{generationId=1, memberId='consumer-notification-group-1-96f6322b-6f10-4c44-9dfa-3b18cec604e9', protocol='range'}
-2024-12-16 10:07:57 INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-notification-group-1, groupId=notification-group] Finished assignment for group at generation 1: {consumer-notification-group-1-96f6322b-6f10-4c44-9dfa-3b18cec604e9=Assignment(partitions=[user-registration-0])}
-2024-12-16 10:07:57 INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-notification-group-1, groupId=notification-group] Successfully synced group in generation Generation{generationId=1, memberId='consumer-notification-group-1-96f6322b-6f10-4c44-9dfa-3b18cec604e9', protocol='range'}
-2024-12-16 10:07:57 INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-notification-group-1, groupId=notification-group] Notifying assignor about the new Assignment(partitions=[user-registration-0])
-2024-12-16 10:07:57 INFO  o.a.k.c.c.i.ConsumerRebalanceListenerInvoker - [Consumer clientId=consumer-notification-group-1, groupId=notification-group] Adding newly assigned partitions: user-registration-0
-2024-12-16 10:07:57 INFO  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-notification-group-1, groupId=notification-group] Found no committed offset for partition user-registration-0
-2024-12-16 10:07:57 INFO  o.a.k.c.c.i.SubscriptionState - [Consumer clientId=consumer-notification-group-1, groupId=notification-group] Resetting offset for partition user-registration-0 to position FetchPosition{offset=0, offsetEpoch=Optional.empty, currentLeader=LeaderAndEpoch{leader=Optional[kafka:9092 (id: 1 rack: null)], epoch=0}}.
-2024-12-16 10:07:57 INFO  o.s.k.l.KafkaMessageListenerContainer - notification-group: partitions assigned: [user-registration-0]
-2024-12-16 10:16:52 INFO  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-notification-group-1, groupId=notification-group] Node -1 disconnected.
-2024-12-16 10:26:52 INFO  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-notification-group-1, groupId=notification-group] Node -1 disconnected.
