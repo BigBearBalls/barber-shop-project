@@ -1,23 +1,35 @@
 package eu.senla.booking.data.mapper;
 
 import eu.senla.booking.entity.Booking;
-import eu.senla.common.dto.ProcedureDTO;
-import eu.senla.common.booking.dto.request.BookingRequestDTO;
-import eu.senla.common.booking.dto.response.ResponseWorkingDayDTO;
+import eu.senla.booking.entity.BookingRequestDto;
+import eu.senla.booking.entity.BookingResponseDto;
+import eu.senla.booking.entity.MeetingRoom;
+import eu.senla.booking.entity.TimeSlot;
+import java.util.Optional;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 
-import java.time.LocalTime;
-
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, uses = {TimeSlotMapper.class, MeetingRoomMapper.class})
 public interface BookingMapper {
 
-    @Mapping(target = "id", ignore = true)
-    @Mapping(source = "booking.clientId", target = "clientId")
-    @Mapping(source = "procedure.id", target = "procedureId")
-    @Mapping(source = "workingDay.id", target = "workingDayId")
-    @Mapping(source = "booking.reservationStart", target = "reservationStart")
-    @Mapping(source = "reservationEnd", target = "reservationEnd")
-    Booking toBooking(BookingRequestDTO booking, ProcedureDTO procedure, ResponseWorkingDayDTO workingDay, LocalTime reservationEnd);
+    default Booking toBooking(final BookingRequestDto bookingRequestDto) {
+        Booking booking = new Booking();
+        TimeSlot timeSlot = new TimeSlot();
+
+        Optional.ofNullable(bookingRequestDto.getBookingStart()).ifPresent(timeSlot::setReservationStart);
+        Optional.ofNullable(bookingRequestDto.getBookingEnd()).ifPresent(timeSlot::setReservationEnd);
+
+        booking.getTimeSlots().add(timeSlot);
+        MeetingRoom meetingRoom = new MeetingRoom();
+
+        Optional.ofNullable(bookingRequestDto.getMeetingRoomId()).ifPresent(meetingRoom::setId);
+
+        booking.setMeetingRoom(meetingRoom);
+
+        Optional.ofNullable(bookingRequestDto.getBookingDate()).ifPresent(booking::setBookingDate);
+
+        return booking;
+    }
+
+    BookingResponseDto toBookingResponseDto(final Booking booking);
 }

@@ -1,4 +1,29 @@
+logging:
+  level:
+    root: info
+  file:
+    name: /app/logs/service.log
+  pattern:
+    file: "%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n"
 spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: daniil.zubets@gmail.com
+    password: cpgq nfvw vwus lsbh
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  kafka:
+    bootstrap-servers: kafka:9092
+    consumer:
+      group-id: notification-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      auto-offset-reset: earliest
   application:
     name: notification-service
 management:

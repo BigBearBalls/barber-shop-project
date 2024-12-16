@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
-      id: "booking-1.0"
-      author: Dany
+      id: "reservation-1.0"
+      author: Yevgany Tyurin
       changes:
         - createTable:
             schemaName: booking_service_schema
@@ -16,13 +16,134 @@ databaseChangeLog:
                     nullable: false
 
               - column:
+                  name: meeting_room_id
+                  type: uuid
+                  constraints:
+                    unique: false
+                    nullable: false
+
+              - column:
+                  name: booking_date
+                  type: DATE
+                  constraints:
+                    unique: false
+                    nullable: false
+
+              - column:
+                  name: user_id
+                  type: uuid
+                  constraints:
+                    unique: false
+                    nullable: false
+
+  - changeSet:
+      id: "time-slot-1.0"
+      author: Yevgany Tyurin
+      changes:
+        - createTable:
+            schemaName: booking_service_schema
+            tableName: time_slots
+            columns:
+              - column:
+                  name: time_slot_id
+                  type: uuid
+                  autoIncrement: false
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
                   name: reservation_start
                   type: TIME
                   constraints:
+                    unique: false
                     nullable: false
 
               - column:
                   name: reservation_end
                   type: TIME
                   constraints:
+                    unique: false
                     nullable: false
+
+  - changeSet:
+      id: "meeting-room-1.0"
+      author: Yevgany Tyurin
+      changes:
+        - createTable:
+            tableName: meeting_rooms
+            columns:
+
+              - column:
+                  name: meeting_room_id
+                  type: uuid
+                  autoIncrement: false
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: number
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: bookings_time_slots-table
+      author: Yevgany Tyurin
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  name: booking_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_booking_id
+              - column:
+                  name: time_slot_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_time_slot_id
+            tableName: bookings_time_slots
+        - addPrimaryKey:
+            tableName: bookings_time_slots
+            constraintName: pk_bookings_time_slots
+            columnNames: booking_id, time_slot_id
+
+  - changeSet:
+      id: bookings_time_slots-time_slots-foreign-key
+      author: Yevgany Tyurin
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: time_slot_id
+            baseTableName: bookings_time_slots
+            constraintName: fk_bookings_time_slots_on_time_slots
+            referencedColumnNames: time_slot_id
+            referencedTableName: time_slots
+
+  - changeSet:
+      id: bookings_time_slots-bookings-foreign-key
+      author: Yevgany Tyurin
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: booking_id
+            baseTableName: bookings_time_slots
+            constraintName: fk_bookings_time_slots_on_bookings
+            referencedColumnNames: booking_id
+            referencedTableName: bookings
+
+  - changeSet:
+      id: booking-meeting_room-foreign-key
+      author: Yevgany Tyurin
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: meeting_room_id
+            baseTableName: bookings
+            constraintName: fk_booking_on_meeting_room
+            referencedColumnNames: meeting_room_id
+            referencedTableName: meeting_rooms
