@@ -103,6 +103,11 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public List<TimeSlotResponseDto> findAvailableTimeSlotsDto(UUID meetingRoomId, LocalDate bookingDate) {
 
+        if (!meetingRoomService.existsById(meetingRoomId)) {
+            throw LogExceptionWrapper.logErrorException(new NotFoundException(String.format(ErrorCode.ERR_MEETING_ROOM_NOT_FOUND.getMessage(),
+                    "id", meetingRoomId), ErrorCode.ERR_MEETING_ROOM_NOT_FOUND));
+        }
+
         List<TimeSlot> availableTimeSlots = findAvailableTimeSlots(meetingRoomId, bookingDate);
 
         return availableTimeSlots
