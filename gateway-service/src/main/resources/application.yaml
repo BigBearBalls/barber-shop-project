@@ -17,43 +17,58 @@ spring:
     gateway:
       mvc:
         routes:
+          # Auth Service
           - id: auth-service-route
             uri: http://auth-service:8080
             predicates:
+              - Path=/auth-service/swagger-ui/**, /auth-service/v3/api-docs
               - Path=/api/v1/auth/**, /api/v1/permissions/**
             filters:
+              - RewritePath=/auth-service/(?<segment>.*), /$<segment>
               - AddRequestHeader=X-Request-Api-Key, ${API_KEY}
               - AddRequestHeader=X-Request-Source, EXTERNAL
 
+          # Booking Service
           - id: booking-service-route
             uri: http://booking-service:8080
             predicates:
+              - Path=/booking-service/swagger-ui.html, /booking-service/v3/api-docs
               - Path=/api/v1/bookings/**
             filters:
+              - RewritePath=/booking-service/(?<segment>.*), /$<segment>
               - AddRequestHeader=X-Request-Api-Key, ${API_KEY}
               - AddRequestHeader=X-Request-Source, EXTERNAL
 
-          - id: calendar-service
+          # Calendar Service
+          - id: calendar-service-route
             uri: http://calendar-service:8080
             predicates:
+              - Path=/calendar-service/swagger-ui.html, /calendar-service/v3/api-docs
               - Path=/api/v1/calendars/**
             filters:
+              - RewritePath=/calendar-service/(?<segment>.*), /$<segment>
               - AddRequestHeader=X-Request-Api-Key, ${API_KEY}
               - AddRequestHeader=X-Request-Source, EXTERNAL
 
-          - id: user-service
+          # User Service
+          - id: user-service-route
             uri: http://user-service:8080
             predicates:
+              - Path=/user-service/swagger-ui.html, /user-service/v3/api-docs
               - Path=/api/v1/user/**
             filters:
+              - RewritePath=/user-service/(?<segment>.*), /$<segment>
               - AddRequestHeader=X-Request-Api-Key, ${API_KEY}
               - AddRequestHeader=X-Request-Source, EXTERNAL
 
-          - id: account-service
+          # Account Service
+          - id: account-service-route
             uri: http://account-service:8080
             predicates:
+              - Path=/account-service/swagger-ui.html, /account-service/v3/api-docs
               - Path=/api/v1/account/**
             filters:
+              - RewritePath=/account-service/(?<segment>.*), /$<segment>
               - AddRequestHeader=X-Request-Api-Key, ${API_KEY}
               - AddRequestHeader=X-Request-Source, EXTERNAL
 

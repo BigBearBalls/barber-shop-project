@@ -2,6 +2,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
     implementation project(":libs.common:booking")
+    implementation project(":libs.common:notification")
 }
 
 
