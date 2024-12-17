@@ -8,7 +8,7 @@ import org.mapstruct.MappingConstants;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface TimeSlotMapper {
 
-    TimeSlot toTimeSlot(TimeSlotResponseDTO timeSlotResponseDto);
+//    TimeSlot toTimeSlot(TimeSlotResponseDTO timeSlotResponseDto);
 
     TimeSlotResponseDTO toTimeSlotResponseDto(TimeSlot timeSlot);
 }
