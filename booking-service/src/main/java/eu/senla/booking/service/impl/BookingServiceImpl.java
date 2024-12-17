@@ -130,7 +130,7 @@ public class BookingServiceImpl implements BookingService {
 
     private List<TimeSlot> findAvailableTimeSlots(UUID meetingRoomId, LocalDate bookingDate) {
 
-        List<Booking> bookings = bookingRepository.findAllByReservationDateAndMeetingRoomId(bookingDate,
+        List<Booking> bookings = bookingRepository.findAllByBookingDateAndMeetingRoomId(bookingDate,
                 meetingRoomId);
         List<UUID> bookedTimeSlotIds = bookings
                 .stream()
