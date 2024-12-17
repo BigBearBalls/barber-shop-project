@@ -6,4 +6,5 @@ dependencies {
     implementation "io.jsonwebtoken:jjwt-gson:${jwtVersion}"
     implementation project(":libs.common:auth")
     implementation project(":libs.common:department")
+    implementation project(":libs.common:notification")
 }

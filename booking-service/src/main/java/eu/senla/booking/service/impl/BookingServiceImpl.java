@@ -3,20 +3,25 @@ package eu.senla.booking.service.impl;
 import eu.senla.booking.data.mapper.BookingMapper;
 import eu.senla.booking.data.mapper.TimeSlotMapper;
 import eu.senla.booking.entity.Booking;
-import eu.senla.booking.entity.BookingResponseDto;
+import eu.senla.common.booking.dto.response.BookingResponseDTO;
 import eu.senla.booking.entity.TimeSlot;
-import eu.senla.booking.entity.TimeSlotResponseDto;
+import eu.senla.common.booking.dto.response.TimeSlotResponseDTO;
 import eu.senla.booking.repository.BookingRepository;
 import eu.senla.booking.repository.TimeSlotRepository;
 import eu.senla.booking.service.BookingService;
 import eu.senla.booking.service.MeetingRoomService;
 import eu.senla.booking.service.TimeSlotService;
+import eu.senla.booking.service.kafka.BookingKafkaProducer;
 import eu.senla.common.booking.dto.response.IdResponseDTO;
 import eu.senla.common.enums.ErrorCode;
 import eu.senla.common.exception.ExistsException;
 import eu.senla.common.exception.InvalidValueException;
 import eu.senla.common.exception.LogExceptionWrapper;
 import eu.senla.common.exception.NotFoundException;
+import java.time.LocalDate;
+
+import eu.senla.common.kafka.dto.KafkaMailDto;
+import eu.senla.common.kafka.dto.MailType;
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,8 +30,11 @@ import java.util.List;
 import java.util.UUID;
 import org.springframework.transaction.annotation.Transactional;
 
+import org.springframework.transaction.annotation.Transactional;
+
 @Service
 @AllArgsConstructor
+@Slf4j
 @Transactional
 public class BookingServiceImpl implements BookingService {
 
@@ -37,9 +45,10 @@ public class BookingServiceImpl implements BookingService {
     private final TimeSlotService timeSlotService;
     private final BookingMapper bookingMapper;
     private final MeetingRoomService meetingRoomService;
+    private final BookingKafkaProducer bookingKafkaProducer;
 
     @Override
-    public BookingResponseDto findBookingById(UUID id) {
+    public BookingResponseDTO findBookingById(UUID id) {
 
         Booking booking = bookingRepository
                 .findById(id)
@@ -52,9 +61,13 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public IdResponseDTO saveBooking(Booking booking) {
 
-        if (!meetingRoomService.existsById(booking.getMeetingRoom().getId())) {
-            throw LogExceptionWrapper.logErrorException(new NotFoundException(String.format(ErrorCode.ERR_MEETING_ROOM_NOT_FOUND.getMessage(),
-                    "id", booking.getMeetingRoom().getId()), ErrorCode.ERR_MEETING_ROOM_NOT_FOUND));
+//        MeetingRoom meetingRoom = meetingRoomService.findMeetingRoomById(booking.getMeetingRoomId()); //TODO check if exist
+//        System.out.println(meetingRoom.getId());
+//        System.out.println(meetingRoom.getNumber());
+
+        if (meetingRoomService.existsById(booking.getMeetingRoomId())) {
+            throw LogExceptionWrapper.logErrorException(new ExistsException(String.format(
+                    ErrorCode.ERR_MEETING_ROOM_NOT_FOUND.getMessage(), booking.getMeetingRoomId()), ErrorCode.ERR_MEETING_ROOM_NOT_FOUND));
         }
 
         TimeSlot timeSlot = booking
@@ -63,18 +76,12 @@ public class BookingServiceImpl implements BookingService {
                 .findFirst()
                 .get();
 
-        if (booking.getBookingDate().isBefore(LocalDate.now())) {
-            throw LogExceptionWrapper.logErrorException(new InvalidValueException(ErrorCode.ERR_BOOKING_DATE_CANNOT_BE_IN_PAST));
-        }
-
-        if (timeSlot.getReservationEnd().equals(timeSlot.getReservationStart())) {
-            throw LogExceptionWrapper.logErrorException(new InvalidValueException(ErrorCode.ERR_START_TIME_CANNOT_BE_EQUAL_END_TIME));
-        } else if ((timeSlot.getReservationStart().isAfter(timeSlot.getReservationEnd()))) {
-            throw LogExceptionWrapper.logErrorException(new InvalidValueException(ErrorCode.ERR_START_TIME_CANNOT_BE_AFTER_END_TIME));
+        if (timeSlot.getReservationEnd().isBefore(timeSlot.getReservationStart())) {
+            throw LogExceptionWrapper.logErrorException(new InvalidValueException(ErrorCode.ERR_TIME_CANNOT_BE_IN_PAST));
         }
 
         List<TimeSlot> timeSlotsForBooking = timeSlotService.findTimeSlotsForBooking(timeSlot.getReservationStart(),
-                                                                                     timeSlot.getReservationEnd());
+                timeSlot.getReservationEnd());
 
         List<TimeSlot> availableTimeSlots = findAvailableTimeSlots(booking.getMeetingRoom().getId(), booking.getBookingDate());
 
@@ -86,8 +93,12 @@ public class BookingServiceImpl implements BookingService {
 
         booking.setTimeSlots(timeSlotsForBooking);
         booking.setUserId(UUID.fromString("f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe94")); //TODO
+        IdResponseDTO idResponseDTO = new IdResponseDTO(bookingRepository.save(booking).getId());
 
-        return new IdResponseDTO(bookingRepository.save(booking).getId());
+        bookingKafkaProducer.sendUserRegistrationEvent("user-registration",
+                new KafkaMailDto(MailType.BOOKING_MAIL, "evgturin@gmail.com", "NiHao" ,"You have successfully booked"));
+
+        return idResponseDTO;
     }
 
     @Override
@@ -101,7 +112,12 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<TimeSlotResponseDto> findAvailableTimeSlotsDto(UUID meetingRoomId, LocalDate bookingDate) {
+    public List<TimeSlotResponseDTO> findAvailableTimeSlotsDto(UUID meetingRoomId, LocalDate bookingDate) {
+
+        if (!meetingRoomService.existsById(meetingRoomId)) {
+            throw LogExceptionWrapper.logErrorException(new NotFoundException(String.format(ErrorCode.ERR_MEETING_ROOM_NOT_FOUND.getMessage(),
+                    "id", meetingRoomId), ErrorCode.ERR_MEETING_ROOM_NOT_FOUND));
+        }
 
         List<TimeSlot> availableTimeSlots = findAvailableTimeSlots(meetingRoomId, bookingDate);
 
@@ -114,15 +130,14 @@ public class BookingServiceImpl implements BookingService {
     private List<TimeSlot> findAvailableTimeSlots(UUID meetingRoomId, LocalDate bookingDate) {
 
         List<Booking> bookings = bookingRepository.findAllByBookingDateAndMeetingRoomId(bookingDate,
-                                                                                        meetingRoomId);
+                meetingRoomId);
         List<UUID> bookedTimeSlotIds = bookings
                 .stream()
                 .map(Booking::getTimeSlots)
                 .flatMap(List::stream)
                 .map(TimeSlot::getId)
                 .toList();
-
-        if(bookedTimeSlotIds.isEmpty()) {
+        if (bookedTimeSlotIds.isEmpty()) {
             return timeSlotRepository.findAll();
         } else {
             return timeSlotRepository.findAllByIdNotIn(bookedTimeSlotIds);

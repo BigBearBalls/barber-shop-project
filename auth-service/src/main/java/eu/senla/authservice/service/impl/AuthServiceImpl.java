@@ -18,6 +18,8 @@ import eu.senla.common.dto.UserDataDTO;
 import eu.senla.common.enums.ErrorCode;
 import eu.senla.common.exception.AuthenticationException;
 import eu.senla.common.exception.NotFoundException;
+import eu.senla.common.kafka.dto.KafkaMailDto;
+import eu.senla.common.kafka.dto.MailType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -36,6 +38,7 @@ public class AuthServiceImpl implements AuthService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final PermissionService permissionService;
+    private final KafkaProducer kafkaProducer;
 
     @Override
     public void regUser(RegistrationRequest registrationRequest) {
@@ -47,6 +50,10 @@ public class AuthServiceImpl implements AuthService {
         user.setPermissions(permissions);
 
         UUID userId = userService.saveUser(user);
+        kafkaProducer.sendUserRegistrationEvent("user-registration",
+                new KafkaMailDto(MailType.REGISTRATION_MAIL, user.getEmail(), "Welcome to PLAHCTOH",
+                        "Successful registration. Thank you."));
+
         userDataDTO.setId(userId);
         createDepartmentUserRequest.setId(userId);
         CallbackExceptionWrapper.wrap(() -> {

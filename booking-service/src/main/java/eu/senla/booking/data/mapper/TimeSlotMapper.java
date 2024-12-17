@@ -1,14 +1,14 @@
 package eu.senla.booking.data.mapper;
 
 import eu.senla.booking.entity.TimeSlot;
-import eu.senla.booking.entity.TimeSlotResponseDto;
+import eu.senla.common.booking.dto.response.TimeSlotResponseDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface TimeSlotMapper {
 
-    TimeSlot toTimeSlot(TimeSlotResponseDto timeSlotResponseDto);
+//    TimeSlot toTimeSlot(TimeSlotResponseDTO timeSlotResponseDto);
 
-    TimeSlotResponseDto toTimeSlotResponseDto(TimeSlot timeSlot);
+    TimeSlotResponseDTO toTimeSlotResponseDto(TimeSlot timeSlot);
 }

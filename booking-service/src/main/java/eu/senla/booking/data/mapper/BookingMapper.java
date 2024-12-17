@@ -1,8 +1,8 @@
 package eu.senla.booking.data.mapper;
 
 import eu.senla.booking.entity.Booking;
-import eu.senla.booking.entity.BookingRequestDto;
-import eu.senla.booking.entity.BookingResponseDto;
+import eu.senla.common.booking.dto.request.BookingRequestDTO;
+import eu.senla.common.booking.dto.response.BookingResponseDTO;
 import eu.senla.booking.entity.MeetingRoom;
 import eu.senla.booking.entity.TimeSlot;
 import java.util.Optional;
@@ -12,7 +12,7 @@ import org.mapstruct.MappingConstants;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING, uses = {TimeSlotMapper.class, MeetingRoomMapper.class})
 public interface BookingMapper {
 
-    default Booking toBooking(final BookingRequestDto bookingRequestDto) {
+    default Booking toBooking(final BookingRequestDTO bookingRequestDto) {
         Booking booking = new Booking();
         TimeSlot timeSlot = new TimeSlot();
 
@@ -31,5 +31,5 @@ public interface BookingMapper {
         return booking;
     }
 
-    BookingResponseDto toBookingResponseDto(final Booking booking);
+    BookingResponseDTO toBookingResponseDto(final Booking booking);
 }

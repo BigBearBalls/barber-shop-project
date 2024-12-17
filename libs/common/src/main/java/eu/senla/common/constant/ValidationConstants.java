@@ -38,6 +38,9 @@ public class ValidationConstants {
     public static final String BOOKING_START_TIME_CANNOT_BE_NULL_VALIDATION_MESSAGE = "Booking start time cannot be null!";
     public static final String BOOKING_END_TIME_CANNOT_BE_NULL_VALIDATION_MESSAGE = "Booking end time cannot be null!";
     public static final String BOOKING_DATE_CANNOT_BE_NULL_VALIDATION_MESSAGE = "Booking date cannot be null!";
+    public static final String BOOKING_START_TIME_CANNOT_BE_NULL_VALIDATION_MESSAGE = "Booking start time cannot be null!";
+    public static final String BOOKING_END_TIME_CANNOT_BE_NULL_VALIDATION_MESSAGE = "Booking end time cannot be null!";
+    public static final String BOOKING_DATE_CANNOT_BE_NULL_VALIDATION_MESSAGE = "Booking date cannot be null!";
     public static final String TEAM_LEADER_ID_CANNOT_BE_NULL_VALIDATION_MESSAGE = "Team leader id cannot be null!";
     public static final String DEPARTMENT_NAME_CANNOT_BE_NULL_OR_BLANK_VALIDATION_MESSAGE = "Department name cannot be null or blank!";
     public static final String DEPARTMENT_NAME_LENGTH_MUST_BE_BETWEEN_VALIDATION_MESSAGE = "Department name length must be between 5 and 20 chars!";

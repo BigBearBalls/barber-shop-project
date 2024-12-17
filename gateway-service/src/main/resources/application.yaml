@@ -17,6 +17,7 @@ spring:
     gateway:
       mvc:
         routes:
+          # Auth Service
           - id: auth-service-route
             uri: http://auth-service:8080
             predicates:
@@ -24,7 +25,7 @@ spring:
             filters:
               - AddRequestHeader=X-Request-Api-Key, ${API_KEY}
               - AddRequestHeader=X-Request-Source, EXTERNAL
-
+          # Booking Service
           - id: booking-service-route
             uri: http://booking-service:8080
             predicates:
@@ -32,24 +33,24 @@ spring:
             filters:
               - AddRequestHeader=X-Request-Api-Key, ${API_KEY}
               - AddRequestHeader=X-Request-Source, EXTERNAL
-
-          - id: calendar-service
+          # Calendar Service
+          - id: calendar-service-route
             uri: http://calendar-service:8080
             predicates:
               - Path=/api/v1/calendars/**
             filters:
               - AddRequestHeader=X-Request-Api-Key, ${API_KEY}
               - AddRequestHeader=X-Request-Source, EXTERNAL
-
-          - id: user-service
+          # User Service
+          - id: user-service-route
             uri: http://user-service:8080
             predicates:
               - Path=/api/v1/users/**
             filters:
               - AddRequestHeader=X-Request-Api-Key, ${API_KEY}
               - AddRequestHeader=X-Request-Source, EXTERNAL
-
-          - id: account-service
+          # Account Service
+          - id: account-service-route
             uri: http://account-service:8080
             predicates:
               - Path=/api/v1/accounts/**
@@ -64,7 +65,6 @@ spring:
             filters:
               - AddRequestHeader=X-Request-Api-Key, ${API_KEY}
               - AddRequestHeader=X-Request-Source, EXTERNAL
-
 #jwt:
 #  auth:
 #    converter:

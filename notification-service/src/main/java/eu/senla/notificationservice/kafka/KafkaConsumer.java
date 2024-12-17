@@ -1,6 +1,7 @@
 package eu.senla.notificationservice.kafka;
 
-import eu.senla.notificationservice.service.EmailService;
+import eu.senla.common.kafka.dto.KafkaMailDto;
+import eu.senla.notificationservice.handler.MailTypeHandlerRegistry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -12,17 +13,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class KafkaConsumer {
 
-    private final EmailService emailService;
+    private final MailTypeHandlerRegistry handlerRegistry;
 
     @KafkaListener(topics = "user-registration", groupId = "notification-group")
-    public void listen(String message) {
-        log.info("Received message!!!!!: " + message);
-
+    public void listen(KafkaMailDto message) {
+        log.info("Received message!!!!! " + message.toString());
         try{
-            emailService.sendEmail(
-                    "evgturin@gmail.com",
-                    "Welcome to Our Service",
-                    "Thank you for registering!");
+            var handler = handlerRegistry.getHandler(message.getMailType());
+            handler.handle(message);
         } catch (MailAuthenticationException e) {
             log.error("Failed to send email: {}", e.getMessage());
         }

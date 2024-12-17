@@ -1,62 +1,62 @@
 services:
 
-  kibana:
-    image: docker.elastic.co/kibana/kibana:8.10.2
-    container_name: kibana
-    ports:
-      - "5601:5601"
-    environment:
-      - "ELASTICSEARCH_HOSTS=http://elasticsearch:9200"
-      - "SERVER_HOST=0.0.0.0"
-      - "ELASTICSEARCH_USERNAME=kibana_system"
-      - "ELASTICSEARCH_PASSWORD=_rI6ySgpfznuLMUdSBS0"
-      - "ELASTICSEARCH_SSL_VERIFICATIONMODE=none"
-    networks:
-      - plahctoh
-
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.2
-    container_name: elasticsearch
-    environment:
-      - "discovery.type=single-node"
-      - "ELASTIC_PASSWORD=XNV1iC2BZ7alheRmqo1_"
-      - "xpack.security.enabled=false"
-    ports:
-      - "9200:9200"
-    mem_limit: 2g
-    mem_reservation: 1g
-    healthcheck:
-      test: [ "CMD-SHELL", "curl -fsSL http://localhost:9200/_cluster/health | grep green || exit 1" ]
-      interval: 10s
-      timeout: 10s
-      retries: 10
-      start_period: 30s
-    networks:
-      - plahctoh
-
-  logstash:
-    image: docker.elastic.co/logstash/logstash:8.16.1
-    container_name: logstash
-    user: "0:0"
-    depends_on:
-      elasticsearch:
-        condition: service_healthy
-    ports:
-      - "5044:5044"
-      - "9600:9600"
-    volumes:
-      - ./logstash/config:/usr/share/logstash/config
-      - ./logstash/pipeline:/usr/share/logstash/pipeline
-      - ./logs:/app/logs
-    environment:
-      - "LS_JAVA_OPTS=-Xms512m -Xmx512m"
-      - "LOGSTASH_DISABLE_ES_PING=true"
-      - "xpack.monitoring.elasticsearch.hosts=http://elasticsearch:9200"
-      - "xpack.monitoring.elasticsearch.username=elastic"
-      - "xpack.monitoring.elasticsearch.password=XNV1iC2BZ7alheRmqo1_"
-      - "xpack.monitoring.enabled=true"
-    networks:
-      - plahctoh
+#  kibana:
+#    image: docker.elastic.co/kibana/kibana:8.10.2
+#    container_name: kibana
+#    ports:
+#      - "5601:5601"
+#    environment:
+#      - "ELASTICSEARCH_HOSTS=http://elasticsearch:9200"
+#      - "SERVER_HOST=0.0.0.0"
+#      - "ELASTICSEARCH_USERNAME=kibana_system"
+#      - "ELASTICSEARCH_PASSWORD=_rI6ySgpfznuLMUdSBS0"
+#      - "ELASTICSEARCH_SSL_VERIFICATIONMODE=none"
+#    networks:
+#      - plahctoh
+#
+#  elasticsearch:
+#    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.2
+#    container_name: elasticsearch
+#    environment:
+#      - "discovery.type=single-node"
+#      - "ELASTIC_PASSWORD=XNV1iC2BZ7alheRmqo1_"
+#      - "xpack.security.enabled=false"
+#    ports:
+#      - "9200:9200"
+#    mem_limit: 2g
+#    mem_reservation: 1g
+#    healthcheck:
+#      test: [ "CMD-SHELL", "curl -fsSL http://localhost:9200/_cluster/health | grep green || exit 1" ]
+#      interval: 10s
+#      timeout: 5s
+#      retries: 10
+#      start_period: 30s
+#    networks:
+#      - plahctoh
+#
+#  logstash:
+#    image: docker.elastic.co/logstash/logstash:8.16.1
+#    container_name: logstash
+#    user: "0:0"
+#    depends_on:
+#      elasticsearch:
+#        condition: service_healthy
+#    ports:
+#      - "5044:5044"
+#      - "9600:9600"
+#    volumes:
+#      - ./logstash/config:/usr/share/logstash/config
+#      - ./logstash/pipeline:/usr/share/logstash/pipeline
+#      - ./logs:/app/logs
+#    environment:
+#      - "LS_JAVA_OPTS=-Xms512m -Xmx512m"
+#      - "LOGSTASH_DISABLE_ES_PING=true"
+#      - "xpack.monitoring.elasticsearch.hosts=http://elasticsearch:9200"
+#      - "xpack.monitoring.elasticsearch.username=elastic"
+#      - "xpack.monitoring.elasticsearch.password=XNV1iC2BZ7alheRmqo1_"
+#      - "xpack.monitoring.enabled=true"
+#    networks:
+#      - plahctoh
 
 
   zookeeper:
@@ -182,7 +182,7 @@ services:
     volumes:
       - ./logs:/app/logs
     environment:
-        - LOG_PATH=/app/logs/service.log
+      - LOG_PATH=/app/logs/service.log
     networks:
       - plahctoh
 
