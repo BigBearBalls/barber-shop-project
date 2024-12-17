@@ -220,6 +220,7 @@ services:
     env_file:
       - env/datasource.env
       - env/security.env
+      - env/feign-services-url.env
     depends_on:
       plahctoh-database:
         condition: service_healthy

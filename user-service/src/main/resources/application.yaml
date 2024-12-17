@@ -31,3 +31,7 @@ management:
   endpoint:
     health:
       show-details: always
+feign:
+  clients:
+    user-credentials-service:
+      url: "${AUTH_SERVICE_URL}"

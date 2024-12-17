@@ -81,7 +81,35 @@
 		},
 		{
 			"name": "User API Collention",
-			"item": []
+			"item": [
+				{
+					"name": "Get account by id from header",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-User-Id",
+								"value": "d44900be-8f81-415f-9466-2ad7063f8a86",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:7080/api/v1/accounts/",
+							"host": [
+								"localhost"
+							],
+							"port": "7080",
+							"path": [
+								"api",
+								"v1",
+								"accounts",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "Booking API Collection",
