@@ -1,0 +1,525 @@
+{
+	"info": {
+		"_postman_id": "f754a1d4-3551-4d98-9a80-4948f95b9864",
+		"name": "PLB API Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38638188"
+	},
+	"item": [
+		{
+			"name": "Registration",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Request-Api-Key",
+						"value": "U3Ryb25nUGFzc3dvcmRWZXJ5U3Ryb25nWWVzWWVz",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"yushkevich2004@mail.ru\",\n    \"password\":\"973341\",\n    \"confirmPassword\":\"973341\",\n    \"firstName\":\"Артем\",\n    \"lastName\":\"Юшкевич\",\n    \"phoneNumber\":\"+375 (29) 5023167\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:7080/api/v1/auth/registration",
+					"host": [
+						"localhost"
+					],
+					"port": "7080",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"registration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseBody = pm.response.text();",
+							"",
+							"let jsonData;",
+							"try {",
+							"    jsonData = pm.response.json();",
+							"} catch (e) {",
+							"    console.log(\"Response is not a valid JSON:\", e);",
+							"}",
+							"",
+							"if (jsonData) {",
+							"    const accessToken = jsonData.accessToken || \"No Token found\";",
+							"    pm.environment.set(\"accessToken\", accessToken)",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Request-Api-Key",
+						"value": "U3Ryb25nUGFzc3dvcmRWZXJ5U3Ryb25nWWVzWWVz",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"yushkevich2004@mail.ru\",\n    \"password\":\"973341\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:7080/api/v1/auth/login",
+					"host": [
+						"localhost"
+					],
+					"port": "7080",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get account information",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseBody = pm.response.text();",
+							"",
+							"let jsonData;",
+							"try {",
+							"    jsonData = pm.response.json();",
+							"} catch (e) {",
+							"    console.log(\"Response is not a valid JSON:\", e);",
+							"}",
+							"",
+							"if (jsonData) {",
+							"    const userId = jsonData.id || \"No ID found\";",
+							"    pm.environment.set(\"userId\", userId)",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "email",
+						"value": "chelovechek@gmail.com",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:7080/api/v1/accounts/",
+					"host": [
+						"localhost"
+					],
+					"port": "7080",
+					"path": [
+						"api",
+						"v1",
+						"accounts",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all permissions",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:7080/api/v1/permissions/",
+					"host": [
+						"localhost"
+					],
+					"port": "7080",
+					"path": [
+						"api",
+						"v1",
+						"permissions",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get account permissions",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:7080/api/v1/permissions/user",
+					"host": [
+						"localhost"
+					],
+					"port": "7080",
+					"path": [
+						"api",
+						"v1",
+						"permissions",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add/Remove user permissions",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\":\"{{userId}}\",\n    \"permissionValues\": [\n        \"VIEW_SELF_PERMISsIONS\"\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:7080/api/v1/permissions/user",
+					"host": [
+						"localhost"
+					],
+					"port": "7080",
+					"path": [
+						"api",
+						"v1",
+						"permissions",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create department",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseBody = pm.response.text();",
+							"",
+							"let jsonData;",
+							"try {",
+							"    jsonData = pm.response.json();",
+							"} catch (e) {",
+							"    console.log(\"Response is not a valid JSON:\", e);",
+							"}",
+							"",
+							"if (jsonData) {",
+							"    if (jsonData.id) {",
+							"        const departmentId = jsonData.id;",
+							"        pm.environment.set(\"departmentId\", departmentId)",
+							"    }",
+							"}",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"departmentName\":\"Falcon\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:7080/api/v1/departments/",
+					"host": [
+						"localhost"
+					],
+					"port": "7080",
+					"path": [
+						"api",
+						"v1",
+						"departments",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set teamLeader to department",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"teamLeaderId\":\"{{userId}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:7080/api/v1/departments/{{departmentId}}",
+					"host": [
+						"localhost"
+					],
+					"port": "7080",
+					"path": [
+						"api",
+						"v1",
+						"departments",
+						"{{departmentId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get department users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:7080/api/v1/departments/{{departmentId}}/users",
+					"host": [
+						"localhost"
+					],
+					"port": "7080",
+					"path": [
+						"api",
+						"v1",
+						"departments",
+						"{{departmentId}}",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set user role",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"role\":\"team_leaDer\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:7080/api/v1/departments/users/{{userId}}/roles",
+					"host": [
+						"localhost"
+					],
+					"port": "7080",
+					"path": [
+						"api",
+						"v1",
+						"departments",
+						"users",
+						"{{userId}}",
+						"roles"
+					],
+					"query": [
+						{
+							"key": "role",
+							"value": "TEAM_LEADEr",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add users by ids to department",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"usersIds\":[\"{{userId}}\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:7080/api/v1/departments/{{departmentId}}/users",
+					"host": [
+						"localhost"
+					],
+					"port": "7080",
+					"path": [
+						"api",
+						"v1",
+						"departments",
+						"{{departmentId}}",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search users by first name and last name (case insensitive)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\":\"Арт\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:7080/api/v1/accounts/search?firstName=Art&lastName=Y",
+					"host": [
+						"localhost"
+					],
+					"port": "7080",
+					"path": [
+						"api",
+						"v1",
+						"accounts",
+						"search"
+					],
+					"query": [
+						{
+							"key": "firstName",
+							"value": "Art"
+						},
+						{
+							"key": "lastName",
+							"value": "Y"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get page of departments",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:7080/api/v1/departments/",
+					"host": [
+						"localhost"
+					],
+					"port": "7080",
+					"path": [
+						"api",
+						"v1",
+						"departments",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

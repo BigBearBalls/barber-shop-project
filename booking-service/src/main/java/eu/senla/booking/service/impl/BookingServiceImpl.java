@@ -23,6 +23,8 @@ import java.time.LocalDate;
 import eu.senla.common.kafka.dto.KafkaMailDto;
 import eu.senla.common.kafka.dto.MailType;
 import java.time.LocalDate;
+
+import eu.senla.httpconfiguration.security.holder.UserIdHolder;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -60,9 +62,18 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public IdResponseDTO saveBooking(Booking booking) {
 
-        if (!meetingRoomService.existsById(booking.getMeetingRoom().getId())) {
-            throw LogExceptionWrapper.logErrorException(new NotFoundException(String.format(ErrorCode.ERR_MEETING_ROOM_NOT_FOUND.getMessage(),
-                    "id", booking.getMeetingRoom().getId()), ErrorCode.ERR_MEETING_ROOM_NOT_FOUND));
+//        MeetingRoom meetingRoom = meetingRoomService.findMeetingRoomById(booking.getMeetingRoomId()); //TODO check if exist
+//        System.out.println(meetingRoom.getId());
+//        System.out.println(meetingRoom.getNumber());
+
+//        UUID userId = UserIdHolder.getUserId();
+//        DepartmentDTO department = departmentClient.getUser();
+
+
+
+        if (meetingRoomService.existsById(booking.getMeetingRoom().getId())) {
+            throw LogExceptionWrapper.logErrorException(new ExistsException(String.format(
+                    ErrorCode.ERR_MEETING_ROOM_NOT_FOUND.getMessage(), booking.getMeetingRoom().getId()), ErrorCode.ERR_MEETING_ROOM_NOT_FOUND));
         }
 
         TimeSlot timeSlot = booking
@@ -71,14 +82,8 @@ public class BookingServiceImpl implements BookingService {
                 .findFirst()
                 .get();
 
-        if (booking.getBookingDate().isBefore(LocalDate.now())) {
-            throw LogExceptionWrapper.logErrorException(new InvalidValueException(ErrorCode.ERR_BOOKING_DATE_CANNOT_BE_IN_PAST));
-        }
-
-        if (timeSlot.getReservationEnd().equals(timeSlot.getReservationStart())) {
-            throw LogExceptionWrapper.logErrorException(new InvalidValueException(ErrorCode.ERR_START_TIME_CANNOT_BE_EQUAL_END_TIME));
-        } else if ((timeSlot.getReservationStart().isAfter(timeSlot.getReservationEnd()))) {
-            throw LogExceptionWrapper.logErrorException(new InvalidValueException(ErrorCode.ERR_START_TIME_CANNOT_BE_AFTER_END_TIME));
+        if (timeSlot.getReservationEnd().isBefore(timeSlot.getReservationStart())) {
+            throw LogExceptionWrapper.logErrorException(new InvalidValueException(ErrorCode.ERR_TIME_CANNOT_BE_IN_PAST));
         }
 
         List<TimeSlot> timeSlotsForBooking = timeSlotService.findTimeSlotsForBooking(timeSlot.getReservationStart(),
