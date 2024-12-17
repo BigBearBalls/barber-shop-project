@@ -3,6 +3,7 @@ package eu.senla.authservice.service.impl;
 import eu.senla.authservice.client.DepartmentUserClient;
 import eu.senla.authservice.client.UserDataClient;
 import eu.senla.authservice.component.JwtUtils;
+import eu.senla.authservice.kafka.KafkaProducer;
 import eu.senla.authservice.mapper.UserMapper;
 import eu.senla.authservice.model.Permission;
 import eu.senla.authservice.model.User;

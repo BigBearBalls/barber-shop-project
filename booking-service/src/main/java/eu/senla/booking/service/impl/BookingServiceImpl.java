@@ -23,6 +23,8 @@ import java.time.LocalDate;
 import eu.senla.common.kafka.dto.KafkaMailDto;
 import eu.senla.common.kafka.dto.MailType;
 import java.time.LocalDate;
+
+import eu.senla.httpconfiguration.security.holder.UserIdHolder;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +36,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
-@Slf4j
 @Transactional
 public class BookingServiceImpl implements BookingService {
 
@@ -65,9 +66,14 @@ public class BookingServiceImpl implements BookingService {
 //        System.out.println(meetingRoom.getId());
 //        System.out.println(meetingRoom.getNumber());
 
-        if (meetingRoomService.existsById(booking.getMeetingRoomId())) {
+//        UUID userId = UserIdHolder.getUserId();
+//        DepartmentDTO department = departmentClient.getUser();
+
+
+
+        if (meetingRoomService.existsById(booking.getMeetingRoom().getId())) {
             throw LogExceptionWrapper.logErrorException(new ExistsException(String.format(
-                    ErrorCode.ERR_MEETING_ROOM_NOT_FOUND.getMessage(), booking.getMeetingRoomId()), ErrorCode.ERR_MEETING_ROOM_NOT_FOUND));
+                    ErrorCode.ERR_MEETING_ROOM_NOT_FOUND.getMessage(), booking.getMeetingRoom().getId()), ErrorCode.ERR_MEETING_ROOM_NOT_FOUND));
         }
 
         TimeSlot timeSlot = booking
