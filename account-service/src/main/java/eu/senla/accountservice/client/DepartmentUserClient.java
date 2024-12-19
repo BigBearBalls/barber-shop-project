@@ -2,7 +2,6 @@ package eu.senla.accountservice.client;
 
 import eu.senla.common.department.dto.response.DepartmentUserDTO;
 import eu.senla.common.department.dto.response.ShortDepartmentUserInfoDTO;
-import eu.senla.httpconfiguration.security.holder.UserIdHolder;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -2,14 +2,14 @@ http-configuration:
   security:
     filters:
       enable: true
-      get-user-id-header-filter:
+      get-user-header-filter:
         enable: true
       api-key-header-filter:
         enable: true
     feign:
       enable: true
       interceptor:
-        add-user-id-to-headers:
+        add-user-to-headers:
           enable: true
 spring:
   application:

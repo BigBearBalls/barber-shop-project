@@ -1,13 +1,9 @@
 package eu.senla.authservice.controller;
 
-import eu.senla.authservice.model.User;
 import eu.senla.authservice.service.UserService;
 import eu.senla.common.dto.UserCredentialsDTO;
-import eu.senla.httpconfiguration.security.holder.UserIdHolder;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
+import eu.senla.httpconfiguration.security.holder.UserHolder;
 import lombok.RequiredArgsConstructor;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -21,7 +17,7 @@ public class InternalUserController {
 
     @GetMapping
     public UserCredentialsDTO getUserCredentials() {
-        UUID userId = UserIdHolder.getUserId();
+        UUID userId = UserHolder.getUser().getId();
         return userService.getUserCredentialsById(userId);
     }
 
