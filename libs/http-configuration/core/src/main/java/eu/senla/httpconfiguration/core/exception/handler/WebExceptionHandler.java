@@ -22,6 +22,7 @@ import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
@@ -105,6 +106,15 @@ public class WebExceptionHandler {
                 ErrorCode.ERR_METHOD_ARGUMENTS_TYPE_MISMATCH.getMessage(), request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exceptionResponse);
     }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<?> handleNoResourceFoundExceptionException(NoResourceFoundException e,
+                                                                       HttpServletRequest request) {
+        ExceptionResponse exceptionResponse = buildExceptionResponse(ErrorCode.ERR_NO_RESOURCE,
+                ErrorCode.ERR_NO_RESOURCE.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exceptionResponse);
+    }
+
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleException(Exception e, HttpServletRequest request) {
