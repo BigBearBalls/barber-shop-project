@@ -15,7 +15,7 @@ public class KafkaConsumer {
 
     private final MailTypeHandlerRegistry handlerRegistry;
 
-    @KafkaListener(topics = "user-registration", groupId = "notification-group")
+    @KafkaListener(topics = "mail-sender-topic", groupId = "notification-group")
     public void listen(KafkaMailDto message) {
         log.info("Received message!!!!! " + message.toString());
         try{

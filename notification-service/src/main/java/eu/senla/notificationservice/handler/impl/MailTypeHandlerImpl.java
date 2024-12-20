@@ -5,12 +5,13 @@ import eu.senla.common.kafka.dto.MailType;
 import eu.senla.notificationservice.handler.MailTypeHandler;
 import eu.senla.notificationservice.service.EmailService;
 import jakarta.mail.MessagingException;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@Component
 @RequiredArgsConstructor
-public class ApproveBookingHandler implements MailTypeHandler {
+public abstract class MailTypeHandlerImpl implements MailTypeHandler {
 
     private final EmailService emailService;
 
@@ -30,6 +31,7 @@ public class ApproveBookingHandler implements MailTypeHandler {
                             "</html>",
                     message.getMailBody()
             );
+
             emailService.sendEmail(message.getRecipient(), message.getSubject(), htmlContent);
         } catch (MessagingException e) {
             throw new RuntimeException(e);
@@ -37,7 +39,5 @@ public class ApproveBookingHandler implements MailTypeHandler {
     }
 
     @Override
-    public MailType getMailType() {
-        return MailType.APPROVE_BOOKING_MAIL;
-    }
+    public abstract MailType getMailType();
 }

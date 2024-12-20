@@ -2,18 +2,15 @@ package eu.senla.notificationservice.handler.impl;
 
 import eu.senla.common.kafka.dto.KafkaMailDto;
 import eu.senla.common.kafka.dto.MailType;
-import eu.senla.notificationservice.handler.MailTypeHandler;
 import eu.senla.notificationservice.service.EmailService;
-import jakarta.mail.MessagingException;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BookingMailHandler extends MailTypeHandlerImpl {
+public class BookingRequestHandler extends MailTypeHandlerImpl{
 
     @Autowired
-    public BookingMailHandler(EmailService emailService) {
+    public BookingRequestHandler(EmailService emailService) {
         super(emailService);
     }
 
@@ -24,6 +21,6 @@ public class BookingMailHandler extends MailTypeHandlerImpl {
 
     @Override
     public MailType getMailType() {
-        return MailType.BOOKING_MAIL;
+        return MailType.BOOKING_APPROVE_REQUEST_MAIL;
     }
 }

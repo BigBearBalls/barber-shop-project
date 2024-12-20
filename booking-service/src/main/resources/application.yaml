@@ -7,6 +7,7 @@ spring:
 
   application:
     name: booking-service
+    domain: ${APPLICATION_DOMAIN:"http://localhost:7080"}
     security:
       jwt:
         access-key:
@@ -26,6 +27,8 @@ spring:
     password: ${DATABASE_PASSWORD:1234}
     driver-class-name: org.postgresql.Driver
     url: ${DATABASE_URL:jdbc:postgresql://localhost:5433/}${DATABASE_NAME:plahctoh-database}
+    hikari:
+      schema: "booking_service_schema"
   jpa:
     hibernate:
       ddl-auto: none
