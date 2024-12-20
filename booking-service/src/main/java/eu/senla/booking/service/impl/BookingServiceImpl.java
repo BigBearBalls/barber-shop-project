@@ -28,7 +28,6 @@ import java.time.LocalDate;
 import eu.senla.common.kafka.dto.KafkaMailDto;
 import eu.senla.common.kafka.dto.MailType;
 
-import eu.senla.httpconfiguration.security.holder.UserIdHolder;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

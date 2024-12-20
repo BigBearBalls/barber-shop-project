@@ -82,12 +82,14 @@ management:
 feign:
   clients:
     auth-service:
-      url: ${AUTH_SERVICE_URL}
+      url: "${AUTH_SERVICE_URL}"
+    department-service:
+      url: "${DEPARTMENT_SERVICE_URL}"
 
 http-configuration:
   security:
     filters:
-      get-user-id-header-filter:
+      get-user-header-filter:
         enable: false
       api-key-header-filter:
         enable: false

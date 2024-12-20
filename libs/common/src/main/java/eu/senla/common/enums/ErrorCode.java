@@ -47,6 +47,8 @@ public enum ErrorCode {
     ERR_PHONE_NUMBER_ALREADY_EXISTS("This phone number already exists!"),
     ERR_DEPARTMENT_NOT_FOUND("Department with %s '%s' was not found!"),
     ERR_DEPARTMENT_EXISTS("Department with %s '%s' already exists!"),
+    ERR_USER_UNAUTHORIZED("Authentication is required to access this resource."),
+    ERR_NO_RESOURCE("No resource found!"),
     ERR_ERR_CONSTRAINT_VIOLATION_EXCEPTION("Constraint violation!");
 
     private final String message;
