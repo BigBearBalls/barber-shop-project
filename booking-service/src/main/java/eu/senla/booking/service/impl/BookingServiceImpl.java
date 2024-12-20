@@ -28,6 +28,7 @@ import java.time.LocalDate;
 import eu.senla.common.kafka.dto.KafkaMailDto;
 import eu.senla.common.kafka.dto.MailType;
 
+import eu.senla.httpconfiguration.security.holder.UserHolder;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -114,7 +115,7 @@ public class BookingServiceImpl implements BookingService {
 
         if (department.getRole().equals(TEAM_LEADER)) {
             booking.setStatus("APPROVED");
-            String mail = authClient.getUserById(UserIdHolder.getUserId()).getEmail();
+            String mail = authClient.getUserById(UserHolder.getUser().getId()).getEmail();
             bookingKafkaProducer.sendUserRegistrationEvent("user-registration",
                     new KafkaMailDto(MailType.BOOKING_MAIL, mail, "PLAHCTOH-BOOKING", "You have successfully booked"));
         } else {
