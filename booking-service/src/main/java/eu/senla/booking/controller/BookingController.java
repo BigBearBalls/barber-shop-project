@@ -7,11 +7,14 @@ import eu.senla.common.booking.dto.response.TimeSlotResponseDTO;
 import eu.senla.booking.service.BookingService;
 import eu.senla.common.booking.dto.response.IdResponseDTO;
 import eu.senla.common.constant.ValidationConstants;
+import eu.senla.httpconfiguration.security.holder.UserIdHolder;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+
 import lombok.AllArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -48,10 +51,10 @@ public class BookingController {
                               @Valid
                               BookingRequestDTO bookingRequestDto) {
 
-        System.out.printf("Was the optional header present? %s!%n", (userId == null ? "No" : "Yes"));
+        System.out.printf("Was the optional header present?  %s!%n", (userId == null ? UserIdHolder.getUserId() : "Yes"));
 
         return bookingService.saveBooking(bookingMapper.toBooking(bookingRequestDto));
-     }
+    }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable
@@ -63,5 +66,17 @@ public class BookingController {
         System.out.printf("Was the optional header present? %s!%n", (userId == null ? "No" : "Yes"));
 
         bookingService.delete(id);
+    }
+
+    @GetMapping("/approve")
+    public void approveBooking(@RequestParam String bookingId) {
+        UUID uuid = UUID.fromString(bookingId);
+        bookingService.approveBooking(uuid);
+    }
+
+    @GetMapping("/decline")
+    public void declineBooking(@RequestParam String bookingId) {
+        UUID uuid = UUID.fromString(bookingId);
+        bookingService.declineBooking(uuid);
     }
 }

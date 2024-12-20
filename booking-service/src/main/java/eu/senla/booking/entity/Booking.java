@@ -13,6 +13,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
+@ToString
 @Table(name = "bookings", schema = "booking_service_schema")
 public class Booking {
 
@@ -32,4 +33,6 @@ public class Booking {
     List<TimeSlot> timeSlots = new ArrayList<>();
     @Column(name = "user_id")
     private UUID userId;
+    @Column(name = "status")
+    private String status;
 }

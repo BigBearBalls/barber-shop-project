@@ -10,7 +10,7 @@ spring:
     security:
       jwt:
         access-key:
-          expiration-time: 10
+          expiration-time: 100
         refresh-key:
           expiration-time: 120
   cloud:

@@ -10,14 +10,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class RegistrationMailHandler implements MailTypeHandler {
+public class ApproveBookingHandler implements MailTypeHandler {
 
     private final EmailService emailService;
 
     @Override
     public void handle(KafkaMailDto message) {
         try {
-
             String htmlContent = String.format(
                     "<html>" +
                             "  <body style='font-family: Arial, sans-serif; font-size: 16px; line-height: 1.5; text-align: center;'>" +
@@ -31,7 +30,6 @@ public class RegistrationMailHandler implements MailTypeHandler {
                             "</html>",
                     message.getMailBody()
             );
-
             emailService.sendEmail(message.getRecipient(), message.getSubject(), htmlContent);
         } catch (MessagingException e) {
             throw new RuntimeException(e);
@@ -40,6 +38,6 @@ public class RegistrationMailHandler implements MailTypeHandler {
 
     @Override
     public MailType getMailType() {
-        return MailType.REGISTRATION_MAIL;
+        return MailType.APPROVE_BOOKING_MAIL;
     }
 }

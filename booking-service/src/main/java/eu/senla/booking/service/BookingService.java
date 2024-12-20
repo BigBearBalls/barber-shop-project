@@ -18,4 +18,7 @@ public interface BookingService {
     BookingResponseDTO findBookingById(UUID bookingId);
 
     void delete(UUID id);
+
+    void declineBooking(UUID bookingId);
+    void approveBooking(UUID bookingId);
 }
