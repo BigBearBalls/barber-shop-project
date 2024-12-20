@@ -1,5 +1,6 @@
 package eu.senla.gatewayservice.model;
 
+import eu.senla.common.enums.DepartmentRole;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,6 +23,8 @@ public class User implements UserDetails {
     private String password;
 
     private Set<Permission> permissions;
+
+    private DepartmentRole role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

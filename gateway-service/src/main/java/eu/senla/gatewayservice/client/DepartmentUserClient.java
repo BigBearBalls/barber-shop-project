@@ -1,4 +1,4 @@
-package eu.senla.accountservice.client;
+package eu.senla.gatewayservice.client;
 
 import eu.senla.common.department.dto.response.DepartmentUserDTO;
 import eu.senla.common.department.dto.response.ShortDepartmentUserInfoDTO;

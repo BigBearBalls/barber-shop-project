@@ -22,16 +22,12 @@ import java.time.LocalDate;
 
 import eu.senla.common.kafka.dto.KafkaMailDto;
 import eu.senla.common.kafka.dto.MailType;
-import java.time.LocalDate;
 
-import eu.senla.httpconfiguration.security.holder.UserIdHolder;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
-import org.springframework.transaction.annotation.Transactional;
-
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
