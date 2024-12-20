@@ -7,7 +7,6 @@ import eu.senla.common.booking.dto.response.TimeSlotResponseDTO;
 import eu.senla.booking.service.BookingService;
 import eu.senla.common.booking.dto.response.IdResponseDTO;
 import eu.senla.common.constant.ValidationConstants;
-import eu.senla.httpconfiguration.security.holder.UserIdHolder;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
@@ -45,13 +44,7 @@ public class BookingController {
     }
 
     @PostMapping
-    public IdResponseDTO save(@RequestHeader(value = "userId", required = false)
-                              String userId,
-                              @RequestBody
-                              @Valid
-                              BookingRequestDTO bookingRequestDto) {
-
-        System.out.printf("Was the optional header present?  %s!%n", (userId == null ? UserIdHolder.getUserId() : "Yes"));
+    public IdResponseDTO save(@RequestBody @Valid BookingRequestDTO bookingRequestDto) {
 
         return bookingService.saveBooking(bookingMapper.toBooking(bookingRequestDto));
     }
@@ -59,12 +52,7 @@ public class BookingController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable
                        @NotNull(message = ValidationConstants.BOOKING_ID_CANNOT_BE_NULL_VALIDATION_MESSAGE)
-                       UUID id,
-                       @RequestHeader(value = "userId", required = false)
-                       String userId) {
-
-        System.out.printf("Was the optional header present? %s!%n", (userId == null ? "No" : "Yes"));
-
+                       UUID id) {
         bookingService.delete(id);
     }
 
