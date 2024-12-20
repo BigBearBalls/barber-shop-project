@@ -16,4 +16,5 @@ public class ShortDepartmentUserInfoDTO {
 
     private UUID id;
     private DepartmentRole role;
+
 }

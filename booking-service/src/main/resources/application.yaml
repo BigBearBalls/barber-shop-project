@@ -44,5 +44,9 @@ management:
 
 feign:
   clients:
+    auth-service:
+      url: ${AUTH_SERVICE_URL}
+    department-service:
+      url: ${DEPARTMENT_SERVICE_URL}
     user-service:
       url: ${USER_SERVICE_URL}

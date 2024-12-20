@@ -20,7 +20,7 @@ spring:
       jwt:
         access-key:
           value: ${ACCESS_KEY}
-          expiration-time: 10
+          expiration-time: 100
         refresh-key:
           value: ${REFRESH_KEY}
           expiration-time: 120
