@@ -1,7 +1,10 @@
 package eu.senla.booking.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.booking.data.mapper.BookingMapper;
 import eu.senla.common.booking.dto.request.BookingRequestDTO;
+import eu.senla.common.booking.dto.request.ChangeBookingStatusDTO;
 import eu.senla.common.booking.dto.response.BookingResponseDTO;
 import eu.senla.common.booking.dto.response.TimeSlotResponseDTO;
 import eu.senla.booking.service.BookingService;
@@ -10,7 +13,11 @@ import eu.senla.common.constant.ValidationConstants;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,6 +33,8 @@ public class BookingController {
 
     private final BookingService bookingService;
     private final BookingMapper bookingMapper;
+
+    private final ObjectMapper objectMapper;
 
     @GetMapping("/{id}")
     public BookingResponseDTO findBookingById(@PathVariable UUID id) {
@@ -44,8 +53,7 @@ public class BookingController {
     }
 
     @PostMapping
-    public IdResponseDTO save(@RequestBody @Valid BookingRequestDTO bookingRequestDto) {
-
+    public IdResponseDTO save(@RequestBody @Valid BookingRequestDTO bookingRequestDto) throws JsonProcessingException {
         return bookingService.saveBooking(bookingMapper.toBooking(bookingRequestDto));
     }
 
@@ -56,15 +64,10 @@ public class BookingController {
         bookingService.delete(id);
     }
 
-    @GetMapping("/approve")
-    public void approveBooking(@RequestParam String bookingId) {
-        UUID uuid = UUID.fromString(bookingId);
-        bookingService.approveBooking(uuid);
-    }
-
-    @GetMapping("/decline")
-    public void declineBooking(@RequestParam String bookingId) {
-        UUID uuid = UUID.fromString(bookingId);
-        bookingService.declineBooking(uuid);
+    @GetMapping("/approvement/{encodedDTO}")
+    public void approvementBooking(@PathVariable("encodedDTO") String encodedDTO) throws IOException {
+        byte[] decodedDTO = Base64.getDecoder().decode(encodedDTO);
+        ChangeBookingStatusDTO dto = objectMapper.readValue(decodedDTO, ChangeBookingStatusDTO.class);
+        bookingService.changeBookingStatus(dto);
     }
 }

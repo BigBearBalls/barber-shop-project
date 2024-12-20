@@ -1,5 +1,6 @@
 package eu.senla.booking.entity;
 
+import eu.senla.common.booking.enums.BookingStatus;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -34,5 +35,6 @@ public class Booking {
     @Column(name = "user_id")
     private UUID userId;
     @Column(name = "status")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private BookingStatus status;
 }

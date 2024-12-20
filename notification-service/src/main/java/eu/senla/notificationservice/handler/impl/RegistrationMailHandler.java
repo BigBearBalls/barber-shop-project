@@ -6,37 +6,22 @@ import eu.senla.notificationservice.handler.MailTypeHandler;
 import eu.senla.notificationservice.service.EmailService;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
-public class RegistrationMailHandler implements MailTypeHandler {
+public class RegistrationMailHandler extends MailTypeHandlerImpl {
 
-    private final EmailService emailService;
+    @Autowired
+    public RegistrationMailHandler(EmailService emailService) {
+        super(emailService);
+    }
 
     @Override
     public void handle(KafkaMailDto message) {
-        try {
-
-            String htmlContent = String.format(
-                    "<html>" +
-                            "  <body style='font-family: Arial, sans-serif; font-size: 16px; line-height: 1.5; text-align: center;'>" +
-                            "    <p>%s</p>" +
-                            "    <div style='margin-top: 20px;'>" +
-                            "      <span style='display: inline-block; padding: 20px 40px; color: #007BFF; font-size: 24px; font-weight: bold; border: 2px solid #007BFF; border-radius: 8px;'>" +
-                            "        PLAHCTOH" +
-                            "      </span>" +
-                            "    </div>" +
-                            "  </body>" +
-                            "</html>",
-                    message.getMailBody()
-            );
-
-            emailService.sendEmail(message.getRecipient(), message.getSubject(), htmlContent);
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
+        super.handle(message);
     }
+
 
     @Override
     public MailType getMailType() {

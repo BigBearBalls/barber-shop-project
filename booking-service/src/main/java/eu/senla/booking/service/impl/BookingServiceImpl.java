@@ -1,11 +1,16 @@
 package eu.senla.booking.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.booking.client.DepartmentClient;
 import eu.senla.booking.client.AuthClient;
 import eu.senla.booking.client.UserClient;
 import eu.senla.booking.data.mapper.BookingMapper;
 import eu.senla.booking.data.mapper.TimeSlotMapper;
 import eu.senla.booking.entity.Booking;
+import eu.senla.common.booking.constant.KafkaConstants;
+import eu.senla.common.booking.constant.MailConstants;
+import eu.senla.common.booking.dto.request.ChangeBookingStatusDTO;
 import eu.senla.common.booking.dto.response.BookingResponseDTO;
 import eu.senla.booking.entity.TimeSlot;
 import eu.senla.common.booking.dto.response.TimeSlotResponseDTO;
@@ -16,6 +21,7 @@ import eu.senla.booking.service.MeetingRoomService;
 import eu.senla.booking.service.TimeSlotService;
 import eu.senla.booking.service.kafka.BookingKafkaProducer;
 import eu.senla.common.booking.dto.response.IdResponseDTO;
+import eu.senla.common.booking.enums.BookingStatus;
 import eu.senla.common.department.dto.response.DepartmentUserDTO;
 import eu.senla.common.enums.ErrorCode;
 import eu.senla.common.exception.ExistsException;
@@ -29,11 +35,12 @@ import eu.senla.common.kafka.dto.KafkaMailDto;
 import eu.senla.common.kafka.dto.MailType;
 
 import eu.senla.httpconfiguration.security.holder.UserHolder;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalTime;
+import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 
@@ -43,7 +50,7 @@ import static eu.senla.common.enums.DepartmentRole.TEAM_LEADER;
 
 @Slf4j
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Transactional
 public class BookingServiceImpl implements BookingService {
 
@@ -59,6 +66,11 @@ public class BookingServiceImpl implements BookingService {
     private final AuthClient authClient;
     private final UserClient userClient;
 
+    private final ObjectMapper objectMapper;
+
+    @Value("${spring.application.domain}")
+    private String domain;
+
     @Override
     public BookingResponseDTO findBookingById(UUID id) {
 
@@ -71,7 +83,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public IdResponseDTO saveBooking(Booking booking) {
+    public IdResponseDTO saveBooking(Booking booking) throws JsonProcessingException {
 
         log.info(booking.toString() + "------------------------");
 
@@ -107,20 +119,24 @@ public class BookingServiceImpl implements BookingService {
         });
 
         booking.setTimeSlots(timeSlotsForBooking);
-        booking.setUserId(UUID.fromString("f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe94")); //TODO
+        booking.setUserId(UserHolder.getUser().getId());
 
 
         DepartmentUserDTO department = departmentClient.getUser();
         IdResponseDTO idResponseDTO = new IdResponseDTO(bookingRepository.save(booking).getId());
 
+        String mail = UserHolder.getUser().getEmail();
         if (department.getRole().equals(TEAM_LEADER)) {
-            booking.setStatus("APPROVED");
-            String mail = authClient.getUserById(UserHolder.getUser().getId()).getEmail();
-            bookingKafkaProducer.sendUserRegistrationEvent("user-registration",
-                    new KafkaMailDto(MailType.BOOKING_MAIL, mail, "PLAHCTOH-BOOKING", "You have successfully booked"));
+            booking.setStatus(BookingStatus.APPROVED);
+            bookingKafkaProducer.sendMailSendEvent(KafkaConstants.MAIL_SENDER_TOPIC_NAME,
+                    new KafkaMailDto(MailType.BOOKING_MAIL, mail, MailConstants.PLAHCTOH_BOOKING_MAIL_SUBJECT,
+                            MailConstants.BOOKED_SUCCESSFULLY_MAIL_MESSAGE));
         } else {
-            booking.setStatus("PENDING");
+            booking.setStatus(BookingStatus.PENDING);
             approveBookingRequest(department, booking);
+            bookingKafkaProducer.sendMailSendEvent(KafkaConstants.MAIL_SENDER_TOPIC_NAME,
+                    new KafkaMailDto(MailType.BOOKING_MAIL, mail, MailConstants.PLAHCTOH_BOOKING_MAIL_SUBJECT,
+                            MailConstants.BOOKING_REQUEST_CREATED_AWAIT_APROVE_MAIL_MESSAGE));
         }
 
         return idResponseDTO;
@@ -128,23 +144,23 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public void delete(UUID id) {
-        Booking booking = bookingRepository
-                .findById(id)
-                .orElseThrow(() -> new NotFoundException(String.format(ErrorCode.ERR_BOOKING_NOT_FOUND.getMessage(), id),
-                        ErrorCode.ERR_BOOKING_NOT_FOUND));
-
+        Booking booking = bookingRepository.findById(id).orElseThrow(() -> LogExceptionWrapper.logErrorException(
+                new NotFoundException(String.format(ErrorCode.ERR_BOOKING_NOT_FOUND.getMessage(), id),
+                        ErrorCode.ERR_BOOKING_NOT_FOUND)));
         bookingRepository.delete(booking);
     }
 
     @Override
-    public void declineBooking(UUID bookingId) {
-        bookingRepository.deleteById(bookingId);
-    }
-
-    @Override
-    public void approveBooking(UUID bookingId) {
-        Booking booking = bookingRepository.getBookingById(bookingId);
-        booking.setStatus("APPROVED");
+    public void changeBookingStatus(ChangeBookingStatusDTO dto) {
+        Booking booking = bookingRepository.findById(dto.getBookingId()).orElseThrow(() -> LogExceptionWrapper
+                .logErrorException(new NotFoundException(String.format(ErrorCode.ERR_BOOKING_NOT_FOUND.getMessage(),
+                        dto.getBookingId()), ErrorCode.ERR_BOOKING_NOT_FOUND)));
+        booking.setStatus(dto.getStatus());
+        String mail = authClient.getUserById(booking.getUserId()).getEmail();
+        bookingKafkaProducer.sendMailSendEvent(KafkaConstants.MAIL_SENDER_TOPIC_NAME,
+                new KafkaMailDto(MailType.BOOKING_MAIL, mail, MailConstants.PLAHCTOH_BOOKING_MAIL_SUBJECT,
+                        String.format(MailConstants.BOOKING_REQUEST_WAS_REJECTED_MAIL_MESSAGE_TEMPLATE,
+                                booking.getMeetingRoom().getNumber(), dto.getStatus().name())));
     }
 
     @Override
@@ -180,7 +196,7 @@ public class BookingServiceImpl implements BookingService {
         }
     }
 
-    private void approveBookingRequest(DepartmentUserDTO department, Booking booking) {
+    private void approveBookingRequest(DepartmentUserDTO department, Booking booking) throws JsonProcessingException {
 
         UUID teamLeadId = department.getTeamLeader().getId();
         String leadMail = authClient.getUserById(teamLeadId).getEmail();
@@ -189,33 +205,21 @@ public class BookingServiceImpl implements BookingService {
         String userLastName = userClient.getUser().getLastName();
         Integer meetRoomNumber = meetingRoomService.findMeetingRoomById(booking.getMeetingRoom().getId()).getNumber();
 
+        ChangeBookingStatusDTO approveDTO = new ChangeBookingStatusDTO(booking.getId(), BookingStatus.APPROVED);
+        ChangeBookingStatusDTO rejectDTO = new ChangeBookingStatusDTO(booking.getId(), BookingStatus.REJECTED);
+        String encodedApprovePart = Base64.getEncoder().encodeToString(objectMapper.writeValueAsString(approveDTO)
+                .getBytes());
+        String encodedRejectPart = Base64.getEncoder().encodeToString(objectMapper.writeValueAsString(rejectDTO)
+                .getBytes());
+        String url = domain + "/api/v1/bookings/approvement/";
 
-        StringBuilder mailMessageBuilder = new StringBuilder();
-        String approveUrl = "http://localhost:7080/api/v1/bookings/approve?bookingId=" + booking.getId();
-        String declineUrl = "http://localhost:7080/api/v1/bookings/decline?bookingId=" + booking.getId();
 
-        mailMessageBuilder.append(userFirstName)
-                .append(" ")
-                .append(userLastName)
-                .append(", wants to book a meeting room №")
-                .append(meetRoomNumber)
-                .append("<br><br>")
-                .append("date: ")
-                .append(booking.getBookingDate())
-                .append("<br><br>")
-//                .append("from: ")
-////                .append(booking.getTimeSlots().)
-//                .append("to: ")
-//                .append(meetRoomNumber)
-                .append(". Please choose one of the following options:\n\n")
-                .append("<br><br>")
-                .append("<a href='").append(approveUrl).append("' style='display: inline-block; padding: 12px 24px; color: white; background-color: #a8d5ba; text-decoration: none; border-radius: 5px; margin-right: 10px; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);'>Approve</a>")
-                .append("<a href='").append(declineUrl).append("' style='display: inline-block; padding: 12px 24px; color: white; background-color: #f7a8a8; text-decoration: none; border-radius: 5px; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);'>Decline</a>");
-        ;
+        String mailMessage = MailConstants.BOOKING_REQUEST_MAIL_MESSAGE_TEMPATE.formatted(userFirstName,
+                userLastName, meetRoomNumber, booking.getBookingDate(), url+encodedApprovePart, url+encodedRejectPart);
 
-        bookingKafkaProducer.sendUserRegistrationEvent("user-registration",
-                new KafkaMailDto(MailType.APPROVE_BOOKING_MAIL,
-                        leadMail, "Booking Approve", mailMessageBuilder.toString()));
+        bookingKafkaProducer.sendMailSendEvent(KafkaConstants.MAIL_SENDER_TOPIC_NAME, new KafkaMailDto(
+                MailType.BOOKING_APPROVE_REQUEST_MAIL, leadMail, MailConstants.BOOKING_APPROVE_REQUEST_MAIL_SUBJECT,
+                       mailMessage));
     }
 
 }
