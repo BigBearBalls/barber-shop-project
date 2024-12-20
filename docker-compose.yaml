@@ -195,6 +195,7 @@ services:
       retries: 3
       start_period: 10s
     env_file:
+      - env/application-values.env
       - env/security.env
       - env/datasource.env
       - env/feign-services-url.env
@@ -253,6 +254,23 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+      start_period: 10s
+    env_file:
+      - env/security.env
+      - env/datasource.env
+    depends_on:
+      plahctoh-database:
+        condition: service_healthy
+    networks:
+      - plahctoh
+
+  department-service:
+    build: ./department-service
+    healthcheck:
+      test: curl -f http://localhost:8080/actuator/health
+      interval: 10s
+      timeout: 10s
+      retries: 5
       start_period: 10s
     env_file:
       - env/security.env

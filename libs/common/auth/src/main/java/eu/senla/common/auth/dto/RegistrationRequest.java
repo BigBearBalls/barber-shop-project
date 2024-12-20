@@ -35,6 +35,11 @@ public class RegistrationRequest {
             message = ValidationConstants.PASSWORD_MUST_BE_BETWEEN_VALIDATION_MESSAGE)
     private String password;
 
+    @NotBlank(message = ValidationConstants.PASSWORD_CANNOT_BE_BLANK_VALIDATION_MESSAGE)
+    @Size(min = ValidationConstants.MIN_PASSWORD_LENGTH, max = ValidationConstants.MAX_PASSWORD_LENGTH,
+            message = ValidationConstants.PASSWORD_MUST_BE_BETWEEN_VALIDATION_MESSAGE)
+    private String confirmPassword;
+
     @NotBlank(message = ValidationConstants.PHONE_NUMBER_CANNOT_BE_BLANK_VALIDATION_MESSAGE)
     @Pattern(regexp = ValidationConstants.BY_PHONE_REGEXP_PATTERN,
             message = ValidationConstants.PHONE_NUMBER_IS_NOT_VALID_VALIDATION_MESSAGE)

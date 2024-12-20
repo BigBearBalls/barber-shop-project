@@ -10,7 +10,7 @@ spring:
     security:
       jwt:
         access-key:
-          expiration-time: 10
+          expiration-time: 100
         refresh-key:
           expiration-time: 120
   cloud:
@@ -45,7 +45,7 @@ spring:
           - id: user-service-route
             uri: http://user-service:8080
             predicates:
-              - Path=/api/v1/user/**
+              - Path=/api/v1/users/**
             filters:
               - AddRequestHeader=X-Request-Api-Key, ${API_KEY}
               - AddRequestHeader=X-Request-Source, EXTERNAL
@@ -53,7 +53,15 @@ spring:
           - id: account-service-route
             uri: http://account-service:8080
             predicates:
-              - Path=/api/v1/account/**
+              - Path=/api/v1/accounts/**
+            filters:
+              - AddRequestHeader=X-Request-Api-Key, ${API_KEY}
+              - AddRequestHeader=X-Request-Source, EXTERNAL
+
+          - id: department-service
+            uri: http://department-service:8080
+            predicates:
+              - Path=/api/v1/departments/**
             filters:
               - AddRequestHeader=X-Request-Api-Key, ${API_KEY}
               - AddRequestHeader=X-Request-Source, EXTERNAL
@@ -74,12 +82,14 @@ management:
 feign:
   clients:
     auth-service:
-      url: ${AUTH_SERVICE_URL}
+      url: "${AUTH_SERVICE_URL}"
+    department-service:
+      url: "${DEPARTMENT_SERVICE_URL}"
 
 http-configuration:
   security:
     filters:
-      get-user-id-header-filter:
+      get-user-header-filter:
         enable: false
       api-key-header-filter:
         enable: false

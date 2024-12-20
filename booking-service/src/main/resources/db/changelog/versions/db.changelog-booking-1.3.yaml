@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-status-to-bookings
+      author: Dany
+      changes:
+        - addColumn:
+            tableName: bookings
+            schemaName: booking_service_schema
+            columns:
+              - name: status
+                type: varchar(255)

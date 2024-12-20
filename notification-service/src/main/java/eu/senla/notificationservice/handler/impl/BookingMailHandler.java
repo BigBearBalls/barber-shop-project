@@ -4,18 +4,22 @@ import eu.senla.common.kafka.dto.KafkaMailDto;
 import eu.senla.common.kafka.dto.MailType;
 import eu.senla.notificationservice.handler.MailTypeHandler;
 import eu.senla.notificationservice.service.EmailService;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
-public class BookingMailHandler implements MailTypeHandler {
+public class BookingMailHandler extends MailTypeHandlerImpl {
 
-    private final EmailService emailService;
+    @Autowired
+    public BookingMailHandler(EmailService emailService) {
+        super(emailService);
+    }
 
     @Override
     public void handle(KafkaMailDto message) {
-        emailService.sendEmail(message.getRecipient(), message.getSubject(), message.getMailBody());
+        super.handle(message);
     }
 
     @Override

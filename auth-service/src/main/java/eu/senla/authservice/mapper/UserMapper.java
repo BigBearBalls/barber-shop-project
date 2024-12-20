@@ -2,6 +2,7 @@ package eu.senla.authservice.mapper;
 
 import eu.senla.authservice.model.User;
 import eu.senla.common.auth.dto.RegistrationRequest;
+import eu.senla.common.department.dto.request.CreateDepartmentUserRequest;
 import eu.senla.common.dto.UserDataDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -21,4 +22,7 @@ public interface UserMapper {
     @Mapping(target = "lastName", source = "lastName")
     @Mapping(target = "id", ignore = true)
     UserDataDTO toUserInfoDTO(RegistrationRequest request);
+
+    @Mapping(target = "id", ignore = true)
+    CreateDepartmentUserRequest toDepartmentUserDTO(RegistrationRequest request);
 }

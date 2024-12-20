@@ -1,5 +1,6 @@
 package eu.senla.authservice.service.impl;
 
+import eu.senla.authservice.client.DepartmentUserClient;
 import eu.senla.authservice.client.UserDataClient;
 import eu.senla.authservice.component.JwtUtils;
 import eu.senla.authservice.kafka.KafkaProducer;
@@ -13,8 +14,10 @@ import eu.senla.authservice.utility.CallbackExceptionWrapper;
 import eu.senla.common.auth.dto.LoginRequest;
 import eu.senla.common.auth.dto.LoginResponse;
 import eu.senla.common.auth.dto.RegistrationRequest;
+import eu.senla.common.department.dto.request.CreateDepartmentUserRequest;
 import eu.senla.common.dto.UserDataDTO;
 import eu.senla.common.enums.ErrorCode;
+import eu.senla.common.exception.ApiException;
 import eu.senla.common.exception.AuthenticationException;
 import eu.senla.common.exception.NotFoundException;
 import eu.senla.common.kafka.dto.KafkaMailDto;
@@ -25,6 +28,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +36,7 @@ public class AuthServiceImpl implements AuthService {
 
     private final UserService userService;
     private final UserDataClient userDataClient;
+    private final DepartmentUserClient departmentUserClient;
     private final JwtUtils jwtUtils;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
@@ -42,18 +47,28 @@ public class AuthServiceImpl implements AuthService {
     public void regUser(RegistrationRequest registrationRequest) {
         registrationRequest.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
         UserDataDTO userDataDTO = userMapper.toUserInfoDTO(registrationRequest);
+        CreateDepartmentUserRequest createDepartmentUserRequest = userMapper.toDepartmentUserDTO(registrationRequest);
         Set<Permission> permissions = permissionService.getDefaultUserPermissions();
         User user = userMapper.toEntity(registrationRequest);
         user.setPermissions(permissions);
 
         UUID userId = userService.saveUser(user);
-        kafkaProducer.sendUserRegistrationEvent("user-registration",
-                new KafkaMailDto(MailType.REGISTRATION_MAIL, user.getEmail(), "Welcome to PLAHCTOH",
-                        "Successful registration. Thank you."));
 
         userDataDTO.setId(userId);
-        CallbackExceptionWrapper.wrap(() -> userDataClient.createUser(userDataDTO),
-                () -> userService.deleteUserById(userId));
+        createDepartmentUserRequest.setId(userId);
+        AtomicBoolean success = new AtomicBoolean(true);
+        CallbackExceptionWrapper.wrap(() -> {
+                    userDataClient.createUser(userDataDTO);
+                    departmentUserClient.createUser(createDepartmentUserRequest);
+        }, () -> {
+            success.set(false);
+            userService.deleteUserById(userId);
+        });
+        if (success.get()) {
+            kafkaProducer.sendUserRegistrationEvent("user-registration",
+                    new KafkaMailDto(MailType.REGISTRATION_MAIL, user.getEmail(), "Welcome to PLAHCTOH",
+                            "Successful registration. Thank you."));
+        }
     }
 
     @Override

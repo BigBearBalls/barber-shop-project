@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class BookingKafkaProducer {
     private final KafkaTemplate<String, KafkaMailDto> kafkaTemplate;
 
-    public void sendUserRegistrationEvent(String topic, KafkaMailDto message) {
+    public void sendMailSendEvent(String topic, KafkaMailDto message) {
         kafkaTemplate.send(topic, message);
     }
 }

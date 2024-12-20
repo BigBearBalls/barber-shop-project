@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: department-service
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-auth-master.yaml
+    enabled: false
+    default-schema: department_service_schema
+  datasource:
+    username: ${DATABASE_USERNAME:postgres}
+    password: ${DATABASE_PASSWORD:1234}
+    driver-class-name: org.postgresql.Driver
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5433/}${DATABASE_NAME:plahctoh-database}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: postgresql
+    properties:
+      hibernate:
+        show_sql: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always

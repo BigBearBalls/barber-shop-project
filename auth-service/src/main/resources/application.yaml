@@ -20,7 +20,7 @@ spring:
       jwt:
         access-key:
           value: ${ACCESS_KEY}
-          expiration-time: 10
+          expiration-time: 100
         refresh-key:
           value: ${REFRESH_KEY}
           expiration-time: 120
@@ -48,7 +48,4 @@ management:
   endpoint:
     health:
       show-details: always
-feign:
-  clients:
-    user-service:
-      url: ${USER_SERVICE_URL}
+

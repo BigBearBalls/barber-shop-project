@@ -12,4 +12,6 @@ import java.util.UUID;
 public interface BookingRepository extends JpaRepository<Booking, UUID> {
 
     List<Booking> findAllByBookingDateAndMeetingRoomId(LocalDate bookingDate, UUID meetingRoomId);
+
+    Booking getBookingById(UUID id);
 }
