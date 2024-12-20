@@ -147,7 +147,7 @@ public class BookingServiceImpl implements BookingService {
         Booking booking = bookingRepository.findById(id).orElseThrow(() -> LogExceptionWrapper.logErrorException(
                 new NotFoundException(String.format(ErrorCode.ERR_BOOKING_NOT_FOUND.getMessage(), id),
                         ErrorCode.ERR_BOOKING_NOT_FOUND)));
-        bookingRepository.delete(booking);
+        booking.setStatus(BookingStatus.CANCELLED);
     }
 
     @Override
