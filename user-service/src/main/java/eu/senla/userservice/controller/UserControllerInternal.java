@@ -1,7 +1,7 @@
 package eu.senla.userservice.controller;
 
 import eu.senla.common.account.dto.FindUsersAccountsRequest;
-import eu.senla.common.dto.UserDataDTO;
+import eu.senla.common.user.dto.UserDataDTO;
 import eu.senla.common.user.dto.UsersDataResponse;
 import eu.senla.httpconfiguration.security.holder.UserIdHolder;
 import eu.senla.userservice.service.UserService;

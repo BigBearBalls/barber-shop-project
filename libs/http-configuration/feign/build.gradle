@@ -1,0 +1,8 @@
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
+    annotationProcessor 'org.projectlombok:lombok'
+    compileOnly "org.projectlombok:lombok"
+    implementation project(":libs.http-configuration.exception-controller")
+    implementation project(":libs.common:serialization")
+}

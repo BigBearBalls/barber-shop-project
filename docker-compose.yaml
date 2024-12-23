@@ -172,6 +172,8 @@ services:
       retries: 3
       start_period: 30s
     restart: always
+    env_file:
+      - env/security.env
     depends_on:
       kafka-topics-generator:
         condition: service_completed_successfully

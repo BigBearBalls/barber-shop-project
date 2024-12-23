@@ -3,7 +3,7 @@ package eu.senla.authservice.mapper;
 import eu.senla.authservice.model.User;
 import eu.senla.common.auth.dto.RegistrationRequest;
 import eu.senla.common.department.dto.request.CreateDepartmentUserRequest;
-import eu.senla.common.dto.UserDataDTO;
+import eu.senla.common.user.dto.UserDataDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;

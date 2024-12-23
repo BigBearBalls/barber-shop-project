@@ -4,11 +4,12 @@ import eu.senla.booking.entity.MeetingRoom;
 import eu.senla.booking.repository.MeetingRoomRepository;
 import eu.senla.booking.service.MeetingRoomService;
 import eu.senla.common.enums.ErrorCode;
-import eu.senla.common.exception.NotFoundException;
-import java.util.UUID;
+import eu.senla.httpconfiguration.exceptioncontroller.exception.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor

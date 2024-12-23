@@ -9,14 +9,20 @@ include "account-service"
 include "department-service"
 include ":libs.http-configuration.security"
 project(":libs.http-configuration.security").projectDir = file("libs/http-configuration/security")
-include ":libs.http-configuration.core"
-project(":libs.http-configuration.core").projectDir = file("libs/http-configuration/core")
+include ":libs.http-configuration.starter"
+project(":libs.http-configuration.starter").projectDir = file("libs/http-configuration/starter")
+include ":libs.http-configuration.feign"
+project(":libs.http-configuration.feign").projectDir = file("libs/http-configuration/feign")
+include ":libs.http-configuration.exception-controller"
+project(":libs.http-configuration.exception-controller").projectDir = file("libs/http-configuration/exception-controller")
 include ":libs.common"
 project(":libs.common").projectDir = file("libs/common")
 include ":libs.common:auth"
+include ":libs.common:serialization"
 include ":libs.common:account"
 include ":libs.common:booking"
 include ":libs.common:gateway"
 include ":libs.common:notification"
 include ":libs.common:user"
 include ":libs.common:department"
+include ":libs.common:property-source-scanner"

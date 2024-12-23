@@ -2,8 +2,8 @@ package eu.senla.gatewayservice.handler;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import eu.senla.common.dto.exception.ExceptionResponse;
 import eu.senla.common.enums.ErrorCode;
+import eu.senla.httpconfiguration.exceptioncontroller.dto.ExceptionResponse;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-import static eu.senla.httpconfiguration.core.util.ExceptionWrapper.buildExceptionResponse;
+import static eu.senla.httpconfiguration.exceptioncontroller.util.ExceptionWrapper.buildExceptionResponse;
 
 @Component
 @RequiredArgsConstructor

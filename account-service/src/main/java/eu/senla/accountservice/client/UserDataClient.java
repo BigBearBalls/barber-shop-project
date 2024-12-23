@@ -1,9 +1,7 @@
 package eu.senla.accountservice.client;
 
-import eu.senla.common.account.dto.FindUsersAccountsRequest;
-import eu.senla.common.dto.UserDataDTO;
+import eu.senla.common.user.dto.UserDataDTO;
 import eu.senla.common.user.dto.UsersDataResponse;
-import feign.QueryMap;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

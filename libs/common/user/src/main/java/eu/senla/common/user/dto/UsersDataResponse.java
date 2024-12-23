@@ -1,6 +1,5 @@
 package eu.senla.common.user.dto;
 
-import eu.senla.common.dto.UserDataDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

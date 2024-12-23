@@ -15,18 +15,19 @@ import eu.senla.common.auth.dto.LoginRequest;
 import eu.senla.common.auth.dto.LoginResponse;
 import eu.senla.common.auth.dto.RegistrationRequest;
 import eu.senla.common.department.dto.request.CreateDepartmentUserRequest;
-import eu.senla.common.dto.UserDataDTO;
 import eu.senla.common.enums.ErrorCode;
-import eu.senla.common.exception.AuthenticationException;
-import eu.senla.common.exception.NotFoundException;
 import eu.senla.common.kafka.dto.KafkaMailDto;
 import eu.senla.common.kafka.dto.MailType;
+import eu.senla.common.user.dto.UserDataDTO;
+import eu.senla.httpconfiguration.exceptioncontroller.exception.AuthenticationException;
+import eu.senla.httpconfiguration.exceptioncontroller.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
 @RequiredArgsConstructor
@@ -51,16 +52,22 @@ public class AuthServiceImpl implements AuthService {
         user.setPermissions(permissions);
 
         UUID userId = userService.saveUser(user);
-        kafkaProducer.sendUserRegistrationEvent("user-registration",
-                new KafkaMailDto(MailType.REGISTRATION_MAIL, user.getEmail(), "Welcome to PLAHCTOH",
-                        "Successful registration. Thank you."));
 
         userDataDTO.setId(userId);
         createDepartmentUserRequest.setId(userId);
+        AtomicBoolean success = new AtomicBoolean(true);
         CallbackExceptionWrapper.wrap(() -> {
                     userDataClient.createUser(userDataDTO);
                     departmentUserClient.createUser(createDepartmentUserRequest);
-                }, () -> userService.deleteUserById(userId));
+        }, () -> {
+            success.set(false);
+            userService.deleteUserById(userId);
+        });
+        if (success.get()) {
+            kafkaProducer.sendUserRegistrationEvent("user-registration",
+                    new KafkaMailDto(MailType.REGISTRATION_MAIL, user.getEmail(), "Welcome to PLAHCTOH",
+                            "Successful registration. Thank you."));
+        }
     }
 
     @Override

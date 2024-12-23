@@ -1,12 +1,12 @@
 package eu.senla.userservice.service.impl;
 
 import eu.senla.common.account.dto.FindUsersAccountsRequest;
-import eu.senla.common.dto.UserDataDTO;
 import eu.senla.common.enums.ErrorCode;
-import eu.senla.common.exception.ExistsException;
-import eu.senla.common.exception.LogExceptionWrapper;
-import eu.senla.common.exception.NotFoundException;
+import eu.senla.common.user.dto.UserDataDTO;
 import eu.senla.common.user.dto.UsersDataResponse;
+import eu.senla.httpconfiguration.exceptioncontroller.exception.ExistsException;
+import eu.senla.httpconfiguration.exceptioncontroller.exception.LogExceptionWrapper;
+import eu.senla.httpconfiguration.exceptioncontroller.exception.NotFoundException;
 import eu.senla.userservice.entity.User;
 import eu.senla.userservice.mapper.UserMapper;
 import eu.senla.userservice.repository.UserRepository;

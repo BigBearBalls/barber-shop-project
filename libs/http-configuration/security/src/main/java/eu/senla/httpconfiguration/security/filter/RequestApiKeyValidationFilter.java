@@ -2,7 +2,7 @@ package eu.senla.httpconfiguration.security.filter;
 
 import eu.senla.common.constant.SecurityConstants;
 import eu.senla.common.enums.ErrorCode;
-import eu.senla.common.exception.HeadersParseException;
+import eu.senla.httpconfiguration.exceptioncontroller.exception.HeadersParseException;
 import eu.senla.httpconfiguration.security.configuration.SecurityFiltersConfiguration;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

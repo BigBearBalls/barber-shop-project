@@ -3,6 +3,9 @@ dependencies {
     annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
     implementation project(":libs.common:booking")
     implementation project(":libs.common:notification")
+    implementation project(":libs.common:department")
+    implementation project(":libs.common:user")
+    implementation project(":libs.common:auth")
 }
 
 

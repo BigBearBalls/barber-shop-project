@@ -80,8 +80,8 @@ subprojects { subproject ->
 
     if (subproject in webProjects) {
         dependencies {
-            implementation project(':libs.http-configuration.security')
-            implementation project(':libs.http-configuration.core')
+            implementation project(":libs.http-configuration.starter")
+            implementation project(':libs.common:serialization')
             implementation "org.springframework.boot:spring-boot-starter-web"
             implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
             implementation "org.springframework.boot:spring-boot-starter-validation"

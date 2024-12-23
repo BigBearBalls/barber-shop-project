@@ -1,0 +1,7 @@
+dependencies {
+    implementation project(":libs.common:property-source-scanner")
+    implementation project(":libs.common:serialization")
+    api project(":libs.http-configuration.feign")
+    api project(":libs.http-configuration.security")
+    api project(":libs.http-configuration.exception-controller")
+}

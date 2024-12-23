@@ -2,7 +2,7 @@ package eu.senla.authservice.controller;
 
 import eu.senla.authservice.model.User;
 import eu.senla.authservice.service.UserService;
-import eu.senla.common.dto.UserCredentialsDTO;
+import eu.senla.common.auth.dto.UserCredentialsDTO;
 import eu.senla.httpconfiguration.security.holder.UserIdHolder;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;

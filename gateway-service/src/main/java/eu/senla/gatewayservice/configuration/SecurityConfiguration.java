@@ -2,12 +2,12 @@ package eu.senla.gatewayservice.configuration;
 
 import eu.senla.common.enums.ErrorCode;
 import eu.senla.common.enums.PermissionValue;
-import eu.senla.common.exception.AuthenticationException;
 import eu.senla.gatewayservice.filters.JwtAuthFilter;
 import eu.senla.gatewayservice.filters.SecurityContextUserIdHandlerFilter;
 import eu.senla.gatewayservice.handler.CustomAccessDeniedHandler;
 import eu.senla.gatewayservice.model.Permission;
 import eu.senla.gatewayservice.model.User;
+import eu.senla.httpconfiguration.exceptioncontroller.exception.AuthenticationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

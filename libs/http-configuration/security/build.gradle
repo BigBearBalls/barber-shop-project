@@ -4,5 +4,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     compileOnly "org.projectlombok:lombok"
     implementation 'com.google.guava:guava:33.3.1-jre'
-    implementation project(":libs.http-configuration.core")
+    implementation project(":libs.common:property-source-scanner")
+    implementation project(":libs.common:serialization")
+    implementation project(":libs.http-configuration.exception-controller")
 }

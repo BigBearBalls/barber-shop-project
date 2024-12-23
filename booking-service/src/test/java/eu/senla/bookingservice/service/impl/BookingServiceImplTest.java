@@ -1,31 +1,12 @@
 package eu.senla.bookingservice.service.impl;
 
-import eu.senla.booking.data.mapper.BookingMapper;
-import eu.senla.booking.entity.Booking;
-import eu.senla.booking.repository.BookingRepository;
-import eu.senla.booking.service.impl.BookingServiceImpl;
 //import eu.senla.common.booking.dto.request.AggregatedBooking;
 //import eu.senla.common.booking.dto.request.BookingRequestDTO;
-import eu.senla.common.booking.dto.response.IdResponseDTO;
-import eu.senla.common.booking.dto.response.ResponseWorkingDayDTO;
-import eu.senla.common.dto.ProcedureDTO;
-import eu.senla.common.exception.NotFoundException;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+        import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+        import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class BookingServiceImplTest {

@@ -1,0 +1,6 @@
+dependencies {
+    annotationProcessor "org.projectlombok:lombok"
+    implementation project(":libs.common")
+    implementation project(":libs.common:serialization")
+    implementation project(":libs.common:property-source-scanner")
+}
