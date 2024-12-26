@@ -20,6 +20,8 @@ public interface BookingService {
 
     List<TimeSlotResponseDTO> findAvailableTimeSlotsDto(UUID meetingRoomId, LocalDate date);
 
+    Set<TimeSlotResponseDTO> findBookedTimeSlotsDto(UUID meetingRoomId, LocalDate date);
+
     BookingResponseDTO findBookingById(UUID bookingId);
 
     void delete(UUID id);

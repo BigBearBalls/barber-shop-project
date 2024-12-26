@@ -36,6 +36,7 @@ import eu.senla.common.kafka.dto.KafkaMailDto;
 import eu.senla.common.kafka.dto.MailType;
 
 import eu.senla.httpconfiguration.security.holder.UserHolder;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -188,6 +189,22 @@ public class BookingServiceImpl implements BookingService {
                 .toList();
     }
 
+    @Override
+    public Set<TimeSlotResponseDTO> findBookedTimeSlotsDto(UUID meetingRoomId, LocalDate bookingDate) {
+
+        if (!meetingRoomService.existsById(meetingRoomId)) {
+            throw LogExceptionWrapper.logErrorException(new NotFoundException(String.format(ErrorCode.ERR_MEETING_ROOM_NOT_FOUND.getMessage(),
+                    "id", meetingRoomId), ErrorCode.ERR_MEETING_ROOM_NOT_FOUND));
+        }
+
+        List<TimeSlot> bookedTimeSlots = findBookedTimeSlots(meetingRoomId, bookingDate);
+
+        return bookedTimeSlots
+                .stream()
+                .map(timeSlotMapper::toTimeSlotResponseDto)
+                .collect(Collectors.toSet());
+    }
+
     private List<TimeSlot> findAvailableTimeSlots(UUID meetingRoomId, LocalDate bookingDate) {
 
         List<Booking> bookings = bookingRepository.findAllByBookingDateAndMeetingRoomId(bookingDate,
@@ -202,6 +219,22 @@ public class BookingServiceImpl implements BookingService {
             return timeSlotRepository.findAll();
         } else {
             return timeSlotRepository.findAllByIdNotIn(bookedTimeSlotIds);
+        }
+    }
+
+    private List<TimeSlot> findBookedTimeSlots(UUID meetingRoomId, LocalDate bookingDate) {
+
+        List<Booking> bookings = bookingRepository.findAllByBookingDateAndMeetingRoomId(bookingDate,
+                meetingRoomId);
+
+        if (bookings.isEmpty()) {
+            return Collections.EMPTY_LIST;
+        } else {
+            return bookings
+                    .stream()
+                    .map(Booking::getTimeSlots)
+                    .flatMap(List::stream)
+                    .toList();
         }
     }
 

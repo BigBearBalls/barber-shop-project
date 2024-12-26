@@ -82,10 +82,9 @@ public class BookingController {
         return meetingRooms;
     }
 
-    @GetMapping("/123")
-    public Set<TimeSlot> getAllBookedSlotsByDateAndMeetingRoom(@RequestBody AllTimeSlotsRequestDto allTimeSlotsRequestDto) {
-                bookingService.findAllBookingsByDateAndMeetingRoom(allTimeSlotsRequestDto.getDate(), allTimeSlotsRequestDto.getId());
-        return null;
+    @GetMapping("/booked-time-slots")
+    public Set<TimeSlotResponseDTO> findBookedTimeSlots(@RequestBody AllTimeSlotsRequestDto allTimeSlotsRequestDto) {
+        return bookingService.findBookedTimeSlotsDto(allTimeSlotsRequestDto.getId(), allTimeSlotsRequestDto.getDate());
     }
 
 }
