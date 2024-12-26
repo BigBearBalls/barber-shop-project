@@ -5,7 +5,10 @@ import eu.senla.booking.repository.MeetingRoomRepository;
 import eu.senla.booking.service.MeetingRoomService;
 import eu.senla.common.enums.ErrorCode;
 import eu.senla.common.exception.NotFoundException;
+
+import java.util.List;
 import java.util.UUID;
+
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,11 +26,17 @@ public class MeetingRoomServiceImpl implements MeetingRoomService {
         return meetingRoomRepository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException(String.format(ErrorCode.ERR_MEETING_ROOM_NOT_FOUND.getMessage(), "id", id),
-                                                         ErrorCode.ERR_MEETING_ROOM_NOT_FOUND));
+                        ErrorCode.ERR_MEETING_ROOM_NOT_FOUND));
     }
 
     @Override
     public boolean existsById(UUID id) {
         return meetingRoomRepository.existsById(id);
+    }
+
+
+    @Override
+    public List<MeetingRoom> getAllMeetingRooms() {
+        return meetingRoomRepository.findAll();
     }
 }

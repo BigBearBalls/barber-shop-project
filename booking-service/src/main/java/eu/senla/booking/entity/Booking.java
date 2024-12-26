@@ -14,8 +14,8 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@ToString
 @Table(name = "bookings", schema = "booking_service_schema")
+@ToString
 public class Booking {
 
     @Id

@@ -11,10 +11,8 @@ import jakarta.persistence.Table;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,6 +20,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "time_slots", schema = "booking_service_schema")
+@EqualsAndHashCode
 public class TimeSlot {
 
     @JsonIgnore

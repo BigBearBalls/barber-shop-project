@@ -3,6 +3,10 @@ package eu.senla.booking.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.booking.data.mapper.BookingMapper;
+import eu.senla.booking.entity.MeetingRoom;
+import eu.senla.booking.entity.TimeSlot;
+import eu.senla.booking.service.MeetingRoomService;
+import eu.senla.common.booking.dto.request.AllTimeSlotsRequestDto;
 import eu.senla.common.booking.dto.request.BookingRequestDTO;
 import eu.senla.common.booking.dto.request.ChangeBookingStatusDTO;
 import eu.senla.common.booking.dto.response.BookingResponseDTO;
@@ -16,15 +20,14 @@ import jakarta.validation.constraints.NotNull;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/bookings")
 @AllArgsConstructor
@@ -33,6 +36,7 @@ public class BookingController {
 
     private final BookingService bookingService;
     private final BookingMapper bookingMapper;
+    private final MeetingRoomService meetingRoomService;
 
     private final ObjectMapper objectMapper;
 
@@ -70,4 +74,18 @@ public class BookingController {
         ChangeBookingStatusDTO dto = objectMapper.readValue(decodedDTO, ChangeBookingStatusDTO.class);
         bookingService.changeBookingStatus(dto);
     }
+
+    @GetMapping("/meeting-rooms")
+    public List<MeetingRoom> getAllMeetingRooms() {
+        List<MeetingRoom> meetingRooms = meetingRoomService.getAllMeetingRooms();
+        log.info(meetingRooms.toString() + "@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        return meetingRooms;
+    }
+
+    @GetMapping("/123")
+    public Set<TimeSlot> getAllBookedSlotsByDateAndMeetingRoom(@RequestBody AllTimeSlotsRequestDto allTimeSlotsRequestDto) {
+                bookingService.findAllBookingsByDateAndMeetingRoom(allTimeSlotsRequestDto.getDate(), allTimeSlotsRequestDto.getId());
+        return null;
+    }
+
 }

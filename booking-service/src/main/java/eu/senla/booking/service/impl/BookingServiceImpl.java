@@ -8,6 +8,7 @@ import eu.senla.booking.client.UserClient;
 import eu.senla.booking.data.mapper.BookingMapper;
 import eu.senla.booking.data.mapper.TimeSlotMapper;
 import eu.senla.booking.entity.Booking;
+import eu.senla.booking.entity.MeetingRoom;
 import eu.senla.common.booking.constant.KafkaConstants;
 import eu.senla.common.booking.constant.MailConstants;
 import eu.senla.common.booking.dto.request.ChangeBookingStatusDTO;
@@ -40,9 +41,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.Base64;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -91,7 +90,7 @@ public class BookingServiceImpl implements BookingService {
 //        MeetingRoom meetingRoom = meetingRoomService.findMeetingRoomById(booking.getMeetingRoomId()); //TODO check if exist
 //        System.out.println(meetingRoom.getId());
 //        System.out.println(meetingRoom.getNumber());
-
+//
 //        if (meetingRoomService.existsById(booking.getMeetingRoom().getId())) {
 //            throw LogExceptionWrapper.logErrorException(new ExistsException(String.format(
 //                    ErrorCode.ERR_MEETING_ROOM_NOT_FOUND.getMessage(), booking.getMeetingRoom().getId()), ErrorCode.ERR_MEETING_ROOM_NOT_FOUND));
@@ -164,6 +163,16 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
+    public Set<TimeSlot> findAllBookingsByDateAndMeetingRoom(LocalDate date, UUID meetingRoomId) {
+
+        List<Booking> bookings = bookingRepository.findAllByBookingDateAndMeetingRoomId(date, meetingRoomId);
+        log.info(bookings.toString() + "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+        Set<TimeSlot> timeSlots = new HashSet<>();
+        timeSlots.add(new TimeSlot());
+        return null;
+    }
+
+    @Override
     public List<TimeSlotResponseDTO> findAvailableTimeSlotsDto(UUID meetingRoomId, LocalDate bookingDate) {
 
         if (!meetingRoomService.existsById(meetingRoomId)) {
@@ -215,11 +224,11 @@ public class BookingServiceImpl implements BookingService {
 
 
         String mailMessage = MailConstants.BOOKING_REQUEST_MAIL_MESSAGE_TEMPATE.formatted(userFirstName,
-                userLastName, meetRoomNumber, booking.getBookingDate(), url+encodedApprovePart, url+encodedRejectPart);
+                userLastName, meetRoomNumber, booking.getBookingDate(), url + encodedApprovePart, url + encodedRejectPart);
 
         bookingKafkaProducer.sendMailSendEvent(KafkaConstants.MAIL_SENDER_TOPIC_NAME, new KafkaMailDto(
                 MailType.BOOKING_APPROVE_REQUEST_MAIL, leadMail, MailConstants.BOOKING_APPROVE_REQUEST_MAIL_SUBJECT,
-                       mailMessage));
+                mailMessage));
     }
 
 }
