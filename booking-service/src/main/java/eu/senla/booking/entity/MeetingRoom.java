@@ -19,7 +19,7 @@ import lombok.*;
 @Setter
 @Getter
 @Entity
-@ToString
+@ToString(exclude = "bookings")
 @Table(name = "meeting_rooms", schema = "booking_service_schema")
 public class MeetingRoom {
 
@@ -30,6 +30,6 @@ public class MeetingRoom {
     @Column(name = "number")
     private Integer number;
     @JsonIgnore
-    @OneToMany
+    @OneToMany(mappedBy = "meetingRoom")
     private Set<Booking> bookings = new HashSet<>();
 }

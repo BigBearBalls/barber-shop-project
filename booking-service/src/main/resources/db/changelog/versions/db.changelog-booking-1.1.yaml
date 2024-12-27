@@ -4,20 +4,98 @@ databaseChangeLog:
       author: Yevgany Tyurin
       changes:
         - sql:
-            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe95', '11:00', '11:30');
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe01', '08:00', '08:15');
         - sql:
-            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe94', '11:30', '12:00');
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe02', '08:15', '08:30');
         - sql:
-            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe93', '12:00', '12:30');
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe03', '08:30', '08:45');
         - sql:
-            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe92', '12:30', '13:00');
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe04', '08:45', '09:00');
         - sql:
-            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe91', '13:00', '13:30');
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe05', '09:00', '09:15');
         - sql:
-            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe90', '13:30', '14:00');
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe06', '09:15', '09:30');
         - sql:
-            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe89', '14:00', '14:30');
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe07', '09:30', '09:45');
         - sql:
-            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe88', '14:30', '15:00');
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe08', '09:45', '10:00');
         - sql:
-            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe87', '15:00', '15:30');
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe09', '10:00', '10:15');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe10', '10:15', '10:30');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe11', '10:30', '10:45');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe12', '10:45', '11:00');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe13', '11:00', '11:15');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe14', '11:15', '11:30');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe15', '11:30', '11:45');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe16', '11:45', '12:00');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe21', '12:00', '12:15');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe22', '12:15', '12:30');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe23', '12:30', '12:45');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe24', '12:45', '13:00');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe25', '13:00', '13:15');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe26', '13:15', '13:30');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe27', '13:30', '13:45');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe28', '13:45', '14:00');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe29', '14:00', '14:15');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe30', '14:15', '14:30');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe31', '14:30', '14:45');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe32', '14:45', '15:00');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe33', '15:00', '15:15');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe34', '15:15', '15:30');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe35', '15:30', '15:45');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe36', '15:45', '16:00');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe37', '16:00', '16:15');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe38', '16:15', '16:30');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe39', '16:30', '16:45');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe40', '16:45', '17:00');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe41', '17:00', '17:15');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe42', '17:15', '17:30');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe43', '17:30', '17:45');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe44', '17:45', '18:00');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe45', '18:00', '18:15');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe46', '18:15', '18:30');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe47', '18:30', '18:45');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe48', '18:45', '19:00');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe49', '19:00', '19:15');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe52', '19:15', '19:30');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe53', '19:30', '19:45');
+        - sql:
+            INSERT INTO time_slots (time_slot_id, reservation_start, reservation_end) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe54', '19:45', '20:00');
