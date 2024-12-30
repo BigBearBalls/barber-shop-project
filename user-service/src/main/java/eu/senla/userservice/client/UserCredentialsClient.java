@@ -1,4 +1,4 @@
-package eu.senla.accountservice.client;
+package eu.senla.userservice.client;
 
 import eu.senla.common.dto.UserCredentialsDTO;
 import org.springframework.cloud.openfeign.FeignClient;
