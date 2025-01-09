@@ -1,5 +1,5 @@
-#eu.senla.libs.common.propertysourcescanner.configuration.PropertiesConfiguration
-#eu.senla.httpconfiguration.exceptioncontroller.configuration.FiltersConfiguration
-#eu.senla.httpconfiguration.exceptioncontroller.configuration.ExceptionHandlersConfiguration
-#eu.senla.httpconfiguration.security.configuration.SecurityFeignConfiguration
-#eu.senla.httpconfiguration.security.configuration.SecurityFiltersConfiguration
+eu.senla.libs.common.propertysourcescanner.configuration.PropertiesConfiguration
+eu.senla.httpconfiguration.exceptioncontroller.configuration.FiltersConfiguration
+eu.senla.httpconfiguration.exceptioncontroller.configuration.ExceptionHandlersConfiguration
+eu.senla.httpconfiguration.security.configuration.SecurityFeignConfiguration
+eu.senla.httpconfiguration.security.configuration.SecurityFiltersConfiguration

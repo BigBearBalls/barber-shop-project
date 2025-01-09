@@ -1,9 +1,8 @@
 package eu.senla.httpconfiguration.security.holder;
 
-import eu.senla.common.enums.ErrorCode;
-import eu.senla.common.exception.ApiException;
-import eu.senla.common.exception.AuthenticationException;
-import eu.senla.common.exception.LogExceptionWrapper;
+import eu.senla.httpconfiguration.exceptioncontroller.enums.ErrorCode;
+import eu.senla.httpconfiguration.exceptioncontroller.exception.AuthenticationException;
+import eu.senla.httpconfiguration.exceptioncontroller.exception.LogExceptionWrapper;
 import eu.senla.httpconfiguration.security.dto.UserDTO;
 
 import java.util.Optional;

@@ -20,7 +20,7 @@ import java.util.List;
 @ConditionalOnProperty(prefix = SecurityFiltersConfiguration.PREFIX, name = "get-user-header-filter.enable",
         havingValue = "true")
 @RequiredArgsConstructor
-public class UserIdHeaderConsumerFilter extends OncePerRequestFilter {
+public class UserDTOHeaderConsumerFilter extends OncePerRequestFilter {
 
     private final ObjectMapper objectMapper;
 

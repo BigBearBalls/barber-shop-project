@@ -2,7 +2,7 @@ package eu.senla.httpconfiguration.security.configuration;
 
 import eu.senla.httpconfiguration.exceptioncontroller.configuration.FiltersConfiguration;
 import eu.senla.httpconfiguration.security.filter.RequestApiKeyValidationFilter;
-import eu.senla.httpconfiguration.security.filter.UserIdHeaderConsumerFilter;
+import eu.senla.httpconfiguration.security.filter.UserDTOHeaderConsumerFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -22,8 +22,8 @@ public class SecurityFiltersConfiguration extends FiltersConfiguration {
     @Bean
     @ConditionalOnProperty(prefix = SecurityFiltersConfiguration.PREFIX, name = "get-user-id-header-filter.enable",
             havingValue = "true")
-    public FilterRegistrationBean<UserIdHeaderConsumerFilter> userIdHeaderFilterRegistrationBean(
-            @Autowired UserIdHeaderConsumerFilter filter) {
+    public FilterRegistrationBean<UserDTOHeaderConsumerFilter> userIdHeaderFilterRegistrationBean(
+            @Autowired UserDTOHeaderConsumerFilter filter) {
         return filterRegistrationBean(filter, List.of("/*"), Ordered.HIGHEST_PRECEDENCE + 2);
     }
 
