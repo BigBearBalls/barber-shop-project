@@ -1,7 +1,10 @@
 package eu.senla.booking.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.booking.data.mapper.BookingMapper;
 import eu.senla.common.booking.dto.request.BookingRequestDTO;
+import eu.senla.common.booking.dto.request.ChangeBookingStatusDTO;
 import eu.senla.common.booking.dto.response.BookingResponseDTO;
 import eu.senla.common.booking.dto.response.TimeSlotResponseDTO;
 import eu.senla.booking.service.BookingService;
@@ -9,9 +12,15 @@ import eu.senla.common.booking.dto.response.IdResponseDTO;
 import eu.senla.common.constant.ValidationConstants;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
+
 import lombok.AllArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +33,8 @@ public class BookingController {
 
     private final BookingService bookingService;
     private final BookingMapper bookingMapper;
+
+    private final ObjectMapper objectMapper;
 
     @GetMapping("/{id}")
     public BookingResponseDTO findBookingById(@PathVariable UUID id) {
@@ -42,26 +53,21 @@ public class BookingController {
     }
 
     @PostMapping
-    public IdResponseDTO save(@RequestHeader(value = "userId", required = false)
-                              String userId,
-                              @RequestBody
-                              @Valid
-                              BookingRequestDTO bookingRequestDto) {
-
-        System.out.printf("Was the optional header present? %s!%n", (userId == null ? "No" : "Yes"));
-
+    public IdResponseDTO save(@RequestBody @Valid BookingRequestDTO bookingRequestDto) throws JsonProcessingException {
         return bookingService.saveBooking(bookingMapper.toBooking(bookingRequestDto));
-     }
+    }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable
                        @NotNull(message = ValidationConstants.BOOKING_ID_CANNOT_BE_NULL_VALIDATION_MESSAGE)
-                       UUID id,
-                       @RequestHeader(value = "userId", required = false)
-                       String userId) {
-
-        System.out.printf("Was the optional header present? %s!%n", (userId == null ? "No" : "Yes"));
-
+                       UUID id) {
         bookingService.delete(id);
+    }
+
+    @GetMapping("/approvement/{encodedDTO}")
+    public void approvementBooking(@PathVariable("encodedDTO") String encodedDTO) throws IOException {
+        byte[] decodedDTO = Base64.getDecoder().decode(encodedDTO);
+        ChangeBookingStatusDTO dto = objectMapper.readValue(decodedDTO, ChangeBookingStatusDTO.class);
+        bookingService.changeBookingStatus(dto);
     }
 }

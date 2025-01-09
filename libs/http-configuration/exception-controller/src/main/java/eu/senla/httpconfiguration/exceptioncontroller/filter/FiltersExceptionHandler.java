@@ -20,9 +20,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+
+import static eu.senla.httpconfiguration.core.util.ExceptionWrapper.buildExceptionResponse;
 
 import static eu.senla.httpconfiguration.core.util.ExceptionWrapper.buildExceptionResponse;
 
@@ -50,6 +53,11 @@ public class FiltersExceptionHandler extends OncePerRequestFilter {
         }*/ catch (AuthenticationException e) {
             HttpStatus httpStatus = HttpStatus.UNAUTHORIZED;
             ExceptionResponse exceptionResponse = buildExceptionResponse(e, request.getRequestURI());
+            makeHttpServletResponseWithExceptionResponse(response, httpStatus.value(), exceptionResponse);
+        } catch (NoResourceFoundException e) {
+            HttpStatus httpStatus = HttpStatus.NOT_FOUND;
+            ExceptionResponse exceptionResponse = buildExceptionResponse(ErrorCode.ERR_NO_RESOURCE,
+                    ErrorCode.ERR_NO_RESOURCE.getMessage(), request.getRequestURI());
             makeHttpServletResponseWithExceptionResponse(response, httpStatus.value(), exceptionResponse);
         } catch (NoResourceFoundException e) {
             HttpStatus httpStatus = HttpStatus.NOT_FOUND;

@@ -1,12 +1,14 @@
 package eu.senla.gatewayservice.filters;
 
 import eu.senla.common.constant.SecurityConstants;
-import eu.senla.httpconfiguration.exceptioncontroller.enums.ErrorCode;
+import eu.senla.common.department.dto.response.DepartmentUserDTO;
+import eu.senla.common.enums.ErrorCode;
+import eu.senla.common.exception.JwtValidateException;
 import eu.senla.gatewayservice.client.AuthClient;
+import eu.senla.gatewayservice.client.DepartmentUserClient;
 import eu.senla.gatewayservice.component.TrustedTokenManager;
 import eu.senla.gatewayservice.dto.UserCredentialsByAccessToken;
 import eu.senla.gatewayservice.model.User;
-import eu.senla.httpconfiguration.exceptioncontroller.exception.JwtValidateException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,6 +34,7 @@ import java.util.List;
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final AuthClient authClient;
+    private final DepartmentUserClient departmentUserClient;
 
     private final TrustedTokenManager tokenManager;
 
@@ -65,7 +68,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             SecurityContextHolder.setContext(context);
         } else {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            if (!authentication.getPrincipal().equals(email)) {
+            if (! ((User) authentication.getPrincipal()).getEmail().equals(email)) {
                 throw new JwtValidateException(String.format(SecurityConstants.TOKEN_WAS_STOLEN_LOG_MESSAGE, email,
                         authentication.getPrincipal()), ErrorCode.ERR_JWT_VALIDATION_EXCEPTION);
             }
@@ -86,10 +89,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     private User getUserFromToken(String token) {
         UserCredentialsByAccessToken userCredentialsByAccessToken = authClient.getUserCredentialsByAccessToken(token);
+        DepartmentUserDTO departmentUserDTO = departmentUserClient.getUserById(userCredentialsByAccessToken.getUserId());
         return User.builder()
                 .id(userCredentialsByAccessToken.getUserId())
                 .email(userCredentialsByAccessToken.getEmail())
                 .permissions(userCredentialsByAccessToken.getPermissions())
+                .role(departmentUserDTO.getRole())
                 .build();
     }
 }

@@ -197,6 +197,7 @@ services:
       retries: 3
       start_period: 10s
     env_file:
+      - env/application-values.env
       - env/security.env
       - env/datasource.env
       - env/feign-services-url.env

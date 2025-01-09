@@ -1,6 +1,6 @@
-package eu.senla.common.department.dto.response;
+package eu.senla.common.booking.dto.request;
 
-import eu.senla.common.enums.DepartmentRole;
+import eu.senla.common.booking.enums.BookingStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,9 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ShortDepartmentUserInfoDTO {
-
-    private UUID id;
-    private DepartmentRole role;
-
+public class ChangeBookingStatusDTO {
+    UUID bookingId;
+    BookingStatus status;
 }

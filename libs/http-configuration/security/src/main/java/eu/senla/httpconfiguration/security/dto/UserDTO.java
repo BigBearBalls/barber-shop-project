@@ -1,4 +1,4 @@
-package eu.senla.common.department.dto.response;
+package eu.senla.httpconfiguration.security.dto;
 
 import eu.senla.common.enums.DepartmentRole;
 import lombok.*;
@@ -10,10 +10,9 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString
-public class DepartmentUserDTO {
+public class UserDTO {
 
     private UUID id;
-    private String departmentName;
-    private ShortDepartmentUserInfoDTO teamLeader;
+    private String email;
     private DepartmentRole role;
 }

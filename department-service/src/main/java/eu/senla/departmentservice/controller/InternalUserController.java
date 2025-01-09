@@ -4,7 +4,7 @@ import eu.senla.common.department.dto.request.CreateDepartmentUserRequest;
 import eu.senla.common.department.dto.response.DepartmentUserDTO;
 import eu.senla.common.department.dto.response.ShortDepartmentUserInfoDTO;
 import eu.senla.departmentservice.service.UserService;
-import eu.senla.httpconfiguration.security.holder.UserIdHolder;
+import eu.senla.httpconfiguration.security.holder.UserHolder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +30,7 @@ public class InternalUserController {
 
     @GetMapping
     public DepartmentUserDTO getUser() {
-        UUID uuid = UserIdHolder.getUserId();
+        UUID uuid = UserHolder.getUser().getId();
         return userService.getUserDTOById(uuid);
     }
 

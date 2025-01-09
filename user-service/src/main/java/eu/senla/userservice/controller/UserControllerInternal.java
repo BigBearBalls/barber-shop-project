@@ -3,7 +3,7 @@ package eu.senla.userservice.controller;
 import eu.senla.common.account.dto.FindUsersAccountsRequest;
 import eu.senla.common.user.dto.UserDataDTO;
 import eu.senla.common.user.dto.UsersDataResponse;
-import eu.senla.httpconfiguration.security.holder.UserIdHolder;
+import eu.senla.httpconfiguration.security.holder.UserHolder;
 import eu.senla.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ public class UserControllerInternal {
 
     @GetMapping
     public UserDataDTO getUser() {
-        UUID userId = UserIdHolder.getUserId();
+        UUID userId = UserHolder.getUser().getId();
         return userService.getUserById(userId);
     }
 
