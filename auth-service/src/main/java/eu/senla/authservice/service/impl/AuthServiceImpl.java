@@ -15,7 +15,7 @@ import eu.senla.common.auth.dto.LoginRequest;
 import eu.senla.common.auth.dto.LoginResponse;
 import eu.senla.common.auth.dto.RegistrationRequest;
 import eu.senla.common.department.dto.request.CreateDepartmentUserRequest;
-import eu.senla.common.enums.ErrorCode;
+import eu.senla.httpconfiguration.exceptioncontroller.enums.ErrorCode;
 import eu.senla.common.kafka.dto.KafkaMailDto;
 import eu.senla.common.kafka.dto.MailType;
 import eu.senla.common.user.dto.UserDataDTO;

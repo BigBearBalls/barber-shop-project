@@ -6,7 +6,7 @@ import eu.senla.common.department.dto.request.UsersIdsDTO;
 import eu.senla.common.department.dto.response.DepartmentDTO;
 import eu.senla.common.department.dto.response.DepartmentPageResponse;
 import eu.senla.common.department.dto.response.ShortDepartmentUserInfoResponse;
-import eu.senla.common.enums.ErrorCode;
+import eu.senla.httpconfiguration.exceptioncontroller.enums.ErrorCode;
 import eu.senla.departmentservice.mapper.DepartmentMapper;
 import eu.senla.departmentservice.mapper.UserMapper;
 import eu.senla.departmentservice.model.Department;

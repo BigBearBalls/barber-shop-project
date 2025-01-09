@@ -2,7 +2,7 @@ package eu.senla.gatewayservice.handler;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import eu.senla.common.enums.ErrorCode;
+import eu.senla.httpconfiguration.exceptioncontroller.enums.ErrorCode;
 import eu.senla.httpconfiguration.exceptioncontroller.dto.ExceptionResponse;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

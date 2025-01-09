@@ -1,7 +1,7 @@
 package eu.senla.userservice.service.impl;
 
 import eu.senla.common.account.dto.FindUsersAccountsRequest;
-import eu.senla.common.enums.ErrorCode;
+import eu.senla.httpconfiguration.exceptioncontroller.enums.ErrorCode;
 import eu.senla.common.user.dto.UserDataDTO;
 import eu.senla.common.user.dto.UsersDataResponse;
 import eu.senla.httpconfiguration.exceptioncontroller.exception.ExistsException;

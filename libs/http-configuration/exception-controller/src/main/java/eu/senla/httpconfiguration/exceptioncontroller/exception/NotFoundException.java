@@ -1,6 +1,6 @@
 package eu.senla.httpconfiguration.exceptioncontroller.exception;
 
-import eu.senla.common.enums.ErrorCode;
+import eu.senla.httpconfiguration.exceptioncontroller.enums.ErrorCode;
 import org.springframework.http.HttpStatus;
 
 public class NotFoundException extends ApiException {

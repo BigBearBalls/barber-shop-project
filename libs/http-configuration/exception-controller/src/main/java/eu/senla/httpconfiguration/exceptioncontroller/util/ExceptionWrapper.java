@@ -1,6 +1,6 @@
 package eu.senla.httpconfiguration.exceptioncontroller.util;
 
-import eu.senla.common.enums.ErrorCode;
+import eu.senla.httpconfiguration.exceptioncontroller.enums.ErrorCode;
 import eu.senla.httpconfiguration.exceptioncontroller.dto.ExceptionResponse;
 import eu.senla.httpconfiguration.exceptioncontroller.exception.ApiException;
 import lombok.experimental.UtilityClass;

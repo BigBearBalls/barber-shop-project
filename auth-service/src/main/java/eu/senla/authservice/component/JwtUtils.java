@@ -1,7 +1,7 @@
 package eu.senla.authservice.component;
 
 import eu.senla.authservice.model.User;
-import eu.senla.common.enums.ErrorCode;
+import eu.senla.httpconfiguration.exceptioncontroller.enums.ErrorCode;
 import eu.senla.httpconfiguration.exceptioncontroller.exception.JwtValidateException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

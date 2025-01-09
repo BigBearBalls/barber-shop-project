@@ -23,7 +23,7 @@ import eu.senla.common.booking.dto.response.IdResponseDTO;
 import eu.senla.common.booking.dto.response.TimeSlotResponseDTO;
 import eu.senla.common.booking.enums.BookingStatus;
 import eu.senla.common.department.dto.response.DepartmentUserDTO;
-import eu.senla.common.enums.ErrorCode;
+import eu.senla.httpconfiguration.exceptioncontroller.enums.ErrorCode;
 import eu.senla.common.kafka.dto.KafkaMailDto;
 import eu.senla.common.kafka.dto.MailType;
 import eu.senla.httpconfiguration.exceptioncontroller.exception.ExistsException;

@@ -3,7 +3,7 @@ package eu.senla.httpconfiguration.exceptioncontroller.filter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.common.constant.SecurityConstants;
-import eu.senla.common.enums.ErrorCode;
+import eu.senla.httpconfiguration.exceptioncontroller.enums.ErrorCode;
 import eu.senla.httpconfiguration.exceptioncontroller.dto.ExceptionResponse;
 import eu.senla.httpconfiguration.exceptioncontroller.exception.AuthenticationException;
 import eu.senla.httpconfiguration.exceptioncontroller.exception.FilterException;

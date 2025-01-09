@@ -4,7 +4,7 @@ import eu.senla.authservice.model.User;
 import eu.senla.authservice.repository.UserRepository;
 import eu.senla.authservice.service.UserService;
 import eu.senla.common.auth.dto.UserCredentialsDTO;
-import eu.senla.common.enums.ErrorCode;
+import eu.senla.httpconfiguration.exceptioncontroller.enums.ErrorCode;
 import eu.senla.httpconfiguration.exceptioncontroller.exception.ExistsException;
 import eu.senla.httpconfiguration.exceptioncontroller.exception.LogExceptionWrapper;
 import eu.senla.httpconfiguration.exceptioncontroller.exception.NotFoundException;

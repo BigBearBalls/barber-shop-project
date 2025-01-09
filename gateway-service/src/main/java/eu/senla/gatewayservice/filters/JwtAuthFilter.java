@@ -1,7 +1,7 @@
 package eu.senla.gatewayservice.filters;
 
 import eu.senla.common.constant.SecurityConstants;
-import eu.senla.common.enums.ErrorCode;
+import eu.senla.httpconfiguration.exceptioncontroller.enums.ErrorCode;
 import eu.senla.gatewayservice.client.AuthClient;
 import eu.senla.gatewayservice.component.TrustedTokenManager;
 import eu.senla.gatewayservice.dto.UserCredentialsByAccessToken;

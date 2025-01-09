@@ -1,7 +1,7 @@
 package eu.senla.httpconfiguration.feign.decoder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import eu.senla.common.enums.ErrorCode;
+import eu.senla.httpconfiguration.exceptioncontroller.enums.ErrorCode;
 import eu.senla.httpconfiguration.exceptioncontroller.dto.ExceptionResponse;
 import eu.senla.httpconfiguration.exceptioncontroller.exception.ExternalApiException;
 import feign.Response;

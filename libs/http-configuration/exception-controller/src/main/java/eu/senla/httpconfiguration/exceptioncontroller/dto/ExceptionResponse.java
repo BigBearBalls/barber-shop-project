@@ -1,6 +1,6 @@
-package eu.senla.common.dto.exception;
+package eu.senla.httpconfiguration.exceptioncontroller.dto;
 
-import eu.senla.common.enums.ErrorCode;
+import eu.senla.httpconfiguration.exceptioncontroller.enums.ErrorCode;
 
 import java.time.LocalDateTime;
 

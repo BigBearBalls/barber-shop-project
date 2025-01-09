@@ -2,9 +2,9 @@ package eu.senla.httpconfiguration.exceptioncontroller.exception.handler;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import eu.senla.common.enums.ErrorCode;
 import eu.senla.httpconfiguration.exceptioncontroller.dto.ExceptionResponse;
 import eu.senla.httpconfiguration.exceptioncontroller.dto.Violation;
+import eu.senla.httpconfiguration.exceptioncontroller.enums.ErrorCode;
 import eu.senla.httpconfiguration.exceptioncontroller.exception.ApiException;
 import eu.senla.httpconfiguration.exceptioncontroller.exception.AuthenticationException;
 import eu.senla.httpconfiguration.exceptioncontroller.util.ExceptionWrapper;

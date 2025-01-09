@@ -1,4 +1,4 @@
-package eu.senla.common.enums;
+package eu.senla.httpconfiguration.exceptioncontroller.enums;
 
 import lombok.Getter;
 

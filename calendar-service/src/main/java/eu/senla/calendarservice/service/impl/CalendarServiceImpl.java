@@ -4,7 +4,7 @@ import eu.senla.calendarservice.entity.DayOff;
 import eu.senla.calendarservice.mapper.CalendarMapper;
 import eu.senla.calendarservice.repository.CalendarRepository;
 import eu.senla.calendarservice.service.CalendarService;
-import eu.senla.common.enums.ErrorCode;
+import eu.senla.httpconfiguration.exceptioncontroller.enums.ErrorCode;
 import eu.senla.httpconfiguration.exceptioncontroller.exception.ExistsException;
 import eu.senla.httpconfiguration.exceptioncontroller.exception.InvalidValueException;
 import eu.senla.httpconfiguration.exceptioncontroller.exception.LogExceptionWrapper;
