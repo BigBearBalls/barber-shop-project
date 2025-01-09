@@ -45,19 +45,11 @@ spring:
           - id: user-service-route
             uri: http://user-service:8080
             predicates:
-              - Path=/api/v1/users/**
+              - Path=/api/v1/users/**, /api/v1/accounts/**
             filters:
               - AddRequestHeader=X-Request-Api-Key, ${API_KEY}
               - AddRequestHeader=X-Request-Source, EXTERNAL
-          # Account Service
-          - id: account-service-route
-            uri: http://account-service:8080
-            predicates:
-              - Path=/api/v1/accounts/**
-            filters:
-              - AddRequestHeader=X-Request-Api-Key, ${API_KEY}
-              - AddRequestHeader=X-Request-Source, EXTERNAL
-
+          # Department Service
           - id: department-service
             uri: http://department-service:8080
             predicates:

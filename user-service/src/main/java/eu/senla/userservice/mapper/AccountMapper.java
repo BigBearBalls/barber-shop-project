@@ -1,4 +1,4 @@
-package eu.senla.accountservice.mapper;
+package eu.senla.userservice.mapper;
 
 import eu.senla.common.account.dto.AccountDetailsDTO;
 import eu.senla.common.account.dto.PreviewAccountDTO;
@@ -6,12 +6,9 @@ import eu.senla.common.department.dto.response.DepartmentUserDTO;
 import eu.senla.common.department.dto.response.ShortDepartmentUserInfoDTO;
 import eu.senla.common.dto.UserCredentialsDTO;
 import eu.senla.common.dto.UserDataDTO;
-import eu.senla.common.enums.DepartmentRole;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
-
-import java.util.UUID;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface AccountMapper {

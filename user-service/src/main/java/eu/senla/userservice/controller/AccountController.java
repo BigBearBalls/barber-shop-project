@@ -1,10 +1,10 @@
-package eu.senla.accountservice.controller;
+package eu.senla.userservice.controller;
 
-import eu.senla.accountservice.service.AccountService;
 import eu.senla.common.account.dto.AccountDetailsDTO;
 import eu.senla.common.account.dto.FindUsersAccountsRequest;
 import eu.senla.common.account.dto.PreviewAccountDTO;
 import eu.senla.common.user.dto.UsersDataResponse;
+import eu.senla.userservice.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
