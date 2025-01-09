@@ -1,9 +1,8 @@
-package eu.senla.accountservice.service;
+package eu.senla.userservice.service;
 
 import eu.senla.common.account.dto.AccountDetailsDTO;
 import eu.senla.common.account.dto.FindUsersAccountsRequest;
 import eu.senla.common.account.dto.PreviewAccountDTO;
-import eu.senla.common.account.dto.PreviewsAccountsResponse;
 import eu.senla.common.user.dto.UsersDataResponse;
 
 import java.util.UUID;

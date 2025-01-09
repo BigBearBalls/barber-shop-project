@@ -221,28 +221,9 @@ services:
     env_file:
       - env/datasource.env
       - env/security.env
-    depends_on:
-      plahctoh-database:
-        condition: service_healthy
-    networks:
-      - plahctoh
-
-  account-service:
-    build: ./account-service
-    healthcheck:
-      test: curl -f http://localhost:8080/actuator/health
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 10s
-    env_file:
-      - env/datasource.env
-      - env/security.env
       - env/feign-services-url.env
     depends_on:
-      user-service:
-        condition: service_healthy
-      auth-service:
+      plahctoh-database:
         condition: service_healthy
     networks:
       - plahctoh
