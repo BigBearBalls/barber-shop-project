@@ -22,10 +22,10 @@ public class ApiException extends RuntimeException {
     }
 
     public ApiException(String message, ErrorCode errorCode) {
-        this(message, HttpStatus.INTERNAL_SERVER_ERROR, errorCode);
+        this(message, HttpStatus.I_AM_A_TEAPOT, errorCode);
     }
 
     public ApiException(String message) {
-        this(message, HttpStatus.INTERNAL_SERVER_ERROR, ErrorCode.ERR_UNKNOWN_CODE);
+        this(message, HttpStatus.I_AM_A_TEAPOT, ErrorCode.ERR_UNKNOWN_CODE);
     }
 }

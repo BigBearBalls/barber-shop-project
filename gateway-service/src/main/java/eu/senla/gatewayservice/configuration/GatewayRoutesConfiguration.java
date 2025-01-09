@@ -1,6 +1,6 @@
 package eu.senla.gatewayservice.configuration;
 
-import eu.senla.gatewayservice.filters.UserIdHeaderInterceptorFilter;
+import eu.senla.gatewayservice.filters.UserDTOHeaderInterceptorFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +11,7 @@ import org.springframework.web.servlet.function.ServerResponse;
 @RequiredArgsConstructor
 public class GatewayRoutesConfiguration {
 
-    private final UserIdHeaderInterceptorFilter userIdHeaderInterceptorFilter;
+    private final UserDTOHeaderInterceptorFilter userDTOHeaderInterceptorFilter;
 
 //    private final GatewayMvcProperties properties;
 //
@@ -39,6 +39,6 @@ public class GatewayRoutesConfiguration {
 
     @Bean
     public RouterFunction<ServerResponse> globalRouterFunction(RouterFunction<ServerResponse> originalRouterFunction) {
-        return originalRouterFunction.filter(userIdHeaderInterceptorFilter);
+        return originalRouterFunction.filter(userDTOHeaderInterceptorFilter);
     }
 }

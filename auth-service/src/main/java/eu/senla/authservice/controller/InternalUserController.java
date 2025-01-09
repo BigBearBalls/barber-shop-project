@@ -1,10 +1,13 @@
 package eu.senla.authservice.controller;
 
 import eu.senla.authservice.service.UserService;
-import eu.senla.common.dto.UserCredentialsDTO;
+import eu.senla.common.auth.dto.UserCredentialsDTO;
 import eu.senla.httpconfiguration.security.holder.UserHolder;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 

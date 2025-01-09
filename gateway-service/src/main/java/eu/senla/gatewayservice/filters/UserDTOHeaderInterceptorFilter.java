@@ -13,7 +13,7 @@ import org.springframework.web.servlet.function.ServerResponse;
 
 @Component
 @RequiredArgsConstructor
-public class UserIdHeaderInterceptorFilter implements HandlerFilterFunction<ServerResponse, ServerResponse> {
+public class UserDTOHeaderInterceptorFilter implements HandlerFilterFunction<ServerResponse, ServerResponse> {
 
     private final ObjectMapper objectMapper;
 

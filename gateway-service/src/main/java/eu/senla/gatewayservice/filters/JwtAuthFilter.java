@@ -2,13 +2,13 @@ package eu.senla.gatewayservice.filters;
 
 import eu.senla.common.constant.SecurityConstants;
 import eu.senla.common.department.dto.response.DepartmentUserDTO;
-import eu.senla.common.enums.ErrorCode;
-import eu.senla.common.exception.JwtValidateException;
 import eu.senla.gatewayservice.client.AuthClient;
 import eu.senla.gatewayservice.client.DepartmentUserClient;
 import eu.senla.gatewayservice.component.TrustedTokenManager;
 import eu.senla.gatewayservice.dto.UserCredentialsByAccessToken;
 import eu.senla.gatewayservice.model.User;
+import eu.senla.httpconfiguration.exceptioncontroller.enums.ErrorCode;
+import eu.senla.httpconfiguration.exceptioncontroller.exception.JwtValidateException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

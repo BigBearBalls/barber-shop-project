@@ -3,9 +3,10 @@ package eu.senla.httpconfiguration.exceptioncontroller.filter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.common.constant.SecurityConstants;
-import eu.senla.httpconfiguration.exceptioncontroller.enums.ErrorCode;
 import eu.senla.httpconfiguration.exceptioncontroller.dto.ExceptionResponse;
+import eu.senla.httpconfiguration.exceptioncontroller.enums.ErrorCode;
 import eu.senla.httpconfiguration.exceptioncontroller.exception.AuthenticationException;
+import eu.senla.httpconfiguration.exceptioncontroller.exception.ExternalApiException;
 import eu.senla.httpconfiguration.exceptioncontroller.exception.FilterException;
 import eu.senla.libs.common.serialization.configuration.ObjectMapperConfiguration;
 import jakarta.servlet.FilterChain;
@@ -25,9 +26,7 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
-import static eu.senla.httpconfiguration.core.util.ExceptionWrapper.buildExceptionResponse;
-
-import static eu.senla.httpconfiguration.core.util.ExceptionWrapper.buildExceptionResponse;
+import static eu.senla.httpconfiguration.exceptioncontroller.util.ExceptionWrapper.buildExceptionResponse;
 
 @Component
 @RequiredArgsConstructor
@@ -59,10 +58,9 @@ public class FiltersExceptionHandler extends OncePerRequestFilter {
             ExceptionResponse exceptionResponse = buildExceptionResponse(ErrorCode.ERR_NO_RESOURCE,
                     ErrorCode.ERR_NO_RESOURCE.getMessage(), request.getRequestURI());
             makeHttpServletResponseWithExceptionResponse(response, httpStatus.value(), exceptionResponse);
-        } catch (NoResourceFoundException e) {
-            HttpStatus httpStatus = HttpStatus.NOT_FOUND;
-            ExceptionResponse exceptionResponse = buildExceptionResponse(ErrorCode.ERR_NO_RESOURCE,
-                    ErrorCode.ERR_NO_RESOURCE.getMessage(), request.getRequestURI());
+        } catch (ExternalApiException e) {
+            HttpStatus httpStatus = e.getStatus();
+            ExceptionResponse exceptionResponse = buildExceptionResponse(e, request.getRequestURI());
             makeHttpServletResponseWithExceptionResponse(response, httpStatus.value(), exceptionResponse);
         } catch (Exception e) {
             if (!response.isCommitted()) {

@@ -1,15 +1,16 @@
 package eu.senla.userservice.service.impl;
 
 import eu.senla.common.account.dto.AccountDetailsDTO;
-import eu.senla.common.dto.UserCredentialsDTO;
-import eu.senla.common.dto.UserDataDTO;
+import eu.senla.common.auth.dto.UserCredentialsDTO;
+import eu.senla.common.user.dto.UserDataDTO;
 import eu.senla.userservice.client.UserCredentialsClient;
 import eu.senla.userservice.mapper.AccountMapper;
 import eu.senla.userservice.service.AccountService;
 import eu.senla.userservice.service.UserService;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor

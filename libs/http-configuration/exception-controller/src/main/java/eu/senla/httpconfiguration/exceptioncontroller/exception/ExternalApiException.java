@@ -7,25 +7,19 @@ import org.springframework.http.HttpStatus;
 @Getter
 public class ExternalApiException extends ApiException {
 
-    private HttpStatus httpStatus;
-
     public ExternalApiException(String message) {
-        super(message, ErrorCode.ERR_EXTERNAL_API);
-        this.httpStatus = HttpStatus.I_AM_A_TEAPOT;
+        super(message, HttpStatus.I_AM_A_TEAPOT, ErrorCode.ERR_EXTERNAL_API);
     }
 
     public ExternalApiException() {
-        super(ErrorCode.ERR_EXTERNAL_API.getMessage(), ErrorCode.ERR_EXTERNAL_API);
-        this.httpStatus = HttpStatus.I_AM_A_TEAPOT;
+        super(ErrorCode.ERR_EXTERNAL_API.getMessage(), HttpStatus.I_AM_A_TEAPOT, ErrorCode.ERR_EXTERNAL_API);
     }
 
     public ExternalApiException(String message, ErrorCode errorCode) {
-        super(message, errorCode);
-        this.httpStatus = HttpStatus.I_AM_A_TEAPOT;
+        super(message, HttpStatus.I_AM_A_TEAPOT, errorCode);
     }
 
     public ExternalApiException(String message, ErrorCode errorCode, HttpStatus httpStatus) {
-        super(message, errorCode);
-        this.httpStatus = httpStatus;
+        super(message, httpStatus, errorCode);
     }
 }

@@ -5,10 +5,7 @@ import eu.senla.common.kafka.dto.MailType;
 import eu.senla.notificationservice.handler.MailTypeHandler;
 import eu.senla.notificationservice.service.EmailService;
 import jakarta.mail.MessagingException;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @RequiredArgsConstructor
 public abstract class MailTypeHandlerImpl implements MailTypeHandler {

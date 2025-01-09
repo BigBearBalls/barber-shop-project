@@ -3,6 +3,7 @@ package eu.senla.authservice.controller;
 import eu.senla.authservice.service.PermissionService;
 import eu.senla.common.auth.dto.PermissionsDTO;
 import eu.senla.common.auth.dto.UserPermissionsManipulationRequest;
+import eu.senla.httpconfiguration.security.holder.UserHolder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +27,8 @@ public class PermissionController {
     }
 
     @GetMapping("user")
-    public PermissionsDTO getUserPermissions(@RequestHeader(name = "X-User-Id") UUID userId) {
+    public PermissionsDTO getUserPermissions() {
+        UUID userId = UserHolder.getUser().getId();
         return permissionService.getUserPermissions(userId);
     }
 
