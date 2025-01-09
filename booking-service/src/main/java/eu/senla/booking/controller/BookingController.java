@@ -3,8 +3,8 @@ package eu.senla.booking.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.booking.data.mapper.BookingMapper;
+import eu.senla.booking.entity.BookedTimeSlotDto;
 import eu.senla.booking.entity.MeetingRoom;
-import eu.senla.booking.entity.TimeSlot;
 import eu.senla.booking.service.MeetingRoomService;
 import eu.senla.common.booking.dto.request.AllTimeSlotsRequestDto;
 import eu.senla.common.booking.dto.request.BookingRequestDTO;
@@ -18,7 +18,6 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -82,9 +81,10 @@ public class BookingController {
         return meetingRooms;
     }
 
-    @GetMapping("/booked-time-slots")
-    public Set<TimeSlotResponseDTO> findBookedTimeSlots(@RequestBody AllTimeSlotsRequestDto allTimeSlotsRequestDto) {
-        return bookingService.findBookedTimeSlotsDto(allTimeSlotsRequestDto.getId(), allTimeSlotsRequestDto.getDate());
+    @PostMapping("/booked-time-slots")
+    public Set<BookedTimeSlotDto> findBookedTimeSlots(@RequestBody AllTimeSlotsRequestDto allTimeSlotsRequestDto) {
+        Set<BookedTimeSlotDto> bookedTimeSlots = bookingService.findBookedTimeSlotsDto(allTimeSlotsRequestDto.getId(), allTimeSlotsRequestDto.getDate());
+        return bookedTimeSlots;
     }
 
 }

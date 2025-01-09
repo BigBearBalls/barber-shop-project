@@ -1,6 +1,7 @@
 package eu.senla.booking.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import eu.senla.booking.entity.BookedTimeSlotDto;
 import eu.senla.booking.entity.Booking;
 import eu.senla.booking.entity.TimeSlot;
 import eu.senla.common.booking.dto.request.ChangeBookingStatusDTO;
@@ -20,7 +21,7 @@ public interface BookingService {
 
     List<TimeSlotResponseDTO> findAvailableTimeSlotsDto(UUID meetingRoomId, LocalDate date);
 
-    Set<TimeSlotResponseDTO> findBookedTimeSlotsDto(UUID meetingRoomId, LocalDate date);
+    Set<BookedTimeSlotDto> findBookedTimeSlotsDto(UUID meetingRoomId, LocalDate date);
 
     BookingResponseDTO findBookingById(UUID bookingId);
 

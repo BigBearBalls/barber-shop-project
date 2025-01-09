@@ -7,8 +7,8 @@ import eu.senla.booking.client.AuthClient;
 import eu.senla.booking.client.UserClient;
 import eu.senla.booking.data.mapper.BookingMapper;
 import eu.senla.booking.data.mapper.TimeSlotMapper;
+import eu.senla.booking.entity.BookedTimeSlotDto;
 import eu.senla.booking.entity.Booking;
-import eu.senla.booking.entity.MeetingRoom;
 import eu.senla.common.booking.constant.KafkaConstants;
 import eu.senla.common.booking.constant.MailConstants;
 import eu.senla.common.booking.dto.request.ChangeBookingStatusDTO;
@@ -190,19 +190,14 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Set<TimeSlotResponseDTO> findBookedTimeSlotsDto(UUID meetingRoomId, LocalDate bookingDate) {
+    public Set<BookedTimeSlotDto> findBookedTimeSlotsDto(UUID meetingRoomId, LocalDate bookingDate) {
 
         if (!meetingRoomService.existsById(meetingRoomId)) {
             throw LogExceptionWrapper.logErrorException(new NotFoundException(String.format(ErrorCode.ERR_MEETING_ROOM_NOT_FOUND.getMessage(),
                     "id", meetingRoomId), ErrorCode.ERR_MEETING_ROOM_NOT_FOUND));
         }
 
-        List<TimeSlot> bookedTimeSlots = findBookedTimeSlots(meetingRoomId, bookingDate);
-
-        return bookedTimeSlots
-                .stream()
-                .map(timeSlotMapper::toTimeSlotResponseDto)
-                .collect(Collectors.toSet());
+        return findBookedTimeSlots(meetingRoomId, bookingDate);
     }
 
     private List<TimeSlot> findAvailableTimeSlots(UUID meetingRoomId, LocalDate bookingDate) {
@@ -222,19 +217,31 @@ public class BookingServiceImpl implements BookingService {
         }
     }
 
-    private List<TimeSlot> findBookedTimeSlots(UUID meetingRoomId, LocalDate bookingDate) {
+    private Set<BookedTimeSlotDto> findBookedTimeSlots(UUID meetingRoomId, LocalDate bookingDate) {
 
         List<Booking> bookings = bookingRepository.findAllByBookingDateAndMeetingRoomId(bookingDate,
                 meetingRoomId);
 
         if (bookings.isEmpty()) {
-            return Collections.EMPTY_LIST;
+            return Collections.EMPTY_SET;
         } else {
-            return bookings
+
+            Map<TimeSlot, BookingStatus> bookedTimeSlots = new HashMap<>();
+
+            bookings
                     .stream()
-                    .map(Booking::getTimeSlots)
-                    .flatMap(List::stream)
-                    .toList();
+                    .forEach(booking -> booking
+                            .getTimeSlots()
+                            .forEach(timeSlot -> bookedTimeSlots.put(timeSlot, booking.getStatus())));
+
+            return  bookedTimeSlots
+                    .entrySet()
+                    .stream()
+                    .map(bookedTimeSlot -> new BookedTimeSlotDto(bookedTimeSlot.
+                            getKey().getReservationStart(),
+                            bookedTimeSlot.getKey().getReservationEnd(),
+                            bookedTimeSlot.getValue()))
+                    .collect(Collectors.toSet());
         }
     }
 
