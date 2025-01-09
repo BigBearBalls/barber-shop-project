@@ -84,7 +84,9 @@ public class BookingController {
 
     @PostMapping("/booked-time-slots")
     public Set<TimeSlotResponseDTO> findBookedTimeSlots(@RequestBody AllTimeSlotsRequestDto allTimeSlotsRequestDto) {
-        return bookingService.findBookedTimeSlotsDto(allTimeSlotsRequestDto.getId(), allTimeSlotsRequestDto.getDate());
+        Set<TimeSlotResponseDTO> bbb = bookingService.findBookedTimeSlotsDto(allTimeSlotsRequestDto.getId(), allTimeSlotsRequestDto.getDate());
+        log.info(bbb.toString());
+        return bbb;
     }
 
 }
