@@ -19,6 +19,7 @@ import eu.senla.booking.service.kafka.BookingKafkaProducer;
 import eu.senla.common.booking.constant.KafkaConstants;
 import eu.senla.common.booking.constant.MailConstants;
 import eu.senla.common.booking.dto.request.ChangeBookingStatusDTO;
+import eu.senla.common.booking.dto.request.StatusAndClientRequestDto;
 import eu.senla.common.booking.dto.response.BookingResponseDTO;
 import eu.senla.common.booking.dto.response.IdResponseDTO;
 import eu.senla.common.booking.dto.response.TimeSlotResponseDTO;
@@ -205,18 +206,13 @@ public class BookingServiceImpl implements BookingService {
             return Collections.EMPTY_SET;
         } else {
 
-            Map<TimeSlot, BookingStatus> bookedTimeSlots = new HashMap<>();
+            Map<TimeSlot, StatusAndClientRequestDto> bookedTimeSlots = new HashMap<>();
 
             bookings
                     .stream()
                     .forEach(booking -> booking
                             .getTimeSlots()
-                            .forEach(timeSlot -> bookedTimeSlots.put(timeSlot, booking.getStatus())));
-
-            DepartmentUserDTO department = departmentClient.getUser();
-
-            String teamLeadFirstName = userClient.getUserData(department.getTeamLeader().getId()).getFirstName();
-            String teamLeadSecondName = userClient.getUserData(department.getTeamLeader().getId()).getLastName();
+                            .forEach(timeSlot -> bookedTimeSlots.put(timeSlot, new StatusAndClientRequestDto(booking.getStatus(), booking.getUserId()))));
 
             return bookedTimeSlots
                     .entrySet()
@@ -224,7 +220,9 @@ public class BookingServiceImpl implements BookingService {
                     .map(bookedTimeSlot -> new BookedTimeSlotDto(bookedTimeSlot.
                             getKey().getReservationStart(),
                             bookedTimeSlot.getKey().getReservationEnd(),
-                            bookedTimeSlot.getValue(), teamLeadFirstName, teamLeadSecondName))
+                            bookedTimeSlot.getValue().getStatus(),
+                            userClient.getUserData(departmentClient.getUserById(bookedTimeSlot.getValue().getClientId()).getTeamLeader().getId()).getFirstName(),
+                            userClient.getUserData(departmentClient.getUserById(bookedTimeSlot.getValue().getClientId()).getTeamLeader().getId()).getLastName()))
                     .collect(Collectors.toSet());
         }
     }
