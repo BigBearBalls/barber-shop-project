@@ -4,3 +4,14 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     compileOnly "org.projectlombok:lombok"
 }
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = "eu.senla.libs"
+            artifactId = "http-configuration-core"
+            version = "1.0.0"
+            from components.java
+        }
+    }
+}

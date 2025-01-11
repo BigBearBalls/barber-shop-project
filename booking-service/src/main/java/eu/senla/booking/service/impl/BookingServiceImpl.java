@@ -2,26 +2,26 @@ package eu.senla.booking.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import eu.senla.booking.client.DepartmentClient;
 import eu.senla.booking.client.AuthClient;
+import eu.senla.booking.client.DepartmentClient;
 import eu.senla.booking.client.UserClient;
 import eu.senla.booking.data.mapper.BookingMapper;
 import eu.senla.booking.data.mapper.TimeSlotMapper;
 import eu.senla.booking.entity.BookedTimeSlotDto;
 import eu.senla.booking.entity.Booking;
-import eu.senla.common.booking.constant.KafkaConstants;
-import eu.senla.common.booking.constant.MailConstants;
-import eu.senla.common.booking.dto.request.ChangeBookingStatusDTO;
-import eu.senla.common.booking.dto.response.BookingResponseDTO;
 import eu.senla.booking.entity.TimeSlot;
-import eu.senla.common.booking.dto.response.TimeSlotResponseDTO;
 import eu.senla.booking.repository.BookingRepository;
 import eu.senla.booking.repository.TimeSlotRepository;
 import eu.senla.booking.service.BookingService;
 import eu.senla.booking.service.MeetingRoomService;
 import eu.senla.booking.service.TimeSlotService;
 import eu.senla.booking.service.kafka.BookingKafkaProducer;
+import eu.senla.common.booking.constant.KafkaConstants;
+import eu.senla.common.booking.constant.MailConstants;
+import eu.senla.common.booking.dto.request.ChangeBookingStatusDTO;
+import eu.senla.common.booking.dto.response.BookingResponseDTO;
 import eu.senla.common.booking.dto.response.IdResponseDTO;
+import eu.senla.common.booking.dto.response.TimeSlotResponseDTO;
 import eu.senla.common.booking.enums.BookingStatus;
 import eu.senla.common.department.dto.response.DepartmentUserDTO;
 import eu.senla.common.enums.ErrorCode;
@@ -29,22 +29,18 @@ import eu.senla.common.exception.ExistsException;
 import eu.senla.common.exception.InvalidValueException;
 import eu.senla.common.exception.LogExceptionWrapper;
 import eu.senla.common.exception.NotFoundException;
-
-import java.time.LocalDate;
-
 import eu.senla.common.kafka.dto.KafkaMailDto;
 import eu.senla.common.kafka.dto.MailType;
-
 import eu.senla.httpconfiguration.security.holder.UserHolder;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import java.util.*;
-
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static eu.senla.common.enums.DepartmentRole.TEAM_LEADER;
 
@@ -200,23 +196,6 @@ public class BookingServiceImpl implements BookingService {
         return findBookedTimeSlots(meetingRoomId, bookingDate);
     }
 
-    private List<TimeSlot> findAvailableTimeSlots(UUID meetingRoomId, LocalDate bookingDate) {
-
-        List<Booking> bookings = bookingRepository.findAllByBookingDateAndMeetingRoomId(bookingDate,
-                meetingRoomId);
-        List<UUID> bookedTimeSlotIds = bookings
-                .stream()
-                .map(Booking::getTimeSlots)
-                .flatMap(List::stream)
-                .map(TimeSlot::getId)
-                .toList();
-        if (bookedTimeSlotIds.isEmpty()) {
-            return timeSlotRepository.findAll();
-        } else {
-            return timeSlotRepository.findAllByIdNotIn(bookedTimeSlotIds);
-        }
-    }
-
     private Set<BookedTimeSlotDto> findBookedTimeSlots(UUID meetingRoomId, LocalDate bookingDate) {
 
         List<Booking> bookings = bookingRepository.findAllByBookingDateAndMeetingRoomId(bookingDate,
@@ -234,16 +213,39 @@ public class BookingServiceImpl implements BookingService {
                             .getTimeSlots()
                             .forEach(timeSlot -> bookedTimeSlots.put(timeSlot, booking.getStatus())));
 
-            return  bookedTimeSlots
+            DepartmentUserDTO department = departmentClient.getUser();
+
+            String teamLeadFirstName = userClient.getUserData(department.getTeamLeader().getId()).getFirstName();
+            String teamLeadSecondName = userClient.getUserData(department.getTeamLeader().getId()).getLastName();
+
+            return bookedTimeSlots
                     .entrySet()
                     .stream()
                     .map(bookedTimeSlot -> new BookedTimeSlotDto(bookedTimeSlot.
                             getKey().getReservationStart(),
                             bookedTimeSlot.getKey().getReservationEnd(),
-                            bookedTimeSlot.getValue()))
+                            bookedTimeSlot.getValue(), teamLeadFirstName, teamLeadSecondName))
                     .collect(Collectors.toSet());
         }
     }
+
+    private List<TimeSlot> findAvailableTimeSlots(UUID meetingRoomId, LocalDate bookingDate) {
+
+        List<Booking> bookings = bookingRepository.findAllByBookingDateAndMeetingRoomId(bookingDate,
+                meetingRoomId);
+        List<UUID> bookedTimeSlotIds = bookings
+                .stream()
+                .map(Booking::getTimeSlots)
+                .flatMap(List::stream)
+                .map(TimeSlot::getId)
+                .toList();
+        if (bookedTimeSlotIds.isEmpty()) {
+            return timeSlotRepository.findAll();
+        } else {
+            return timeSlotRepository.findAllByIdNotIn(bookedTimeSlotIds);
+        }
+    }
+
 
     private void approveBookingRequest(DepartmentUserDTO department, Booking booking) throws JsonProcessingException {
 
