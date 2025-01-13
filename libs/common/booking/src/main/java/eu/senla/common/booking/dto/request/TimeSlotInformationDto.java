@@ -12,7 +12,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class StatusAndClientRequestDto {
+public class TimeSlotInformationDto {
 
     private BookingStatus status;
     private UUID clientId;

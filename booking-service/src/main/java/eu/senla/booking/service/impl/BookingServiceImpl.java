@@ -19,12 +19,14 @@ import eu.senla.booking.service.kafka.BookingKafkaProducer;
 import eu.senla.common.booking.constant.KafkaConstants;
 import eu.senla.common.booking.constant.MailConstants;
 import eu.senla.common.booking.dto.request.ChangeBookingStatusDTO;
-import eu.senla.common.booking.dto.request.StatusAndClientRequestDto;
+import eu.senla.common.booking.dto.request.TimeSlotInformationDto;
+import eu.senla.common.booking.dto.request.UserTeamLeadDto;
 import eu.senla.common.booking.dto.response.BookingResponseDTO;
 import eu.senla.common.booking.dto.response.IdResponseDTO;
 import eu.senla.common.booking.dto.response.TimeSlotResponseDTO;
 import eu.senla.common.booking.enums.BookingStatus;
 import eu.senla.common.department.dto.response.DepartmentUserDTO;
+import eu.senla.common.dto.UserDataDTO;
 import eu.senla.common.enums.ErrorCode;
 import eu.senla.common.exception.ExistsException;
 import eu.senla.common.exception.InvalidValueException;
@@ -206,13 +208,25 @@ public class BookingServiceImpl implements BookingService {
             return Collections.EMPTY_SET;
         } else {
 
-            Map<TimeSlot, StatusAndClientRequestDto> bookedTimeSlots = new HashMap<>();
+//UserTeamLeadDto(String teamLeadFirstName, String teamLeadLastName)
+            Map<TimeSlot, TimeSlotInformationDto> bookedTimeSlots = new HashMap<>();
+            Map<UUID, UserTeamLeadDto> teamLeadInfo = new HashMap<>(); //id того, кто бронировал и его тимлида имя и фамилия
 
             bookings
                     .stream()
                     .forEach(booking -> booking
                             .getTimeSlots()
-                            .forEach(timeSlot -> bookedTimeSlots.put(timeSlot, new StatusAndClientRequestDto(booking.getStatus(), booking.getUserId()))));
+                            .forEach(timeSlot -> bookedTimeSlots.put(timeSlot, new TimeSlotInformationDto(booking.getStatus(), booking.getUserId()))));
+
+            bookings
+                    .stream()
+                    .map(Booking::getUserId)
+                    .forEach(userId -> {
+                                if( !teamLeadInfo.containsKey(userId)) {
+                                    UserDataDTO teamLeadData = userClient.getUserData(departmentClient.getUserById(userId).getTeamLeader().getId());
+                                    teamLeadInfo.put(userId, new UserTeamLeadDto(teamLeadData.getFirstName(),teamLeadData.getLastName()));
+                                }
+                            });
 
             return bookedTimeSlots
                     .entrySet()
@@ -221,9 +235,9 @@ public class BookingServiceImpl implements BookingService {
                             getKey().getReservationStart(),
                             bookedTimeSlot.getKey().getReservationEnd(),
                             bookedTimeSlot.getValue().getStatus(),
-                            userClient.getUserData(departmentClient.getUserById(bookedTimeSlot.getValue().getClientId()).getTeamLeader().getId()).getFirstName(),
-                            userClient.getUserData(departmentClient.getUserById(bookedTimeSlot.getValue().getClientId()).getTeamLeader().getId()).getLastName()))
-                    .collect(Collectors.toSet());
+                            teamLeadInfo.get(bookedTimeSlot.getValue().getClientId()).getTeamLeadFirstName(),
+                            teamLeadInfo.get(bookedTimeSlot.getValue().getClientId()).getTeamLeadLastName()))
+                            .collect(Collectors.toSet());
         }
     }
 
