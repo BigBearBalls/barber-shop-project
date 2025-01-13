@@ -2,8 +2,8 @@ spring:
   application:
     name: department-service
   liquibase:
-    change-log: classpath:/db/changelog/db.changelog-auth-master.yaml
-    enabled: false
+    change-log: classpath:/db/changelog/db.changelog-department-master.yaml
+    enabled: true
     default-schema: department_service_schema
   datasource:
     username: ${DATABASE_USERNAME:postgres}
@@ -12,7 +12,7 @@ spring:
     url: ${DATABASE_URL:jdbc:postgresql://localhost:5433/}${DATABASE_NAME:plahctoh-database}
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     database: postgresql
     properties:
       hibernate:

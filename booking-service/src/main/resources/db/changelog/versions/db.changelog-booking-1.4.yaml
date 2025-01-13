@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: "booking-1.4"
+      author: Yevgany Tyurin
+      changes:
+        - sql:
+            INSERT INTO meeting_rooms (meeting_room_id, number) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe92', 4);
+        - sql:
+            INSERT INTO meeting_rooms (meeting_room_id, number) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe91', 5);
+        - sql:
+            INSERT INTO meeting_rooms (meeting_room_id, number) VALUES('f2d4e0a1-16b3-4d9e-88d9-94a9cc93fe90', 6);

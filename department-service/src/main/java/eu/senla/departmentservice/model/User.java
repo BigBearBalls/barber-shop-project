@@ -14,7 +14,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "users")
+@Table(name = "users", schema = "department_service_schema")
 public class User {
 
     @Id
@@ -22,7 +22,7 @@ public class User {
     private UUID id;
 
     @ManyToOne
-    @JoinColumn(name = "departmentId")
+    @JoinColumn(name = "department_id")
     private Department department;
 
     @Enumerated(EnumType.STRING)

@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: "department-1.3"
+      author: Yevgany Tyurin
+      changes:
+        - sql:
+            INSERT INTO users (id, role, department_id) VALUES('988875dc-e810-4f1d-85af-7f0973889ea2', 'TEAM_LEADER', '988875dc-e810-4f1d-85af-7f0973889ba2');
+        - sql:
+            INSERT INTO users (id, role, department_id) VALUES('988875dc-e810-4f1d-85af-7f0973889ea3', 'TEAM_LEADER', '988875dc-e810-4f1d-85af-7f0973889ba3');
+        - sql:
+            INSERT INTO users (id, role, department_id) VALUES('988875dc-e810-4f1d-85af-7f0973889ea4', 'TEAM_LEADER', '988875dc-e810-4f1d-85af-7f0973889ba4');
+        - sql:
+            INSERT INTO users (id, role, department_id) VALUES('988875dc-e810-4f1d-85af-7f0973889ea5', 'TEAM_LEADER', '988875dc-e810-4f1d-85af-7f0973889ba5');
+        - sql:
+            INSERT INTO users (id, role, department_id) VALUES('988875dc-e810-4f1d-85af-7f0973889ea6', 'TEAM_LEADER', '988875dc-e810-4f1d-85af-7f0973889ba6');

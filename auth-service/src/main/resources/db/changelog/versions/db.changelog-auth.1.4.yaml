@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: "auth-1.4"
+      author: Yevgany Tyurin
+      changes:
+        - sql:
+            INSERT INTO users (user_id, email, password) VALUES('988875dc-e810-4f1d-85af-7f0973889ea2', 'evgturin@gmail.com', '$2a$10$iAlrneJyDdSpLzmkfd7MNeJnCyKGRusiktVNVD/LaOOWdcm9L2D2W');
+        - sql:
+            INSERT INTO users (user_id, email, password) VALUES('988875dc-e810-4f1d-85af-7f0973889ea3', 'teamlead@gmail.com', '$2a$10$iAlrneJyDdSpLzmkfd7MNeJnCyKGRusiktVNVD/LaOOWdcm9L2D2W');
+        - sql:
+            INSERT INTO users (user_id, email, password) VALUES('988875dc-e810-4f1d-85af-7f0973889ea4', 'ekodzuna@gmail.com', '$2a$10$iAlrneJyDdSpLzmkfd7MNeJnCyKGRusiktVNVD/LaOOWdcm9L2D2W');
+        - sql:
+            INSERT INTO users (user_id, email, password) VALUES('988875dc-e810-4f1d-85af-7f0973889ea5', 'badboy@gmail.com', '$2a$10$iAlrneJyDdSpLzmkfd7MNeJnCyKGRusiktVNVD/LaOOWdcm9L2D2W');
+        - sql:
+            INSERT INTO users (user_id, email, password) VALUES('988875dc-e810-4f1d-85af-7f0973889ea6', 'polka-dot@gmail.com', '$2a$10$iAlrneJyDdSpLzmkfd7MNeJnCyKGRusiktVNVD/LaOOWdcm9L2D2W');
+        - sql:
+            INSERT INTO users (user_id, email, password) VALUES('988875dc-e810-4f1d-85af-7f0973889ea7', 'asci@gmail.com', '$2a$10$iAlrneJyDdSpLzmkfd7MNeJnCyKGRusiktVNVD/LaOOWdcm9L2D2W');
+        - sql:
+            INSERT INTO users (user_id, email, password) VALUES('988875dc-e810-4f1d-85af-7f0973889ea8', 'warrior@gmail.com', '$2a$10$iAlrneJyDdSpLzmkfd7MNeJnCyKGRusiktVNVD/LaOOWdcm9L2D2W');

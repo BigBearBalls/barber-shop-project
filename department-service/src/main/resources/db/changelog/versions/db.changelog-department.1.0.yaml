@@ -1,0 +1,61 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-department-table
+      author: Yevgany Tyurin
+      changes:
+        - createTable:
+            tableName: department
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: department_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: team_leader_id
+                  type: UUID
+
+  - changeSet:
+      id: create-users-table
+      author: Yevgany Tyurin
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: role
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: department_id
+                  type: UUID
+                  constraints:
+                    nullable: true
+
+  - changeSet:
+      id: add-fk-to-users
+      author: Yevgany Tyurin
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: users
+            baseColumnNames: department_id
+            referencedTableName: department
+            referencedColumnNames: id
+            constraintName: fk_department_on_users
+
+#              constraints:
+#                foreignKeyName: fk_department_id
+#                references: department(id)

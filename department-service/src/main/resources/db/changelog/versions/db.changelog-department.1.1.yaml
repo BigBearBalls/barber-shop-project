@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: "department-1.2"
+      author: Yevgany Tyurin
+      changes:
+        - sql:
+            INSERT INTO department (id, department_name, team_leader_id) VALUES('988875dc-e810-4f1d-85af-7f0973889ba2', 'champions', '988875dc-e810-4f1d-85af-7f0973889ea2');
+        - sql:
+            INSERT INTO department (id, department_name, team_leader_id) VALUES('988875dc-e810-4f1d-85af-7f0973889ba3', 'pandas', '988875dc-e810-4f1d-85af-7f0973889ea3');
+        - sql:
+            INSERT INTO department (id, department_name, team_leader_id) VALUES('988875dc-e810-4f1d-85af-7f0973889ba4', 'apples', '988875dc-e810-4f1d-85af-7f0973889ea4');
+        - sql:
+            INSERT INTO department (id, department_name, team_leader_id) VALUES('988875dc-e810-4f1d-85af-7f0973889ba5', 'hamburgers', '988875dc-e810-4f1d-85af-7f0973889ea6');
+        - sql:
+            INSERT INTO department (id, department_name, team_leader_id) VALUES('988875dc-e810-4f1d-85af-7f0973889ba6', 'dragons', '988875dc-e810-4f1d-85af-7f0973889ea5');

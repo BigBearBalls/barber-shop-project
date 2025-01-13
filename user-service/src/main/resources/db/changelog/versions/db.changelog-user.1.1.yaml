@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: "user-1.1"
+      author: Yevgany Tyurin
+      changes:
+        - sql:
+            INSERT INTO users (user_id, first_name, last_name, phone_number) VALUES('988875dc-e810-4f1d-85af-7f0973889ea2', 'Yevgany', 'Tyurin', '+375256399514');
+        - sql:
+            INSERT INTO users (user_id, first_name, last_name, phone_number) VALUES('988875dc-e810-4f1d-85af-7f0973889ea3', 'Bob', 'Jones', '+375256399513');
+        - sql:
+            INSERT INTO users (user_id, first_name, last_name, phone_number) VALUES('988875dc-e810-4f1d-85af-7f0973889ea4', 'Mike', 'Vilentine', '+375256399512');
+        - sql:
+            INSERT INTO users (user_id, first_name, last_name, phone_number) VALUES('988875dc-e810-4f1d-85af-7f0973889ea5', 'Stive', 'Hoking', '+375256399511');
+        - sql:
+            INSERT INTO users (user_id, first_name, last_name, phone_number) VALUES('988875dc-e810-4f1d-85af-7f0973889ea6', 'Serious', 'Sam', '+375256399515');
+        - sql:
+            INSERT INTO users (user_id, first_name, last_name, phone_number) VALUES('988875dc-e810-4f1d-85af-7f0973889ea7', 'Bob', 'Marley', '+375256399516');
+        - sql:
+            INSERT INTO users (user_id, first_name, last_name, phone_number) VALUES('988875dc-e810-4f1d-85af-7f0973889ea8', 'Hue', 'Mongous', '+375256399517');
