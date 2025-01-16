@@ -18,9 +18,7 @@ import eu.senla.booking.service.TimeSlotService;
 import eu.senla.booking.service.kafka.BookingKafkaProducer;
 import eu.senla.common.booking.constant.KafkaConstants;
 import eu.senla.common.booking.constant.MailConstants;
-import eu.senla.common.booking.dto.request.ChangeBookingStatusDTO;
-import eu.senla.common.booking.dto.request.TimeSlotInformationDto;
-import eu.senla.common.booking.dto.request.UserTeamLeadDto;
+import eu.senla.common.booking.dto.request.*;
 import eu.senla.common.booking.dto.response.BookingResponseDTO;
 import eu.senla.common.booking.dto.response.IdResponseDTO;
 import eu.senla.common.booking.dto.response.TimeSlotResponseDTO;
@@ -42,6 +40,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -102,12 +101,19 @@ public class BookingServiceImpl implements BookingService {
                 .findFirst()
                 .get();
 
+
         if (timeSlot.getReservationEnd().isBefore(timeSlot.getReservationStart())) {
             throw LogExceptionWrapper.logErrorException(new InvalidValueException(ErrorCode.ERR_TIME_CANNOT_BE_IN_PAST));
         }
 
-        List<TimeSlot> timeSlotsForBooking = timeSlotService.findTimeSlotsForBooking(timeSlot.getReservationStart(),
-                timeSlot.getReservationEnd());
+        if (booking.getBookingDate().isBefore(LocalDate.now()) || (booking.getBookingDate().equals(LocalDate.now()) && timeSlot.getReservationStart().isBefore(LocalTime.now()))) {
+            throw LogExceptionWrapper.logErrorException(new InvalidValueException(ErrorCode.ERR_TIME_CANNOT_BE_IN_PAST));
+        }
+
+
+            List<TimeSlot> timeSlotsForBooking = timeSlotService.findTimeSlotsForBooking(timeSlot.getReservationStart(),
+                    timeSlot.getReservationEnd());
+
 
         List<TimeSlot> availableTimeSlots = findAvailableTimeSlots(booking.getMeetingRoom().getId(), booking.getBookingDate());
 
@@ -117,11 +123,17 @@ public class BookingServiceImpl implements BookingService {
             }
         });
 
+        if (booking.getBookingDate().isBefore(LocalDate.now())) {
+
+        }
+
         booking.setTimeSlots(timeSlotsForBooking);
         booking.setUserId(UserHolder.getUser().getId());
 
 
         DepartmentUserDTO department = departmentClient.getUser();
+
+
         IdResponseDTO idResponseDTO = new IdResponseDTO(bookingRepository.save(booking).getId());
 
         String mail = UserHolder.getUser().getEmail();
@@ -173,6 +185,11 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
+    public List<Booking> getBookingsByUserId(UUID userId) {
+        return bookingRepository.findAllByUserId(userId);
+    }
+
+    @Override
     public List<TimeSlotResponseDTO> findAvailableTimeSlotsDto(UUID meetingRoomId, LocalDate bookingDate) {
 
         if (!meetingRoomService.existsById(meetingRoomId)) {
@@ -211,6 +228,7 @@ public class BookingServiceImpl implements BookingService {
 //UserTeamLeadDto(String teamLeadFirstName, String teamLeadLastName)
             Map<TimeSlot, TimeSlotInformationDto> bookedTimeSlots = new HashMap<>();
             Map<UUID, UserTeamLeadDto> teamLeadInfo = new HashMap<>(); //id того, кто бронировал и его тимлида имя и фамилия
+            Map<UUID, BookingClientDto> clientInfo = new HashMap<>();
 
             bookings
                     .stream()
@@ -222,11 +240,21 @@ public class BookingServiceImpl implements BookingService {
                     .stream()
                     .map(Booking::getUserId)
                     .forEach(userId -> {
-                                if( !teamLeadInfo.containsKey(userId)) {
-                                    UserDataDTO teamLeadData = userClient.getUserData(departmentClient.getUserById(userId).getTeamLeader().getId());
-                                    teamLeadInfo.put(userId, new UserTeamLeadDto(teamLeadData.getFirstName(),teamLeadData.getLastName()));
-                                }
-                            });
+                        if (!clientInfo.containsKey(userId)) {
+                            UserDataDTO clientDto = userClient.getUserData(userId);
+                            clientInfo.put(userId, new BookingClientDto(clientDto.getFirstName(), clientDto.getLastName(), clientDto.getPhoneNumber()));
+                        }
+                    });
+
+            bookings
+                    .stream()
+                    .map(Booking::getUserId)
+                    .forEach(userId -> {
+                        if (!teamLeadInfo.containsKey(userId)) {
+                            UserDataDTO teamLeadData = userClient.getUserData(departmentClient.getUserById(userId).getTeamLeader().getId());
+                            teamLeadInfo.put(userId, new UserTeamLeadDto(teamLeadData.getFirstName(), teamLeadData.getLastName()));
+                        }
+                    });
 
             return bookedTimeSlots
                     .entrySet()
@@ -236,8 +264,9 @@ public class BookingServiceImpl implements BookingService {
                             bookedTimeSlot.getKey().getReservationEnd(),
                             bookedTimeSlot.getValue().getStatus(),
                             teamLeadInfo.get(bookedTimeSlot.getValue().getClientId()).getTeamLeadFirstName(),
-                            teamLeadInfo.get(bookedTimeSlot.getValue().getClientId()).getTeamLeadLastName()))
-                            .collect(Collectors.toSet());
+                            teamLeadInfo.get(bookedTimeSlot.getValue().getClientId()).getTeamLeadLastName(),
+                            new BookingOwner(bookedTimeSlot.getValue().getClientId(), clientInfo.get(bookedTimeSlot.getValue().getClientId()).getClientName(), clientInfo.get(bookedTimeSlot.getValue().getClientId()).getClientLastName(), clientInfo.get(bookedTimeSlot.getValue().getClientId()).getPhoneNumber())))
+                    .collect(Collectors.toSet());
         }
     }
 

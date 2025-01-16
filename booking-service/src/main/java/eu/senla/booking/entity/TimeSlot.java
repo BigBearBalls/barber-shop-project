@@ -1,18 +1,12 @@
 package eu.senla.booking.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.*;
+
 import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
-
-import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,6 +15,7 @@ import lombok.*;
 @Entity
 @Table(name = "time_slots", schema = "booking_service_schema")
 @EqualsAndHashCode
+@ToString
 public class TimeSlot {
 
     @JsonIgnore

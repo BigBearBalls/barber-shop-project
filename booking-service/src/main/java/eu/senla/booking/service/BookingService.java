@@ -30,4 +30,6 @@ public interface BookingService {
     void changeBookingStatus(ChangeBookingStatusDTO dto);
 
     Set<TimeSlot> findAllBookingsByDateAndMeetingRoom(LocalDate date, UUID meetingRoomId);
+
+    List<Booking> getBookingsByUserId(UUID userId);
 }

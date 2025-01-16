@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.booking.data.mapper.BookingMapper;
 import eu.senla.booking.entity.BookedTimeSlotDto;
+import eu.senla.booking.entity.Booking;
 import eu.senla.booking.entity.MeetingRoom;
 import eu.senla.booking.service.BookingService;
 import eu.senla.booking.service.MeetingRoomService;
@@ -79,13 +80,17 @@ public class BookingController {
     @GetMapping("/meeting-rooms")
     public List<MeetingRoom> getAllMeetingRooms() {
         List<MeetingRoom> meetingRooms = meetingRoomService.getAllMeetingRooms();
-        log.info(meetingRooms.toString() + "@@@@@@@@@@@@@@@@@@@@@@@@@@");
         return meetingRooms;
     }
 
     @PostMapping("/booked-time-slots")
     public Set<BookedTimeSlotDto> findBookedTimeSlots(@RequestBody AllTimeSlotsRequestDto allTimeSlotsRequestDto) {
         return bookingService.findBookedTimeSlotsDto(allTimeSlotsRequestDto.getId(), allTimeSlotsRequestDto.getDate());
+    }
+
+    @GetMapping("/my-bookings/{userId}")
+    public List<Booking> getBookingsByUserId(@PathVariable UUID userId) {
+        return bookingService.getBookingsByUserId(userId);
     }
 
 }
