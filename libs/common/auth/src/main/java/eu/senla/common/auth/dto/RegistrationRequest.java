@@ -44,4 +44,6 @@ public class RegistrationRequest {
     @Pattern(regexp = ValidationConstants.BY_PHONE_REGEXP_PATTERN,
             message = ValidationConstants.PHONE_NUMBER_IS_NOT_VALID_VALIDATION_MESSAGE)
     private String phoneNumber;
+
+    private String registrationToken;
 }

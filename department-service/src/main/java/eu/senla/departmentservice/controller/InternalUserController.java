@@ -1,15 +1,20 @@
 package eu.senla.departmentservice.controller;
 
-import eu.senla.common.department.dto.request.CreateDepartmentUserRequest;
+import eu.senla.common.department.dto.request.NewDepartmentUserRequest;
 import eu.senla.common.department.dto.response.DepartmentUserDTO;
 import eu.senla.common.department.dto.response.ShortDepartmentUserInfoDTO;
+import eu.senla.departmentservice.model.Department;
+import eu.senla.departmentservice.service.DepartmentService;
 import eu.senla.departmentservice.service.UserService;
 import eu.senla.httpconfiguration.security.holder.UserHolder;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.UUID;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,16 +22,7 @@ import java.util.UUID;
 public class InternalUserController {
 
     private final UserService userService;
-
-    /**
-     * Save department user
-     * @param request data needed for user create operation
-     */
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public void saveUser(@RequestBody CreateDepartmentUserRequest request) {
-        userService.saveUser(request);
-    }
+    private final DepartmentService departmentService;
 
     @GetMapping
     public DepartmentUserDTO getUser() {
@@ -42,5 +38,11 @@ public class InternalUserController {
     @GetMapping("{userId}/preview")
     public ShortDepartmentUserInfoDTO getShortUserInfo(@PathVariable("userId") UUID userId) {
         return userService.getUserShortInfo(userId);
+    }
+
+    @PostMapping
+    public void createUser(@RequestBody NewDepartmentUserRequest departmentUserRequest) {
+        Department department = departmentService.getDepartmentByTeamLeaderId(departmentUserRequest.getTeamLeaderId());
+        userService.createUser(departmentUserRequest, department);
     }
 }

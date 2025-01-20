@@ -24,6 +24,9 @@ spring:
         refresh-key:
           value: ${REFRESH_KEY}
           expiration-time: 120
+        registration-key:
+          value: ${REGISTRATION_KEY}
+          expiration-time: 2280
   liquibase:
     change-log: classpath:/db/changelog/db.changelog-auth-master.yaml
     enabled: true
