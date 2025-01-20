@@ -61,6 +61,7 @@ public class AuthServiceImpl implements AuthService {
         departmentUserClient.createNewUser(newDepartmentUserRequest);
 
         userDataDTO.setId(userId);
+        userDataClient.createUser(userDataDTO);
 //        createDepartmentUserRequest.setId(userId);
         AtomicBoolean success = new AtomicBoolean(true);
 //        CallbackExceptionWrapper.wrap(() -> {
