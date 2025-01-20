@@ -7,14 +7,14 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
 import java.security.Key;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.UUID;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 @Component
 public class JwtUtils {
@@ -24,6 +24,9 @@ public class JwtUtils {
 
     @Value("${spring.application.security.jwt.refresh-key.value}")
     private String jwtRefreshSecret;
+
+    @Value("${spring.application.security.jwt.registration-key.value}")
+    private String jwtRegistrationSecret;
 
     @Value("${spring.application.security.jwt.access-key.expiration-time}")
     private Integer jwtAccessExpiration;
@@ -149,5 +152,36 @@ public class JwtUtils {
     private Key getAccessSigningKey() {
         byte[] keyBytes = Decoders.BASE64.decode(jwtAccessSecret);
         return Keys.hmacShaKeyFor(keyBytes);
+    }
+
+    public Key getRegistrationKeyWithSalt(String salt) {
+
+        byte[] keyBytes = Decoders.BASE64.decode(jwtRegistrationSecret);
+        byte[] saltBytes = salt.getBytes();
+        byte[] keys = new byte[keyBytes.length + saltBytes.length];
+        for (int i = 0; i < keyBytes.length; i++) {
+            keys[i] = keyBytes[i];
+        }
+        for (int i = 0; i < saltBytes.length; i++) {
+            keys[keyBytes.length + i] = saltBytes[i];
+        }
+        return Keys.hmacShaKeyFor(keys);
+    }
+
+    public String generateSalt() {
+        return UUID.randomUUID().toString();
+    }
+
+    public void validateRegistrationToken(String token, Key key) {
+        try {
+            validateToken(token, key);
+        } catch (Exception e) {
+            throw new JwtValidateException(String.format("%s: %s", e.getClass().getSimpleName(), e.getMessage()),
+                    ErrorCode.ERR_JWT_VALIDATION_EXCEPTION);
+        }
+    }
+
+    public Claims getRegistrationClaims(String token, Key key) {
+        return getClaims(token, key);
     }
 }

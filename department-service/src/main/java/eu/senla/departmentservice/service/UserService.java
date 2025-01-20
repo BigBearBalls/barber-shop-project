@@ -1,6 +1,7 @@
 package eu.senla.departmentservice.service;
 
 import eu.senla.common.department.dto.request.CreateDepartmentUserRequest;
+import eu.senla.common.department.dto.request.NewDepartmentUserRequest;
 import eu.senla.common.department.dto.response.DepartmentUserDTO;
 import eu.senla.common.department.dto.response.ShortDepartmentUserInfoDTO;
 import eu.senla.common.enums.DepartmentRole;
@@ -54,4 +55,6 @@ public interface UserService {
     void setUserRole(UUID userId, DepartmentRole role);
 
     ShortDepartmentUserInfoDTO getUserShortInfo(UUID id);
+
+    void createUser(NewDepartmentUserRequest request, Department department);
 }

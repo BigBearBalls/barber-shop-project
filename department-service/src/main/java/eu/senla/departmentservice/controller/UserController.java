@@ -1,14 +1,14 @@
 package eu.senla.departmentservice.controller;
 
 import eu.senla.common.department.dto.request.NewUserDepartmentRole;
-import eu.senla.common.department.dto.response.ShortDepartmentUserInfoDTO;
-import eu.senla.common.enums.DepartmentRole;
-import eu.senla.departmentservice.model.Department;
 import eu.senla.departmentservice.service.UserService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.UUID;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor

@@ -1,6 +1,7 @@
 package eu.senla.departmentservice.service.impl;
 
 import eu.senla.common.department.dto.request.CreateDepartmentUserRequest;
+import eu.senla.common.department.dto.request.NewDepartmentUserRequest;
 import eu.senla.common.department.dto.response.DepartmentUserDTO;
 import eu.senla.common.department.dto.response.ShortDepartmentUserInfoDTO;
 import eu.senla.common.enums.DepartmentRole;
@@ -12,13 +13,12 @@ import eu.senla.departmentservice.model.Department;
 import eu.senla.departmentservice.model.User;
 import eu.senla.departmentservice.repository.UserRepository;
 import eu.senla.departmentservice.service.UserService;
+import java.util.Set;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Set;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -81,5 +81,17 @@ public class UserServiceImpl implements UserService {
     public ShortDepartmentUserInfoDTO getUserShortInfo(UUID id) {
         User user = this.getUserById(id);
         return userMapper.toShortDepartmentUserInfoDTO(user);
+    }
+
+    @Override
+    @Transactional
+    public void createUser(NewDepartmentUserRequest request, Department department) {
+
+        User user = new User();
+        user.setId(request.getUserId());
+        user.setRole(DepartmentRole.DEVELOPER);
+        user.setDepartment(department);
+
+        userRepository.save(user);
     }
 }

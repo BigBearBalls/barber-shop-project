@@ -73,4 +73,6 @@ public interface DepartmentService {
     DepartmentPageResponse getDepartmentPage(Pageable pageable);
 
     DepartmentDTO getDepartment(UUID departmentId);
+
+    Department getDepartmentByTeamLeaderId(UUID teamLeadId);
 }

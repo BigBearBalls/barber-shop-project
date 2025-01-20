@@ -1,8 +1,13 @@
 package eu.senla.authservice.client;
 
-import eu.senla.common.department.dto.request.CreateDepartmentUserRequest;
+import eu.senla.common.department.dto.request.NewDepartmentUserRequest;
+import eu.senla.common.department.dto.response.DepartmentUserDTO;
+import eu.senla.common.department.dto.response.ShortDepartmentUserInfoDTO;
+import java.util.UUID;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -10,7 +15,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @FeignClient(url = "${feign.clients.department-service.url}", name = "departmentUserClient")
 public interface DepartmentUserClient {
 
+    @GetMapping("/internal/users/{userId}")
+    DepartmentUserDTO getUserById(@PathVariable("userId") UUID userId);
+
+    @GetMapping("/internal/users/{userId}/preview")
+    ShortDepartmentUserInfoDTO getShortUserInfo(@PathVariable("userId") UUID userId);
+
     @PostMapping(value = "/internal/users/")
     @ResponseStatus(HttpStatus.CREATED)
-    void createUser(@RequestBody CreateDepartmentUserRequest request);
+    void createNewUser(@RequestBody NewDepartmentUserRequest request);
 }
