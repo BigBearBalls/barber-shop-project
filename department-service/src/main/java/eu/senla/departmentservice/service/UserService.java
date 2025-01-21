@@ -1,13 +1,11 @@
 package eu.senla.departmentservice.service;
 
 import eu.senla.common.department.dto.request.CreateDepartmentUserRequest;
-import eu.senla.common.department.dto.request.NewDepartmentUserRequest;
 import eu.senla.common.department.dto.response.DepartmentUserDTO;
 import eu.senla.common.department.dto.response.ShortDepartmentUserInfoDTO;
 import eu.senla.common.enums.DepartmentRole;
 import eu.senla.departmentservice.model.Department;
 import eu.senla.departmentservice.model.User;
-
 import java.util.Set;
 import java.util.UUID;
 
@@ -56,5 +54,5 @@ public interface UserService {
 
     ShortDepartmentUserInfoDTO getUserShortInfo(UUID id);
 
-    void createUser(NewDepartmentUserRequest request, Department department);
+    void createUser(UUID userId, Department department);
 }

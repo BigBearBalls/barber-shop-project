@@ -45,5 +45,6 @@ public class RegistrationRequest {
             message = ValidationConstants.PHONE_NUMBER_IS_NOT_VALID_VALIDATION_MESSAGE)
     private String phoneNumber;
 
+    @NotBlank(message = ValidationConstants.REGISTRATION_TOKEN_CANNOT_BE_BLANK_VALIDATION_MESSAGE)
     private String registrationToken;
 }

@@ -8,6 +8,10 @@ import eu.senla.authservice.service.TokenService;
 import eu.senla.common.auth.dto.RegistrationTokenResponse;
 import eu.senla.common.department.dto.response.ShortDepartmentUserInfoDTO;
 import eu.senla.common.enums.DepartmentRole;
+import eu.senla.common.enums.ErrorCode;
+import eu.senla.common.exception.InvalidValueException;
+import eu.senla.common.exception.LogExceptionWrapper;
+import eu.senla.common.exception.NotFoundException;
 import io.jsonwebtoken.Jwts;
 import java.security.Key;
 import java.util.UUID;
@@ -30,11 +34,10 @@ public class TokenServiceImpl implements TokenService {
         ShortDepartmentUserInfoDTO shortDepartmentUserInfoDTO = departmentUserClient.getShortUserInfo(id);
 
         if (!shortDepartmentUserInfoDTO.getRole().equals(DepartmentRole.TEAM_LEADER)) {
-            //TODO exception not team lead
+            throw LogExceptionWrapper.logErrorException(new InvalidValueException(ErrorCode.ERR_ROLE_MUST_BE_TEAM_LEADER));
         }
 
         String salt = jwtUtils.generateSalt();
-
         Key key = jwtUtils.getRegistrationKeyWithSalt(salt);
 
         String token = Jwts
@@ -44,9 +47,7 @@ public class TokenServiceImpl implements TokenService {
                 .compact();
 
         RegistrationToken registrationToken = new RegistrationToken(salt, token);
-
         RegistrationToken savedToken = registrationTokenRepository.save(registrationToken);
-
         jwtUtils.validateRegistrationToken(savedToken.getToken(), key);
 
         return new RegistrationTokenResponse(token);
@@ -55,9 +56,13 @@ public class TokenServiceImpl implements TokenService {
     @Override
     @Transactional
     public UUID parseRegistrationTokenToTeamLeaderId(String token) {
-        RegistrationToken registrationToken = registrationTokenRepository.findByToken(token).get();
-        //TODO exception
+
+        RegistrationToken registrationToken = registrationTokenRepository.findByToken(token).orElseThrow(() -> LogExceptionWrapper
+                .logErrorException(new NotFoundException(String.format(ErrorCode.ERR_REGISTRATION_TOKEN_NOT_FOUND.getMessage(),
+                         token), ErrorCode.ERR_REGISTRATION_TOKEN_NOT_FOUND)));
+
         Key key = jwtUtils.getRegistrationKeyWithSalt(registrationToken.getSalt());
+
         return UUID.fromString(jwtUtils.getRegistrationClaims(token, key).getSubject());
     }
 

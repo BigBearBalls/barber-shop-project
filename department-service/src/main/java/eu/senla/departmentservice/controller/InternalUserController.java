@@ -43,6 +43,6 @@ public class InternalUserController {
     @PostMapping
     public void createUser(@RequestBody NewDepartmentUserRequest departmentUserRequest) {
         Department department = departmentService.getDepartmentByTeamLeaderId(departmentUserRequest.getTeamLeaderId());
-        userService.createUser(departmentUserRequest, department);
+        userService.createUser(departmentUserRequest.getUserId(), department);
     }
 }

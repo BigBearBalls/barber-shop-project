@@ -11,10 +11,10 @@ import eu.senla.authservice.service.AuthService;
 import eu.senla.authservice.service.PermissionService;
 import eu.senla.authservice.service.TokenService;
 import eu.senla.authservice.service.UserService;
+import eu.senla.authservice.utility.CallbackExceptionWrapper;
 import eu.senla.common.auth.dto.LoginRequest;
 import eu.senla.common.auth.dto.LoginResponse;
 import eu.senla.common.auth.dto.RegistrationRequest;
-import eu.senla.common.department.dto.request.CreateDepartmentUserRequest;
 import eu.senla.common.department.dto.request.NewDepartmentUserRequest;
 import eu.senla.common.dto.UserDataDTO;
 import eu.senla.common.enums.ErrorCode;
@@ -47,33 +47,27 @@ public class AuthServiceImpl implements AuthService {
     public void regUser(RegistrationRequest registrationRequest) {
         registrationRequest.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
         UserDataDTO userDataDTO = userMapper.toUserInfoDTO(registrationRequest);
-        CreateDepartmentUserRequest createDepartmentUserRequest = userMapper.toDepartmentUserDTO(registrationRequest);
         Set<Permission> permissions = permissionService.getDefaultUserPermissions();
         User user = userMapper.toEntity(registrationRequest);
         user.setPermissions(permissions);
 
         UUID teamLeaderId = tokenService.parseRegistrationTokenToTeamLeaderId(registrationRequest.getRegistrationToken());
-
         UUID userId = userService.saveUser(user);
-
         NewDepartmentUserRequest newDepartmentUserRequest = new NewDepartmentUserRequest(userId, teamLeaderId);
-
-        departmentUserClient.createNewUser(newDepartmentUserRequest);
-
         userDataDTO.setId(userId);
-        userDataClient.createUser(userDataDTO);
-//        createDepartmentUserRequest.setId(userId);
-        AtomicBoolean success = new AtomicBoolean(true);
-//        CallbackExceptionWrapper.wrap(() -> {
-//                    userDataClient.createUser(userDataDTO);
-//                    departmentUserClient.createUser(createDepartmentUserRequest);
-//        }, () -> {
-//            success.set(false);
-//            userService.deleteUserById(userId);
-//        });
 
-        tokenService.deleteByToken(registrationRequest.getRegistrationToken());
+        AtomicBoolean success = new AtomicBoolean(true);
+
+        CallbackExceptionWrapper.wrap(() -> {
+            departmentUserClient.createNewUser(newDepartmentUserRequest);
+            userDataClient.createUser(userDataDTO);
+        }, () -> {
+            success.set(false);
+            userService.deleteUserById(userId);
+        });
+
         if (success.get()) {
+            tokenService.deleteByToken(registrationRequest.getRegistrationToken());
             kafkaProducer.sendUserRegistrationEvent("user-registration",
                     new KafkaMailDto(MailType.REGISTRATION_MAIL, user.getEmail(), "Welcome to PLAHCTOH",
                             "Successful registration. Thank you."));
