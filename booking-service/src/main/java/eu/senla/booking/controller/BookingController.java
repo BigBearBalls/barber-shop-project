@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.booking.data.mapper.BookingMapper;
 import eu.senla.booking.entity.BookedTimeSlotDto;
+import eu.senla.booking.entity.Booking;
 import eu.senla.booking.entity.MeetingRoom;
 import eu.senla.booking.service.BookingService;
 import eu.senla.booking.service.MeetingRoomService;
@@ -16,17 +17,25 @@ import eu.senla.common.booking.dto.response.TimeSlotResponseDTO;
 import eu.senla.common.constant.ValidationConstants;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Base64;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
@@ -86,6 +95,18 @@ public class BookingController {
     @PostMapping("/booked-time-slots")
     public Set<BookedTimeSlotDto> findBookedTimeSlots(@RequestBody AllTimeSlotsRequestDto allTimeSlotsRequestDto) {
         return bookingService.findBookedTimeSlotsDto(allTimeSlotsRequestDto.getId(), allTimeSlotsRequestDto.getDate());
+    }
+
+    @GetMapping("/my-bookings")
+    public Page<Booking> getBookingsByParams(
+            @RequestParam(required = false) UUID userId,
+            @RequestParam(required = false)
+            @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @RequestParam(required = false)
+            @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return bookingService.findBookingsByParams(userId, startDate, endDate, page, size);
     }
 
 }

@@ -48,6 +48,8 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -176,6 +178,18 @@ public class BookingServiceImpl implements BookingService {
         Set<TimeSlot> timeSlots = new HashSet<>();
         timeSlots.add(new TimeSlot());
         return null;
+    }
+
+    @Override
+    public Page<Booking> findBookingsByParams(
+            UUID userId,
+            LocalDate startDate,
+            LocalDate endDate,
+            int page,
+            int size
+    ) {
+        PageRequest pageable = PageRequest.of(page, size);
+        return bookingRepository.findByParams(userId, startDate, endDate, pageable);
     }
 
     @Override
